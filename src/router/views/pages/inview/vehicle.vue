@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- vehicle
+ vehicle,deletevehicle
 } from '../../../../services/auth'
 
 export default {
@@ -109,6 +109,28 @@ export default {
     this.getvehicles()
   },
   methods: {
+    async deleteReq(data) {
+       console.log("data",data.item.id)
+       var id = data.item.id
+     try{
+          
+        const result = await deletevehicle(data.item.id)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `You Deleted Vehicle Successfully`,
+            duration: 5000,
+          })
+         this.refresh()
+        }
+      } catch (e) {
+         this.$toasted.error(e.message.error, {
+          duration: 7000,
+        })
+      }
+     
+    },
    async getvehicles() {
        try {
         NProgress.start()

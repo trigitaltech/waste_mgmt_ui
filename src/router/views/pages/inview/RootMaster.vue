@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  routemaster,
+  routemaster,deleteroute
 } from '../../../../services/auth'
 import NProgress from 'nprogress/nprogress'
 export default {
@@ -106,6 +106,29 @@ export default {
     this.getroutes()
   },
   methods: {
+ async deleteReq(data) {
+       console.log("data",data.item.id)
+       var id = data.item.id
+     try{
+          
+        const result = await deleteroute(data.item.id)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `You Deleted Route Successfully`,
+            duration: 5000,
+          })
+         this.refresh()
+        }
+      } catch (e) {
+         this.$toasted.error(e.message.error, {
+          duration: 7000,
+        })
+      }
+     
+    },
+
     async getroutes() {
        try {
         NProgress.start()
@@ -130,7 +153,7 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="Rootmasters"
+        header="Routemasters"
         header-bg-variant="info"
         border-variant="info"
         header-text-variant="white"
@@ -141,8 +164,8 @@ export default {
   background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% )"
             class="btn btn-info float-right mr-2"
             text="Create Tenant"
-            @click="$router.push({path:'/create'})"
-          >Create Rootmaster</b-button>
+            @click="$router.push({path:'/CreateRoute'})"
+          >Create Routemaster</b-button>
         </b-col>
         <div class="mt-3">
           <b-table

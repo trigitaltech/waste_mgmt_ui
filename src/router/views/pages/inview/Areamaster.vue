@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  Areamasters
+  Areamasters,deletearea
 } from '../../../../services/auth'
 import NProgress from 'nprogress/nprogress'
 export default {
@@ -100,27 +100,27 @@ export default {
     this.getplans()
   },
   methods: {
-    async makeredeem() {
-      try {
-        const payload = {
-          pinNumber: this.vouchernumber,
-          clientId: this.clientId,
-        }
-        let result = await redeem(payload)
+   async deleteReq(data) {
+       console.log("data",data.item.id)
+       var id = data.item.id
+     try{
+          
+        const result = await deletearea(data.item.id)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `Your Redeemption Done Successfully`,
+            text: `You Deleted Dumping Successfully`,
             duration: 5000,
           })
-          this.refresh()
+         this.refresh()
         }
       } catch (e) {
-        this.$toasted.error(e.message.errors[0].developerMessage, {
+         this.$toasted.error(e.message.error, {
           duration: 7000,
         })
       }
+     
     },
   
 
@@ -160,7 +160,7 @@ export default {
   background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% )"
             class="btn btn-info float-right mr-2"
             text="Create Tenant"
-            @click="$router.push({path:'/create'})"
+            @click="$router.push({path:'/CreateArea'})"
           >Create Areamaster</b-button>
         </b-col>
         <div class="mt-3">

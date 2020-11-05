@@ -26,11 +26,21 @@ export const vehicle = () => serviceMaker(`/vehicles/admin/encoders/owner `, met
 
 export const simpleactivation = (payload) => serviceMaker(`/auth/signup`, methods.POST, api.NGB, payload)
 
-export const deletepermission = (id) => serviceMaker(`/permissions/admin/${id}`, methods.DELETE, api.NGB)
+export const deletevehicle = (id) => serviceMaker(`/vehicles/admin/encoders/${id}`, methods.DELETE, api.NGB) 
+
+export const deletepermission = (id) => serviceMaker(`/permissions/admin/${id}`, methods.DELETE, api.NGB) 
  
 export const deleteattendance = (id) => serviceMaker(`/attendence/admin/${id}`, methods.DELETE, api.NGB)
 
+export const deletearea = (id) => serviceMaker(`/areamaster/admin/${id}`, methods.DELETE, api.NGB)
+
+export const deleteroute = (id) => serviceMaker(`/routemaster/admin/${id}`, methods.DELETE, api.NGB)
+
 export const deleteemployee = (id) => serviceMaker(`/employees/admin/delete/${id}`, methods.DELETE, api.NGB)
+
+export const deletestagingarea = (id) => serviceMaker(`/stagingarea/admin/${id}`, methods.DELETE, api.NGB) 
+
+export const deletedumping = (id) => serviceMaker(`/dumpinglocation/admin/${id}`, methods.DELETE, api.NGB)
 
 export const deleteuser = (id) => serviceMaker(`/users/admin/delete/${id}`, methods.DELETE, api.NGB)
 
@@ -39,6 +49,14 @@ export const deleteequipment = (id) => serviceMaker(`/equipment/admin/encoders/$
 export const deleterole = (id) => serviceMaker(`/roles/admin/${id}`, methods.DELETE, api.NGB)
 
 export const createpermission = (payload) => serviceMaker(`/permissions/admin`, methods.POST, api.NGB, payload)
+
+export const createroute = (payload) => serviceMaker(`/routemaster/admin`, methods.POST, api.NGB, payload)
+
+export const createstaging = (payload) => serviceMaker(`/stagingarea/admin`, methods.POST, api.NGB, payload)
+
+export const createdumping = (payload) => serviceMaker(`/dumpinglocation/admin`, methods.POST, api.NGB, payload)
+
+export const createarea = (payload) => serviceMaker(`/areamaster/admin`, methods.POST, api.NGB, payload)
 
 export const createuser = (payload) => serviceMaker(`/users/admin/create`, methods.POST, api.NGB, payload)
 

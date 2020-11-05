@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  dumpinglocation
+  dumpinglocation,deletedumping
 } from '../../../../services/auth'
 
 export default {
@@ -112,6 +112,29 @@ export default {
     this.getdumping()
   },
   methods: {
+
+       async deleteReq(data) {
+       console.log("data",data.item.id)
+       var id = data.item.id
+     try{
+          
+        const result = await deletedumping(data.item.id)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `You Deleted Dumping Successfully`,
+            duration: 5000,
+          })
+         this.refresh()
+        }
+      } catch (e) {
+         this.$toasted.error(e.message.error, {
+          duration: 7000,
+        })
+      }
+     
+    },
   async getdumping() {
        try {
         NProgress.start()
@@ -147,7 +170,7 @@ export default {
   background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% )"
             class="btn btn-info float-right mr-2"
             text="Create Tenant"
-            @click="$router.push({path:'/create'})"
+            @click="$router.push({path:'/CreateDumpinglocation'})"
           >Create DumpingLocation</b-button>
         </b-col>
         <div class="mt-3">

@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  stagingarea,
+  stagingarea,deletestagingarea
 } from '../../../../services/auth'
 import NProgress from 'nprogress/nprogress'
 
@@ -112,6 +112,28 @@ export default {
     this.staging()
   },
   methods: {
+      async deleteReq(data) {
+       console.log("data",data.item.id)
+       var id = data.item.id
+     try{
+          
+        const result = await deletestagingarea(data.item.id)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `You Deleted Stagingarea Successfully`,
+            duration: 5000,
+          })
+         this.refresh()
+        }
+      } catch (e) {
+         this.$toasted.error(e.message.error, {
+          duration: 7000,
+        })
+      }
+     
+    },
    async staging() {
        try {
         NProgress.start()
@@ -148,7 +170,7 @@ export default {
   background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% )"
             class="btn btn-info float-right mr-2"
             text="Create Tenant"
-            @click="$router.push({path:'/create'})"
+            @click="$router.push({path:'/CreateStaging'})"
           >Create StagingArea</b-button>
         </b-col>
         <div class="mt-3">
