@@ -91,7 +91,7 @@ export default {
       ],
       items: [
         {
-          text: 'Home',
+          text: 'Setup',
           href: '/',
         },
         {
@@ -167,7 +167,7 @@ export default {
       >
         <b-col md="12">
             <b-button  style="
-  background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% )"
+  background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );margin-bottom:10px"
             class="btn btn-info float-right mr-2"
             text="Create Tenant"
             @click="$router.push({path:'/CreateDumpinglocation'})"
@@ -184,7 +184,7 @@ export default {
             responsive="sm"
             :current-page="currentPage"
             :per-page="perPage"
-            thead-class="header"
+            thead-class="bg-dark"
             :small="small"
             :fixed="fixed"
             :fields="DumpingLocationColumns"
@@ -237,6 +237,10 @@ background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8
     rgba(51, 8, 103, 1) 92.5%
   );
   border-bottom: 0 solid rgba(0, 0, 0, 0.125);
+}
+.table thead th {
+    outline: none !important;
+    color: white;
 }
 </style>
 <style lang="sass" scoped>

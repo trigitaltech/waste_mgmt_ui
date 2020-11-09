@@ -40,13 +40,10 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-      name:"",
-      status:"",
-      createdBy:"",
-      createdDate:"",
+    
       items: [
         {
-          text: 'Home',
+          text: 'Setup',
           href: '/',
         },
         {
@@ -54,8 +51,23 @@ export default {
           active: true,
         },
       ],
-      
+        option: [
+        { value: null, text: 'Please select an option' },
+        { value: 'POST', text: 'POST' },
+        { value: 'GET', text: 'GET' },
+        { value: 'PUT', text: 'PUT' },
+        { value: 'DELETE', text: 'DELETE' },
+      ],
+        name: '',
+      Operation: null,
+      createdby: "",
+      createddate: new Date(),
+      url: '',
+      title: 'Register',
+      modifydate: new Date(),
+      modifyby:"",
     }
+
   },
   computed: {
     getUserDetails() {
@@ -65,18 +77,20 @@ export default {
   mounted() {
     // this.getClientDetails()
     // this.getplans()
+      this.createdby = this.getUserDetails.userName
+    this.modifyby = this.getUserDetails.userName
   },
   methods: {
     async create() {
       try {
         const payload = {
-    name:this.name,
-    status: "200",
-    isDeleted:false,
-    createdDate:"2020-10-28T17:30:00.000+00:00",
-    createdBy: this.createdBy,
-    modifiedDate: "2020-10-28T17:30:00.000+00:00",
-    modifiedBy: "admin"
+          name: this.name,
+          status: 200,
+          isDeleted: false,
+          createdDate: this.createddate,
+          createdBy: this.createdby,
+          modifiedDate: this.modifydate,
+          modifiedBy: this.modifyby,
 }
         let result = await createrole(payload)
         if (result) {
@@ -109,88 +123,60 @@ export default {
   <Layout>
     <PageHeader :items="items" />
 
-     <div class="animated fadeIn">
+    <div class="animated fadeIn">
       <b-card
-       
         header="Create Role"
         header-bg-variant="info"
         border-variant="info"
         header-text-variant="white"
-          class="mt-10 ml-10 mr-10 mx-auto"
+        class="mt-10 ml-10 mr-10 mx-auto"
       >
-       
         <div class="mt-3">
-      
-  <!-- Card -->
-  <div class="card mx-xl-5">
-
-    <!-- Card body -->
-    <div class="card-body">
-
-        <!-- Default form subscription -->
-        <form>
-            <b-row>
-                <b-col>
-          
-
-            <!-- Default input name -->
-            <label for="defaultFormCardNameEx" class="grey-text font-weight-dark"> name</label>
-            <input type="text" id="defaultFormCardNameEx" class="form-control" v-model="name">
-
-            <br>
-
-            <!-- Default input email -->
-            <label for="defaultFormCardEmailEx" class="grey-text font-weight-dark"> Created By</label>
-            <input type="email" id="defaultFormCardEmailEx" class="form-control" v-model="createdBy">
-
-          
-                </b-col>
+          <!-- Card -->
+          <div class="card mx-xl-5">
+            <!-- Card body -->
+            <div class="card-body">
+              <!-- Default form subscription -->
+              <form>
+                <b-row>
                   <b-col>
-            
+                    <!-- Default input name -->
+                   <input
+                      type="text"
+                      disabled
+                      id="defaultFormCardNameEx"
+                      class="form-control"
+                      placeholder="Role Name"
+                    />
+                  </b-col>
+                  <b-col style="margin-left:50px">
+                    <input
+                      type="text"
+                      id="defaultFormCardNameEx"
+                      class="form-control"
+                      v-model="name"
+                    />
 
-            <!-- Default input name -->
-            <label for="defaultFormCardNameEx" class="grey-text font-weight-dark">Status</label>
-            <input type="text" id="defaultFormCardNameEx" class="form-control" v-model="status">
-
-            <br>
-
-            <!-- Default input email -->
-            <label for="defaultFormCardEmailEx" class="grey-text font-weight-dark">Date</label>
-            <input type="email" id="defaultFormCardEmailEx" class="form-control" v-model="createdDate">
-
-           
-                </b-col>
-                     <!-- <b-col>
-             -->
-
-            <!-- Default input name -->
-            <!-- <label for="defaultFormCardNameEx" class="grey-text font-weight-dark">Address</label>
-            <input type="text" id="defaultFormCardNameEx" class="form-control">
-
-            <br> -->
-
-            <!-- Default input email -->
-            <!-- <label for="defaultFormCardEmailEx" class="grey-text font-weight-dark">State</label>
-            <input type="email" id="defaultFormCardEmailEx" class="form-control">
-
-           
-                </b-col> -->
-            </b-row>
-            <br>
-            <b-button style="background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% )"
-            class="btn btn-info float-right mr-2"
-            text="Create Tenant"
-            @click="create"
-          >Create</b-button>
-        </form>
-        <!-- Default form subscription -->
-
-    </div>
-    <!-- Card body -->
-
-  </div>
-  <!-- Card -->
-
+                  </b-col>
+                  <b-col>
+                     <b-button
+                  style="
+                    background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
+                  class="btn btn-info float-right mr-2"
+                  text="Create Tenant"
+                  @click="create"
+                  >Save</b-button
+                >
+                  </b-col>
+                </b-row>
+                <br />
+               
+              </form>
+              <!-- Default form subscription -->
+            </div>
+            <!-- Card body -->
+          </div>
+          <!-- Card -->
         </div>
       </b-card>
     </div>

@@ -164,12 +164,7 @@ export default {
         <b-col md="12">
           <b-button
             style="
-              background-image: linear-gradient(
-                109.6deg,
-                rgba(48, 207, 208, 1) 11.2%,
-                rgba(51, 8, 103, 1) 92.5%
-              );
-            "
+              background-image: linear-gradient( 109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5% );margin-bottom:10px"
             class="btn btn-info float-right mr-2"
             text="Create Tenant"
             @click="$router.push({ path: '/create' })"
@@ -187,7 +182,7 @@ export default {
             responsive="sm"
             :current-page="currentPage"
             :per-page="perPage"
-            thead-class="header"
+            thead-class="bg-dark"
             :small="small"
             :fixed="fixed"
             :fields="AttendanceColumns"
@@ -269,6 +264,10 @@ export default {
   </Layout>
 </template>
 <style lang="scss">
+.table thead th {
+    outline: none !important;
+    color: white;
+}
 .btn-info {
     color: #fff;
     background-image: linear-gradient(

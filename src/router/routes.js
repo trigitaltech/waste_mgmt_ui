@@ -297,54 +297,6 @@ const inviewRoutes = [
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
-    path: '/Payrole ',
-    name: 'Payrole Management',
-    header: 'Apps',
-    icon: 'credit-card',
-    meta: { label: 'Permissions' },
-    component: {
-      render(c) { return c('router-view') }
-    },
-
-    children: [
-
-      {
-        path: 'Redcard',
-        name: 'Payrole red card',
-        icon: 'check-square',
-        component: () => lazyLoadView(import('@views/pages/Payrol/redcard')),
-        meta: { authRequired: true },
-        props: (route) => ({ user: store.state.auth.currentUser || {} }),
-      },
-
-      {
-        path: 'Billing',
-        name: 'Payrole billing',
-        icon: 'check-square',
-        component: () => lazyLoadView(import('@views/pages/Payrol/billing')),
-        meta: { authRequired: true },
-        props: (route) => ({ user: store.state.auth.currentUser || {} }),
-      },
-      {
-        path: 'Settlement',
-        name: 'Payrole settlement',
-        icon: 'check-square',
-        component: () => lazyLoadView(import('@views/pages/Payrol/settlement')),
-        meta: { authRequired: true },
-        props: (route) => ({ user: store.state.auth.currentUser || {} }),
-      },
-    ]
-  },
-  {
-    path: '/Equipment',
-    name: 'Equipment',
-    header: 'Apps',
-    icon: 'layout',
-    component: () => lazyLoadView(import('@views/pages/inview/Equipment')),
-    meta: { authRequired: true },
-    props: (route) => ({ user: store.state.auth.currentUser || {} }),
-  },
-  {
 
     path: '/Employee',
     name: 'Employee',
@@ -389,6 +341,17 @@ const inviewRoutes = [
       },
     ]
   },
+  
+  {
+    path: '/Equipment',
+    name: 'Equipment',
+    header: 'Apps',
+    icon: 'layout',
+    component: () => lazyLoadView(import('@views/pages/inview/Equipment')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  
 
   {
     path: '/Vehicle',
@@ -398,6 +361,45 @@ const inviewRoutes = [
     component: () => lazyLoadView(import('@views/pages/inview/vehicle')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Payroll ',
+    name: 'Payroll Management',
+    header: 'Apps',
+    icon: 'credit-card',
+    meta: { label: 'Permissions' },
+    component: {
+      render(c) { return c('router-view') }
+    },
+
+    children: [
+
+      {
+        path: 'Redcard',
+        name: 'Payroll red card',
+        icon: 'check-square',
+        component: () => lazyLoadView(import('@views/pages/Payrol/redcard')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+
+      {
+        path: 'Billing',
+        name: 'Payroll billing',
+        icon: 'check-square',
+        component: () => lazyLoadView(import('@views/pages/Payrol/billing')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+      {
+        path: 'Settlement',
+        name: 'Payroll settlement',
+        icon: 'check-square',
+        component: () => lazyLoadView(import('@views/pages/Payrol/settlement')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+    ]
   },
   {
     path: '/Tripdetails',
@@ -458,7 +460,7 @@ const pagesRoutes = [
     path: '/CreatePermissions',
     name: 'CreatePermission',
     icon: 'check-square',
-    component: () => lazyLoadView(import('@views/pages/account/Create Permission')),
+    component: () => lazyLoadView(import('@views/pages/account/CreatePermission')),
     // meta: { authRequired: true },
     // props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },

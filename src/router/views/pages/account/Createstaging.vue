@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- createstaging
+ createstaging,users
 } from '../../../../services/auth'
 
 export default {
@@ -27,15 +27,32 @@ export default {
   },
   data() {
     return {
-       name:"",
-       operation:"",
-       createdBy:"",
-       createdDate:"",
-      title: 'Register',
-     
+      areaname:"",
+      description:"",
+      supervisor:null,
+      city:"",
+      state:"",
+      country:"",
+      zip:"",
+      geoLat:"",
+      geoLong:"",
+      area:"",
+      workinghours:"",
+      message:"",
+      stagingtype:null,
+      createdby: "",
+      createddate: new Date(),
+      modifydate: new Date(),
+      modifyby:"",
+       option: [
+        { value: null, text: 'Please select an option' },
+        { value: 'Areastaging', text: 'Area Staging' },
+        { value: 'Centralstaging', text: 'Central Staging' },
+      ],
+      item:[ { value: null, text: 'Please select an user' }],
       items: [
         {
-          text: 'Home',
+          text: 'Setup',
           href: '/',
         },
         {
@@ -53,33 +70,55 @@ export default {
     },
   },
   mounted() {
+      this.createdby = this.getUserDetails.userName
+    this.modifyby = this.getUserDetails.userName
     // this.getClientDetails()
     // this.getplans()
+    this.userdata()
   },
   methods: {
+     async userdata() {
+       try {
+      
+      const result = await users()
+      var data = result.data.response.Users
+      console.log("users",data[0].userName)
+      // JSON.parse(JSON.stringify(result))
+      // for(i=0;i<data.length;i++){
+      //   this.item[i]=data[i].userName
+      // }
+
+      data.map(e=>{
+      this.item.push(e.userName)
+      console.log("user",e)
+      })
+       console.log("users",this.item)
+     
+      } catch (error) {}
+     },
     async create() {
       try {
         const payload = {
-                "stagingAreaName": "uppal",
-                "staging_type": "B",
-                "supervisor": "supervisor",
-                "working_hrs": "19 hours",
-                "geoLat": "",
-                "geoLong": "",
+                stagingAreaName:this.areaname,
+                staging_type: this.stagingtype,
+                supervisor: this.supervisor,
+                working_hrs:this.workinghours,
+                geoLat: this.geoLat,
+                geoLong: this.geoLong,
                 "isDeleted": true,
                 "status": 300,
-                "createdDate": "2020-10-25T23:30:00.000+00:00",
-                "createdBy": "supervisor",
-                "modifiedDate": "2020-10-28T17:30:00.000+00:00",
-                "modifiedBy": "admin",
-                "address": "123123 Opp: uppal flyover  223 233 outskirts",
-                "state": "telangana",
-                "country": "India",
-                "description": "........................",
-                "holiday_message": "tomorrow is a 'not a Holiday'",
-                "zip": "500028",
-                "city": "hyderabad",
-                "area": "uppal"
+                createdDate: this.createddate,
+          createdBy: this.createdby,
+          modifiedDate: this.modifydate,
+          modifiedBy: this.modifyby,
+                address: this.address,
+                state: this.state,
+                country: this.country,
+                description: this.description,
+                holiday_message: this.message,
+                zip: this.zip,
+                city: this.city,
+                area: this.area
             }
         let result = await createstaging(payload)
         if (result) {
@@ -115,86 +154,300 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-       
-        header="Create Staging"
+        header="Create Stagingarea"
         header-bg-variant="info"
         border-variant="info"
         header-text-variant="white"
-          class="mt-10 ml-10 mr-10 mx-auto"
+        class="mt-10 ml-10 mr-10 mx-auto"
       >
-       
         <div class="mt-3">
-      
-  <!-- Card -->
-  <div class="card mx-xl-5">
-
-    <!-- Card body -->
-    <div class="card-body">
-
-        <!-- Default form subscription -->
-        <form>
-            <b-row>
-                <b-col>
-          
-
-            <!-- Default input name -->
-            <label for="defaultFormCardNameEx" class="grey-text font-weight-dark"> name</label>
-            <input type="text" id="defaultFormCardNameEx" class="form-control" v-model="name">
-
-            <br>
-
-            <!-- Default input email -->
-            <label for="defaultFormCardEmailEx" class="grey-text font-weight-dark"> Created By</label>
-            <input type="email" id="defaultFormCardEmailEx" class="form-control" v-model="createdBy">
-
-          
-                </b-col>
+          <!-- Card -->
+          <div class="card mx-xl-5">
+            <!-- Card body -->
+            <div class="card-body">
+              <!-- Default form subscription -->
+              <form>
+                <b-row>
                   <b-col>
-            
+                    <!-- Default input name -->
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                    >
+                     Staging Area Name</label
+                    >
+                    <input
+                      type="text"
+                      id="defaultFormCardNameEx"
+                      class="form-control"
+                      v-model="areaname"
+                    />
 
-            <!-- Default input name -->
-            <label for="defaultFormCardNameEx" class="grey-text font-weight-dark">Operation</label>
-            <input type="text" id="defaultFormCardNameEx" class="form-control" v-model="operation">
+                   <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >Staging Type</label
+                    >
+                    <b-form-select
+                      v-model="stagingtype"
+                      :options="option"
+                      class="form-control"
+                      id="defaultFormCardEmailEx"
+                    ></b-form-select>
 
-            <br>
+                    <br />
 
-            <!-- Default input email -->
-            <label for="defaultFormCardEmailEx" class="grey-text font-weight-dark">Date</label>
-            <input type="email" id="defaultFormCardEmailEx" class="form-control" v-model="createdDate">
+                    <!-- Default input email -->
+                  </b-col>
+                  <b-col>
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Address</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="address"
+                    />
 
-           
-                </b-col>
-                     <!-- <b-col>
-             -->
+                    <!-- Default input name -->
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >State</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="state"
+                    />
+                  </b-col>
+              
+                  <br />
+                
+                
+                  
+               
+                </b-row>
+                  <b-row>
+                    
+                      <b-col>
+                    <!-- Default input email -->
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Supervisor</label
+                    >
+                    <b-form-select
+                  v-model.trim="supervisor"
+                  placeholder="Select Supervisor"
+                  label="value"
+                  :options="item"
+                  
+                ></b-form-select>
 
-            <!-- Default input name -->
-            <!-- <label for="defaultFormCardNameEx" class="grey-text font-weight-dark">Address</label>
-            <input type="text" id="defaultFormCardNameEx" class="form-control">
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Working Hours</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="workinghours"
+                    />
+                  </b-col>
+               
+                 <b-col>
+                    <!-- Default input email -->
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >City</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="city"
+                    />
 
-            <br> -->
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Country</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="country"
+                    />
+                  </b-col>
+                  
+                </b-row>
+                <b-row>
+                     <b-col>
+                    <!-- Default input email -->
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Geo Lat</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="geoLat"
+                    />
 
-            <!-- Default input email -->
-            <!-- <label for="defaultFormCardEmailEx" class="grey-text font-weight-dark">State</label>
-            <input type="email" id="defaultFormCardEmailEx" class="form-control">
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Geo Long</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="geoLong"
+                    />
+                  </b-col>
+                  
+                   <b-col>
+                    <!-- Default input email -->
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Created Date</label
+                    >
+                    <input
+                    disabled
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="createddate"
+                    />
 
-           
-                </b-col> -->
-            </b-row>
-            <br>
-            <b-button style="background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% )"
-            class="btn btn-info float-right mr-2"
-            text="Create Tenant"
-            @click="create"
-          >Create</b-button>
-        </form>
-        <!-- Default form subscription -->
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Modify Date</label
+                    >
+                    <input
+                    disabled
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="modifydate"
+                    />
+                  </b-col>
+                </b-row>
+                <b-row>
+                   
+                   <b-col>
+                    <!-- Default input email -->
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Description</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="description"
+                    />
 
-    </div>
-    <!-- Card body -->
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Holiday Message</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="message"
+                    />
+                  </b-col>
+                  
+                </b-row>
+                <b-row>
+                <b-col>
+                    <!-- Default input email -->
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Zip</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="zip"
+                    />
 
-  </div>
-  <!-- Card -->
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Area</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="area"
+                    />
+                  </b-col>
+                   <b-col>
+                    <!-- Default input email -->
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Created By</label
+                    >
+                    <input
+                    disabled
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="createdby"
+                    />
 
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Modify By</label
+                    >
+                    <input
+                    disabled
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="modifyby"
+                    />
+                  </b-col>
+                </b-row>
+                <br />
+                <b-button
+                  style="
+                    background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
+                  class="btn btn-info float-right mr-2"
+                  text="Create Tenant"
+                  @click="create"
+                  >Create</b-button
+                >
+              </form>
+              <!-- Default form subscription -->
+            </div>
+            <!-- Card body -->
+          </div>
+          <!-- Card -->
         </div>
       </b-card>
     </div>
