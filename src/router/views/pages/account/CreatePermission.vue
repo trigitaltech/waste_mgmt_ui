@@ -142,7 +142,12 @@ export default {
                       v-model="name"
                     />
 
-                    <label
+                 
+
+                    <!-- Default input email -->
+                  </b-col>
+                  <b-col>
+                       <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
                     >
@@ -156,11 +161,8 @@ export default {
                     />
 
                     <br />
-
-                    <!-- Default input email -->
                   </b-col>
-                  <b-col>
-                    <label
+                    <!-- <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
                       >Created Date</label
@@ -170,9 +172,10 @@ export default {
                       id="defaultFormCardEmailEx"
                       class="form-control"
                       v-model="createddate"
-                    />
+                    /> -->
 
                     <!-- Default input name -->
+                    <b-col>
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
@@ -185,35 +188,7 @@ export default {
                       id="defaultFormCardEmailEx"
                     ></b-form-select>
                   </b-col>
-                  <br />
-                  <b-col>
-                    <!-- Default input email -->
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Created By</label
-                    >
-                    <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
-                      v-model="createdby"
-                    />
-
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Modify Date</label
-                    >
-                    <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
-                      v-model="modifydate"
-                    />
-                  </b-col>
-                  <!-- <b-col>
-             -->
+                 
 
                   <!-- Default input name -->
                   <!-- <label for="defaultFormCardNameEx" class="grey-text font-weight-dark">Address</label>
@@ -228,7 +203,7 @@ export default {
            
                 </b-col> -->
                 </b-row>
-                <br />
+               
                 <b-button
                   style="
                     background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"

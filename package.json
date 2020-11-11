@@ -40,6 +40,7 @@
     "axios": "0.18.0",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.3",
+    "country-state-city": "^1.0.5",
     "dual-listbox-vue": "^1.0.2",
     "feather-icons": "^4.24.1",
     "https": "^1.0.0",
@@ -68,6 +69,7 @@
     "vue-toasted": "^1.1.28",
     "vue2-dropzone": "^3.6.0",
     "vue2-editor": "^2.10.2",
+    "vue2-google-maps": "^0.10.7",
     "vuedraggable": "^2.23.2",
     "vuelidate": "^0.7.4",
     "vuex": "3.1.0"

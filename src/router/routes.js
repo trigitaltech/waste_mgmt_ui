@@ -187,6 +187,25 @@ const inviewRoutes = [
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
+     
+      {
+        path: 'AreaMaster',
+        name: 'Area Master',
+        header: 'Apps',
+        icon: 'loader',
+        component: () => lazyLoadView(import('@views/pages/inview/Areamaster')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+      {
+        path: 'RootMaster',
+        name: 'Route Master',
+        header: 'Apps',
+        icon: 'arrow-up',
+        component: () => lazyLoadView(import('@views/pages/inview/RootMaster')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
       // {
       //   path: 'City',
       //   name: 'City',
@@ -232,24 +251,7 @@ const inviewRoutes = [
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
-      {
-        path: 'RootMaster',
-        name: 'Route Master',
-        header: 'Apps',
-        icon: 'arrow-up',
-        component: () => lazyLoadView(import('@views/pages/inview/RootMaster')),
-        meta: { authRequired: true },
-        props: (route) => ({ user: store.state.auth.currentUser || {} }),
-      },
-      {
-        path: 'AreaMaster',
-        name: 'Area Master',
-        header: 'Apps',
-        icon: 'loader',
-        component: () => lazyLoadView(import('@views/pages/inview/Areamaster')),
-        meta: { authRequired: true },
-        props: (route) => ({ user: store.state.auth.currentUser || {} }),
-      },
+     
       {
         path: 'Notification Template',
         name: 'Notification Template',
@@ -402,14 +404,32 @@ const inviewRoutes = [
     ]
   },
   {
-    path: '/Tripdetails',
-    name: 'Trip Details',
+    path: '/Reports',
+    name: 'Reports',
     header: 'Apps',
-    icon: 'book',
-    component: () => lazyLoadView(import('@views/pages/inview/Tripdetails')),
+    icon: 'credit-card',
+    meta: { label: 'Trip Reports' },
+    component: {
+      render(c) { return c('router-view') }
+    },
+
+    children: [
+  {
+    path: 'Tripincomingdetails',
+    name: 'Tripincomingdetails',
+    component: () => lazyLoadView(import('@views/pages/inview/Tripincomingdetails')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
+  {
+    path: 'Tripoutgoingdetails',
+    name: 'Tripoutgoingdetails',
+    component: () => lazyLoadView(import('@views/pages/inview/Tripoutgoingdetails')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  }
+]
+},
   {
     path: '/Service request details',
     name: 'Service Request Details',
@@ -419,11 +439,36 @@ const inviewRoutes = [
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
+  
 
 ]
 
 // pageRoute
 const pagesRoutes = [
+  {
+    path: '/Createemployee',
+    name: 'Createemployee',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/Createemployee')),
+    // meta: { authRequired: true },
+    // props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Createequipment',
+    name: 'Createequipment',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/Createequipment')),
+    // meta: { authRequired: true },
+    // props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Createvehicle',
+    name: 'Createvehicle',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/Createvehicle')),
+    // meta: { authRequired: true },
+    // props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
   {
     path: '/CreateStaging',
     name: 'CreateStaging',
@@ -489,20 +534,7 @@ const pagesRoutes = [
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
 
-  {
-    path: '/voucher-management-details-view/:id',
-    name: 'Voucher Management Details',
-    component: () => lazyLoadView(import('@views/pages/inview/voucherManagementDetailsView')),
-    meta: { authRequired: true },
-    props: (route) => ({ user: store.state.auth.currentUser || {} }),
-  },
-  {
-    path: '/voucher-management-details/:id',
-    name: 'Voucher Management Details',
-    component: () => lazyLoadView(import('@views/pages/inview/voucherManagementDetails')),
-    meta: { authRequired: true },
-    props: (route) => ({ user: store.state.auth.currentUser || {} }),
-  }
+  
 ]
 
 // error pages

@@ -89,7 +89,7 @@ export default {
           href: '/',
         },
         {
-          text: 'Rootmasters',
+          text: 'Routemaster',
           active: true,
         },
       ],
@@ -165,7 +165,7 @@ export default {
             class="btn btn-info float-right mr-2"
             text="Create Tenant"
             @click="$router.push({path:'/CreateRoute'})"
-          >Create Routemaster</b-button>
+          >Create Route</b-button>
         </b-col>
         <div class="mt-3">
           <b-table

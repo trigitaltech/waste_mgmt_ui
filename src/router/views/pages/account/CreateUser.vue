@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- createuser
+ createuser,roles
 } from '../../../../services/auth'
 
 export default {
@@ -75,6 +75,9 @@ export default {
       selected: null,
       clientId: '',
       options: ['DAF'],
+      servieoffice:"",
+      file:"",
+      personalidno:"",
       item: {
         value: '',
         text: '',
@@ -100,10 +103,16 @@ export default {
         amount: 0,
         voucherNo: '',
       },
+      roles:[],
+      rolename:"",
       titles: ['Mr.', 'Sri.', 'Mrs'],
       vouchernumber: '',
       genderOpt: ['Male', 'Female', 'Other'],
       cityOpt: [],
+       createdby: "",
+      createddate: new Date(),
+      modifydate: new Date(),
+      modifyby:"",
       bouquetsOpt: [
         { value: null, text: 'Please select an option' },
         'FTA  AND STARTER',
@@ -119,8 +128,30 @@ export default {
   mounted() {
     // this.getClientDetails()
     // this.getplans()
+     this.createdby = this.getUserDetails.userName
+    this.modifyby = this.getUserDetails.userName
+    this.roledata()
   },
   methods: {
+     async roledata() {
+       try {
+      
+      const result = await roles()
+      var data = result.data.response.RoleMaster
+      // console.log("users",data[0].userName)
+      // JSON.parse(JSON.stringify(result))
+      // for(i=0;i<data.length;i++){
+      //   this.item[i]=data[i].userName
+      // }
+
+      data.map(e=>{
+      this.roles.push(e.name)
+      // console.log("user",e)
+      })
+      //  console.log("users",this.item)
+     
+      } catch (error) {}
+     },
     async create() {
       try {
         const payload = {
@@ -134,24 +165,24 @@ export default {
     state:this.form.state,
    country: this.form.country,
     isDeleted: 1,
-    id_PROOF_DOC_URL:"",
-    service_OFFICE: "",
-    personal_ID_NO: "",
-    role:"",
+    id_PROOF_DOC_URL:this.file,
+    service_OFFICE: this.servieoffice,
+    personal_ID_NO:this.personalidno,
+    role:this.rolename,
     city: this.form.city,
     area: this.form.area,
     first_Name: this.form.firstName,
     pin: this.form.postCode,
-    modified_by: "User",
+    modified_by: this.modifyby,
     middle_Name: this.form.middleName,
     status: 200,
     salutation: this.form.personalTitle,
     last_Name: this.form.lastName,
     address_Line1: this.form.address,
     address_Line2: this.form.address2,
-    created_Date: "2020-10-26T10:30:00.000+05:30",
-    modified_Date: "2020-10-30T04:30:00.000+05:30",
-    created_by: "Admin"
+    created_Date: this.createddate,
+    modified_Date: this.modifydate,
+    created_by: this.createdby
 
         }
         let result = await createuser(payload)
@@ -162,7 +193,7 @@ export default {
             text: `Your Created User Successfully`,
             duration: 5000,
           })
-          this.refresh()
+          this.$router.push({path:'/Users'})
         }
       } catch (e) {
          this.$toasted.error(e.message.error, {
@@ -529,6 +560,75 @@ export default {
                                 />
                               </div>
                             </div>
+                               <div class="col-md-4">
+                            
+                           
+                        
+                              <div class="form-group mt-3 mt-sm-0">
+                                   <label for="default">ID Proof</label>
+                                 
+                                <b-form-file
+                                @change="readAgreement"
+                                :state="Boolean(file)"
+                                placeholder="Choose a file..."
+                                drop-placeholder="Drop file here..."
+                                ></b-form-file>
+                                    </div>
+                           
+                           
+                            </div>
+                            <div class="col-md-4">
+                            
+                           
+                        
+                              <div class="form-group mt-3 mt-sm-0">
+                                   <label for="default">Service office</label>
+                                 
+                              <input
+                                v-model.trim="serviceoffice"
+                                placeholder="Enter Service office"
+                                class="form-control"
+                                type="number"
+                              />
+                                    </div>
+                           
+                           
+                            </div>
+                              <div class="col-md-4">
+                            
+                           
+                        
+                              <div class="form-group mt-3 mt-sm-0">
+                                   <label for="default">Personal ID No</label>
+                                 
+                              <input
+                                v-model.trim="personalidno"
+                                placeholder="Enter Personal ID"
+                                class="form-control"
+                                type="number"
+                              />
+                                    </div>
+                           
+                           
+                            </div>
+                             <div class="col-md-4">
+                            
+                           
+                        
+                              <div class="form-group mt-3 mt-sm-0">
+                                      <label
+                              for="defaultFormCardEmailEx"
+                              class="grey-text font-weight-dark"
+                              >Role</label
+                            >
+                            <b-form-select
+                          v-model.trim="rolename"
+                          placeholder="Select Supervisor"
+                          label="value"
+                          :options="roles"
+                        ></b-form-select>
+                              </div>
+                             </div>
                           </div>
                         </fieldset>
                       </div>

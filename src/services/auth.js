@@ -62,6 +62,11 @@ export const createuser = (payload) => serviceMaker(`/users/admin/create`, metho
 
 export const createrole = (payload) => serviceMaker(`/roles/admin`, methods.POST, api.NGB, payload)
 
+export const createemployee = (payload) => serviceMaker(`/employees/admin/create`, methods.POST, api.NGB, payload)
+
+export const createvehicle = (payload) => serviceMaker(`/vehicles/admin/encoders`, methods.POST, api.NGB, payload)
+
+export const createequipment = (payload) => serviceMaker(`/equipment/admin/encoders/`, methods.POST, api.NGB, payload)
 
 export const editcustomer = (payload,id) => serviceMaker (`/clients/${id}`, methods.PUT, api.NGB, payload)
 
@@ -79,6 +84,8 @@ export const plandata = (id,cid,sid) => serviceMaker(`/salescataloge/salescatalo
 
 export const addplan = (id,payload) => serviceMaker(`/multipleorders/${id}`, methods.POST, api.NGB,payload)
 
+
+export const Tripdownload = (id) => serviceMaker(`/tripincoming/system/${id}`, methods.GET, api.NGB)
  
 
 export const searchvoucher = (id) => serviceMaker(`/vouchers/verify?pinNumber=${id}`, methods.GET, api.NGB)

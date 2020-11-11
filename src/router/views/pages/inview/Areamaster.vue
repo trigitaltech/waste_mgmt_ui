@@ -85,7 +85,7 @@ export default {
           href: '/',
         },
         {
-          text: 'Areamasters',
+          text: 'Areamaster',
           active: true,
         },
       ],
@@ -161,7 +161,7 @@ export default {
             class="btn btn-info float-right mr-2"
             text="Create Tenant"
             @click="$router.push({path:'/CreateArea'})"
-          >Create Areamaster</b-button>
+          >Create Area</b-button>
         </b-col>
         <div class="mt-3">
           <b-table

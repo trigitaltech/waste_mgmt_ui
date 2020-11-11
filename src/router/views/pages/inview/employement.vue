@@ -51,8 +51,8 @@ export default {
           label: 'Personal ID NO',
         },
          {
-          key: 'firstName',
-          label: 'firstName',
+          key: 'userName',
+          label: 'userName',
         },
          {
           key: 'phone',
@@ -99,7 +99,7 @@ export default {
           href: '/',
         },
         {
-          text: 'Employement',
+          text: 'Employees',
           active: true,
         },
       ],
@@ -174,7 +174,7 @@ export default {
   background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );margin-bottom:10px"
             class="btn btn-info float-right mr-2"
             text="Create Tenant"
-            @click="$router.push({path:'/tenant/create'})"
+            @click="$router.push({path:'/Createemployee'})"
           >Create Employee</b-button>
         </b-col>
         <div class="mt-3">

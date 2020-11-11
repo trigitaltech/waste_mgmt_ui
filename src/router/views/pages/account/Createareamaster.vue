@@ -334,9 +334,9 @@ this.userdata()
                 <b-row>
                   
                   
-                   <b-col>
+                   <!-- <b-col> -->
                     <!-- Default input email -->
-                    <label
+                    <!-- <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
                       >Created Date</label
@@ -361,13 +361,13 @@ this.userdata()
                       class="form-control"
                       v-model="modifydate"
                     />
-                  </b-col>
+                  </b-col> -->
 
-                  <br/>
+                  <!-- <br/>
 
-                   <b-col>
+                   <b-col> -->
                     <!-- Default input email -->
-                    <label
+                    <!-- <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
                       >Created By</label
@@ -392,7 +392,7 @@ this.userdata()
                       class="form-control"
                       v-model="modifyby"
                     />
-                  </b-col>
+                  </b-col> -->
                 </b-row>
               
               

@@ -8,10 +8,8 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import {
- createstaging,users
-} from '../../../../services/auth'
-
+import {createstaging,users}from '../../../../services/auth'
+import csc from "country-state-city";
 export default {
   page: {
     title: 'Create Staging',
@@ -77,6 +75,17 @@ export default {
     this.userdata()
   },
   methods: {
+     async setPlace(p) {
+      let place = await p;
+      let position = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng()
+      };
+      this.position = position;
+      this.geoLat = this.position.lat
+      this.geoLong = this.position.lng
+      
+    },
      async userdata() {
        try {
       
@@ -225,12 +234,7 @@ export default {
                       v-model="state"
                     />
                   </b-col>
-              
                   <br />
-                
-                
-                  
-               
                 </b-row>
                   <b-row>
                     
@@ -246,9 +250,7 @@ export default {
                   placeholder="Select Supervisor"
                   label="value"
                   :options="item"
-                  
                 ></b-form-select>
-
                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
@@ -291,64 +293,14 @@ export default {
                   
                 </b-row>
                 <b-row>
-                     <b-col>
-                    <!-- Default input email -->
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Geo Lat</label
-                    >
-                    <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
-                      v-model="geoLat"
-                    />
-
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Geo Long</label
-                    >
-                    <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
-                      v-model="geoLong"
-                    />
-                  </b-col>
-                  
-                   <b-col>
-                    <!-- Default input email -->
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Created Date</label
-                    >
-                    <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
-                      v-model="createddate"
-                    />
-
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Modify Date</label
-                    >
-                    <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
-                      v-model="modifydate"
-                    />
-                  </b-col>
-                </b-row>
-                <b-row>
-                   
+                  <b-col md="3">
+                     <p class="head">Location</p>
+                        <GmapAutocomplete
+                          @place_changed="setPlace"
+                          :placeholder="'Select Target Location'"
+                          class="form-control"
+                        ></GmapAutocomplete>
+                      </b-col>
                    <b-col>
                     <!-- Default input email -->
                     <label
@@ -375,6 +327,38 @@ export default {
                       v-model="message"
                     />
                   </b-col>
+                   <!-- <b-col> -->
+                    <!-- Default input email -->
+                    <!-- <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Created Date</label
+                    >
+                    <input
+                    disabled
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="createddate"
+                    />
+
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Modify Date</label
+                    >
+                    <input
+                    disabled
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="modifydate"
+                    />
+                  </b-col> -->
+                </b-row>
+                <b-row>
+                   
+                  
                   
                 </b-row>
                 <b-row>
@@ -392,7 +376,10 @@ export default {
                       v-model="zip"
                     />
 
-                    <label
+                  
+                  </b-col>
+                  <b-col>
+                      <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
                       >Area</label
@@ -404,34 +391,7 @@ export default {
                       v-model="area"
                     />
                   </b-col>
-                   <b-col>
-                    <!-- Default input email -->
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Created By</label
-                    >
-                    <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
-                      v-model="createdby"
-                    />
-
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Modify By</label
-                    >
-                    <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
-                      v-model="modifyby"
-                    />
-                  </b-col>
+                  
                 </b-row>
                 <br />
                 <b-button

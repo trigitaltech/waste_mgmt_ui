@@ -3,7 +3,7 @@ import App from './app'
 import router from '@router'
 import store from '@state/store'
 import '@components/_globals'
-
+import * as VueGoogleMaps from 'vue2-google-maps'
 import BootstrapVue from 'bootstrap-vue'
 import VueApexCharts from 'vue-apexcharts'
 import Vuelidate from 'vuelidate'
@@ -24,6 +24,13 @@ Vue.use(VueSweetalert2);
 Vue.use(VueRouter)
 Vue.use(vco)
 Vue.use(Toasted)
+Vue.use(VueGoogleMaps, {
+  // AIzaSyDKS80QRLObhMDL9XblnGyblRgjAp8sasE
+  load: {
+    key: 'AIzaSyAMRA7ZCZ9hUFFrd6jX2fDfNfIdcY5wMKw',
+    libraries: 'places',
+  },
+})
 // Don't warn about using the dev version of Vue in development.
 Vue.config.productionTip = process.env.NODE_ENV === 'production'
 
