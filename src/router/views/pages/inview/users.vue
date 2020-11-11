@@ -53,6 +53,34 @@ export default {
           key: 'userName',
           label: 'userName',
         },
+         {
+          key: 'firstName',
+          label: 'firstName',
+        },
+         {
+          key: 'email',
+          label: 'email',
+        },
+        {
+          key: 'phone',
+          label: 'userName',
+        },
+         {
+          key: 'addressLine1',
+          label: 'addressLine1',
+        },
+         {
+          key: 'city',
+          label: 'city',
+        },
+         {
+          key: 'state',
+          label: 'state',
+        },
+         {
+          key: 'country',
+          label: 'country',
+        },
           {
           key: 'createdDate',
           label: 'createdDate',

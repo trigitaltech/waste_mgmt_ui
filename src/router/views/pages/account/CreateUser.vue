@@ -156,34 +156,34 @@ export default {
       try {
         const payload = {
        
-    userName: this.form.userName,
-          password: this.form.password,
-          passwordStatus: '1',
-          email:this.form.email,
-          phone:this.form.number,
- 
-    state:this.form.state,
-   country: this.form.country,
-    isDeleted: 1,
-    id_PROOF_DOC_URL:this.file,
-    service_OFFICE: this.servieoffice,
-    personal_ID_NO:this.personalidno,
-    role:this.rolename,
-    city: this.form.city,
-    area: this.form.area,
-    first_Name: this.form.firstName,
-    pin: this.form.postCode,
-    modified_by: this.modifyby,
-    middle_Name: this.form.middleName,
-    status: 200,
-    salutation: this.form.personalTitle,
-    last_Name: this.form.lastName,
-    address_Line1: this.form.address,
-    address_Line2: this.form.address2,
-    created_Date: this.createddate,
-    modified_Date: this.modifydate,
-    created_by: this.createdby
-
+                userName: this.form.userName,
+                password: this.form.password,
+                passwordStatus: 1,
+                email: this.form.email,
+                phone: this.form.number,
+                salutation:this.form.personalTitle,
+                firstName: this.form.firstName,
+                middleName: this.form.middleName,
+                lastName: this.form.lastName,
+                addressLine1: this.form.address,
+                addressLine2: this.form.address2,
+                area: this.form.area,
+                city: this.form.city,
+                state: this.form.state,
+                country: this.form.country,
+                pin: this.form.postCode,
+                personalIdNo: this.form.personalidno,
+                idProofDocURL: this.file,
+                type: null,
+                role: this.rolename,
+                isDeleted: false,
+                status: 200,
+                createdDate: this.createddate,
+                modifiedDate: this.modifydate,
+                createdBy: this.createdby,
+                modifiedBy: this.modifyby,
+                service_Office: this.servieoffice
+            
         }
         let result = await createuser(payload)
         if (result) {
@@ -528,12 +528,12 @@ export default {
                            <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">City</label>
-                                <multiselect
-                                  v-model.trim="form.city"
-                                  placeholder="Select City"
-                                  :options="cityOpt"
-                                
-                                ></multiselect>
+                                  <input
+                                v-model.trim="form.city"
+                                placeholder="Enter City"
+                                class="form-control"
+                                type="text"
+                              />
                               </div>
                             </div>
                             <div class="col-md-4">
