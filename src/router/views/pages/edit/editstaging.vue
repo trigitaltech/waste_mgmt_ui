@@ -8,11 +8,11 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import {createequipment,Areamasters,employees}from '../../../../services/auth'
-
+import {editstaging,users}from '../../../../services/auth'
+import csc from "country-state-city";
 export default {
   page: {
-    title: 'Create Equipment',
+    title: 'Create Staging',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -25,38 +25,41 @@ export default {
   },
   data() {
     return {
-     equipmentno:"",
-     equipmenttype:"",
-     ownername:"",
-     equipmentid:"",
-     ownerid:"",
-     description:"",
-     servingarea:"",
-     manufacturedate:"",
-     totalkmsserved:"",
-     totalhoursserved:"",
+      address:this.$route.params.address,
+      areaname:this.$route.params.stagingAreaName,
+      description:this.$route.params.description,
+      supervisor:this.$route.params.supervisor,
+      city:this.$route.params.city,
+      state:this.$route.params.state,
+      country:this.$route.params.country,
+      zip:this.$route.params.zip,
+      geoLat:this.$route.params.geoLat,
+      geoLong:this.$route.params.geoLong,
+      area:this.$route.params.area,
+      workinghours:this.$route.params.working_hrs,
+      message:this.$route.params.holiday_message,
+      stagingtype:this.$route.params.staging_type,
       createdby: "",
       createddate: new Date(),
       modifydate: new Date(),
       modifyby:"",
        option: [
-        { value: null, text: 'Please select an option' },
+       
         { value: 'Areastaging', text: 'Area Staging' },
         { value: 'Centralstaging', text: 'Central Staging' },
       ],
       item:[ ],
       items: [
         {
-          text: 'Home',
+          text: 'Setup',
           href: '/',
         },
         {
-          text: 'Equipment / Create Equipment',
+          text: 'Staging Area / Edit Staging',
           active: true,
         },
       ],
-   owners:[],
-   emp:[],
+   
     
     }
   },
@@ -66,54 +69,38 @@ export default {
     },
   },
   mounted() {
-      this.createdby = this.getUserDetails.user.username
+       this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     // this.getClientDetails()
     // this.getplans()
-    this.areadata()
-    this.employeedata()
+    console.log(this.$route.params)
+    this.userdata()
   },
   methods: {
-       getid(){
-        console.log("haiiiiii",)
-        this.emp.map(e=>{
-            if(this.ownername === e.userName){
-                this.ownerid = e.id    
-                       }
-        })
-      },
-     async areadata() {
+     async setPlace(p) {
+      let place = await p;
+      let position = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng()
+      };
+      this.position = position;
+      this.geoLat = this.position.lat
+      this.geoLong = this.position.lng
+      
+    },
+     async userdata() {
        try {
       
-      const result = await Areamasters()
-      var data = result.data.response.areaMaster
-    //   console.log("users",data[0].userName)
+      const result = await users()
+      var data = result.data.response.Users
+      console.log("users",data[0].userName)
       // JSON.parse(JSON.stringify(result))
       // for(i=0;i<data.length;i++){
       //   this.item[i]=data[i].userName
       // }
 
       data.map(e=>{
-      this.item.push(e.areaName)
-      console.log("user",e)
-      })
-       console.log("users",this.item)
-     
-      } catch (error) {}
-     },
-      async employeedata() {
-       try {
-      
-      const result = await employees()
-      this.emp = result.data.response.result
-    //   console.log("users",data[0].userName)
-      // JSON.parse(JSON.stringify(result))
-      // for(i=0;i<data.length;i++){
-      //   this.item[i]=data[i].userName
-      // }
-
-      this.emp.map(e=>{
-      this.owners.push(e.userName)
+      this.item.push(e.userName)
       console.log("user",e)
       })
        console.log("users",this.item)
@@ -123,34 +110,37 @@ export default {
     async create() {
       try {
         const payload = {
-            equipmentType:this.equipmenttype,
-            equipmentNo:this.equipmentno,
-            ownerName: String(this.ownername),
-            ownerId:this.ownerid,
-            equipmentId:this.equipmentid,
-            servingArea:this.servingarea,
-            manufactureDate: this.manufacturedate,
-            warrantyStatus: "NOT EXPIRED",
-            totalKmServed: this.totalkmsserved,
-            totalHourServed: this.totalhoursserved,
-            description:this.description,
-            isDeleted: false,
-            status: 22,
-            createdDate: this.createddate,
-            createdBy: this.createdby,
-            modifiedDate: this.modifydate,
-            modifiedBy: this.modifyby
-        }
-        let result = await createequipment(payload)
+                id:this.$route.params.id,
+                stagingAreaName:this.areaname,
+                supervisor: this.supervisor,
+                working_hrs: this.workinghours,
+                geoLat: this.geoLat,
+                geoLong: this.geoLong,
+                isDeleted: true,
+                status: 300,
+                createdDate: this.createddate,
+                createdBy: this.createdby,
+                modifiedDate: this.modifydate,
+                modifiedBy: this.modifyby,
+                address: this.address,
+                state:this.state,
+                country: this.country,
+                description: this.description,
+                holiday_message:this.message,
+                zip: this.zip,
+                city: this.city,
+                area: this.area
+            }
+        let result = await editstaging(payload)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You Created Equipment Successfully`,
+            text: `You Edited Staging Successfully`,
             duration: 5000,
           })
          
-           this.$router.push({path:'/Equipment'})
+           this.$router.push({path:'/Setup/StagingArea'})
             
         }
       } catch (e) {
@@ -175,7 +165,7 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="Create Equipment"
+        header="Edit Stagingarea"
         header-bg-variant="info"
         border-variant="info"
         header-text-variant="white"
@@ -195,26 +185,26 @@ export default {
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
                     >
-                     Equipment No</label
+                     Staging Area Name</label
                     >
                     <input
                       type="text"
                       id="defaultFormCardNameEx"
                       class="form-control"
-                      v-model="equipmentno"
+                      v-model="areaname"
                     />
 
                    <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Equipment Type</label
+                      >Staging Type</label
                     >
-                    <input
-                      type="text"
-                      id="defaultFormCardNameEx"
+                    <b-form-select
+                      v-model="stagingtype"
+                      :options="option"
                       class="form-control"
-                      v-model="equipmenttype"
-                    />
+                      id="defaultFormCardEmailEx"
+                    ></b-form-select>
 
                     <br />
 
@@ -224,27 +214,26 @@ export default {
                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
-                      >Owner Name</label
-                    >
-                     <b-form-select
-                  v-model.trim="ownername"
-                  placeholder="Select Supervisor"
-                  label="value"
-                @change="getid()"
-                  :options="owners"
-                ></b-form-select>
-
-                    <!-- Default input name -->
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Equipment Id</label
+                      >Address</label
                     >
                     <input
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
-                      v-model="equipmentid"
+                      v-model="address"
+                    />
+
+                    <!-- Default input name -->
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >State</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="state"
                     />
                   </b-col>
                   <br />
@@ -256,24 +245,23 @@ export default {
                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
-                      >Serving Area</label
+                      >Supervisor</label
                     >
                     <b-form-select
-                  v-model.trim="servingarea"
-                  placeholder="Select Supervisor"
-                  label="value"
+                  v-model.trim="supervisor"
+                
                   :options="item"
                 ></b-form-select>
                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
-                      >Manufacture Date</label
+                      >Working Hours</label
                     >
                     <input
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
-                      v-model="manufacturedate"
+                      v-model="workinghours"
                     />
                   </b-col>
                
@@ -282,31 +270,39 @@ export default {
                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
-                      >Total Kms Served</label
+                      >City</label
                     >
                     <input
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
-                      v-model="totalkmsserved"
+                      v-model="city"
                     />
 
                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
-                      >Total Hours Served</label
+                      >Country</label
                     >
                     <input
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
-                      v-model="totalhoursserved"
+                      v-model="country"
                     />
                   </b-col>
                   
                 </b-row>
                 <b-row>
-                     <b-col>
+                  <b-col md="3">
+                     <p class="head">Location</p>
+                        <GmapAutocomplete
+                          @place_changed="setPlace"
+                          :placeholder="'Select Target Location'"
+                          class="form-control"
+                        ></GmapAutocomplete>
+                      </b-col>
+                   <b-col>
                     <!-- Default input email -->
                     <label
                       for="defaultFormCardEmailEx"
@@ -320,7 +316,83 @@ export default {
                       v-model="description"
                     />
 
-                     </b-col>
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Holiday Message</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="message"
+                    />
+                  </b-col>
+                   <!-- <b-col> -->
+                    <!-- Default input email -->
+                    <!-- <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Created Date</label
+                    >
+                    <input
+                    disabled
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="createddate"
+                    />
+
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Modify Date</label
+                    >
+                    <input
+                    disabled
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="modifydate"
+                    />
+                  </b-col> -->
+                </b-row>
+                <b-row>
+                   
+                  
+                  
+                </b-row>
+                <b-row>
+                <b-col>
+                    <!-- Default input email -->
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Zip</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="zip"
+                    />
+
+                  
+                  </b-col>
+                  <b-col>
+                      <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Area</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="area"
+                    />
+                  </b-col>
+                  
                 </b-row>
                 <br />
                 <b-button

@@ -42,9 +42,9 @@ export default {
 
       try {
        const payload = {
-         password:this.password,
-    mobile:this.username
-       }
+password: this.password,
+mobile:this.username
+}
         this.logIn({payload})
           .then((token) => {
             this.tryingToLogIn = false

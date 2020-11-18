@@ -128,8 +128,8 @@ export default {
   mounted() {
     // this.getClientDetails()
     // this.getplans()
-     this.createdby = this.getUserDetails.userName
-    this.modifyby = this.getUserDetails.userName
+     this.createdby = this.getUserDetails.user.username
+    this.modifyby = this.getUserDetails.user.username
     this.roledata()
   },
   methods: {

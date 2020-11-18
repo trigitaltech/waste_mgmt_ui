@@ -8,13 +8,11 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import {
- createrole
-} from '../../../../services/auth'
-
+import { Editpermission } from '../../../../services/auth'
+import moment from 'moment'
 export default {
   page: {
-    title: 'Create Role',
+    title: 'Edit Permission',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -25,40 +23,15 @@ export default {
     ValidationObserver,
     ModelSelect,
   },
+   props: {
+    itemObj: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
-      plandata: '',
-      striped: false,
-      bordered: true,
-      filter: '',
-      perPage: 10,
-      hover: true,
-      currentPage: 1,
-      small: false,
-      dark: false,
-      fixed: false,
-      amount: '',
-      submitted: false,
-      title: 'Register',
-    
-      items: [
-        {
-          text: 'Setup',
-          href: '/',
-        },
-        {
-          text: 'Roles / Create Role',
-          active: true,
-        },
-      ],
-        option: [
-        { value: null, text: 'Please select an option' },
-        { value: 'POST', text: 'POST' },
-        { value: 'GET', text: 'GET' },
-        { value: 'PUT', text: 'PUT' },
-        { value: 'DELETE', text: 'DELETE' },
-      ],
-        name: '',
+      name: '',
       Operation: null,
       createdby: "",
       createddate: new Date(),
@@ -66,8 +39,24 @@ export default {
       title: 'Register',
       modifydate: new Date(),
       modifyby:"",
+      items: [
+        {
+          text: 'Setup',
+          href: '/',
+        },
+        {
+          text: 'Permissions / EditPermission',
+          active: true,
+        },
+      ],
+      option: [
+        { value: null, text: 'Please select an option' },
+        { value: 'POST', text: 'POST' },
+        { value: 'GET', text: 'GET' },
+        { value: 'PUT', text: 'PUT' },
+        { value: 'DELETE', text: 'DELETE' },
+      ],
     }
-
   },
   computed: {
     getUserDetails() {
@@ -75,10 +64,12 @@ export default {
     },
   },
   mounted() {
+    console.log(this.getUserDetails.userName)
+    this.createdby = this.getUserDetails.userName
+    this.modifyby = this.getUserDetails.userName
     // this.getClientDetails()
     // this.getplans()
-      this.createdby = this.getUserDetails.user.username
-    this.modifyby = this.getUserDetails.user.username
+    console.log(this.$route.params)
   },
   methods: {
     async create() {
@@ -87,29 +78,33 @@ export default {
           name: this.name,
           status: 200,
           isDeleted: false,
+          url: this.url,
+          operation: this.Operation,
           createdDate: this.createddate,
           createdBy: this.createdby,
           modifiedDate: this.modifydate,
           modifiedBy: this.modifyby,
-}
-        let result = await createrole(payload)
+        }
+        let result = await createpermission(payload)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `Your Created Role Successfully`,
+            text: `You Created permission Successfully`,
             duration: 5000,
           })
-        
-           this.$router.push({path:'/Setup/Roles'})
+
+          this.$router.push({ path: '/Setup/Permissions' })
         }
       } catch (e) {
-         this.$toasted.error(e.message.error, {
+        this.$toasted.error(e.message.errors[0].developerMessage, {
           duration: 7000,
         })
       }
     },
- 
+    getFormattedDate() {
+      return moment(new Date()).format('DD MMMM YYYY')
+    },
     async refresh() {
       setTimeout(function () {
         location.reload()
@@ -125,7 +120,7 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="Create Role"
+        header="Edit Permission"
         header-bg-variant="info"
         border-variant="info"
         header-text-variant="white"
@@ -141,15 +136,12 @@ export default {
                 <b-row>
                   <b-col>
                     <!-- Default input name -->
-                   <input
-                      type="text"
-                      disabled
-                      id="defaultFormCardNameEx"
-                      class="form-control"
-                      placeholder="Role Name"
-                    />
-                  </b-col>
-                  <b-col style="margin-left:50px">
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                    >
+                      name</label
+                    >
                     <input
                       type="text"
                       id="defaultFormCardNameEx"
@@ -157,20 +149,76 @@ export default {
                       v-model="name"
                     />
 
+                 
+
+                    <!-- Default input email -->
                   </b-col>
                   <b-col>
-                     <b-button
+                       <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                    >
+                      Url</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="url"
+                    />
+
+                    <br />
+                  </b-col>
+                    <!-- <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >Created Date</label
+                    >
+                    <input
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="createddate"
+                    /> -->
+
+                    <!-- Default input name -->
+                    <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >Operation</label
+                    >
+                    <b-form-select
+                      v-model="Operation"
+                      :options="option"
+                      class="form-control"
+                      id="defaultFormCardEmailEx"
+                    ></b-form-select>
+                  </b-col>
+                 
+
+                  <!-- Default input name -->
+                  <!-- <label for="defaultFormCardNameEx" class="grey-text font-weight-dark">Address</label>
+            <input type="text" id="defaultFormCardNameEx" class="form-control">
+
+            <br> -->
+
+                  <!-- Default input email -->
+                  <!-- <label for="defaultFormCardEmailEx" class="grey-text font-weight-dark">State</label>
+            <input type="email" id="defaultFormCardEmailEx" class="form-control">
+
+           
+                </b-col> -->
+                </b-row>
+               
+                <b-button
                   style="
                     background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
                   class="btn btn-info float-right mr-2"
                   text="Create Tenant"
                   @click="create"
-                  >Save</b-button
+                  >Create</b-button
                 >
-                  </b-col>
-                </b-row>
-                <br />
-               
               </form>
               <!-- Default form subscription -->
             </div>
@@ -187,7 +235,7 @@ export default {
 .card-header {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
+  background-image: linear-gradient(109.6deg, rgba(48, 207, 208, 1) 11.2%,  rgba(51, 8, 103, 1) 92.5%);
   border-bottom: 0 solid rgba(0, 0, 0, 0.125);
 }
 </style>

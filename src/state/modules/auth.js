@@ -38,9 +38,10 @@ export const actions = {
     // if (getters.loggedIn) return dispatch('validate')
     
     return authAPI(payload).then((response) => {
-      const user = response.data.response.user;
+      const user = response.data.response;
+      // debugger
       // localStorage.setItem("eb:user", JSON.stringify(user));
-      setAuthorizationHeader(user.base64EncodedAuthenticationKey);
+      setAuthorizationHeader(user.authToken);
       commit('SET_CURRENT_USER', user)
       return user
     })
@@ -81,7 +82,8 @@ export const actions = {
     const cachedUser = localStorage.getItem('auth.currentUser');
     if (cachedUser) {
       const user = JSON.parse(cachedUser); 
-      setAuthorizationHeader(user.base64EncodedAuthenticationKey);
+      // debugger
+      setAuthorizationHeader(user.authToken);
       commit('SET_CURRENT_USER', user)
       return user
     } else {

@@ -8,11 +8,11 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import { createpermission } from '../../../../services/auth'
+import { Editpermission } from '../../../../services/auth'
 import moment from 'moment'
 export default {
   page: {
-    title: 'Create Permission',
+    title: 'Edit Permission',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -23,15 +23,21 @@ export default {
     ValidationObserver,
     ModelSelect,
   },
+   props: {
+    itemObj: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
-      name: '',
-      Operation: null,
-      createdby: "",
-      createddate: new Date(),
-      url: '',
+      name:this.$route.params.name,
+      operation: this.$route.params.operation,
+      createdby: this.$route.params.createdBy,
+      createddate: this.$route.params.createdDate,
+      url:this.$route.params.url,
       title: 'Register',
-      modifydate: new Date(),
+      modifydate:new Date(),
       modifyby:"",
       items: [
         {
@@ -39,7 +45,7 @@ export default {
           href: '/',
         },
         {
-          text: 'permissions / Create Permission',
+          text: 'Permissions / EditPermission',
           active: true,
         },
       ],
@@ -58,39 +64,43 @@ export default {
     },
   },
   mounted() {
-    console.log(this.getUserDetails.userName)
-     this.createdby = this.getUserDetails.user.username
+    console.log(this.getUserDetails.user.username)
+    // this.createdby = this.getUserDetails.userName
     this.modifyby = this.getUserDetails.user.username
     // this.getClientDetails()
     // this.getplans()
+    console.log(this.$route.params)
   },
   methods: {
     async create() {
       try {
         const payload = {
-          name: this.name,
-          status: 200,
-          isDeleted: false,
-          url: this.url,
-          operation: this.Operation,
-          createdDate: this.createddate,
-          createdBy: this.createdby,
-          modifiedDate: this.modifydate,
-          modifiedBy: this.modifyby,
+              
+            id:this.$route.params.id,
+            name: this.name,
+            status: 200,
+            isDeleted:false,
+            url:this.url,
+            operation: this.operation,
+            createdDate: this.createddate,
+            createdBy: this.createdby,
+            modifiedDate: this.modifydate,
+            modifiedBy: this.modifyby
+
         }
-        let result = await createpermission(payload)
+        let result = await Editpermission(payload)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You Created permission Successfully`,
+            text: `You Edited permission Successfully`,
             duration: 5000,
           })
 
           this.$router.push({ path: '/Setup/Permissions' })
         }
       } catch (e) {
-        this.$toasted.error(e.message.errors[0].developerMessage, {
+        this.$toasted.error('something went wrong', {
           duration: 7000,
         })
       }
@@ -113,7 +123,7 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="Create Permission"
+        header="Edit Permission"
         header-bg-variant="info"
         border-variant="info"
         header-text-variant="white"
@@ -182,7 +192,7 @@ export default {
                       >Operation</label
                     >
                     <b-form-select
-                      v-model="Operation"
+                      v-model="operation"
                       :options="option"
                       class="form-control"
                       id="defaultFormCardEmailEx"

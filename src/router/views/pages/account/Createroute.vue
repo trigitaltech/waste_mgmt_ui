@@ -67,8 +67,8 @@ export default {
     },
   },
   mounted() {
-      this.createdby = this.getUserDetails.userName
-    this.modifyby = this.getUserDetails.userName
+       this.createdby = this.getUserDetails.user.username
+    this.modifyby = this.getUserDetails.user.username
     // this.getClientDetails()
     // this.getplans()
     this.userdata()

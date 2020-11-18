@@ -4,7 +4,7 @@ import {
     api
 } from "./index.js"
 
-export const authAPI = (payload) => serviceMaker(`/auth/signin`, methods.POST, api.NGB,payload)
+export const authAPI = (payload) => serviceMaker(`/auth/login`, methods.POST, api.NGB,payload)
 
 export const dumpinglocation = () => serviceMaker(`/dumpinglocation/all`, methods.GET, api.NGB)
 
@@ -68,7 +68,13 @@ export const createvehicle = (payload) => serviceMaker(`/vehicles/admin/encoders
 
 export const createequipment = (payload) => serviceMaker(`/equipment/admin/encoders/`, methods.POST, api.NGB, payload)
 
-export const editcustomer = (payload,id) => serviceMaker (`/clients/${id}`, methods.PUT, api.NGB, payload)
+export const Editpermission = (payload) => serviceMaker (`/permissions/admin`, methods.PUT, api.NGB, payload)
+
+export const Edituser = (payload) => serviceMaker (`/areamaster/admin`, methods.PUT, api.NGB, payload)
+
+export const editroute = (payload) => serviceMaker (`/routemaster/admin`, methods.PUT, api.NGB, payload)  
+
+export const editstaging = (payload) => serviceMaker (`/stagingarea/admin`, methods.PUT, api.NGB, payload)
 
 export const plandetails = () => serviceMaker(`/chargecode/template`, methods.GET, api.NGB)
 

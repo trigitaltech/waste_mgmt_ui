@@ -43,7 +43,8 @@ export let headers = {
 }
 
 export const setAuthorizationHeader = (token) => {
-  headers.Authorization = `Basic ${token}`
+  // debugger
+  headers.Authorization = `Bearer ${token}`
 }
 export const removeHeader = (key) => {
   delete headers[key];
