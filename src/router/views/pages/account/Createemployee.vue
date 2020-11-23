@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- createemployee
+ createemployee,Areamasters
 } from '../../../../services/auth'
 
 export default {
@@ -74,14 +74,19 @@ export default {
         },
       ],
       finalModel: {},
+      employeetype:"",
       selected: null,
       clientId: '',
       options: ['DAF'],
-      item: {
-        value: '',
-        text: '',
-      },
+      item:[ { value: 'INTERNAL', text: 'INTERNAL' },
+        { value: 'DRIVER', text: 'DRIVER' },
+          { value: 'CONTRACTOR', text: 'CONTRACTOR' },
+          { value: 'HELPER', text: 'HELPER' },
+          { value: 'OPERATOR', text: 'OPERATOR' },
+          { value: 'PALERO', text: 'PALERO' }],
       file:"",
+      item2:[],
+      sid:"",
      form: {
         personalTitle: '',
         firstName: '',
@@ -103,7 +108,9 @@ export default {
         amount: 0,
         voucherNo: '',
       },
+      areas:[],
       titles: ['Mr.', 'Sri.', 'Mrs'],
+      item1:[],
       vouchernumber: '',
       genderOpt: ['Male', 'Female', 'Other'],
       cityOpt: [],
@@ -125,11 +132,38 @@ export default {
   },
   mounted() {
     // this.getClientDetails()
-    // this.getplans()
+    this.getplans()
       this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
   },
   methods: {
+    getid(){
+        // console.log("haiiiiii",this.item2)
+        this.areas.map(e=>{
+            if(this.serviceoffice === e.areaName){
+                this.sid = e.id    
+                       }
+                        //  console.log("haiiiiii",this.sid)
+        })
+      },
+     async getplans() {
+       try {
+        const result = await Areamasters()
+      this.areas = result.data.response.areaMaster
+    //   console.log("users",data[0].userName)
+      // JSON.parse(JSON.stringify(result))
+      // for(i=0;i<data.length;i++){
+      //   this.item[i]=data[i].userName
+      // }
+
+      this.areas.map(e=>{
+      this.item2.push(e.areaName)
+      console.log("user",e)
+      })
+       console.log("users",this.item)
+     
+      } catch (error) {}
+     },
       readAgreement(e) {
     const reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
@@ -167,7 +201,8 @@ export default {
                 modifiedBy: this.modifyby,
                 personal_ID_NO: this.personalidno,
                 id_PROOF_DOC_URL:this.file,
-                service_OFFICE: this.serviceoffice
+                service_OFFICE: this.sid,
+                type:this.employeetype
             }
         let result = await createemployee(payload)
         if (result) {
@@ -514,9 +549,9 @@ export default {
                                 <label for="default">City</label>
                                <input
                                 v-model.trim="form.city"
-                                placeholder="Enter Poster Code"
+                                placeholder="Enter city"
                                 class="form-control"
-                                type="number"
+                                type="text"
                               />
                               </div>
                             </div>
@@ -549,31 +584,29 @@ export default {
                            
                         
                               <div class="form-group mt-3 mt-sm-0">
-                                   <label for="default">ID Proof</label>
+                                   <label for="default">Employee Type</label>
                                  
-                                <b-form-file
-                                @change="readAgreement"
-                                :state="Boolean(file)"
-                                placeholder="Choose a file..."
-                                drop-placeholder="Drop file here..."
-                                ></b-form-file>
+                                           <b-form-select
+                                           v-model.trim="employeetype"
+                                            
+                                           :options="item"
+                                              
+                                           ></b-form-select>
                                     </div>
                            
                            
                             </div>
                             <div class="col-md-4">
-                            
-                           
-                        
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Service office</label>
                                  
-                              <input
-                                v-model.trim="serviceoffice"
-                                placeholder="Enter Service office"
-                                class="form-control"
-                                type="number"
-                              />
+                           
+                               <b-form-select
+                                           v-model.trim="serviceoffice"
+                                            @change="getid()"
+                                           :options="item2"
+                                              
+                                ></b-form-select>
                                     </div>
                            
                            
@@ -595,10 +628,23 @@ export default {
                            
                            
                             </div>
-                            
+                             <div class="col-md-4">
+                              <div class="form-group mt-3 mt-sm-0">
+                                   <label for="default">ID Proof</label>
+                                 
+                                <b-form-file
+                                @change="readAgreement"
+                                :state="Boolean(file)"
+                                placeholder="Choose a file..."
+                                drop-placeholder="Drop file here..."
+                                ></b-form-file>
+                                    </div>
+                            </div>
                             
                           </div>
+                          
                         </fieldset>
+                        
                       </div>
 
                     <!-- <div class="col-md-12">

@@ -56,7 +56,7 @@ export default {
           href: '/',
         },
         {
-          text: 'Areamaster / Edit AreaMaster',
+          text: 'Areas / Edit Areas',
           active: true,
         },
       ],
@@ -155,7 +155,7 @@ this.userdata()
 
     <div class="animated fadeIn">
       <b-card
-        header="Edit Areamaster"
+        header="Edit Areas"
         header-bg-variant="info"
         border-variant="info"
         header-text-variant="white"
@@ -402,7 +402,7 @@ this.userdata()
                   class="btn btn-info float-right mr-2"
                   text="Create Tenant"
                   @click="create"
-                  >Create</b-button
+                  >Edit</b-button
                 >
               </form>
               <!-- Default form subscription -->

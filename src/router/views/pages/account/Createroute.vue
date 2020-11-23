@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- createroute,users
+ createroute,users,Areamasters
 } from '../../../../services/auth'
 
 export default {
@@ -40,6 +40,7 @@ export default {
       modifydate: new Date(),
       modifyby:"",
       title: 'Register',
+      areas:[],
       option: [
         { value: null, text: 'Please select an option' },
         { value: 'mainroad', text: 'Mainroad' },
@@ -47,6 +48,7 @@ export default {
           { value: 'internalroad', text: 'Internalroad' },
       ],
       item:[ { value: null, text: 'Please select an user' }],
+      item2:[],
       items: [
         {
           text: 'Setup',
@@ -70,10 +72,37 @@ export default {
        this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     // this.getClientDetails()
-    // this.getplans()
+    this.getplans()
     this.userdata()
   },
   methods: {
+     getid(){
+        // console.log("haiiiiii",this.item2)
+        this.areas.map(e=>{
+            if(this.areaname === e.areaName){
+                this.areaid = e.id    
+                       }
+                        //  console.log("haiiiiii",this.sid)
+        })
+      },
+     async getplans() {
+       try {
+        const result = await Areamasters()
+      this.areas = result.data.response.areaMaster
+    //   console.log("users",data[0].userName)
+      // JSON.parse(JSON.stringify(result))
+      // for(i=0;i<data.length;i++){
+      //   this.item[i]=data[i].userName
+      // }
+
+      this.areas.map(e=>{
+      this.item2.push(e.areaName)
+      console.log("user",e)
+      })
+       console.log("users",this.item)
+     
+      } catch (error) {}
+     },
      async userdata() {
        try {
       
@@ -204,26 +233,7 @@ export default {
                 </b-row>
                  <br/>
                   <b-row>
-                  <b-col>
-                    <!-- Default input name -->
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                    >
-                     Area ID</label
-                    >
-                    <input
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
-                      v-model="areaid"
-                    />
-
-                
-
-                  
-                    <!-- Default input email -->
-                  </b-col>
+                 
                   
                   <b-col>
                      <label
@@ -232,12 +242,13 @@ export default {
                     >
                      Area Name</label
                     >
-                    <input
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                      <b-form-select
                       v-model="areaname"
-                    />
+                      :options="item2"
+                      class="form-control"
+                      id="defaultFormCardEmailEx"
+                       @change="getid()"
+                    ></b-form-select>
                     <!-- Default input name -->
                   
                   </b-col>

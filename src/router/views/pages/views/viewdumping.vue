@@ -8,11 +8,13 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import {editstaging,users}from '../../../../services/auth'
-import csc from "country-state-city";
+import {
+ editdumping,users
+} from '../../../../services/auth'
+
 export default {
   page: {
-    title: 'Create Staging',
+    title: 'Create Dumping',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -26,36 +28,38 @@ export default {
   data() {
     return {
       address:this.$route.params.address,
-      areaname:this.$route.params.stagingAreaName,
+      dumpname:this.$route.params.dumpingAreaName,
+      dumptype:this.$route.params.dumpingType,
       description:this.$route.params.description,
       supervisor:this.$route.params.supervisor,
       city:this.$route.params.city,
       state:this.$route.params.state,
       country:this.$route.params.country,
       zip:this.$route.params.zip,
-      geoLat:this.$route.params.geoLat,
+       geoLat:this.$route.params.geoLat,
       geoLong:this.$route.params.geoLong,
       area:this.$route.params.area,
       workinghours:this.$route.params.working_hrs,
       message:this.$route.params.holiday_message,
-      stagingtype:this.$route.params.staging_type,
-      createdby: "",
-      createddate: new Date(),
+      stagingtype:null,
+      createdby:this.$route.params.createdBy,
+      createddate:this.$route.params.createdDate,
       modifydate: new Date(),
       modifyby:"",
        option: [
-       
-        { value: 'Areastaging', text: 'Area Staging' },
-        { value: 'Centralstaging', text: 'Central Staging' },
+      
+        { value: 'solidwaste', text: 'Solidwaste' },
+        { value: 'organicewaste', text: 'Organicwaste' },
       ],
-      item:[ ],
+      title: 'Register',
+     item:[],
       items: [
         {
           text: 'Setup',
           href: '/',
         },
         {
-          text: 'Staging Area / Edit Staging',
+          text: 'Dumping Location / View Dumping',
           active: true,
         },
       ],
@@ -69,25 +73,14 @@ export default {
     },
   },
   mounted() {
-       this.createdby = this.getUserDetails.user.username
-    this.modifyby = this.getUserDetails.user.username
+    console.log(this.$route.params)
     // this.getClientDetails()
     // this.getplans()
-    console.log(this.$route.params)
+       this.createdby = this.getUserDetails.user.username
+    this.modifyby = this.getUserDetails.user.username
     this.userdata()
   },
   methods: {
-     async setPlace(p) {
-      let place = await p;
-      let position = {
-        lat: place.geometry.location.lat(),
-        lng: place.geometry.location.lng()
-      };
-      this.position = position;
-      this.geoLat = this.position.lat
-      this.geoLong = this.position.lng
-      
-    },
      async userdata() {
        try {
       
@@ -110,37 +103,38 @@ export default {
     async create() {
       try {
         const payload = {
-                id:this.$route.params.id,
-                stagingAreaName:this.areaname,
-                supervisor: this.supervisor,
-                working_hrs: this.workinghours,
+           id: this.$route.params.id,
+            dumpingAreaName: this.dumpname,
+            dumpingType: this.dumptype,
+             supervisor: this.supervisor,
+                working_hrs:this.workinghours,
                 geoLat: this.geoLat,
                 geoLong: this.geoLong,
-                isDeleted: true,
-                status: 300,
-                createdDate: this.createddate,
-                createdBy: this.createdby,
-                modifiedDate: this.modifydate,
-                modifiedBy: this.modifyby,
+            "isDeleted": true,
+            "status": 404,
+             createdDate: this.createddate,
+          createdBy: this.createdby,
+          modifiedDate: this.modifydate,
+          modifiedBy: this.modifyby,
                 address: this.address,
-                state:this.state,
+                state: this.state,
                 country: this.country,
                 description: this.description,
-                holiday_message:this.message,
+                holiday_message: this.message,
                 zip: this.zip,
                 city: this.city,
                 area: this.area
-            }
-        let result = await editstaging(payload)
+        }
+        let result = await editdumping(payload)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You Edited Staging Successfully`,
+            text: `You Created Dumping Successfully`,
             duration: 5000,
           })
          
-           this.$router.push({path:'/Setup/StagingArea'})
+           this.$router.push({path:'/Setup/DumpingLocation'})
             
         }
       } catch (e) {
@@ -148,6 +142,17 @@ export default {
           duration: 7000,
         })
       }
+    },
+    async setPlace(p) {
+      let place = await p;
+      let position = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng()
+      };
+      this.position = position;
+      this.geoLat = this.position.lat
+      this.geoLong = this.position.lng
+      
     },
  
     async refresh() {
@@ -165,7 +170,7 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="Edit Stagingarea"
+        header="View Dumping"
         header-bg-variant="info"
         border-variant="info"
         header-text-variant="white"
@@ -185,26 +190,28 @@ export default {
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
                     >
-                     Staging Area Name</label
+                     Dumping Area Name</label
                     >
                     <input
+                    disabled
                       type="text"
                       id="defaultFormCardNameEx"
                       class="form-control"
-                      v-model="areaname"
+                      v-model="dumpname"
                     />
 
                    <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Staging Type</label
+                      >Dumping Type</label
                     >
-                    <b-form-select
-                      v-model="stagingtype"
-                      :options="option"
-                      class="form-control"
+                  <input
+                    disabled
+                      type="email"
                       id="defaultFormCardEmailEx"
-                    ></b-form-select>
+                      class="form-control"
+                      v-model="dumptype"
+                    />
 
                     <br />
 
@@ -217,6 +224,7 @@ export default {
                       >Address</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -230,13 +238,19 @@ export default {
                       >State</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
                       v-model="state"
                     />
                   </b-col>
+              
                   <br />
+                
+                
+                  
+               
                 </b-row>
                   <b-row>
                     
@@ -247,17 +261,21 @@ export default {
                       class="grey-text font-weight-dark"
                       >Supervisor</label
                     >
-                    <b-form-select
-                  v-model.trim="supervisor"
-                
-                  :options="item"
-                ></b-form-select>
+                 <input
+                    disabled
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="supervisor"
+                    />
+
                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
                       >Working Hours</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -273,6 +291,7 @@ export default {
                       >City</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -285,6 +304,7 @@ export default {
                       >Country</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -294,15 +314,18 @@ export default {
                   
                 </b-row>
                 <b-row>
-                  <b-col md="3">
+                    
+                     <!-- <b-col md="3">
                      <p class="head">Location</p>
                         <GmapAutocomplete
                           @place_changed="setPlace"
                           :placeholder="'Select Target Location'"
                           class="form-control"
                         ></GmapAutocomplete>
-                      </b-col>
-                   <b-col>
+                      </b-col> -->
+                  
+                  
+<b-col>
                     <!-- Default input email -->
                     <label
                       for="defaultFormCardEmailEx"
@@ -310,6 +333,7 @@ export default {
                       >Description</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -322,46 +346,15 @@ export default {
                       >Holiday Message</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
                       v-model="message"
                     />
                   </b-col>
-                   <!-- <b-col> -->
-                    <!-- Default input email -->
-                    <!-- <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Created Date</label
-                    >
-                    <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
-                      v-model="createddate"
-                    />
-
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Modify Date</label
-                    >
-                    <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
-                      v-model="modifydate"
-                    />
-                  </b-col> -->
                 </b-row>
-                <b-row>
-                   
-                  
-                  
-                </b-row>
+               
                 <b-row>
                 <b-col>
                     <!-- Default input email -->
@@ -371,6 +364,7 @@ export default {
                       >Zip</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -379,30 +373,31 @@ export default {
 
                   
                   </b-col>
-                  <b-col>
-                      <label
+                   <b-col>
+                    <!-- Default input email -->
+                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
                       >Area</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
                       v-model="area"
                     />
                   </b-col>
-                  
                 </b-row>
                 <br />
-                <b-button
+                <!-- <b-button
                   style="
                     background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
                   class="btn btn-info float-right mr-2"
                   text="Create Tenant"
                   @click="create"
-                  >Edit</b-button
-                >
+                  >Edit</b-button -->
+                <!-- > -->
               </form>
               <!-- Default form subscription -->
             </div>

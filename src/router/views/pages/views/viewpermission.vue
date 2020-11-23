@@ -12,7 +12,7 @@ import { Editpermission } from '../../../../services/auth'
 import moment from 'moment'
 export default {
   page: {
-    title: 'Edit Permission',
+    title: 'View Permission',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -45,7 +45,7 @@ export default {
           href: '/',
         },
         {
-          text: 'Permissions / EditPermission',
+          text: 'Permissions / ViewPermission',
           active: true,
         },
       ],
@@ -123,7 +123,7 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="Edit Permission"
+        header="View Permission"
         header-bg-variant="info"
         border-variant="info"
         header-text-variant="white"
@@ -146,6 +146,7 @@ export default {
                       name</label
                     >
                     <input
+                    disabled
                       type="text"
                       id="defaultFormCardNameEx"
                       class="form-control"
@@ -164,6 +165,7 @@ export default {
                       Url</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -191,12 +193,13 @@ export default {
                       class="grey-text font-weight-dark"
                       >Operation</label
                     >
-                    <b-form-select
-                      v-model="operation"
-                      :options="option"
-                      class="form-control"
+                     <input
+                    disabled
+                      type="email"
                       id="defaultFormCardEmailEx"
-                    ></b-form-select>
+                      class="form-control"
+                      v-model="operation"
+                    />
                   </b-col>
                  
 
@@ -214,14 +217,14 @@ export default {
                 </b-col> -->
                 </b-row>
                
-                <b-button
+                <!-- <b-button
                   style="
                     background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
                   class="btn btn-info float-right mr-2"
                   text="Create Tenant"
                   @click="create"
-                  >Edit</b-button
-                >
+                  >Create</b-button
+                > -->
               </form>
               <!-- Default form subscription -->
             </div>

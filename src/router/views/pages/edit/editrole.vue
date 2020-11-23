@@ -217,7 +217,7 @@ export default {
                   class="btn btn-info float-right mr-2"
                   text="Create Tenant"
                   @click="create"
-                  >Create</b-button
+                  >Edit</b-button
                 >
               </form>
               <!-- Default form subscription -->

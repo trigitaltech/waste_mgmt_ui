@@ -55,7 +55,7 @@ export default {
           href: '/',
         },
         {
-          text: 'Staging Area / Edit Staging',
+          text: 'Staging Area / View Staging',
           active: true,
         },
       ],
@@ -74,7 +74,7 @@ export default {
     // this.getClientDetails()
     // this.getplans()
     console.log(this.$route.params)
-    this.userdata()
+    // this.userdata()
   },
   methods: {
      async setPlace(p) {
@@ -165,7 +165,7 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="Edit Stagingarea"
+        header="View Stagingarea"
         header-bg-variant="info"
         border-variant="info"
         header-text-variant="white"
@@ -188,6 +188,7 @@ export default {
                      Staging Area Name</label
                     >
                     <input
+                    disabled
                       type="text"
                       id="defaultFormCardNameEx"
                       class="form-control"
@@ -199,12 +200,19 @@ export default {
                       class="grey-text font-weight-dark"
                       >Staging Type</label
                     >
-                    <b-form-select
+                     <input
+                    disabled
+                      type="text"
+                      id="defaultFormCardNameEx"
+                      class="form-control"
+                      v-model="stagingtype"
+                    />
+                    <!-- <b-form-select
                       v-model="stagingtype"
                       :options="option"
                       class="form-control"
                       id="defaultFormCardEmailEx"
-                    ></b-form-select>
+                    ></b-form-select> -->
 
                     <br />
 
@@ -217,6 +225,7 @@ export default {
                       >Address</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -230,6 +239,7 @@ export default {
                       >State</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -247,17 +257,22 @@ export default {
                       class="grey-text font-weight-dark"
                       >Supervisor</label
                     >
-                    <b-form-select
-                  v-model.trim="supervisor"
-                
-                  :options="item"
-                ></b-form-select>
+                    <input
+                    disabled
+                      type="email"
+                      id="defaultFormCardEmailEx"
+                      class="form-control"
+                      v-model="supervisor"
+                    />
+
+
                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
                       >Working Hours</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -273,6 +288,7 @@ export default {
                       >City</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -285,6 +301,7 @@ export default {
                       >Country</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -294,14 +311,14 @@ export default {
                   
                 </b-row>
                 <b-row>
-                  <b-col md="3">
+                  <!-- <b-col md="3">
                      <p class="head">Location</p>
                         <GmapAutocomplete
                           @place_changed="setPlace"
                           :placeholder="'Select Target Location'"
                           class="form-control"
                         ></GmapAutocomplete>
-                      </b-col>
+                      </b-col> -->
                    <b-col>
                     <!-- Default input email -->
                     <label
@@ -310,6 +327,7 @@ export default {
                       >Description</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -322,6 +340,7 @@ export default {
                       >Holiday Message</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -371,6 +390,7 @@ export default {
                       >Zip</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -386,6 +406,7 @@ export default {
                       >Area</label
                     >
                     <input
+                    disabled
                       type="email"
                       id="defaultFormCardEmailEx"
                       class="form-control"
@@ -395,14 +416,14 @@ export default {
                   
                 </b-row>
                 <br />
-                <b-button
+                <!-- <b-button
                   style="
                     background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
                   class="btn btn-info float-right mr-2"
                   text="Create Tenant"
                   @click="create"
                   >Edit</b-button
-                >
+                > -->
               </form>
               <!-- Default form subscription -->
             </div>

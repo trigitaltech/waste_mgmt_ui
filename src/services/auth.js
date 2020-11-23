@@ -76,6 +76,8 @@ export const editroute = (payload) => serviceMaker (`/routemaster/admin`, method
 
 export const editstaging = (payload) => serviceMaker (`/stagingarea/admin`, methods.PUT, api.NGB, payload)
 
+export const editdumping = (payload) => serviceMaker (`/dumpinglocation/admin`, methods.PUT, api.NGB, payload)
+
 export const plandetails = () => serviceMaker(`/chargecode/template`, methods.GET, api.NGB)
 
 export const employees = () => serviceMaker(`/employees/admin/readAll`, methods.GET, api.NGB)

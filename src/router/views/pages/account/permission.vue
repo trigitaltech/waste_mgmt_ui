@@ -186,9 +186,12 @@ export default {
             ref="roles"
           >
              <template v-slot:cell(actions)="data">
-              <b-button size="sm" class="mr-2" variant="primary" @click="viewReq(data)">
-              <i class="fa fa-eye"></i>
-            </b-button>
+                <router-link :to="{ name: 'Viewpermission', params: data.item }">
+                <b-button size="sm" class="mr-2" variant="primary">
+                 <i class="fa fa-eye"></i>
+                </b-button>
+              </router-link>
+             
             <router-link :to="{ name: 'Editpermission', params: data.item }">
                 <b-button size="sm" class="mr-2" variant="primary">
                   <i class="fas fa-pencil-alt edit"></i>

@@ -39,12 +39,14 @@ export default {
       createddate: new Date(),
       modifydate: new Date(),
       modifyby:"",
+      item:[],
        option: [
         { value: null, text: 'Please select an option' },
         { value: 'Areastaging', text: 'Area Staging' },
         { value: 'Centralstaging', text: 'Central Staging' },
       ],
-      item:[ ],
+      item1:[{ value: 'Truck', text: 'Truck' },
+        { value: 'Machine', text: 'Machine' }],
       items: [
         {
           text: 'Home',
@@ -79,7 +81,7 @@ export default {
         this.emp.map(e=>{
             if(this.ownername === e.userName){
                 this.ownerid = e.id    
-                       }
+                  }
         })
       },
      async areadata() {
@@ -209,12 +211,13 @@ export default {
                       class="grey-text font-weight-dark"
                       >Equipment Type</label
                     >
-                    <input
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
-                      v-model="equipmenttype"
-                    />
+                    <b-form-select
+                      v-model.trim="equipmenttype"
+                      placeholder="Select Equipment"
+                      label="value"
+                  
+                      :options="item1"
+                ></b-form-select>
 
                     <br />
 

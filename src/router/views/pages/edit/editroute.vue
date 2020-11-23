@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- editroute,users
+ editroute,users,Areamasters
 } from '../../../../services/auth'
 
 export default {
@@ -57,7 +57,8 @@ export default {
           active: true,
         },
       ],
-   
+   areas:[],
+   item2:[],
     
     }
   },
@@ -73,8 +74,36 @@ export default {
     // this.getplans()
     console.log(this.$route.params)
     this.userdata()
+     this.getplans()
   },
   methods: {
+    async getplans() {
+       try {
+        const result = await Areamasters()
+      this.areas = result.data.response.areaMaster
+    //   console.log("users",data[0].userName)
+      // JSON.parse(JSON.stringify(result))
+      // for(i=0;i<data.length;i++){
+      //   this.item[i]=data[i].userName
+      // }
+
+      this.areas.map(e=>{
+      this.item2.push(e.areaName)
+      console.log("user",e)
+      })
+       console.log("users",this.item)
+     
+      } catch (error) {}
+     },
+     getid(){
+        // console.log("haiiiiii",this.item2)
+        this.areas.map(e=>{
+            if(this.areaname === e.areaName){
+                this.areaid = e.id    
+                       }
+                        //  console.log("haiiiiii",this.sid)
+        })
+      },
      async userdata() {
        try {
       
@@ -146,7 +175,7 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="Edit Routemaster"
+        header="Edit Route"
         header-bg-variant="info"
         border-variant="info"
         header-text-variant="white"
@@ -190,7 +219,8 @@ export default {
                     <b-form-select
                       v-model="routetype"
                       :options="option"
-                    
+                      class="form-control"
+                      id="defaultFormCardEmailEx"
                     ></b-form-select>
 
                     <!-- Default input name -->
@@ -205,26 +235,7 @@ export default {
                 </b-row>
                  <br/>
                   <b-row>
-                  <b-col>
-                    <!-- Default input name -->
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                    >
-                     Area ID</label
-                    >
-                    <input
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
-                      v-model="areaid"
-                    />
-
-                
-
-                  
-                    <!-- Default input email -->
-                  </b-col>
+                 
                   
                   <b-col>
                      <label
@@ -233,12 +244,13 @@ export default {
                     >
                      Area Name</label
                     >
-                    <input
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                      <b-form-select
                       v-model="areaname"
-                    />
+                      :options="item2"
+                      class="form-control"
+                      id="defaultFormCardEmailEx"
+                       @change="getid()"
+                    ></b-form-select>
                     <!-- Default input name -->
                   
                   </b-col>
@@ -261,7 +273,8 @@ export default {
                     >
                    <b-form-select
                   v-model.trim="supervisor"
-                
+                  placeholder="Select Supervisor"
+                  label="value"
                   :options="item"
                   
                 ></b-form-select>
@@ -384,7 +397,7 @@ export default {
                   class="btn btn-info float-right mr-2"
                   text="Create Tenant"
                   @click="create"
-                  >Create</b-button
+                  >Edit</b-button
                 >
               </form>
               <!-- Default form subscription -->
