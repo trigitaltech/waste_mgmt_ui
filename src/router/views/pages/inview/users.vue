@@ -28,6 +28,8 @@ export default {
   },
   data() {
     return {
+        filter: '',
+      filterOn: [],
       plandata: '',
       striped: false,
       bordered: true,
@@ -63,7 +65,7 @@ export default {
         },
         {
           key: 'phone',
-          label: 'userName',
+          label: 'Phone',
         },
          {
           key: 'addressLine1',
@@ -169,7 +171,18 @@ export default {
         header-text-variant="white"
         class="mt-10 ml-10 mr-10 mx-auto"
       >
-        <b-col md="12">
+      <b-row>
+        <b-col md="6">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+        <b-col md="6">
           <b-button
             style="
               background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);margin-bottom:10px"
@@ -179,6 +192,7 @@ export default {
             >Create User</b-button
           >
         </b-col>
+      </b-row>
         <div class="mt-3">
           <b-table
             :dark="dark"
@@ -197,14 +211,21 @@ export default {
             :items="item"
             class="mt-3"
             ref="roles"
+             
+                :filter-included-fields="filterOn"
+                @filtered="onFiltered"
           >
               <template v-slot:cell(actions)="data">
-              <b-button size="sm" class="mr-2" variant="primary" @click="viewReq(data)">
-              <i class="fa fa-eye"></i>
-            </b-button>
-            <b-button size="sm" class="mr-2" variant="primary" @click="editReq(data)">
-              <i class="fas fa-pencil-alt edit"></i>
-            </b-button>
+             <router-link :to="{ name: 'Viewuser', params: data.item }">
+                <b-button size="sm" class="mr-2" variant="primary">
+                 <i class="fa fa-eye"></i>
+                </b-button>
+              </router-link>
+             <router-link :to="{ name: 'Edituser', params: data.item }">
+                <b-button size="sm" class="mr-2" variant="primary">
+                  <i class="fas fa-pencil-alt edit"></i>
+                </b-button>
+              </router-link>
             <b-button size="sm" class="mr-2" variant="danger" @click="deleteReq(data)">
               <i class="fa fa-trash bin"></i>
             </b-button>

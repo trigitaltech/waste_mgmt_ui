@@ -151,18 +151,18 @@ export default {
 
                  
 
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                   </b-col>
                   <b-col>
                        <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                     >
                       Url</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="url"
                     />
@@ -170,13 +170,13 @@ export default {
                     <br />
                   </b-col>
                     <!-- <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Created Date</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="createddate"
                     /> -->
@@ -192,7 +192,7 @@ export default {
                       v-model="Operation"
                       :options="option"
                       class="form-control"
-                      id="defaultFormCardEmailEx"
+                      id="defaultFormCardtextEx"
                     ></b-form-select>
                   </b-col>
                  
@@ -203,9 +203,9 @@ export default {
 
             <br> -->
 
-                  <!-- Default input email -->
-                  <!-- <label for="defaultFormCardEmailEx" class="grey-text font-weight-dark">State</label>
-            <input type="email" id="defaultFormCardEmailEx" class="form-control">
+                  <!-- Default input text -->
+                  <!-- <label for="defaultFormCardtextEx" class="grey-text font-weight-dark">State</label>
+            <input type="text" id="defaultFormCardtextEx" class="form-control">
 
            
                 </b-col> -->

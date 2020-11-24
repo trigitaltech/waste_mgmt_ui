@@ -135,7 +135,8 @@ export default {
             <!-- Card body -->
             <div class="card-body">
               <!-- Default form subscription -->
-              <form>
+              
+              <form @submit.prevent="create">
                 <b-row>
                   <b-col>
                     <!-- Default input name -->
@@ -146,40 +147,49 @@ export default {
                       name</label
                     >
                     <input
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
-                      v-model="name"
+                    for="name"
+                                type="text"
+                     v-model.trim="name"
+                                oninvalid="this.setCustomValidity('name is required ')"
+                                oninput="setCustomValidity('')"
+                                placeholder="Enter Name"
+                                class="form-control"
+                                required
+                     
                     />
 
                  
 
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                   </b-col>
                   <b-col>
                        <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                     >
                       Url</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
-                      v-model="url"
+                       for="name"
+                                type="text"
+                     v-model.trim="url"
+                                oninvalid="this.setCustomValidity('Url is required ')"
+                                oninput="setCustomValidity('')"
+                                placeholder="Enter Url"
+                                class="form-control"
+                                required
                     />
 
                     <br />
                   </b-col>
                     <!-- <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Created Date</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="createddate"
                     /> -->
@@ -195,7 +205,10 @@ export default {
                       v-model="operation"
                       :options="option"
                       class="form-control"
-                      id="defaultFormCardEmailEx"
+                      id="defaultFormCardtextEx"
+                       oninvalid="this.setCustomValidity('Operation is required ')"
+                                oninput="setCustomValidity('')"
+                                required
                     ></b-form-select>
                   </b-col>
                  
@@ -206,22 +219,22 @@ export default {
 
             <br> -->
 
-                  <!-- Default input email -->
-                  <!-- <label for="defaultFormCardEmailEx" class="grey-text font-weight-dark">State</label>
-            <input type="email" id="defaultFormCardEmailEx" class="form-control">
+                  <!-- Default input text -->
+                  <!-- <label for="defaultFormCardtextEx" class="grey-text font-weight-dark">State</label>
+            <input type="text" id="defaultFormCardtextEx" class="form-control">
 
            
                 </b-col> -->
                 </b-row>
                
-                <b-button
-                  style="
-                    background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-info float-right mr-2"
-                  text="Create Tenant"
-                  @click="create"
-                  >Edit</b-button
-                >
+                <button
+                         
+                          style="
+                            background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
+                          type="submit"
+                         class="btn btn-info float-right mr-2"
+                          >Submit</button
+                        >
               </form>
               <!-- Default form subscription -->
             </div>

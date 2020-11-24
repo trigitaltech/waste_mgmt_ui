@@ -187,7 +187,7 @@ export default {
             <!-- Card body -->
             <div class="card-body">
               <!-- Default form subscription -->
-              <form>
+             <form @submit.prevent="create">
                 <b-row>
                   <b-col>
                     <!-- Default input name -->
@@ -200,14 +200,20 @@ export default {
                     <input
                       type="text"
                       id="defaultFormCardNameEx"
-                      class="form-control"
+                     
                       v-model="routename"
+                         oninvalid="this.setCustomValidity('Route Name is required ')"
+                                oninput="setCustomValidity('')"
+                                placeholder="Select Routename"
+                                class="form-control"
+                                required
+                  
                     />
 
                 
 
                   
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                   </b-col>
                   
                   <b-col>
@@ -219,8 +225,12 @@ export default {
                     <b-form-select
                       v-model="routetype"
                       :options="option"
-                      class="form-control"
-                      id="defaultFormCardEmailEx"
+                        oninvalid="this.setCustomValidity('Route Type is required ')"
+                                oninput="setCustomValidity('')"
+                                placeholder="Select Route Type"
+                                class="form-control"
+                                required
+                
                     ></b-form-select>
 
                     <!-- Default input name -->
@@ -247,8 +257,12 @@ export default {
                       <b-form-select
                       v-model="areaname"
                       :options="item2"
-                      class="form-control"
-                      id="defaultFormCardEmailEx"
+                        oninvalid="this.setCustomValidity('Area Name is required ')"
+                                oninput="setCustomValidity('')"
+                                placeholder="Select Area Name"
+                                class="form-control"
+                                required
+              
                        @change="getid()"
                     ></b-form-select>
                     <!-- Default input name -->
@@ -265,9 +279,9 @@ export default {
                   <b-row>
                     
                       <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Supervisor</label
                     >
@@ -276,44 +290,55 @@ export default {
                   placeholder="Select Supervisor"
                   label="value"
                   :options="item"
-                  
+                     oninvalid="this.setCustomValidity('Supervisor is required ')"
+                                oninput="setCustomValidity('')"
+                             
+                                class="form-control"
+                                required
+              
                 ></b-form-select>
 
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Route Distance</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                      type="text"
+                      id="defaultFormCardtextEx"
+                   
                       v-model="routedistance"
+                         oninvalid="this.setCustomValidity('Route distance is required ')"
+                                oninput="setCustomValidity('')"
+                                placeholder="Select Route Distance"
+                                class="form-control"
+                                required
+              
                     />
                   </b-col>
                 <br/>
                  <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Description</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="description"
                     />
 
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >City</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="city"
                     />
@@ -329,29 +354,29 @@ export default {
                   
                   
                    <!-- <b-col> -->
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <!-- <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Created Date</label
                     >
                     <input
                     disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="createddate"
                     />
  <br/>
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Modify Date</label
                     >
                     <input
                     disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="modifydate"
                     />
@@ -360,29 +385,29 @@ export default {
                   <!-- <br/>
 
                    <b-col> -->
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <!-- <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Created By</label
                     >
                     <input
                     disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="createdby"
                     />
  <br/>
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Modify By</label
                     >
                     <input
                     disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="modifyby"
                     />
@@ -391,14 +416,14 @@ export default {
               
               
                 <br />
-                <b-button
-                  style="
-                    background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-info float-right mr-2"
-                  text="Create Tenant"
-                  @click="create"
-                  >Edit</b-button
-                >
+                <button
+                         
+                          style="
+                            background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
+                          type="submit"
+                         class="btn btn-info float-right mr-2"
+                          >Submit</button
+                        >
               </form>
               <!-- Default form subscription -->
             </div>

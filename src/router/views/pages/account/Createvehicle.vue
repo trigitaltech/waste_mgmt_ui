@@ -242,11 +242,11 @@ export default {
 
                     <br />
 
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                   </b-col>
                   <b-col>
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Owner Name</label
                     >
@@ -260,13 +260,13 @@ export default {
 
                     <!-- Default input name -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Plate NO</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="plateno"
                     />
@@ -276,9 +276,9 @@ export default {
                   <b-row>
                     
                       <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Serving Area</label
                     >
@@ -289,7 +289,7 @@ export default {
                   :options="item"
                 ></b-form-select>
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Serving Route</label
                     >
@@ -302,27 +302,27 @@ export default {
                   </b-col>
                
                  <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Total Kms Served</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="totalkmsserved"
                     />
 
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Total Hours Served</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="totalhoursserved"
                     />
@@ -331,28 +331,28 @@ export default {
                 </b-row>
                 <b-row>
                      <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Description</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="description"
                     />
                      </b-col>
                      <b-col>
                      <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Equipment Id</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="equipmentid"
                     />
@@ -362,15 +362,15 @@ export default {
                 <br />
                  <b-row>
                      <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >ManufactureDate</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="manufacturedate"
                     />

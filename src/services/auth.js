@@ -14,7 +14,7 @@ export const stagingarea = () => serviceMaker(`/stagingarea/all`, methods.GET, a
 
 export const permissions = () => serviceMaker(`/permissions/all`, methods.GET, api.NGB)
 
-export const roles = () => serviceMaker(`/roles/all`, methods.GET, api.NGB)
+export const roles = () => serviceMaker(`/roles/admin/all`, methods.GET, api.NGB)
 
 export const users = () => serviceMaker(`/users/admin/readAll`, methods.GET, api.NGB)
 
@@ -60,6 +60,8 @@ export const createarea = (payload) => serviceMaker(`/areamaster/admin`, methods
 
 export const createuser = (payload) => serviceMaker(`/users/admin/create`, methods.POST, api.NGB, payload)
 
+ export const createattendance = (payload) => serviceMaker(`/attendence/checker/admin/`, methods.POST, api.NGB, payload)
+
 export const createrole = (payload) => serviceMaker(`/roles/admin`, methods.POST, api.NGB, payload)
 
 export const createemployee = (payload) => serviceMaker(`/employees/admin/create`, methods.POST, api.NGB, payload)
@@ -70,13 +72,19 @@ export const createequipment = (payload) => serviceMaker(`/equipment/admin/encod
 
 export const Editpermission = (payload) => serviceMaker (`/permissions/admin`, methods.PUT, api.NGB, payload)
 
-export const Edituser = (payload) => serviceMaker (`/areamaster/admin`, methods.PUT, api.NGB, payload)
+export const Edituser = (payload,id) => serviceMaker (`/users/admin/edit/${id}`, methods.PUT, api.NGB, payload)
+
+export const Editemployee = (payload,id) => serviceMaker (`/employees/admin/edit/${id}`, methods.PUT, api.NGB, payload)
 
 export const editroute = (payload) => serviceMaker (`/routemaster/admin`, methods.PUT, api.NGB, payload)  
+
+export const Editequipment = (payload) => serviceMaker (`/equipment/admin/encoders/owner`, methods.PUT, api.NGB, payload)
 
 export const editstaging = (payload) => serviceMaker (`/stagingarea/admin`, methods.PUT, api.NGB, payload)
 
 export const editdumping = (payload) => serviceMaker (`/dumpinglocation/admin`, methods.PUT, api.NGB, payload)
+
+export const editvehicle = (payload) => serviceMaker (`/vehicles/admin/encoders/owner`, methods.PUT, api.NGB, payload)
 
 export const plandetails = () => serviceMaker(`/chargecode/template`, methods.GET, api.NGB)
 

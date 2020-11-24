@@ -180,7 +180,7 @@ export default {
             <!-- Card body -->
             <div class="card-body">
               <!-- Default form subscription -->
-              <form>
+              <form @submit.prevent="create">
                 <b-row>
                   <b-col>
                     <!-- Default input name -->
@@ -192,9 +192,13 @@ export default {
                     >
                     <input
                       type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                    
                       v-model="dumpname"
+                       oninvalid="this.setCustomValidity('Dumping Area Name is required ')"
+                                oninput="setCustomValidity('')"
+                               placeholder="Enter Dumping area name"
+                                class="form-control"
+                                required
                     />
 
                    <label
@@ -205,38 +209,47 @@ export default {
                     <b-form-select
                       v-model="dumptype"
                       :options="option"
-                      class="form-control"
-                      id="defaultFormCardEmailEx"
+                      oninvalid="this.setCustomValidity('Dumping Type is required ')"
+                                oninput="setCustomValidity('')"
+                               
+                                class="form-control"
+                                required
                     ></b-form-select>
 
                     <br />
 
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                   </b-col>
                   <b-col>
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Address</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="address"
+                       oninvalid="this.setCustomValidity('Address is required ')"
+                                oninput="setCustomValidity('')"
+                               
+                              placeholder="Enter Address"
+                                required
                     />
 
                     <!-- Default input name -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >State</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="state"
+                      placeholder="Enter state"
                     />
                   </b-col>
               
@@ -249,9 +262,9 @@ export default {
                   <b-row>
                     
                       <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Supervisor</label
                     >
@@ -260,46 +273,57 @@ export default {
                   placeholder="Select Supervisor"
                   label="value"
                   :options="item"
-                  
+                   oninvalid="this.setCustomValidity('Supervisor is required ')"
+                                oninput="setCustomValidity('')"
+                               
+                                class="form-control"
+                                required
                 ></b-form-select>
 
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Working Hours</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="workinghours"
+                       oninvalid="this.setCustomValidity('Working Hours is required ')"
+                                oninput="setCustomValidity('')"
+                               placeholder="Enter working hours"
+                               
+                                required
                     />
                   </b-col>
                
                  <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >City</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="city"
+                      placeholder="Enter city"
                     />
 
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Country</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="country"
+                      placeholder="Enter country"
                     />
                   </b-col>
                   
@@ -317,28 +341,30 @@ export default {
                   
                   
 <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Description</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="description"
+                      placeholder="Enter description"
                     />
 
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Holiday Message</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
+                      placeholder="Enter holidaymessage"
                       v-model="message"
                     />
                   </b-col>
@@ -346,45 +372,47 @@ export default {
                
                 <b-row>
                 <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Zip</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="zip"
+                      placeholder="Enter zip"
                     />
 
                   
                   </b-col>
                    <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                      <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Area</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
+                      placeholder="Enter area"
                       v-model="area"
                     />
                   </b-col>
                 </b-row>
                 <br />
-                <b-button
-                  style="
-                    background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-info float-right mr-2"
-                  text="Create Tenant"
-                  @click="create"
-                  >Create</b-button
-                >
+               <button
+                         
+                          style="
+                            background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
+                          type="submit"
+                         class="btn btn-info float-right mr-2"
+                          >Submit</button
+                        >
               </form>
               <!-- Default form subscription -->
             </div>

@@ -560,23 +560,7 @@ export default {
                                 />
                               </div>
                             </div>
-                               <div class="col-md-4">
-                            
-                           
-                        
-                              <div class="form-group mt-3 mt-sm-0">
-                                   <label for="default">ID Proof</label>
-                                 
-                                <b-form-file
-                                @change="readAgreement"
-                                :state="Boolean(file)"
-                                placeholder="Choose a file..."
-                                drop-placeholder="Drop file here..."
-                                ></b-form-file>
-                                    </div>
-                           
-                           
-                            </div>
+                              
                             <div class="col-md-4">
                             
                            
@@ -590,6 +574,23 @@ export default {
                                 class="form-control"
                                 type="number"
                               />
+                                    </div>
+                           
+                           
+                            </div>
+                             <div class="col-md-4">
+                            
+                           
+                        
+                              <div class="form-group mt-3 mt-sm-0">
+                                   <label for="default">ID Proof</label>
+                                 
+                                <b-form-file
+                                @change="readAgreement"
+                                :state="Boolean(file)"
+                                placeholder="Choose a file..."
+                                drop-placeholder="Drop file here..."
+                                ></b-form-file>
                                     </div>
                            
                            

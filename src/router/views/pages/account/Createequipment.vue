@@ -221,11 +221,11 @@ export default {
 
                     <br />
 
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                   </b-col>
                   <b-col>
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Owner Name</label
                     >
@@ -239,13 +239,13 @@ export default {
 
                     <!-- Default input name -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Equipment Id</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="equipmentid"
                     />
@@ -255,9 +255,9 @@ export default {
                   <b-row>
                     
                       <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Serving Area</label
                     >
@@ -268,40 +268,40 @@ export default {
                   :options="item"
                 ></b-form-select>
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Manufacture Date</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="manufacturedate"
                     />
                   </b-col>
                
                  <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Total Kms Served</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="totalkmsserved"
                     />
 
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Total Hours Served</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="totalhoursserved"
                     />
@@ -310,15 +310,15 @@ export default {
                 </b-row>
                 <b-row>
                      <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Description</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="description"
                     />

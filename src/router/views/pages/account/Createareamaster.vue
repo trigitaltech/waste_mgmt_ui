@@ -56,7 +56,7 @@ export default {
           href: '/',
         },
         {
-          text: 'Areamaster / Create AreaMaster',
+          text: 'Areamaster / Create Area',
           active: true,
         },
       ],
@@ -151,7 +151,7 @@ this.userdata()
 
     <div class="animated fadeIn">
       <b-card
-        header="Create Areamaster"
+        header="Create Area"
         header-bg-variant="info"
         border-variant="info"
         header-text-variant="white"
@@ -163,7 +163,7 @@ this.userdata()
             <!-- Card body -->
             <div class="card-body">
               <!-- Default form subscription -->
-              <form>
+             <form @submit.prevent="create">
                 <b-row>
                   <b-col>
                     <!-- Default input name -->
@@ -175,15 +175,19 @@ this.userdata()
                     >
                     <input
                       type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                    
                       v-model="areaname"
+                       oninvalid="this.setCustomValidity('Area Name is required ')"
+                                oninput="setCustomValidity('')"
+                                placeholder="Enter Area Name"
+                                class="form-control"
+                                required
                     />
 
                 
 
                   
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                   </b-col>
                   
                   <b-col>
@@ -195,8 +199,11 @@ this.userdata()
                     <b-form-select
                       v-model="areatype"
                       :options="option"
-                      class="form-control"
-                      id="defaultFormCardEmailEx"
+                      oninvalid="this.setCustomValidity('Area Type is required ')"
+                                oninput="setCustomValidity('')"
+                                placeholder="Select Area Type"
+                                class="form-control"
+                                required
                     ></b-form-select>
 
                     <!-- Default input name -->
@@ -213,60 +220,72 @@ this.userdata()
                   <b-row>
                     
                       <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Supervisor</label
                     >
 
                    <b-form-select
                   v-model.trim="supervisor"
-                  placeholder="Select Supervisor"
-                  label="value"
+                 oninvalid="this.setCustomValidity('Supervisor is required ')"
+                                oninput="setCustomValidity('')"
+                                placeholder="Select Supervisor"
+                                class="form-control"
+                                required
                   :options="item"
                   
                 ></b-form-select>
              
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Area SqKm</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                      type="text"
+                    
                       v-model="areasqkm"
+                       oninvalid="this.setCustomValidity('Area Sqkm is required ')"
+                                oninput="setCustomValidity('')"
+                                placeholder="Enter Area Sqkm"
+                                class="form-control"
+                                required
                     />
                   </b-col>
 
                 <br/>
                 
                  <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Description</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                      type="text"
+                     
                       v-model="description"
+                       oninvalid="this.setCustomValidity('Description is required ')"
+                                oninput="setCustomValidity('')"
+                                placeholder="Enter Description"
+                                class="form-control"
+                                required
                     />
 
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >City</label
                     >
                     <input
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="city"
+                         placeholder="Enter city"
                     />
                   </b-col>
                   
@@ -277,17 +296,18 @@ this.userdata()
                   
                   
                    <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >State</label
                     >
                     <input
                    
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
+                      placeholder="Enter state"
                       v-model="state"
                     />
  <br/>
@@ -297,33 +317,34 @@ this.userdata()
                   <br/>
 
                    <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                   
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Country</label
                     >
                     <input
+                    placeholder="Enter country"
                   
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="country"
                     />
                   </b-col>
                 
                      <b-col>
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Zip</label
                     >
                     <input
-                   
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                   placeholder="Enter Zip"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="zip"
                     />
@@ -335,29 +356,29 @@ this.userdata()
                   
                   
                    <!-- <b-col> -->
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <!-- <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Created Date</label
                     >
                     <input
                     disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="createddate"
                     />
  <br/>
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Modify Date</label
                     >
                     <input
                     disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="modifydate"
                     />
@@ -366,29 +387,29 @@ this.userdata()
                   <!-- <br/>
 
                    <b-col> -->
-                    <!-- Default input email -->
+                    <!-- Default input text -->
                     <!-- <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Created By</label
                     >
                     <input
                     disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="createdby"
                     />
  <br/>
                     <label
-                      for="defaultFormCardEmailEx"
+                      for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Modify By</label
                     >
                     <input
                     disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
+                      type="text"
+                      id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="modifyby"
                     />
@@ -397,14 +418,14 @@ this.userdata()
               
               
                 <br />
-                <b-button
-                  style="
-                    background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-info float-right mr-2"
-                  text="Create Tenant"
-                  @click="create"
-                  >Create</b-button
-                >
+               <button
+                         
+                          style="
+                            background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
+                          type="submit"
+                         class="btn btn-info float-right mr-2"
+                          >Submit</button
+                        >
               </form>
               <!-- Default form subscription -->
             </div>
