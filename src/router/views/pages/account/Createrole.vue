@@ -176,6 +176,7 @@ export default {
       try {
         const payload = {
           name: this.name,
+          code:this.name,
           status: 200,
           isDeleted: false,
           createdDate: this.createddate,
