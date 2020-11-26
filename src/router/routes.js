@@ -601,6 +601,24 @@ const pagesRoutes = [
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
+
+  {
+    path: '/Editrole',
+    name: 'Editrole',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/editrole')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+
+  {
+    path: '/Editattendance',
+    name: 'Editattendance',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/editattendance')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
   {
     path: '/Edituser',
     name: 'Edituser',

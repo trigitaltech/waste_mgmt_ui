@@ -12,7 +12,7 @@ export const Attendance = () => serviceMaker(`/attendence/employee/admin/`, meth
 
 export const stagingarea = () => serviceMaker(`/stagingarea/all`, methods.GET, api.NGB)
 
-export const permissions = () => serviceMaker(`/permissions/all`, methods.GET, api.NGB)
+export const permissions = () => serviceMaker(`/permissions/admin/all`, methods.GET, api.NGB)
 
 export const roles = () => serviceMaker(`/roles/admin/all`, methods.GET, api.NGB)
 
@@ -70,6 +70,11 @@ export const createvehicle = (payload) => serviceMaker(`/vehicles/admin/encoders
 
 export const createequipment = (payload) => serviceMaker(`/equipment/admin/encoders/`, methods.POST, api.NGB, payload)
 
+ 
+export const editrole = (payload) => serviceMaker(`/roles/admin`, methods.PUT, api.NGB, payload)
+
+export const editattendance = (payload) => serviceMaker(`/attendence/checker/admin/`, methods.PUT, api.NGB, payload)
+
 export const Editpermission = (payload) => serviceMaker (`/permissions/admin`, methods.PUT, api.NGB, payload)
 
 export const Edituser = (payload,id) => serviceMaker (`/users/admin/edit/${id}`, methods.PUT, api.NGB, payload)
@@ -102,6 +107,17 @@ export const addplan = (id,payload) => serviceMaker(`/multipleorders/${id}`, met
 
 
 export const Tripdownload = (id) => serviceMaker(`/tripincoming/system/${id}`, methods.GET, api.NGB)
+
+
+
+export const Tripoutgoing = (id) => serviceMaker(`/tripoutgoing/system/${id}`, methods.GET, api.NGB)
  
 
 export const searchvoucher = (id) => serviceMaker(`/vouchers/verify?pinNumber=${id}`, methods.GET, api.NGB)
+
+
+
+
+
+
+export const addpermissiontorole = (id,payload) => serviceMaker(`/roles/assigningpermissions/${id}`, methods.PUT, api.NGB,payload)

@@ -44,14 +44,14 @@ export default {
       item: {  },
 
       AttendanceColumns: [
-        {
-          key: 'id',
-
-          label: 'ID',
-        },
+       
         {
           key: 'employeeId',
-          label: 'Employee Id',
+          label: 'Emp Id',
+        },
+        {
+          key: 'task_ref_no',
+          label: 'Task RefNo',
         },
           {
           key: 'description',
@@ -70,14 +70,15 @@ export default {
           label: 'Time Out ',
         },
          {
-          key: 'createdDate',
-          label: 'Created Date',
-        },
-         {
-          key: 'createdDate',
-          label: 'Created Date',
+          key: 'recordDate',
+          label: 'Record Date',
         },
         
+         {
+          key: 'status',
+
+          label: 'Status',
+        },
 
 
         {
@@ -194,9 +195,11 @@ export default {
               <b-button size="sm" class="mr-2" variant="primary" @click="viewReq(data)">
               <i class="fa fa-eye"></i>
             </b-button>
-            <b-button size="sm" class="mr-2" variant="primary" @click="editReq(data)">
-              <i class="fas fa-pencil-alt edit"></i>
-            </b-button>
+            <router-link :to="{ name: 'Editattendance', params: data.item }">
+                <b-button size="sm" class="mr-2" variant="primary">
+                  <i class="fas fa-pencil-alt edit"></i>
+                </b-button>
+              </router-link>
             <b-button size="sm" class="mr-2" variant="danger" @click="deleteReq(data)">
               <i class="fa fa-trash bin"></i>
             </b-button>

@@ -28,18 +28,21 @@ export default {
   },
   data() {
     return {
+      taskref:"",
      emp:[],
      owners:[],
+     status:"",
      empname:"",
      empid:"",
-     recordDate: moment().format('YYYY-MM-DD'),
-      timein: moment().format('YYYY-MM-DD'),
-        timeout: moment().format('YYYY-MM-DD'),
+     description:this.$route.params.description,
+     recordDate:"",
+      timein:"",
+        timeout:"",
       createdby: "",
       createddate: new Date(),
       modifydate: new Date(),
       modifyby:"",
-      item:[ { value: null, text: 'Please select an user' }],
+      item:[ { value: 'checkin', text: 'Check IN' },],
       ite:[],
        option: [
         { value: null, text: 'Please select an option' },
@@ -53,7 +56,7 @@ export default {
           href: '/',
         },
         {
-          text: 'Areamaster / Create AreaMaster',
+          text: 'Attendance / Create Attendance',
           active: true,
         },
       ],
@@ -84,14 +87,14 @@ this.employeedata()
                 employeeId: this.empid,
                 time_in: this.timein,
                 time_out: this.timeout,
-                task_ref_no: 56431,
-                description: "user5",
+                task_ref_no: this.taskref,
+                description:this.description,
                 isDeleted: true,
-                status: 1,
-                createdDate: "2020-10-25T04:30:00.000+05:30",
-                createdBy: "user5",
-                modifiedDate: "2020-10-26T10:56:00.000+05:30",
-                modifiedBy: "Admin"
+                status: this.status,
+                createdDate: this.createddate,
+                createdBy: this.createdby,
+                modifiedDate: this.modifydate,
+                modifiedBy:this.modifyby
             
         
 
@@ -157,7 +160,7 @@ this.employeedata()
 
     <div class="animated fadeIn">
       <b-card
-        header="Create Areamaster"
+        header="Create Attendance"
         header-bg-variant="info"
         border-variant="info"
         header-text-variant="white"
@@ -187,10 +190,23 @@ this.employeedata()
                     ></flat-pickr>
 
                 
-
+  </b-col>
+                  
+                  <b-col>
+                     <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >Description</label
+                    >
+                   <input
+                      v-model="description"
+                      class="form-control"
+                      placeholder="Enter Description"
+                      name="startdate"
+                    />
                   
                     <!-- Default input text -->
-                  </b-col>
+                  <!-- </b-col>
                   
                   <b-col>
                      <label
@@ -203,7 +219,7 @@ this.employeedata()
                       class="form-control"
                       placeholder="SELECT TIME OUT"
                       name="startdate"
-                    ></flat-pickr>
+                    ></flat-pickr> -->
 
                     <!-- Default input name -->
                   
@@ -245,7 +261,7 @@ this.employeedata()
                     <input
                       type="text"
                     
-                      v-model="areasqkm"
+                      v-model="taskref"
                       
                                 placeholder="Enter Task ref no "
                                 class="form-control"
@@ -275,7 +291,7 @@ this.employeedata()
                       >Status</label
                     >
                     <b-form-select
-                  v-model.trim="employeename"
+                  v-model.trim="status"
                 
                                 placeholder="Select Employee"
                                 class="form-control"

@@ -3,13 +3,16 @@ import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
+import DualListBox from 'dual-listbox-vue'
+import 'dual-listbox-vue/dist/dual-listbox.css'
 import { ModelSelect } from 'vue-search-select'
+import addplan from '@components/addplan'
 import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- createrole
+ createrole, permissions,addpermissiontorole
 } from '../../../../services/auth'
 
 export default {
@@ -18,6 +21,8 @@ export default {
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
+      DualListBox,
+    addplan,
     Layout,
     PageHeader,
     Multiselect,
@@ -27,6 +32,16 @@ export default {
   },
   data() {
     return {
+        planList: [],
+      item:[],
+      payloadData: [],
+       source: [
+                
+               
+            ],
+            destination: [
+               
+            ],
       plandata: '',
       striped: false,
       bordered: true,
@@ -40,7 +55,7 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-    
+    rid:"",
       items: [
         {
           text: 'Setup',
@@ -79,8 +94,84 @@ export default {
     // this.getplans()
       this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
+    this.permission()
   },
   methods: {
+    onChangeList: function ({ source, destination }) {
+      this.source = source
+      this.destination = destination
+      console.log("destination",this.destination)
+      this.planList = this.destination.map(function (x) {
+        return {
+         id: x.id,
+        name: x.name,
+        isDeleted: x.isDeleted,
+        url: x.url,
+        status: x.status,
+        operation: x.operation,
+        }
+      })
+      // this.amount = 0;
+      // this.destination.map(e=>{
+      //   this.amount = this.amount + e.price
+      // });
+// console.log("amount:",amount)
+        console.log('plan', this.planList)
+    
+      this.payloadData = this.planList.map(function (e) {
+        return {
+           id: e.id,
+        name: e.name,
+        isDeleted: e.isDeleted,
+        url: e.url,
+        status: e.status,
+        operation: e.operation,
+        }
+      })
+        // console.log('destination', this.planList[0].label)
+    },
+    
+      async permission() {
+       try {
+      
+      const result = await permissions()
+      // this.item = result.data.response.PermissionMaster
+      this.source = result.data.response.PermissionMaster.map(function (x) {
+          return {
+            id: x.id,
+            label:x.name,
+           isDeleted: x.isDeleted,
+        url: x.url,
+        status: x.status,
+        operation: x.operation,
+          }
+        })
+     
+      } catch (error) {}
+     },
+       async add() {
+      // console.log('id', this.ids)
+      // if(this.form.firstName && this.form.lastName && this.form.number && this.form.address){
+      try {
+        const payload = this.payloadData 
+        console.log('form', payload)
+        const result = await addpermissiontorole(this.rid, payload)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `You Added Permission To Role successfully`,
+            duration: 5000,
+          })
+        }
+      } catch (e) {
+        this.$notify({
+          group: 'alert',
+          type: 'error',
+          text: `${e.message.error}`,
+          duration: 5000,
+        })
+      }},
     async create() {
       try {
         const payload = {
@@ -92,7 +183,11 @@ export default {
           modifiedDate: this.modifydate,
           modifiedBy: this.modifyby,
 }
-        let result = await createrole(payload)
+        const result = await createrole(payload)
+
+        this.rid = result.data.response.Roles.id
+        console.log(this.rid)
+      
         if (result) {
           this.$swal({
             group: 'alert',
@@ -101,7 +196,7 @@ export default {
             duration: 5000,
           })
         
-           this.$router.push({path:'/Setup/Roles'})
+         
         }
       } catch (e) {
          this.$toasted.error(e.message.error, {
@@ -168,6 +263,10 @@ export default {
                   >Save</b-button
                 >
                   </b-col>
+      
+                 
+    
+  
                 </b-row>
                 <br />
                
@@ -178,6 +277,51 @@ export default {
           </div>
           <!-- Card -->
         </div>
+        <b-row>
+
+          
+  <div>
+    <div class="animated fadeIn">
+      <b-row >
+      <b-col md="8">
+          <b-card
+            class="card-wrap"
+            header="Add Permission To Role"
+            border-variant="info"
+            header-text-variant="white"
+            style="width:1250px"
+          >
+           
+            <div>
+              <b-row style="margin-top:50px">
+               <DualListBox
+                  :source="source"
+                  :destination="destination"
+                  label="name"
+                  @onChangeList="onChangeList"
+                />
+              </b-row>
+            </div>
+            <div class="row mt-1 justify-content-center">
+            
+              <div class="col-md-11" style="margin-top:50px">
+           
+                  <button
+                    class="btn btn-primary d-inline-flex align-items-center"
+                    style="background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );"
+                    type="submit"
+                @click="add()"
+                  >Add Permission To Role</button>
+                </div>
+            </div>
+        
+          </b-card>
+      </b-col>
+      </b-row>
+    </div>
+  </div>
+
+        </b-row>
       </b-card>
     </div>
     <!-- end row -->
@@ -204,4 +348,29 @@ export default {
   box-shadow: 0 0 10px #ccc
   .role-details
     margin: 10px
+</style>
+<style>
+.list-box-wrapper .list-box-item .bulk-action .select-all {
+ background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
+}
+.btn-action {
+ background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
+}
+.list-box-wrapper .list-box-item .bulk-action .deselect-all {
+  background-color: #c7c7ca;
+  color: black;
+}
+.card-header {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+ background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
+}
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 10px;
+}
 </style>

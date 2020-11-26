@@ -1,39 +1,19 @@
 <template>
   <div>
     <div class="animated fadeIn">
-      <b-row>
-        <b-col md="8">
+      <b-row >
+      <b-col md="8">
           <b-card
             class="card-wrap"
-            header="Add Plan"
+            header="Add Permission To Role"
             border-variant="info"
             header-text-variant="white"
-            style="width:1300px"
+            style="width:1250px"
           >
-            <b-row style="margin-top:10px">
-              <b-col md="1">
-                <span>Plan List</span>
-              </b-col>
-              <b-col md="5">
-                <b-form-select
-                  id="type"
-                  v-model="plan"
-                  placeholder="Select plan"
-                  :options="list"
-                  @change="getplanlist()"
-                ></b-form-select>
-              </b-col>
-
-              <b-col md="1">
-                <span>Start Date</span>
-              </b-col>
-              <b-col md="5">
-                <b-input v-model="date"></b-input>
-              </b-col>
-            </b-row>
-            <div v-if=" plan !== 'select-one'">
+           
+            <div>
               <b-row style="margin-top:50px">
-                <DualListBox
+               <DualListBox
                   :source="source"
                   :destination="destination"
                   label="name"
@@ -42,37 +22,20 @@
               </b-row>
             </div>
             <div class="row mt-1 justify-content-center">
-              <div class="col-md-1" style="margin-top:50px">
-                <button
-                  style="background-color:#26a69a"
-                  class="btn btn-primary d-inline-flex align-items-center"
-                  @click="e => $emit('plan',e)"
-                >Back</button>
-              </div>
+            
               <div class="col-md-11" style="margin-top:50px">
-                <div class="d-flex justify-content-end">
-                  <div class="form-group mt-5 mt-sm-0">
-                    <label for="default">Amount</label>
-                    <input
-                      v-model.trim="amount"
-                      class="form-control"
-                      type="number"
-                      disabled
-                      placeholder="Amount"
-                    />
-                  </div>
-
+           
                   <button
                     class="btn btn-primary d-inline-flex align-items-center"
-                    style="background-color:#26a69a;margin-left:20px"
+                    style="background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );"
                     type="submit"
-                    @click="add"
-                  >Add Plan</button>
+                @click="add()"
+                  >Add Permission To Role</button>
                 </div>
-              </div>
             </div>
+        
           </b-card>
-        </b-col>
+      </b-col>
       </b-row>
     </div>
   </div>
@@ -81,6 +44,9 @@
 import Multiselect from 'vue-multiselect'
 import DualListBox from 'dual-listbox-vue'
 import 'dual-listbox-vue/dist/dual-listbox.css'
+import {
+ permissions,addpermissiontorole
+} from '../services/auth'
 import moment from 'moment'
 // import {
 //   ValidationProvider,
@@ -102,145 +68,162 @@ export default {
     DualListBox,
     moment,
   },
-  props: {
-    itemObj: {
-      type: Object,
-      required: true,
-    },
-  },
+  // props: {
+  //   itemObj: {
+  //     type: Object,
+  //     required: true,
+  //   },
+  // },
   data() {
     return {
       list: [{ value: null, text: 'Please select an option' }],
       contractPeriodid: [],
       plan: null,
-      date: this.getFormattedDate(),
-      cid: this.itemObj.clientId,
-      csid: this.itemObj.clientServiceId,
+      // date: this.getFormattedDate(),
+      // cid: this.itemObj.clientId,
+      // csid: this.itemObj.clientServiceId,
       planList: [],
+      item:[],
       payloadData: [],
-      source: [],
+       source: [
+                
+               
+            ],
+            destination: [
+               
+            ],
+      // source: [],
       amount:0,
-      destination: [],
+      // destination: [],
     }
   },
   async mounted() {
-    console.log('hai', this.contractPeriodid)
+      // this.$router.push({path:'/Setup/Roles'})
+    // console.log('hai', this.contractPeriodid)
 
-    this.getdetails()
-    this.getcatalog()
+    // this.getdetails()
+    // this.getcatalog()
     // this.getplanlist()
-    console.log('liiisi', this.itemObj)
+    // console.log('liiisi', this.itemObj)
+    this.permission()
   },
   methods: {
+     async permission() {
+       try {
+      
+      const result = await permissions()
+      // this.item = result.data.response.PermissionMaster
+      this.source = result.data.response.PermissionMaster.map(function (x) {
+          return {
+            id: x.id,
+            label:x.name,
+           isDeleted: x.isDeleted,
+        url: x.url,
+        status: x.status,
+        operation: x.operation,
+          }
+        })
+     
+      } catch (error) {}
+     },
+      // onChangeList: function ({ source, destination }) {
+      //       this.source = source;
+      //       this.destination = destination;
+      //   }
     onChangeList: function ({ source, destination }) {
       this.source = source
       this.destination = destination
       console.log("destination",this.destination)
       this.planList = this.destination.map(function (x) {
         return {
-          id: x.id,
-          label: x.label,
-          price: x.price,
-          chargecode: x.chargecode,
-          planPoId: x.planPoId,
-          dealPoId: x.dealPoId,
+         id: x.id,
+        name: x.name,
+        isDeleted: x.isDeleted,
+        url: x.url,
+        status: x.status,
+        operation: x.operation,
         }
       })
-      this.amount = 0;
-      this.destination.map(e=>{
-        this.amount = this.amount + e.price
-      });
+      // this.amount = 0;
+      // this.destination.map(e=>{
+      //   this.amount = this.amount + e.price
+      // });
 // console.log("amount:",amount)
-      //   console.log('plan', this.getplanlist())
-      var ccid = this.cid
-      var cssid = this.csid
-      var date = this.getFormattedDate()
-      var contractid = this.contractPeriodid
-      //   var planPoId =  "",
-      //   var dealPoId = "" ,
-      //   var paytermCode = "",
-      //   var contractPeriod = "",
+        console.log('plan', this.planList)
+    
       this.payloadData = this.planList.map(function (e) {
         return {
-          id: e.id,
-          planCode: e.id,
-          planDescription: e.label,
-          planPoId: e.planPoId,
-          dealPoId: e.dealPoId,
-          paytermCode: e.chargecode,
-          contractPeriod: contractid,
-          clientServiceId: cssid,
-          billAlign: true,
-          clientId: ccid,
-          locale: 'en',
-          dateFormat: 'dd MMMM yyyy',
-          start_date: date,
-          isNewplan: true,
+           id: e.id,
+        name: e.name,
+        isDeleted: e.isDeleted,
+        url: e.url,
+        status: e.status,
+        operation: e.operation,
         }
       })
-      //   console.log('destination', this.planList[0].label)
+        // console.log('destination', this.planList[0].label)
     },
-    async getdetails() {
-      const result = await plandetails()
-      this.clientTemplete = result.data
+    // async getdetails() {
+    //   const result = await plandetails()
+    //   this.clientTemplete = result.data
 
-      console.log('contract', this.clientTemplete)
-    },
-    async getcatalog() {
-      const result = await planlist()
-      var plan = result.data.allPlanDatas
-      console.log('plan', plan)
-      plan.map((e) => {
-        this.list.push(e.name)
-      })
-      console.log('plans', this.list)
-    },
-    async getplanlist() {
+    //   console.log('contract', this.clientTemplete)
+    // },
+    // async getcatalog() {
+    //   const result = await planlist()
+    //   var plan = result.data.allPlanDatas
+    //   console.log('plan', plan)
+    //   plan.map((e) => {
+    //     this.list.push(e.name)
+    //   })
+    //   console.log('plans', this.list)
+    // },
+    // async getplanlist() {
       //  debugger
-      console.log('plam', this.plan, this.plans)
-      if (this.plan !== '') {
-        const result1 = await planlist()
-        var lists = result1.data.allPlanDatas
+    //   console.log('plam', this.plan, this.plans)
+    //   if (this.plan !== '') {
+    //     const result1 = await planlist()
+    //     var lists = result1.data.allPlanDatas
 
-        console.log('lists', lists)
-        lists.map((e) => {
-          if (e.name === this.plan) {
-            this.id = e.id
-          }
-        })
-        const result = await plandata(
-          this.id,
-          this.itemObj.clientId,
-          this.itemObj.clientServiceId
-        )
+    //     console.log('lists', lists)
+    //     lists.map((e) => {
+    //       if (e.name === this.plan) {
+    //         this.id = e.id
+    //       }
+    //     })
+    //     const result = await plandata(
+    //       this.id,
+    //       this.itemObj.clientId,
+    //       this.itemObj.clientServiceId
+    //     )
 
-        this.contractPeriodid = result.data.subscriptiondata[0].id
-        console.log('contractid', this.contractPeriodid)
-        this.source = result.data.planData.map(function (x) {
-          return {
-            id: x.id,
-            label:
-              x.planDescription +
-              '            ' +
-              '           ' +
-              x.price +
-              '-Naira',
-            price: x.price,
-            chargecode: x.chargeCycle,
-            dealPoId: x.dealPoId,
-            planPoId: x.planPoId,
-          }
-        })
-      }
-      console.log('destination', this.source)
-    },
+    //     this.contractPeriodid = result.data.subscriptiondata[0].id
+    //     console.log('contractid', this.contractPeriodid)
+    //     this.source = result.data.planData.map(function (x) {
+    //       return {
+    //         id: x.id,
+    //         label:
+    //           x.planDescription +
+    //           '            ' +
+    //           '           ' +
+    //           x.price +
+    //           '-Naira',
+    //         price: x.price,
+    //         chargecode: x.chargeCycle,
+    //         dealPoId: x.dealPoId,
+    //         planPoId: x.planPoId,
+    //       }
+    //     })
+    //   }
+    //   console.log('destination', this.source)
+    // },
     async add() {
-      console.log('id', this.ids)
+      // console.log('id', this.ids)
       // if(this.form.firstName && this.form.lastName && this.form.number && this.form.address){
       try {
-        const payload = { plans: this.payloadData }
+        const payload = this.payloadData 
         console.log('form', payload)
-        const result = await addplan(this.cid, payload)
+        const result = await addpermissiontorole(this.cid, payload)
         if (result) {
           this.$swal({
             group: 'alert',
@@ -253,11 +236,11 @@ export default {
         this.$notify({
           group: 'alert',
           type: 'error',
-          text: `${e.message.errors[0].developerMessage}`,
+          text: `${e.message.error}`,
           duration: 5000,
         })
       }
-      this.$emit('plan', {})
+      // this.$emit('plan', {})
       // }
       // else
       // {
@@ -277,11 +260,10 @@ export default {
 </script>
 <style>
 .list-box-wrapper .list-box-item .bulk-action .select-all {
-  background-color: #26a69a;
+ background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
 }
 .btn-action {
-  background-color: #26a69a;
-  border-color: #26a69a;
+ background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
 }
 .list-box-wrapper .list-box-item .bulk-action .deselect-all {
   background-color: #c7c7ca;
@@ -290,8 +272,7 @@ export default {
 .card-header {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-color: #26a69a;
-  border-bottom: 0 solid rgba(0, 0, 0, 0.125);
+ background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

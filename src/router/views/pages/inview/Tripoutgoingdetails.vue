@@ -8,7 +8,7 @@ import NProgress from 'nprogress/nprogress'
 // Vue.component('downloadExcel', JsonExcel)
 import {
   // eslint-disable-next-line no-unused-vars
- Tripdownload
+ Tripoutgoing
 } from '../../../../services/auth'
 
 export default {
@@ -187,7 +187,7 @@ export default {
     async create(pay) {
       try {
         NProgress.start()
-        const result = await Tripdownload(this.id)
+        const result = await Tripoutgoing(this.id)
         const { data } = result
         this.printPdf = data.response.Outgoingtrip
         console.log("haii",this.printPdf)

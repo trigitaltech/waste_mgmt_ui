@@ -167,7 +167,7 @@ export default {
     }
   },
   mounted() {
-    this.getDashboard()
+    // this.getDashboard()
   },
   methods: {
     async getDashboard() {

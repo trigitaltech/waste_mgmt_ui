@@ -103,9 +103,15 @@ export default {
           lastName:this.form.lastName,
           addressLine1:this.form.address,
           addressLine2: '',
+
           city:this.form.city,
           state: this.form.state,
           country:this.form.country,
+          roles: [
+                      {
+                      code: "ADMIN"
+                      }
+                      ],
           pin:this.form.postCode,
         createdDate:"2020-01-12"
         }
