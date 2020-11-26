@@ -104,7 +104,7 @@ export default {
 							/> -->
               <div class="media-body text-left">
                 <h6 class="pro-user-name ml-2 my-0">
-                  <!-- <span>{{ user.user.username }}</span> -->
+                  <span>{{ user.user.username }}</span>
                   <h5
                     class="pro-user-desc text-muted d-block mt-1"
                     style="color: white"

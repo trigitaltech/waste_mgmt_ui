@@ -655,7 +655,14 @@ const pagesRoutes = [
 
 
 
-  
+  {
+    path: '/Viewattendance',
+    name: 'Viewattendance',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewattendance')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
   {
     path: '/Viewuser',
     name: 'Viewuser',

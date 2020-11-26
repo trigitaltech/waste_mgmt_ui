@@ -3,15 +3,15 @@ import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
-import moment from 'moment'
 import { Datetime } from 'vue-datetime';
+import moment from 'moment'
 import { ModelSelect } from 'vue-search-select'
 import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- createattendance,users,employees
+ checkout,users,employees
 } from '../../../../services/auth'
 
 export default {
@@ -20,7 +20,7 @@ export default {
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
-     datetime: Datetime,
+    datetime: Datetime,
     Layout,
     PageHeader,
     Multiselect,
@@ -30,22 +30,22 @@ export default {
   },
   data() {
     return {
-      taskref:"",
      emp:[],
      owners:[],
-     status:"",
+     status:this.$route.params.status,
      empname:"",
-     empid:"",
      description:this.$route.params.description,
-     recordDate:"",
-      timein:"",
-        timeout:"",
-      createdby: "",
-      createddate: new Date(),
+     empid:this.$route.params.employeeId,
+     taskref:this.$route.params.task_ref_no,
+     recordDate:this.$route.params.recordDate,
+      timein:this.$route.params.time_in,
+      timeout:this.$route.params.time_out,
+      createdby:this.$route.params.createdBy,
+      createddate: this.$route.params.createdDate,
       modifydate: new Date(),
       modifyby:"",
-      item:[ { value: 'CHECK_IN', text: 'Check IN' },
-     
+      item:[ 
+      { value: 'CHECK_OUT', text: 'Check OUT' },
       { value: 'APPROVED', text: 'APPROVED' },
       { value: 'REJECTED', text: 'REJECTED' }],
       ite:[],
@@ -55,13 +55,14 @@ export default {
         { value: 'rural', text: 'Rural' },
         
       ],
+      ownername:"",
       items: [
         {
           text: 'Setup',
           href: '/',
         },
         {
-          text: 'Attendance / CHECK IN',
+          text: 'Attendance / CHECK OUT',
           active: true,
         },
       ],
@@ -79,7 +80,9 @@ export default {
     this.modifyby = this.getUserDetails.user.username
     // this.getClientDetails()
     // this.getplans()
+    // console.log(this.$route.params)
 this.employeedata() 
+console.log(this.$route.params)
 
   },
   methods: {
@@ -87,27 +90,29 @@ this.employeedata()
       try {
         const payload =  {
           
-                recordDate:this.recordDate,
+                 id:this.$route.params.id,
+                recordDate: this.recordDate,
                 employeeId: this.empid,
                 time_in: this.timein,
-                isDeleted: false,
+                time_out: this.timeout,
+                task_ref_no: this.taskref,
+                description: this.description,
+                isDeleted: true,
+                status: this.status,
                 createdDate: this.createddate,
                 createdBy: this.createdby,
                 modifiedDate: this.modifydate,
-                modifiedBy: this.modifyby
-
-
-             
+                modifiedBy:this.modifyby
             
         
 
         }
-        let result = await createattendance(payload)
+        let result = await checkout(payload)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You CheckedIN Successfully`,
+            text: `You Checked Out Successfully`,
             duration: 5000,
           })
          
@@ -115,7 +120,7 @@ this.employeedata()
             
         }
       } catch (e) {
-        this.$toasted.error(e.message.errors[0].developerMessage, {
+        this.$toasted.error(e.message.error, {
           duration: 7000,
         })
       }
@@ -138,10 +143,11 @@ this.employeedata()
       // for(i=0;i<data.length;i++){
       //   this.item[i]=data[i].userName
       // }
-
+debugger
       this.emp.map(e=>{
-      this.owners.push(e.userName)
-      console.log("user",e)
+          if(this.$route.params.employeeId === e.id)
+             this.ownername=e.userName
+      console.log("user",this.emp)
       })
        console.log("users",this.item)
      
@@ -163,7 +169,7 @@ this.employeedata()
 
     <div class="animated fadeIn">
       <b-card
-        header="CHECK IN"
+        header="View Attendance"
         header-bg-variant="info"
         border-variant="info"
         header-text-variant="white"
@@ -183,67 +189,37 @@ this.employeedata()
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
                     >
-                     Time In</label
+                     Time IN</label
                     >
-                      <datetime 
+                    <input
                       v-model="timein"
-                     
-                      placeholder="SELECT TIME IN"
-                      name="startdate"
-                 ></datetime>
-
-                  </b-col>
-                  <b-col md="9">
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Employee</label
-                    >
-
-                   <b-form-select
-                  v-model.trim="empname"
-               
-                                placeholder="Select Employee"
-                                class="form-control"
-                              
-                  :options="owners"
-                  @change="getid"
-                  
-                ></b-form-select>
-                  </b-col>
-
-                     <!-- <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Description</label
-                    >
-                   <input
-                      v-model="description"
                       class="form-control"
-                      placeholder="Enter Description"
+                     disabled
                       name="startdate"
-                    /> -->
+                    />
+
+                
+
                   
                     <!-- Default input text -->
-                  <!-- </b-col>
+                  </b-col>
                   
-                  <b-col>
+                  <b-col >
                      <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Time Out</label
+                      >Time OUT</label
                     >
-                     <flat-pickr
+                   <input
                       v-model="timeout"
                       class="form-control"
-                      placeholder="SELECT TIME OUT"
+                     disabled
                       name="startdate"
-                    ></flat-pickr> -->
+                    />
 
                     <!-- Default input name -->
                   
-             
+                  </b-col>
               
                   <br />
                 
@@ -254,9 +230,25 @@ this.employeedata()
                  <br/>
                   <b-row>
                     
-                      
+                      <b-col>
+                    <!-- Default input text -->
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Employee</label
+                    >
+
+                    <input
+                      type="text"
+                    
+                      v-model="ownername"
+                      disabled
+                             
+                 class="form-control"
+                             
+                    />
              
-                    <!-- <label
+                    <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Task Ref No</label
@@ -265,12 +257,12 @@ this.employeedata()
                       type="text"
                     
                       v-model="taskref"
-                      
+                      disabled
                                 placeholder="Enter Task ref no "
                                 class="form-control"
                              
-                    /> -->
-               
+                    />
+                  </b-col>
 
                 <br/>
                 
@@ -281,28 +273,24 @@ this.employeedata()
                       class="grey-text font-weight-dark"
                       >Record Date</label
                     >
-                    <flat-pickr
+                   <input
                       v-model="recordDate"
                       class="form-control"
-                      placeholder="SELECT RECORD DATE"
+                     disabled
                       name="startdate"
-                    ></flat-pickr>
-                 </b-col>
-                 <b-col md="9">
+                    />
+
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Status</label
                     >
-                    <b-form-select
-                  v-model.trim="status"
-                
-                                placeholder="Select Employee"
-                                class="form-control"
-                             
-                  :options="item"
-                  
-                ></b-form-select>
+                    <input
+                      v-model="status"
+                      class="form-control"
+                     disabled
+                      name="startdate"
+                    />
                   </b-col>
                   
                 </b-row>
@@ -376,14 +364,14 @@ this.employeedata()
               
               
                 <br />
-               <button
+               <!-- <button
                          
                           style="
                             background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
                           type="submit"
                          class="btn btn-info float-right mr-2"
                           >Submit</button
-                        >
+                        > -->
               </form>
               <!-- Default form subscription -->
             </div>

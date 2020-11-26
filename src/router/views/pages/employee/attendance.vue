@@ -169,7 +169,7 @@ export default {
             class="btn btn-info float-right mr-2"
             text="Create Tenant"
             @click="$router.push({ path: '/Createattendance' })"
-            >Create Attendance</b-button
+            >CheckIN</b-button
           >
         </b-col>
         <div class="mt-3">
@@ -192,11 +192,13 @@ export default {
             ref="roles"
           >
            <template v-slot:cell(actions)="data">
-              <b-button size="sm" class="mr-2" variant="primary" @click="viewReq(data)">
+              <router-link :to="{ name: 'Viewattendance', params: data.item }">
+              <b-button size="sm" class="mr-2" variant="primary" >
               <i class="fa fa-eye"></i>
             </b-button>
+              </router-link>
             <router-link :to="{ name: 'Editattendance', params: data.item }">
-                <b-button size="sm" class="mr-2" variant="primary">
+                <b-button size="sm" class="mr-2" variant="primary"  :hidden="data.item.status === 'CHECK_OUT' ">
                   <i class="fas fa-pencil-alt edit"></i>
                 </b-button>
               </router-link>
@@ -204,10 +206,10 @@ export default {
               <i class="fa fa-trash bin"></i>
             </b-button>
            </template>
-            <template slot="row-details" slot-scope="row">
+            <!-- <template slot="row-details" slot-scope="row">
               <b-card class="role-details">
-                <div>
-                  <multiselect
+                <div> -->
+                  <!-- <multiselect
                     :id="row.item._id"
                     :value="AttendanceMap[row.item._id]"
                     :options="allAttendance"
@@ -218,13 +220,13 @@ export default {
                       (selectedOption, id) =>
                         addAttendanceToRole(selectedOption, id, row)
                     "
-                  ></multiselect>
-                </div>
+                  ></multiselect> -->
+                <!-- </div>
               </b-card>
-            </template>
+            </template> -->
           </b-table>
 
-          <b-modal v-model="AttendanceModal" id="roleModal">
+          <!-- <b-modal v-model="AttendanceModal" id="roleModal">
             <div slot="modal-header">{{ header }}</div>
             <div>
               <b-input v-model="Attendance" />
@@ -248,7 +250,7 @@ export default {
                 >Cancel</b-button
               >
             </div>
-          </b-modal>
+          </b-modal> -->
           <div style="float: right">
             <b-pagination
               v-model="currentPage"

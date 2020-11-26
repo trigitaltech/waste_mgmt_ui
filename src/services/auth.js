@@ -60,7 +60,10 @@ export const createarea = (payload) => serviceMaker(`/areamaster/admin`, methods
 
 export const createuser = (payload) => serviceMaker(`/users/admin/create`, methods.POST, api.NGB, payload)
 
- export const createattendance = (payload) => serviceMaker(`/attendence/checker/admin/`, methods.POST, api.NGB, payload)
+ export const createattendance = (payload) => serviceMaker(`/attendence/checker/admin/checkin`, methods.POST, api.NGB, payload)
+
+
+ export const checkout = (payload) => serviceMaker(`/attendence/checker/admin/checkout/`, methods.PUT, api.NGB, payload)
 
 export const createrole = (payload) => serviceMaker(`/roles/admin`, methods.POST, api.NGB, payload)
 

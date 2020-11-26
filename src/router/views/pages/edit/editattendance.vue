@@ -3,6 +3,7 @@ import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
+import { Datetime } from 'vue-datetime';
 import moment from 'moment'
 import { ModelSelect } from 'vue-search-select'
 import {
@@ -10,7 +11,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- editattendance,users,employees
+ checkout,users,employees
 } from '../../../../services/auth'
 
 export default {
@@ -19,6 +20,7 @@ export default {
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
+    datetime: Datetime,
     Layout,
     PageHeader,
     Multiselect,
@@ -42,7 +44,10 @@ export default {
       createddate: this.$route.params.createdDate,
       modifydate: new Date(),
       modifyby:"",
-      item:[ { value: 'checkout', text: 'Check OUT' },],
+      item:[ 
+      { value: 'CHECK_OUT', text: 'Check OUT' },
+      { value: 'APPROVED', text: 'APPROVED' },
+      { value: 'REJECTED', text: 'REJECTED' }],
       ite:[],
        option: [
         { value: null, text: 'Please select an option' },
@@ -56,7 +61,7 @@ export default {
           href: '/',
         },
         {
-          text: 'Attendance / Edit Attendance',
+          text: 'Attendance / CHECK OUT',
           active: true,
         },
       ],
@@ -100,12 +105,12 @@ this.employeedata()
         
 
         }
-        let result = await editattendance(payload)
+        let result = await checkout(payload)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You Edited Attendance Successfully`,
+            text: `You Checked Out Successfully`,
             duration: 5000,
           })
          
@@ -161,7 +166,7 @@ this.employeedata()
 
     <div class="animated fadeIn">
       <b-card
-        header="Edit Attendance"
+        header="CHECK OUT"
         header-bg-variant="info"
         border-variant="info"
         header-text-variant="white"
@@ -183,12 +188,12 @@ this.employeedata()
                     >
                      Time Out</label
                     >
-                     <flat-pickr
+                   <datetime 
                       v-model="timeout"
-                      class="form-control"
+                     
                       placeholder="SELECT TIME OUT"
                       name="startdate"
-                    ></flat-pickr>
+                 ></datetime>
 
                 
 
@@ -196,7 +201,7 @@ this.employeedata()
                     <!-- Default input text -->
                   </b-col>
                   
-                  <b-col>
+                  <b-col md="9">
                      <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
