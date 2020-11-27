@@ -341,9 +341,7 @@ export default {
     <div class="animated fadeIn">
       <b-card
         header="Billing"
-        header-bg-variant="info"
-        border-variant="info"
-        header-text-variant="white"
+
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <b-col md="12">

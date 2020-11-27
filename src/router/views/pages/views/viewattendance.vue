@@ -170,9 +170,7 @@ debugger
     <div class="animated fadeIn">
       <b-card
         header="View Attendance"
-        header-bg-variant="info"
-        border-variant="info"
-        header-text-variant="white"
+
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
@@ -387,9 +385,7 @@ debugger
 <style lang="scss">
 .card-header {
   padding: 0.75rem 1.25rem;
-  margin-bottom: 0;
-  background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
-  border-bottom: 0 solid rgba(0, 0, 0, 0.125);
+
 }
 </style>
 <style lang="sass" scoped>

@@ -124,9 +124,7 @@ export default {
     <div class="animated fadeIn">
       <b-card
         header="View Permission"
-        header-bg-variant="info"
-        border-variant="info"
-        header-text-variant="white"
+
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
