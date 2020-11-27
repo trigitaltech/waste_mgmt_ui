@@ -152,7 +152,6 @@ this.userdata()
     <div class="animated fadeIn">
       <b-card
         header="Create Area"
-
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
@@ -437,10 +436,6 @@ this.userdata()
   </Layout>
 </template>
 <style lang="scss">
-.card-header {
-  padding: 0.75rem 1.25rem;
-
-}
 </style>
 <style lang="sass" scoped>
 .edit

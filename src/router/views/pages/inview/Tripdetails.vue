@@ -238,16 +238,6 @@ export default {
   );
   border-color: #5369f8;
 }
-.card-header {
-  padding: 0.75rem 1.25rem;
-  margin-bottom: 0;
-  background-image: linear-gradient(
-    109.6deg,
-    rgba(48, 207, 208, 1) 11.2%,
-    rgba(51, 8, 103, 1) 92.5%
-  );
-  border-bottom: 0 solid rgba(0, 0, 0, 0.125);
-}
 </style>
 <style lang="sass" scoped>
 .edit

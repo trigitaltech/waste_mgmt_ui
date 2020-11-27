@@ -211,10 +211,6 @@ export default {
   </Layout>
 </template>
 <style lang="scss">
-.card-header {
-  padding: 0.75rem 1.25rem;
-
-}
 .page-item.active .page-link {
     z-index: 1;
     color: #fff;

@@ -400,12 +400,7 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
-<style lang="scss">
-.card-header {
-  padding: 0.75rem 1.25rem;
 
-}
-</style>
 <style lang="sass" scoped>
 .edit
   color: white !important

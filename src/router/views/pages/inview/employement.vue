@@ -242,10 +242,6 @@ export default {
   );
   border-color: #5369f8;
 }
-.card-header {
-  padding: 0.75rem 1.25rem;
-
-}
 </style>
 <style lang="sass" scoped>
 .edit

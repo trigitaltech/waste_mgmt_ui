@@ -508,10 +508,6 @@ export default {
     page-break-inside: avoid;
   }
 }
-.card-header {
-  padding: 0.75rem 1.25rem;
-
-}
 .print-voucher-text {
   position: absolute;
   top: 36%;

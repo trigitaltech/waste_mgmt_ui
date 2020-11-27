@@ -23,7 +23,7 @@ export default {
 	<!-- start page title -->
 	<div class="row page-title">
 		<div class="col-md-12">
-			<b-breadcrumb :items="items" class="float-right mt-1"></b-breadcrumb>
+			<b-breadcrumb :items="items" class="mt-1"></b-breadcrumb>
 			<h4 class="mb-1 mt-0">{{ title }}</h4>
 		</div>
 	</div>

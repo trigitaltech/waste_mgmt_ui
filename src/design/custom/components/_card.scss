@@ -4,8 +4,9 @@
 
 .card {
     margin-bottom: $grid-gutter-width;
-    box-shadow: $box-shadow-sm;
-    border-radius: 0.25rem;
+    box-shadow: $box-shadow-lg;
+    border-radius: 10px;
+
 }
 
 .card-drop {
@@ -29,6 +30,7 @@
 .card-title,
 .card-header {
     margin-top: 0;
+    border-radius: 10px 10px 0px 0px;
 }
 
 .card-nav {
