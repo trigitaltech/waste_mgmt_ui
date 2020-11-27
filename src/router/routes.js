@@ -773,7 +773,6 @@ const dashboardRoutes = [
   {
     path: '/',
     name: 'Dashboard',
-    header: 'Navigation',
     icon: 'home',
     badge: {
       text: '1',
