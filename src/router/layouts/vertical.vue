@@ -91,3 +91,59 @@ export default {
 		<Rightsidebar />
 	</div>
 </template>
+<style>
+#sidebar-menu>.mm-active>ul>li>a, #sidebar-menu>.mm-active>ul>li>ul>li>a {
+	/* color: #4b4b5a; */
+	color: #8C94C0;
+    display: block;
+    padding: 12px 30px;
+    font-size: 15px;
+    font-weight: 400;
+    position: relative;
+    -webkit-transition: all .4s;
+    transition: all .4s;
+    border-left: 3px solid transparent;
+}
+#sidebar-menu>.mm-active>ul>li>a.active, #sidebar-menu>.mm-active>ul>li>ul>li>a.active {
+    border-left: 5px solid #5369f8;
+    color: #5369f8;
+    background-color: #f7f7ff;
+}
+#sidebar-menu>.mm-active>ul>li>a>span {
+    vertical-align: middle;
+}
+#sidebar-menu>.mm-active>ul>li>a i, #sidebar-menu>.mm-active>ul>li>ul>li>a i {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin: 0 10px 0 3px;
+    color: #8C94C0;
+    fill: rgba(75,75,90,.12);
+}
+#sidebar-menu .menu-arrow {
+    -webkit-transition: -webkit-transform .15s;
+    transition: -webkit-transform .15s;
+    transition: transform .15s;
+    transition: transform .15s,-webkit-transform .15s;
+    position: absolute;
+    right: 30px;
+    display: inline-block;
+    font-family: unicons;
+    text-rendering: auto;
+    line-height: 1.3rem;
+    font-size: .9rem;
+    -webkit-transform: translate(0,0);
+    transform: translate(0,0);
+    top: 15px;
+}
+#sidebar-menu .menu-arrow:before {
+    content: "\e82f";
+}
+#sidebar-menu li.mm-active>a>span.menu-arrow {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+#sidebar-menu>.mm-active>ul>li>ul {
+    padding-left: 0px;
+}
+</style>

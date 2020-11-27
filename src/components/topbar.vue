@@ -47,7 +47,7 @@ export default {
       <a href="/" class="navbar-brand mr-0 mr-md-2 logo">
         <span class="logo-lg">
           <!-- <img src="@assets/images/tstvlogo.png" alt height="90"/> -->
-          <span class="d-inline h5 ml-2 text-logo" style="color: white"
+          <span class="d-inline h5 ml-2 text-logo" style="color: #4b4b5a;"
             >Waste Management</span
           >
         </span>
@@ -178,12 +178,12 @@ export default {
   z-index: 100;
   height: 72px;
   padding: 0 22px 0 37px;
-  /* background-color: #fff; */
-  background-image: linear-gradient(
+  background-color: #fff;
+  /* background-image: linear-gradient(
     109.6deg,
     rgba(48, 207, 208, 1) 11.2%,
     rgba(51, 8, 103, 1) 92.5%
-  );
+  ); */
 
   color: white;
   -webkit-box-shadow: 0 0.05rem 0.01rem rgba(75, 75, 90, 0.075);
