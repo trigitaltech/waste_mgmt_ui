@@ -1,5 +1,5 @@
 export const state = {
-  layoutType: 'horizontal',
+  layoutType: 'vertical',
   layoutWidth: 'default',
   leftSidebarTheme: 'default',
   leftSidebarType: 'fixed',
