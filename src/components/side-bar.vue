@@ -95,7 +95,7 @@ export default {
 <template>
 	<!-- ========== Left Sidebar Start ========== -->
 	<div class="left-side-menu">
-		<div class="media user-profile mt-2 mb-2">
+		<!-- <div class="media user-profile mt-2 mb-2">
 			<img
 				src="@assets/images/users/avatar-7.jpg"
 				class="avatar-sm rounded-circle mr-2"
@@ -158,7 +158,7 @@ export default {
 					<span>Logout</span>
 				</b-dropdown-item>
 			</b-dropdown>
-		</div>
+		</div> -->
 
 		<div class="sidebar-content">
 			<VuePerfectScrollbar

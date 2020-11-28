@@ -19,7 +19,7 @@ const authRoutes = [
   {
     path: '/forgot-password',
     name: 'Forgotpassword',
-    header: 'Apps',
+    
     icon: 'user',
     component: () => lazyLoadView(import('@views/pages/inview/forgotpassword')),
     meta: {
@@ -35,7 +35,7 @@ const authRoutes = [
   {
     path: '/register',
     name: 'Forgotusername',
-    header: 'Apps',
+    
     icon: 'user',
     component: () => lazyLoadView(import('@views/pages/inview/register')),
     meta: {
@@ -51,7 +51,7 @@ const authRoutes = [
   {
     path: '/change-password/:id/:key',
     name: 'Changepassword',
-    header: 'Apps',
+    
     icon: 'user',
     component: () => lazyLoadView(import('@views/pages/inview/changepassword')),
     meta: {
@@ -68,7 +68,7 @@ const authRoutes = [
   {
     path: '/topup-customer',
     name: 'TopupCustomer',
-    header: 'Apps',
+    
     icon: 'user',
     component: () => lazyLoadView(import('@views/pages/inview/topupCustomerDetails')),
     meta: {
@@ -84,7 +84,7 @@ const authRoutes = [
   {
     path: '/renewal-customer',
     name: 'RenewalCustomer',
-    header: 'Apps',
+    
     icon: 'user',
     component: () => lazyLoadView(import('@views/pages/inview/renewalcustomer')),
     meta: {
@@ -100,7 +100,7 @@ const authRoutes = [
   {
     path: '/renewal-customer/:id',
     name: 'RenewalCustomer',
-    header: 'Apps',
+    
     icon: 'user',
     component: () => lazyLoadView(import('@views/pages/inview/renewalcustomer')),
     meta: {
@@ -116,7 +116,7 @@ const authRoutes = [
   // {
   //   path: '/movie-purchase',
   //   name: 'Moviepurchase',
-  //   header: 'Apps',
+  //   
   //   icon: 'user',
   //   component: () => lazyLoadView(import('@views/pages/inview/moviepurchase')),
   //   meta: {
@@ -132,7 +132,7 @@ const authRoutes = [
   // {
   //   path: '/movie-purchase/:id',
   //   name: 'Moviepurchase',
-  //   header: 'Apps',
+  //   
   //   icon: 'user',
   //   component: () => lazyLoadView(import('@views/pages/inview/moviepurchase')),
   //   meta: {
@@ -150,7 +150,7 @@ const authRoutes = [
   {
     path: '/make-payment',
     name: 'MakePaymentReturn',
-    header: 'Apps',
+    
     icon: 'user',
     component: () => lazyLoadView(import('@views/pages/inview/PaymentSuccess')),
   }
@@ -160,7 +160,7 @@ const inviewRoutes = [
   {
     path: '/Setup',
     name: 'Setup',
-    header: 'Apps',
+    
     icon: 'check-square',
     meta: { label: 'Permissions' },
     component: {
@@ -181,7 +181,7 @@ const inviewRoutes = [
       {
         path: 'Roles',
         name: 'Roles',
-        header: 'Apps',
+        
         icon: 'user',
         component: () => lazyLoadView(import('@views/pages/inview/Roles')),
         meta: { authRequired: true },
@@ -191,7 +191,7 @@ const inviewRoutes = [
       {
         path: 'AreaMaster',
         name: 'Area Master',
-        header: 'Apps',
+        
         icon: 'loader',
         component: () => lazyLoadView(import('@views/pages/inview/Areamaster')),
         meta: { authRequired: true },
@@ -200,7 +200,7 @@ const inviewRoutes = [
       {
         path: 'RouteMaster',
         name: 'Route Master',
-        header: 'Apps',
+        
         icon: 'arrow-up',
         component: () => lazyLoadView(import('@views/pages/inview/RootMaster')),
         meta: { authRequired: true },
@@ -209,7 +209,7 @@ const inviewRoutes = [
       // {
       //   path: 'City',
       //   name: 'City',
-      //   header: 'Apps',
+      //   
       //   icon: 'home',
       //   component: () => lazyLoadView(import('@views/pages/inview/city')),
       //   meta: { authRequired: true },
@@ -218,7 +218,7 @@ const inviewRoutes = [
       // {
       //   path: 'State',
       //   name: 'State',
-      //   header: 'Apps',
+      //   
       //   icon: 'home',
       //   component: () => lazyLoadView(import('@views/pages/inview/state')),
       //   meta: { authRequired: true },
@@ -227,7 +227,7 @@ const inviewRoutes = [
       // {
       //   path: 'Country',
       //   name: 'Country',
-      //   header: 'Apps',
+      //   
       //   icon: 'home',
       //   component: () => lazyLoadView(import('@views/pages/inview/Country')),
       //   meta: { authRequired: true },
@@ -236,7 +236,7 @@ const inviewRoutes = [
       {
         path: 'StagingArea',
         name: 'Staging Area',
-        header: 'Apps',
+        
         icon: 'clipboard',
         component: () => lazyLoadView(import('@views/pages/inview/Stagingarea')),
         meta: { authRequired: true },
@@ -245,7 +245,7 @@ const inviewRoutes = [
       {
         path: 'DumpingLocation',
         name: 'Dumping Location',
-        header: 'Apps',
+        
         icon: 'archive',
         component: () => lazyLoadView(import('@views/pages/inview/Dumpinglocation')),
         meta: { authRequired: true },
@@ -255,7 +255,7 @@ const inviewRoutes = [
       {
         path: 'Notification Template',
         name: 'Notification Template',
-        header: 'Apps',
+        
         icon: 'bell',
         component: () => lazyLoadView(import('@views/pages/inview/Notificationtemplate')),
         meta: { authRequired: true },
@@ -270,7 +270,7 @@ const inviewRoutes = [
   // {
   //   path: '/permissions',
   //   name: 'Permission',
-  //   header: 'Apps',
+  //   
   //   icon: 'check-square',
   //   component: () => lazyLoadView(import('@views/pages/account/permission')),
   //   meta: { authRequired: true },
@@ -292,7 +292,7 @@ const inviewRoutes = [
   {
     path: '/Users',
     name: 'Users',
-    header: 'Apps',
+    
     icon: 'users',
     component: () => lazyLoadView(import('@views/pages/inview/users')),
     meta: { label: 'Users' },
@@ -302,7 +302,7 @@ const inviewRoutes = [
 
     path: '/Employee',
     name: 'Employee',
-    header: 'Apps',
+    
     icon: 'user-plus',
     meta: { label: 'Employee' },
     component: {
@@ -347,7 +347,7 @@ const inviewRoutes = [
   {
     path: '/Equipment',
     name: 'Equipment',
-    header: 'Apps',
+    
     icon: 'layout',
     component: () => lazyLoadView(import('@views/pages/inview/Equipment')),
     meta: { authRequired: true },
@@ -358,7 +358,7 @@ const inviewRoutes = [
   {
     path: '/Vehicle',
     name: 'Vehicles',
-    header: 'Apps',
+    
     icon: 'truck',
     component: () => lazyLoadView(import('@views/pages/inview/vehicle')),
     meta: { authRequired: true },
@@ -367,7 +367,7 @@ const inviewRoutes = [
   {
     path: '/Payroll ',
     name: 'Payroll',
-    header: 'Apps',
+    
     icon: 'credit-card',
     meta: { label: 'Permissions' },
     component: {
@@ -406,6 +406,7 @@ const inviewRoutes = [
   {
     path: '/Trips',
     name: 'Trips',
+<<<<<<< HEAD
     header: 'Apps',
     icon: 'credit-card',
     meta: { label: 'Permissions' },
@@ -433,11 +434,18 @@ const inviewRoutes = [
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       }
     ]
+=======
+    
+    icon: 'folder',
+    component: () => lazyLoadView(import('@views/pages/inview/Tripdetails.vue')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+>>>>>>> aba4f58df2b02080c99be0bb16ca6d7065287793
   },
   {
     path: '/Service request details',
     name: 'ServiceRequest',
-    header: 'Apps',
+    
     icon: 'folder',
     component: () => lazyLoadView(import('@views/pages/inview/Servicerequestdetails.vue')),
     meta: { authRequired: true },
@@ -446,7 +454,7 @@ const inviewRoutes = [
   {
     path: '/Reports',
     name: 'Reports',
-    header: 'Apps',
+    
     icon: 'credit-card',
     meta: { label: 'Trip Reports' },
     component: {
@@ -810,7 +818,6 @@ const dashboardRoutes = [
   {
     path: '/',
     name: 'Dashboard',
-    header: 'Navigation',
     icon: 'home',
     badge: {
       text: '1',
