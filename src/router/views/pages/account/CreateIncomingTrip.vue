@@ -8,7 +8,7 @@ import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
 // Vue.component('downloadExcel', JsonExcel)
 import {
   // eslint-disable-next-line no-unused-vars
- Tripdownload,Areamasters,routemaster, CreateTrip
+ Tripdownload,Areamasters,routemaster, CreateIncomingTrip
 } from '../../../../services/auth'
 
 export default {
@@ -76,9 +76,10 @@ export default {
           truckType: this.trucktype,
           servingArea: this.area,
           servingRoute: this.route,
-          collectionStartTime: this.startTime
+          collectionStartTime: this.startTime,
+          status: 1
         };
-        const result = await CreateTrip(payload);
+        const result = await CreateIncomingTrip(payload);
         if (result) {
           this.$swal({
             group: 'alert',

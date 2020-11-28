@@ -20,6 +20,8 @@ export const users = () => serviceMaker(`/users/admin/readAll`, methods.GET, api
 
 export const routemaster = () => serviceMaker(`/routemaster/all `, methods.GET, api.NGB)
 
+export const getIncomingTrips = () => serviceMaker(`/tripincoming/all`, methods.GET, api.NGB)
+
 export const equipment = () => serviceMaker(`/equipment/admin/encoders/owner`, methods.GET, api.NGB)
 
 export const vehicle = () => serviceMaker(`/vehicles/admin/encoders/owner `, methods.GET, api.NGB)
@@ -113,8 +115,7 @@ export const addplan = (id,payload) => serviceMaker(`/multipleorders/${id}`, met
 
 export const Tripdownload = (id) => serviceMaker(`/tripincoming/system/${id}`, methods.GET, api.NGB)
 
-export const CreateTrip = (payload) => serviceMaker(`/tripincoming/admin`,methods.POST,api.NGB,payload)
-
+export const CreateIncomingTrip = (payload) => serviceMaker(`/tripincoming/admin`,methods.POST,api.NGB,payload)
 
 export const Tripoutgoing = (id) => serviceMaker(`/tripoutgoing/system/${id}`, methods.GET, api.NGB)
  
