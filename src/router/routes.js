@@ -377,8 +377,8 @@ const inviewRoutes = [
     children: [
 
       {
-        path: 'Redcard',
-        name: 'Payroll red card',
+        path: 'Ratecard',
+        name: 'Rate card',
         icon: 'check-square',
         component: () => lazyLoadView(import('@views/pages/Payrol/redcard')),
         meta: { authRequired: true },
@@ -387,7 +387,7 @@ const inviewRoutes = [
 
       {
         path: 'Billing',
-        name: 'Payroll billing',
+        name: 'Billing',
         icon: 'check-square',
         component: () => lazyLoadView(import('@views/pages/Payrol/billing')),
         meta: { authRequired: true },
@@ -395,7 +395,7 @@ const inviewRoutes = [
       },
       {
         path: 'Settlement',
-        name: 'Payroll settlement',
+        name: 'Settlement',
         icon: 'check-square',
         component: () => lazyLoadView(import('@views/pages/Payrol/settlement')),
         meta: { authRequired: true },

@@ -274,6 +274,7 @@ export default {
                     >
                     <datetime 
                       v-model="manufacturedate"
+<<<<<<< HEAD
                       :format="{
                         year: 'numeric',
                         month: 'numeric',
@@ -281,9 +282,16 @@ export default {
                       }"
                       id="defaultFormCardtextEx"
                  ></datetime>
+=======
+                     
+                      placeholder="SELECT MANUFACTURE DATE"
+                      name="startdate"
+                 ></datetime>
+
+>>>>>>> eec54f10c25fdc1cce4f83e132986cf7fc78b2af
                   </b-col>
                
-                 <b-col>
+                 <b-col md="9">
                     <!-- Default input text -->
                     <label
                       for="defaultFormCardtextEx"
