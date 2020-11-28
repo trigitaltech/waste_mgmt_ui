@@ -406,7 +406,6 @@ const inviewRoutes = [
   {
     path: '/Trips',
     name: 'Trips',
-<<<<<<< HEAD
     header: 'Apps',
     icon: 'credit-card',
     meta: { label: 'Permissions' },
@@ -434,13 +433,6 @@ const inviewRoutes = [
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       }
     ]
-=======
-    
-    icon: 'folder',
-    component: () => lazyLoadView(import('@views/pages/inview/Tripdetails.vue')),
-    meta: { authRequired: true },
-    props: (route) => ({ user: store.state.auth.currentUser || {} }),
->>>>>>> aba4f58df2b02080c99be0bb16ca6d7065287793
   },
   {
     path: '/Service request details',
