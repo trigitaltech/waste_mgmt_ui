@@ -26,6 +26,8 @@ export const vehicle = () => serviceMaker(`/vehicles/admin/encoders/owner `, met
 
 export const simpleactivation = (payload) => serviceMaker(`/auth/signup`, methods.POST, api.NGB, payload)
 
+export const reviewAttendance = (payload) => serviceMaker('/attendence/checker/admin/review',methods.POST,api.NGB,payload)
+
 export const deletevehicle = (id) => serviceMaker(`/vehicles/admin/encoders/${id}`, methods.DELETE, api.NGB) 
 
 export const deletepermission = (id) => serviceMaker(`/permissions/admin/${id}`, methods.DELETE, api.NGB) 

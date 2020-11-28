@@ -44,10 +44,7 @@ export default {
       createddate: new Date(),
       modifydate: new Date(),
       modifyby:"",
-      item:[ { value: 'CHECK_IN', text: 'Check IN' },
-     
-      { value: 'APPROVED', text: 'APPROVED' },
-      { value: 'REJECTED', text: 'REJECTED' }],
+      item:[ { value: 'CHECK_IN', text: 'Check IN' }],
       ite:[],
        option: [
         { value: null, text: 'Please select an option' },
@@ -95,12 +92,6 @@ this.employeedata()
                 createdBy: this.createdby,
                 modifiedDate: this.modifydate,
                 modifiedBy: this.modifyby
-
-
-             
-            
-        
-
         }
         let result = await createattendance(payload)
         if (result) {
@@ -187,7 +178,16 @@ this.employeedata()
                     >
                       <datetime 
                       v-model="timein"
-                     
+                      :format="{
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        milisecond: '2-digit'
+                      }"
+                      type="datetime"
                       placeholder="SELECT TIME IN"
                       name="startdate"
                  ></datetime>

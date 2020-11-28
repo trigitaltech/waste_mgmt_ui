@@ -5,6 +5,7 @@ import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
 import NProgress from 'nprogress/nprogress'
+import moment from "moment";
 import {
   ValidationProvider,
   ValidationObserver,
@@ -25,6 +26,18 @@ export default {
     ValidationProvider,
     ValidationObserver,
     ModelSelect,
+  },
+  filters: {
+    formatdatetime: function(value) {
+      if (value) {
+        return moment(String(value)).format("hh:mm A DD/MM/YYYY");
+      }
+    },
+    formatdate: function(value) {
+      if (value) {
+        return moment(String(value)).format("DD/MM/YYYY");
+      }
+    }
   },
   data() {
     return {
@@ -191,14 +204,23 @@ export default {
             class="mt-3"
             ref="roles"
           >
+            <template v-slot:cell(time_in)="data">
+              <div>{{ data.item.time_in | formatdatetime }}</div>
+            </template>
+            <template v-slot:cell(time_out)="data">
+              <div>{{ data.item.time_out | formatdatetime }}</div>
+            </template>
+            <template v-slot:cell(recordDate)="data">
+              <div>{{ data.item.recordDate | formatdate }}</div>
+            </template>
            <template v-slot:cell(actions)="data">
               <router-link :to="{ name: 'Viewattendance', params: data.item }">
               <b-button size="sm" class="mr-2" variant="primary" >
               <i class="fa fa-eye"></i>
             </b-button>
               </router-link>
-            <router-link :to="{ name: 'Editattendance', params: data.item }">
-                <b-button size="sm" class="mr-2" variant="primary"  :hidden="data.item.status === 'CHECK_OUT' ">
+            <router-link :to="{ name: data.item.status=='CHECK_IN'?'Editattendance':'Reviewattendance', params: data.item }">
+                <b-button size="sm" class="mr-2" variant="primary"  :hidden="data.item.status === 'APPROVED' || data.item.status === 'REJECTED' ">
                   <i class="fas fa-pencil-alt edit"></i>
                 </b-button>
               </router-link>

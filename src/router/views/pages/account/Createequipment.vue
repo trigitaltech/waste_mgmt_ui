@@ -3,6 +3,7 @@ import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
+import { Datetime } from 'vue-datetime';
 import { ModelSelect } from 'vue-search-select'
 import {
   ValidationProvider,
@@ -16,6 +17,7 @@ export default {
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
+    datetime: Datetime,
     Layout,
     PageHeader,
     Multiselect,
@@ -272,12 +274,15 @@ export default {
                       class="grey-text font-weight-dark"
                       >Manufacture Date</label
                     >
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    <datetime 
                       v-model="manufacturedate"
-                    />
+                      :format="{
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric'
+                      }"
+                      id="defaultFormCardtextEx"
+                 ></datetime>
                   </b-col>
                
                  <b-col>

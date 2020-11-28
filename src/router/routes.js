@@ -407,10 +407,32 @@ const inviewRoutes = [
     path: '/Trips',
     name: 'Trips',
     header: 'Apps',
-    icon: 'folder',
-    component: () => lazyLoadView(import('@views/pages/inview/Tripdetails.vue')),
-    meta: { authRequired: true },
-    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+    icon: 'credit-card',
+    meta: { label: 'Permissions' },
+    component: {
+      render(c) { return c('router-view') }
+    },
+
+    children: [
+
+      {
+        path: 'IncomingTrips',
+        name: 'Incoming Trips',
+        icon: 'check-square',
+        component: () => lazyLoadView(import('@views/pages/inview/Tripincomingdetails.vue')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+
+      {
+        path: 'OutgoingTrips',
+        name: 'Outgoing Trips',
+        icon: 'check-square',
+        component: () => lazyLoadView(import('@views/pages/inview/Tripoutgoingdetails.vue')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      }
+    ]
   },
   {
     path: '/Service request details',
@@ -543,7 +565,14 @@ const pagesRoutes = [
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
-  
+  {
+    path: '/CreateIncomingTrip',
+    name: 'CreateIncomingTrip',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/CreateIncomingTrip')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
   {
     path: '/profile',
     name: 'Profile',
@@ -616,6 +645,14 @@ const pagesRoutes = [
     name: 'Editattendance',
     icon: 'check-square',
     component: () => lazyLoadView(import('@views/pages/edit/editattendance')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Reviewattendance',
+    name: 'Reviewattendance',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/reviewAttendance')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
