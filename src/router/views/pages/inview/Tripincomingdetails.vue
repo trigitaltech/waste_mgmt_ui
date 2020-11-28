@@ -228,7 +228,7 @@ export default {
 
 <template>
   <Layout>
-    <PageHeader :title="title" :items="items" />
+    <PageHeader :items="items" />
    <div class="animated fadeIn">
       <b-card
         header="Trip Incoming Details"
@@ -242,7 +242,7 @@ export default {
                 <b-button
                   style="
                     background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-info float-right mb-2"
+                  class="btn btn-info float-right mr-4 mt-3 mb-2"
                   text="Create Tenant"
                   @click="$router.push({path:'/CreateIncomingTrip'})"
                   >Create Incoming Trip</b-button

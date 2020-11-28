@@ -113,6 +113,7 @@ export const addplan = (id,payload) => serviceMaker(`/multipleorders/${id}`, met
 
 export const Tripdownload = (id) => serviceMaker(`/tripincoming/system/${id}`, methods.GET, api.NGB)
 
+export const CreateTrip = (payload) => serviceMaker(`/tripincoming/admin`,methods.POST,api.NGB,payload)
 
 
 export const Tripoutgoing = (id) => serviceMaker(`/tripoutgoing/system/${id}`, methods.GET, api.NGB)

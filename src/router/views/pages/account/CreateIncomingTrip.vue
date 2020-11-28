@@ -8,7 +8,7 @@ import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
 // Vue.component('downloadExcel', JsonExcel)
 import {
   // eslint-disable-next-line no-unused-vars
- Tripdownload
+ Tripdownload,Areamasters,routemaster, CreateTrip
 } from '../../../../services/auth'
 
 export default {
@@ -39,7 +39,60 @@ export default {
     };
   },
   components: { Layout, PageHeader,VueTimepicker  },
+  mounted() {
+    this.areadata();
+    this.routedata();
+  },
   methods:{
+    async areadata() {
+      try {
+        const result = await Areamasters()
+        var data = result.data.response.areaMaster
+        data.map(e=>{
+        this.servingAreas.push(e.areaName)
+        console.log("user",e)
+      })
+       console.log("users",this.item)
+      } catch (error) {}
+    },
+    async routedata() {
+      try {
+        const result = await routemaster();
+        console.log(result);
+        var data = result.data.response.RouteMaster
+        data.map(e=>{
+        this.servingRoutes.push(e.routeName)
+        console.log("user",e)
+      })
+       console.log("users",this.item)
+      } catch (error) {}
+    },
+    async create() {
+      try{
+        let payload = {
+          tripDate: this.tripDate,
+          bodyNo: this.body,
+          plateNo: this.plate,
+          truckType: this.trucktype,
+          servingArea: this.area,
+          servingRoute: this.route,
+          collectionStartTime: this.startTime
+        };
+        const result = await CreateTrip(payload);
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `Incoming Trip Created`,
+            duration: 5000,
+          })
+          this.$router.push({path:'/Trips/IncomingTrips'});
+        }
+      }
+      catch(e) {
+
+      }
+    },
     getAreaId() {
 
     },
