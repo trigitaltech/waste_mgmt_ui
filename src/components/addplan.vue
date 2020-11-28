@@ -269,11 +269,6 @@ export default {
   background-color: #c7c7ca;
   color: black;
 }
-.card-header {
-  padding: 0.75rem 1.25rem;
-  margin-bottom: 0;
- background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
-}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

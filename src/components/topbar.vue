@@ -182,7 +182,7 @@ export default {
     rgba(48, 207, 208, 1) 11.2%,
     rgba(51, 8, 103, 1) 92.5%
   ); */
-  -webkit-box-shadow: 0 0.05rem 0.01rem rgba(75, 75, 90, 0.075);
-  box-shadow: 0 0.05rem 0.01rem rgba(75, 75, 90, 0.075);
+  // -webkit-box-shadow: 0 0.05rem 0.01rem rgba(75, 75, 90, 0.075);
+  // box-shadow: 0 0.05rem 0.01rem rgba(75, 75, 90, 0.075);
 }
 </style>
