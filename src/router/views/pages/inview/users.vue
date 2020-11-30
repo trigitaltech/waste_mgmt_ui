@@ -166,7 +166,6 @@ export default {
     <div class="animated fadeIn">
       <b-card
         header="Users"
-
         class="mt-10 ml-10 mr-10 mx-auto"
       >
       <b-row>
@@ -182,9 +181,7 @@ export default {
         </b-col>
         <b-col md="6">
           <b-button
-            style="
-              background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);margin-bottom:10px"
-            class="btn btn-info float-right mr-2"
+            class="btn float-right mr-2 mb-1 btn-custm"
             text="Create Tenant"
             @click="$router.push({ path: '/CreateUser' })"
             >Create User</b-button
@@ -202,7 +199,6 @@ export default {
             responsive="sm"
             :current-page="currentPage"
             :per-page="perPage"
-            thead-class="bg-dark"
             :small="small"
             :fixed="fixed"
             :fields="permissionColumns"
@@ -247,28 +243,33 @@ export default {
   </Layout>
 </template>
 <style lang="scss">
-.btn-info {
-    color: #fff;
-    background-image: linear-gradient(
-    109.6deg,
-    rgba(48, 207, 208, 1) 11.2%,
-    rgba(51, 8, 103, 1) 92.5%
-  );
-  border-color: #5369f8;
-}
 .page-item.active .page-link {
   z-index: 1;
   color: #fff;
-  background-image: linear-gradient(
-    109.6deg,
-    rgba(48, 207, 208, 1) 11.2%,
-    rgba(51, 8, 103, 1) 92.5%
-  );
-  border-color: #5369f8;
+  // background-image: linear-gradient(
+  //   109.6deg,
+  //   rgba(48, 207, 208, 1) 11.2%,
+  //   rgba(51, 8, 103, 1) 92.5%
+  // );
+  // border-color: #5369f8;
 }
-.table thead th {
-    outline: none !important;
-    color: white;
+.btn-custm {
+  background-image: linear-gradient(19deg, #0008ff 0%, #c242ff 100%);
+  opacity: 0.8;
+  border: none;
+  position: relative;
+}
+.btn-custm::before {
+  content: ' ';
+  -webkit-filter: blur(20px);
+  filter: blur(20px);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-image: linear-gradient(19deg, #0008ff 0%, #c242ff 100%);
 }
 </style>
 <style lang="sass" scoped>

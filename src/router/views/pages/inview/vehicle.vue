@@ -179,7 +179,6 @@ export default {
             responsive="sm"
             :current-page="currentPage"
             :per-page="perPage"
-            thead-class="bg-dark"
             :small="small"
             :fixed="fixed"
             :fields="permissionColumns"
@@ -230,10 +229,6 @@ export default {
     rgba(51, 8, 103, 1) 92.5%
   );
   border-color: #5369f8;
-}
-.table thead th {
-    outline: none !important;
-    color: white;
 }
 </style>
 <style lang="sass" scoped>

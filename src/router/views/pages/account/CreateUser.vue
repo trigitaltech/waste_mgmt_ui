@@ -223,7 +223,6 @@ export default {
             header="Create User"
             border-variant="info"
             header-text-variant="white"
-            
           >
             <div class="card-body">
               <ValidationObserver v-slot="{ handleSubmit }">

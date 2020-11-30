@@ -186,7 +186,6 @@ export default {
             responsive="sm"
             :current-page="currentPage"
             :per-page="perPage"
-            thead-class="bg-dark"
             :small="small"
             :fixed="fixed"
             :fields="permissionColumns"
@@ -228,10 +227,6 @@ export default {
   </Layout>
 </template>
 <style lang="scss">
-.table thead th {
-    outline: none !important;
-    color: white;
-}
 .page-item.active .page-link {
   z-index: 1;
   color: #fff;

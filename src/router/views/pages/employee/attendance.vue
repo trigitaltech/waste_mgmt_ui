@@ -172,6 +172,7 @@ export default {
         </b-col>
         <div class="mt-3">
           <b-table
+            show-empty
             :dark="dark"
             :hover="hover"
             :striped="striped"
@@ -181,7 +182,6 @@ export default {
             responsive="sm"
             :current-page="currentPage"
             :per-page="perPage"
-            thead-class="bg-dark"
             :small="small"
             :fixed="fixed"
             :fields="AttendanceColumns"
@@ -267,19 +267,6 @@ export default {
   </Layout>
 </template>
 <style lang="scss">
-.table thead th {
-    outline: none !important;
-    color: white;
-}
-.btn-info {
-    color: #fff;
-    background-image: linear-gradient(
-    109.6deg,
-    rgba(48, 207, 208, 1) 11.2%,
-    rgba(51, 8, 103, 1) 92.5%
-  );
-  border-color: #5369f8;
-}
 .page-item.active .page-link {
   z-index: 1;
   color: #fff;
