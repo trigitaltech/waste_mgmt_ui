@@ -20,7 +20,7 @@ export const users = () => serviceMaker(`/users/admin/readAll`, methods.GET, api
 
 export const routemaster = () => serviceMaker(`/routemaster/all `, methods.GET, api.NGB)
 
-export const getIncomingTrips = () => serviceMaker(`/tripincoming/all`, methods.GET, api.NGB)
+export const incomingtrips = () => serviceMaker(`/tripincoming/all`, methods.GET, api.NGB)
 
 export const equipment = () => serviceMaker(`/equipment/admin/encoders/owner`, methods.GET, api.NGB)
 

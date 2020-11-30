@@ -8,7 +8,7 @@ import NProgress from 'nprogress/nprogress'
 // Vue.component('downloadExcel', JsonExcel)
 import {
   // eslint-disable-next-line no-unused-vars
- Tripdownload,getIncomingTrips
+ Tripdownload,incomingtrips
 } from '../../../../services/auth'
 
 export default {
@@ -101,7 +101,7 @@ export default {
   methods: {
     async getTrips() {
       try{
-        let result = await getIncomingTrips();
+        let result = await incomingtrips();
         console.log(result);
       }
       catch(e) {

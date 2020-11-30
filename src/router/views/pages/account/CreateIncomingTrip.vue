@@ -29,7 +29,7 @@ export default {
       tripDate:null,
       trucktype:null,
       tripdate:null,
-      startTime:null,
+      startTime:"",
       servingAreas:[],
       servingRoutes:[],
       driverList:[],
@@ -183,7 +183,7 @@ export default {
                       class="grey-text font-weight-dark mr-2"
                       >Trip Start Time</label
                     >
-                    <vue-timepicker format="hh:mm A"></vue-timepicker>
+                    <vue-timepicker format="hh:mm A" v-model="startTime"></vue-timepicker>
                   </b-col>
                 </b-row>
                 <b-row class="mt-3">
