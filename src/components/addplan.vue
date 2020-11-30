@@ -27,7 +27,6 @@
            
                   <button
                     class="btn btn-primary d-inline-flex align-items-center"
-                    style="background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );"
                     type="submit"
                 @click="add()"
                   >Add Permission To Role</button>

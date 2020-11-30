@@ -346,14 +346,7 @@ export default {
       >
         <b-col md="12">
           <b-button
-            style="
-              background-image: linear-gradient(
-                109.6deg,
-                rgba(48, 207, 208, 1) 11.2%,
-                rgba(51, 8, 103, 1) 92.5%
-              );
-            "
-            class="btn btn-info float-right mr-2"
+            class="btn btn-custome float-right mr-2"
             text="Create Tenant"
             @click="$router.push({ path: '/create' })"
             >Create Billing</b-button
@@ -393,10 +386,10 @@ export default {
                 variant="danger"
                 @click="deleteBilling(data)"
               >
-                <i class="fa fa-trash bin"></i>
+                <i class="fa fa-times bin"></i>
               </b-button>
               <!-- <b-button size="sm" class="mr-2" variant="html5 icon" @click="deleteBilling(data)">
-              <i class="fa fa-trash"></i>
+              <i class="fa fa-times"></i>
             </b-button>
             <b-button size="sm" class="mr-2" variant="facebook" @click="editBilling(data)">
               <i class="fa fa-pencil"></i>
@@ -464,27 +457,6 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
-<style lang="scss">
-.btn-info {
-    color: #fff;
-    background-image: linear-gradient(
-    109.6deg,
-    rgba(48, 207, 208, 1) 11.2%,
-    rgba(51, 8, 103, 1) 92.5%
-  );
-  border-color: #5369f8;
-}
-.page-item.active .page-link {
-  z-index: 1;
-  color: #fff;
-  background-image: linear-gradient(
-    109.6deg,
-    rgba(48, 207, 208, 1) 11.2%,
-    rgba(51, 8, 103, 1) 92.5%
-  );
-  border-color: #5369f8;
-}
-</style>
 <style lang="sass" scoped>
 .edit
   color: white !important

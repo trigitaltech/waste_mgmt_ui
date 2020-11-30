@@ -35,7 +35,6 @@ export default {
       fixed: false,
       printPdf: [],
       tableData: [],
-      title: 'Trip Incoming Details',
       items: [
         {
           text: 'Reports',
@@ -236,10 +235,6 @@ export default {
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
-          <!-- Card -->
-          <div class="card mx-xl-5">
-            <!-- Card body -->
-            <div class="card-body">
               <!-- Default form subscription -->
               <form>
                 <b-row>
@@ -265,9 +260,7 @@ export default {
                   </b-col>
                   <b-col>
                      <b-button
-                  style="
-                    background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-info float-right mr-2"
+                  class="btn btn-custome float-right mr-2"
                   text="Create Tenant"
                   @click="create"
                   >Generate</b-button
@@ -278,10 +271,6 @@ export default {
                
               </form>
               <!-- Default form subscription -->
-            </div>
-            <!-- Card body -->
-          </div>
-          <!-- Card -->
         </div>
       </b-card>
    </div>
@@ -483,12 +472,6 @@ export default {
   </Layout>
 </template>
 <style lang="scss" scoped media="print">
-.page-item.active .page-link {
-  z-index: 1;
-  color: #fff;
-  background-color: #26a69a;
-  border-color: #5369f8;
-}
 .pdf-content {
   background: #fff;
   font-family: sans-serif;

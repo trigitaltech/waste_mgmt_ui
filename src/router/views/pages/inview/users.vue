@@ -183,7 +183,7 @@ export default {
           <b-button
             class="btn float-right mr-2 mb-1 btn-custm"
             text="Create Tenant"
-            @click="$router.push({ path: '/CreateUser' })"
+            @click="$router.push({ name: 'CreateUser' })" 
             >Create User</b-button
           >
         </b-col>
@@ -221,7 +221,7 @@ export default {
                 </b-button>
               </router-link>
             <b-button size="sm" class="mr-2" variant="danger" @click="deleteReq(data)">
-              <i class="fa fa-trash bin"></i>
+              <i class="fa fa-times bin"></i>
             </b-button>
            </template>
           </b-table>
@@ -243,16 +243,6 @@ export default {
   </Layout>
 </template>
 <style lang="scss">
-.page-item.active .page-link {
-  z-index: 1;
-  color: #fff;
-  // background-image: linear-gradient(
-  //   109.6deg,
-  //   rgba(48, 207, 208, 1) 11.2%,
-  //   rgba(51, 8, 103, 1) 92.5%
-  // );
-  // border-color: #5369f8;
-}
 .btn-custm {
   background-image: linear-gradient(19deg, #0008ff 0%, #c242ff 100%);
   opacity: 0.8;

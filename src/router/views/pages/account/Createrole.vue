@@ -222,14 +222,9 @@ export default {
     <div class="animated fadeIn">
       <b-card
         header="Create Role"
-
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
-          <!-- Card -->
-          <div class="card mx-xl-5">
-            <!-- Card body -->
-            <div class="card-body">
               <!-- Default form subscription -->
               <form>
                 <b-row>
@@ -254,9 +249,7 @@ export default {
                   </b-col>
                   <b-col>
                      <b-button
-                  style="
-                    background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-info float-right mr-2"
+                  class="btn btn-custome float-right mr-2"
                   text="Create Tenant"
                   @click="create"
                   >Save</b-button
@@ -271,35 +264,25 @@ export default {
                
               </form>
               <!-- Default form subscription -->
-            </div>
-            <!-- Card body -->
-          </div>
-          <!-- Card -->
         </div>
-        <b-row>
-
-          
-  <div>
-    <div class="animated fadeIn">
+      </b-card>
+          <div class="animated fadeIn">
       <b-row >
-      <b-col md="8">
+      <b-col md="12">
           <b-card
             class="card-wrap"
             header="Add Permission To Role"
             border-variant="info"
             header-text-variant="white"
-            style="width:1250px"
           >
            
             <div>
-              <b-row style="margin-top:50px">
-               <DualListBox
+              <DualListBox
                   :source="source"
                   :destination="destination"
                   label="name"
                   @onChangeList="onChangeList"
                 />
-              </b-row>
             </div>
             <div class="row mt-1 justify-content-center">
             
@@ -307,7 +290,6 @@ export default {
            
                   <button
                     class="btn btn-primary d-inline-flex align-items-center"
-                    style="background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );"
                     type="submit"
                 @click="add()"
                   >Add Permission To Role</button>
@@ -318,10 +300,6 @@ export default {
       </b-col>
       </b-row>
     </div>
-  </div>
-
-        </b-row>
-      </b-card>
     </div>
     <!-- end row -->
   </Layout>

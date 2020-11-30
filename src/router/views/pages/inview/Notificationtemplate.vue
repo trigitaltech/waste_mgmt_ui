@@ -345,9 +345,8 @@ export default {
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <b-col md="12">
-            <b-button  style="
-  background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% )"
-            class="btn btn-info float-right mr-2"
+            <b-button
+            class="btn btn-custome float-right mr-2"
             text="Create Tenant"
             @click="$router.push({path:'/create'})"
           >Create NotificationTemplate</b-button>
@@ -386,10 +385,10 @@ export default {
                 variant="danger"
                 @click="deleteNotificationTemplate(data)"
               >
-                <i class="fa fa-trash bin"></i>
+                <i class="fa fa-times bin"></i>
               </b-button>
               <!-- <b-button size="sm" class="mr-2" variant="html5 icon" @click="deleteNotificationTemplate(data)">
-              <i class="fa fa-trash"></i>
+              <i class="fa fa-times"></i>
             </b-button>
             <b-button size="sm" class="mr-2" variant="facebook" @click="editNotificationTemplate(data)">
               <i class="fa fa-pencil"></i>
@@ -457,14 +456,6 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
-<style lang="scss">
-.page-item.active .page-link {
-    z-index: 1;
-    color: #fff;
-background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
-    border-color: #5369f8;
-}
-</style>
 <style lang="sass" scoped>
 .edit
   color: white !important

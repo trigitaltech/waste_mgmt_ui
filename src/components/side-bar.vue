@@ -167,11 +167,11 @@ export default {
 				class="slimscroll-menu"
 				:settings="settings"
 			>
-				<div id="sidebar-menu">
+				<div id="sidebar-menu" class="left-sidebar">
 					<Appmenu />
 				</div>
 			</VuePerfectScrollbar>
-			<div v-else id="sidebar-menu">
+			<div v-else id="sidebar-menu" class="left-sidebar">
 				<Appmenu />
 			</div>
 		</div>

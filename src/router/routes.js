@@ -529,7 +529,7 @@ const pagesRoutes = [
   },
   {
     path: '/CreateUser',
-    name: 'CreateUsers',
+    name: 'CreateUser',
     icon: 'check-square',
     component: () => lazyLoadView(import('@views/pages/account/CreateUser')),
     meta: { authRequired: true },

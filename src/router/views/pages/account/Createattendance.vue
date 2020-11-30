@@ -168,10 +168,6 @@ this.employeedata()
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
-          <!-- Card -->
-          <div class="card mx-xl-5">
-            <!-- Card body -->
-            <div class="card-body">
               <!-- Default form subscription -->
              <form @submit.prevent="create">
                 <b-row>
@@ -375,19 +371,12 @@ this.employeedata()
               
                 <br />
                <button
-                         
-                          style="
-                            background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
                           type="submit"
-                         class="btn btn-info float-right mr-2"
+                         class="btn btn-custome float-right mr-2"
                           >Submit</button
                         >
               </form>
               <!-- Default form subscription -->
-            </div>
-            <!-- Card body -->
-          </div>
-          <!-- Card -->
         </div>
       </b-card>
     </div>

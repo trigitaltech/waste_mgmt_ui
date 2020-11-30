@@ -1,7 +1,9 @@
 //
 // forms.scss
 //
-
+.form-control {
+  border-bottom: 4px solid #e2e7f1;
+ }
 // Form-control light
 .form-control-light {
   background-color: $gray-100;
