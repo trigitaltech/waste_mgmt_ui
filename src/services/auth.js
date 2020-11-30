@@ -20,6 +20,8 @@ export const users = () => serviceMaker(`/users/admin/readAll`, methods.GET, api
 
 export const routemaster = () => serviceMaker(`/routemaster/all `, methods.GET, api.NGB)
 
+export const servicerequests = () => serviceMaker(`/serviceticket/system/all `, methods.GET, api.NGB)
+
 export const incomingtrips = () => serviceMaker(`/tripincoming/all`, methods.GET, api.NGB)
 
 export const equipment = () => serviceMaker(`/equipment/admin/encoders/owner`, methods.GET, api.NGB)
@@ -50,6 +52,8 @@ export const deleteuser = (id) => serviceMaker(`/users/admin/delete/${id}`, meth
 
 export const deleteequipment = (id) => serviceMaker(`/equipment/admin/encoders/${id}`, methods.DELETE, api.NGB)
 
+export const deleteservicerequest = (id) => serviceMaker(`/serviceticket/encoder/admin/${id}`, methods.DELETE, api.NGB)
+
 export const deleterole = (id) => serviceMaker(`/roles/admin/${id}`, methods.DELETE, api.NGB)
 
 export const createpermission = (payload) => serviceMaker(`/permissions/admin`, methods.POST, api.NGB, payload)
@@ -66,6 +70,7 @@ export const createuser = (payload) => serviceMaker(`/users/admin/create`, metho
 
  export const createattendance = (payload) => serviceMaker(`/attendence/checker/admin/checkin`, methods.POST, api.NGB, payload)
 
+ export const createservicerequest = (payload) => serviceMaker(`/serviceticket/encoder/admin`, methods.POST, api.NGB, payload)
 
  export const checkout = (payload) => serviceMaker(`/attendence/checker/admin/checkout/`, methods.PUT, api.NGB, payload)
 
@@ -77,7 +82,9 @@ export const createvehicle = (payload) => serviceMaker(`/vehicles/admin/encoders
 
 export const createequipment = (payload) => serviceMaker(`/equipment/admin/encoders/`, methods.POST, api.NGB, payload)
 
- 
+
+export const editservicerequest = (payload) => serviceMaker(`/serviceticket/system/issue`, methods.PUT, api.NGB, payload)
+
 export const editrole = (payload) => serviceMaker(`/roles/admin`, methods.PUT, api.NGB, payload)
 
 export const editattendance = (payload) => serviceMaker(`/attendence/checker/admin/`, methods.PUT, api.NGB, payload)

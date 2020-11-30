@@ -8,7 +8,7 @@ export function isValidResponse (resp) {
 export const NGB = axios.create({
 
   // baseURL: 'https://localhost:8877/ngbplatform/api/v1/'
-  baseURL: 'http://13.234.240.203:9000/api/v1/management'
+  baseURL: 'http://13.127.52.18:9000/api/v1/management'
   // baseURL: 'https://tstvbilling.com/ngbplatform/api/v1/',
   
 })

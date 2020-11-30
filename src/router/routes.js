@@ -435,7 +435,7 @@ const inviewRoutes = [
     ]
   },
   {
-    path: '/Service request details',
+    path: '/Servicerequestdetails',
     name: 'ServiceRequest',
     
     icon: 'folder',
@@ -477,6 +477,14 @@ const inviewRoutes = [
 
 // pageRoute
 const pagesRoutes = [
+  {
+    path: '/Createservicerequest',
+    name: 'Createservicerequest',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/servicerequest/createservicerequest')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
   {
     path: '/Createattendance',
     name: 'Createattendance',
@@ -649,6 +657,14 @@ const pagesRoutes = [
   },
 
   {
+    path: '/Editservicerequest',
+    name: 'Editservicerequest',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/editservicerequest')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
     path: '/Editattendance',
     name: 'Editattendance',
     icon: 'check-square',
@@ -698,7 +714,14 @@ const pagesRoutes = [
   },
 
 
-
+  {
+    path: '/Viewservicerequest',
+    name: 'Viewservicerequest',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewservicerequest')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
 
   {
     path: '/Viewattendance',
