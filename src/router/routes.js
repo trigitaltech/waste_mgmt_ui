@@ -712,7 +712,6 @@ const pagesRoutes = [
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
-<<<<<<< HEAD
   {
     path: '/Viewincomingtrip',
     name: 'Viewincomingtrip',
@@ -721,19 +720,6 @@ const pagesRoutes = [
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
-=======
-
-
-  {
-    path: '/Viewservicerequest',
-    name: 'Viewservicerequest',
-    icon: 'check-square',
-    component: () => lazyLoadView(import('@views/pages/views/viewservicerequest')),
-    meta: { authRequired: true },
-    props: (route) => ({ user: store.state.auth.currentUser || {} }),
-  },
-
->>>>>>> 943d55ea52c11886900aeff38122505e0698e3fd
   {
     path: '/Viewattendance',
     name: 'Viewattendance',
