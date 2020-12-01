@@ -199,14 +199,7 @@ export default {
       >
         <b-col md="12">
           <b-button
-            style="
-              background-image: linear-gradient(
-                109.6deg,
-                rgba(48, 207, 208, 1) 11.2%,
-                rgba(51, 8, 103, 1) 92.5%
-              );
-            "
-            class="btn btn-info float-right mr-2"
+            class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/Createservicerequest' })"
             >Create Servicerequest</b-button
@@ -220,7 +213,7 @@ export default {
             :bordered="bordered"
             :filter="filter"
             id="my-table"
-            responsive="sm"
+            :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
             thead-class="bg-dark"
@@ -255,8 +248,6 @@ export default {
               :per-page="perPage"
               :total-rows="item"
               aria-controls="my-table"
-              prev-text="Prev"
-              next-text="Next"
               hide-goto-end-buttons
             ></b-pagination>
           </div>
@@ -300,7 +291,7 @@ export default {
 </style>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

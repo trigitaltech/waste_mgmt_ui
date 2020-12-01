@@ -47,7 +47,7 @@ export default {
       <a href="/" class="navbar-brand mr-0 mr-md-2 logo">
         <span class="logo-lg">
           <!-- <img src="@assets/images/tstvlogo.png" alt height="90"/> -->
-          <span class="d-inline h5 ml-2 text-logo" style="color: #4b4b5a;"
+          <span class="d-inline h5 text-logo" style="color: #4b4b5a;"
             >Waste Management</span
           >
         </span>

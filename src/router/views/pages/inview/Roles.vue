@@ -45,24 +45,24 @@ export default {
       permissionColumns: [
          {
           key: 'id',
-
           label: 'Id',
+          sortable: true,
         },
         {
           key: 'name',
           label: 'NAME',
+          sortable: true,
         },
          {
           key: 'createdBy',
           label: 'createdBy',
+          sortable: true,
         },
          {
           key: 'createdDate',
           label: 'createdDate',
+          sortable: true,
         },
-        
-        
-
         {
           key: 'actions',
           sortable: true,
@@ -139,15 +139,12 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-       
         header="Roles"
-
           class="mt-10 ml-10 mr-10 mx-auto"
       >
          <b-col md="12">
-          <b-button   style="
-  background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );margin-bottom:10px"
-            class="btn btn-info float-right mr-2"
+          <b-button
+            class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({path:'/CreateRole'})"
           >Create Role</b-button>
@@ -160,10 +157,9 @@ export default {
             :bordered="bordered"
             :filter="filter"
             id="my-table"
-            responsive="sm"
+            :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
-            thead-class="bg-dark"
             :small="small"
             :fixed="fixed"
             :fields="permissionColumns"
@@ -174,20 +170,20 @@ export default {
    
              <template v-slot:cell(actions)="data">
               <router-link :to="{ name: 'Viewrole', params: data.item }">
-                <b-button size="sm" class="mr-2" variant="primary">
-                  <i class="fa fa-eye"></i>
-                </b-button>
+                <span class="mr-3" >
+                 <i class="fa fa-eye edit"></i>
+                </span>
               </router-link>
             
          
              <router-link :to="{ name: 'Editrole', params: data.item }">
-                <b-button size="sm" class="mr-2" variant="primary">
+                <span class="mr-3">
                   <i class="fas fa-pencil-alt edit"></i>
-                </b-button>
+                </span>
               </router-link>
-            <b-button size="sm" class="mr-2" variant="danger" @click="deleteReq(data)">
-              <i class="fa fa-trash bin"></i>
-            </b-button>
+            <span class="mr-3" @click="deleteReq(data)">
+              <i class="fa fa-times edit"></i>
+            </span>
            </template>
           
           </b-table>
@@ -199,8 +195,6 @@ export default {
               :per-page="perPage"
               :total-rows="permissions"
               aria-controls="my-table"
-              prev-text="Prev"
-              next-text="Next"
               hide-goto-end-buttons
             ></b-pagination>
           </div>
@@ -209,24 +203,10 @@ export default {
     </div>
     <!-- end row -->
   </Layout>
-</template>
-<style lang="scss">
-.page-item.active .page-link {
-    z-index: 1;
-    color: #fff;
-background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
-    border-color: #5369f8;
-}
-.table thead th {
-    outline: none !important;
-    color: white;
-}
-</style>
+</template> 
 <style lang="sass" scoped>
 .edit
-  color: white !important
-.text-center
-  text-align: center
+  color: #a7a7a7 !important
 .form-div label
   margin-top: 8px
 </style>

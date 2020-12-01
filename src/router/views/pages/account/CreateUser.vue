@@ -221,9 +221,6 @@ export default {
         <div class="col-xl-12  mx-auto">
           <b-card
             header="Create User"
-            border-variant="info"
-            header-text-variant="white"
-            
           >
             <div class="card-body">
               <ValidationObserver v-slot="{ handleSubmit }">
@@ -738,9 +735,6 @@ export default {
                             >Reset</button
                           > -->
                         <button
-                         
-                          style="
-                            background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
                           type="submit"
                           class="btn btn-primary d-inline-flex align-items-center"
                           >Submit</button
@@ -761,7 +755,7 @@ export default {
 </template>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

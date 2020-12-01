@@ -349,9 +349,8 @@ export default {
           class="mt-10 ml-10 mr-10 mx-auto"
       >
          <b-col md="12">
-          <b-button  style="
-  background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% )"
-            class="btn btn-info float-right mr-2"
+          <b-button
+            class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({path:'/tenant/create'})"
           >Create Employee</b-button>
@@ -364,7 +363,7 @@ export default {
             :bordered="bordered"
             :filter="filter"
             id="my-table"
-            responsive="sm"
+            :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
             thead-class="header"
@@ -390,10 +389,10 @@ export default {
                 variant="danger"
                 @click="deletePermission(data)"
               >
-                <i class="fa fa-trash bin"></i>
+                <i class="fa fa-times bin"></i>
               </b-button>
               <!-- <b-button size="sm" class="mr-2" variant="html5 icon" @click="deletePermission(data)">
-              <i class="fa fa-trash"></i>
+              <i class="fa fa-times"></i>
             </b-button>
             <b-button size="sm" class="mr-2" variant="facebook" @click="editPermission(data)">
               <i class="fa fa-pencil"></i>
@@ -450,8 +449,6 @@ export default {
               :per-page="perPage"
               :total-rows="permissions"
               aria-controls="my-table"
-              prev-text="Prev"
-              next-text="Next"
               hide-goto-end-buttons
             ></b-pagination>
           </div>
@@ -464,7 +461,7 @@ export default {
 
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

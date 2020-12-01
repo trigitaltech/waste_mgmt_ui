@@ -222,9 +222,6 @@ export default {
         <div class="col-xl-12  mx-auto">
           <b-card
             header="View User"
-            border-variant="info"
-            header-text-variant="white"
-            
           >
             <div class="card-body">
               <ValidationObserver v-slot="{ handleSubmit }">
@@ -766,7 +763,7 @@ export default {
 
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

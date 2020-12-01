@@ -706,7 +706,7 @@ export default {
                           show-empty
                           :items="movieTableData"
                           :fields="movieFields"
-                          responsive="sm"
+                          :responsive="true"
                           :per-page="perPage"
                           :current-page="currentPage"
                           :sort-by.sync="sortBy"
@@ -780,7 +780,7 @@ export default {
                       show-empty
                       :items="tableData"
                       :fields="fields"
-                      responsive="sm"
+                      :responsive="true"
                       :per-page="perPage"
                       :current-page="currentPage"
                       :sort-by.sync="sortBy"

@@ -6,8 +6,6 @@
           <b-card
             class="card-wrap"
             header="Add Permission To Role"
-            border-variant="info"
-            header-text-variant="white"
             style="width:1250px"
           >
            
@@ -27,7 +25,6 @@
            
                   <button
                     class="btn btn-primary d-inline-flex align-items-center"
-                    style="background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );"
                     type="submit"
                 @click="add()"
                   >Add Permission To Role</button>
@@ -268,13 +265,5 @@ export default {
 .list-box-wrapper .list-box-item .bulk-action .deselect-all {
   background-color: #c7c7ca;
   color: black;
-}
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 10px;
 }
 </style>
