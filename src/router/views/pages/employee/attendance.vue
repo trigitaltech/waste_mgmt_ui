@@ -59,7 +59,7 @@ export default {
       AttendanceColumns: [
        
         {
-          key: 'employeeId',
+          key: 'employeeId.id',
           label: 'Emp Id',
         },
         {

@@ -175,7 +175,7 @@ export default {
                 personalIdNo: this.form.personalidno,
                 idProofDocURL: this.file,
                 type: null,
-                role: this.rolename,
+               roles:[ this.rolename],
                 isDeleted: false,
                 status: 200,
                 createdDate: this.createddate,

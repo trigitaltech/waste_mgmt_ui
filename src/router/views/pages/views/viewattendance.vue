@@ -143,7 +143,7 @@ console.log(this.$route.params)
       // for(i=0;i<data.length;i++){
       //   this.item[i]=data[i].userName
       // }
-debugger
+// debugger
       this.emp.map(e=>{
           if(this.$route.params.employeeId === e.id)
              this.ownername=e.userName

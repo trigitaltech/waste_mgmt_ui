@@ -47,10 +47,10 @@ export default {
       dumparea:"",
       drivername:"",
       driverid:"",
-      controlcheckerid:"",
+      cid:"",
       controlcheckername:"",
-      operatorid:"",
-      operatorname:"",
+
+      item1:[],
       dump:[],
       createdby: "",
       createddate: new Date(),
@@ -63,6 +63,8 @@ export default {
       ],
       title: 'Register',
      item:[{ value: null, text: 'Please select an user' }],
+     emplys:[],
+     oid:"",
       items: [
         {
           text: 'Setup',
@@ -93,10 +95,19 @@ export default {
     this.getemployees()
   },
   methods: {
-    async getuid(){
-       this.users.map(e=>{
+    getoid() {
+    this.emplys.map(e=>{
+     
+         if(this.operatorname === e.type){ 
+        this.oid === e.id
+        console.log("id",this.oid)
+         }
+      })
+    },
+    getuid() {
+       this.item1.map(e=>{
          if(this.controlcheckername === e.userName){ 
-        this.controlcheckerid === e.id
+        this.cid === e.id
          }
       })
            
@@ -105,8 +116,8 @@ export default {
        try {
     
       const result = await users()
-      var item = result.data.response.Users
-      item.map(e=>{
+      this.item1 = result.data.response.Users
+      this.item1.map(e=>{
         this.users.push(e.userName)
       })
      
@@ -155,8 +166,8 @@ this.operators.push(e.type)
                 dumpingArea: this.dumparea,
                 driverName:this.drivername,
                 driverId: this.driverid,
-                operatorId:this.operatorid,
-                controlCheckerid: this.controlcheckerid,
+                operatorId:this.oid,
+                controlCheckerid: this.cid,
                 controlChekerName: this.controlcheckername,
                 isDeleted: "false",
                 createdBy: this.createdby,
@@ -191,8 +202,8 @@ this.operators.push(e.type)
        try {
       
       const result = await  equipment()
-      var item = result.data.response.equipment
-       item.map(e=>{
+      this.emplys = result.data.response.equipment
+       this.emplys.map(e=>{
       this.type.push(e.equipmentType)
       console.log("user",e)
       })
@@ -287,7 +298,7 @@ this.operators.push(e.type)
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Plate</label
+                      >Plate No</label
                     >
                 <input
                       type="text"
@@ -300,14 +311,14 @@ this.operators.push(e.type)
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Body</label
+                      >Vehicle No</label
                     >
                     <input
                       type="text"
                       id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="body"
-                        placeholder="Enter BODY"
+                        placeholder="Enter Vehicle No"
                     
                     />
                   </b-col>
@@ -438,7 +449,7 @@ this.operators.push(e.type)
                    <b-form-select
                       v-model="operatorname"
                       :options="operators"
-                    
+                    @change="getoid()"
                     ></b-form-select>
                   </b-col>
                   <b-col>
