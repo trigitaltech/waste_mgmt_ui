@@ -181,7 +181,7 @@ export default {
         <div class="mt-3">
               <!-- Default form subscription -->
               <form>
-                <b-row>
+                <b-row class="mb-3">
                   <b-col>
                     <!-- Default input name -->
                     <label
@@ -191,13 +191,18 @@ export default {
                      Equipment No</label
                     >
                     <input
+<<<<<<< HEAD
                       type="number"
+=======
+>>>>>>> 9a31dbc5d06310382f9d4965c35d4e9f05c89064
                       id="defaultFormCardNameEx"
-                      class="form-control"
                       v-model="equipmentno"
-                    />
-
-                   <label
+                      type="text"
+                      class="form-control"
+                    /> <!-- Default input text -->
+                  </b-col>
+                  <b-col>
+                    <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
                       >Equipment Type</label
@@ -206,14 +211,12 @@ export default {
                       v-model.trim="equipmenttype"
                       placeholder="Select Equipment"
                       label="value"
-                  
+                      class="form-control"
                       :options="item1"
                 ></b-form-select>
-
-                    <br />
-
-                    <!-- Default input text -->
                   </b-col>
+                </b-row>
+                <b-row class="mb-3">
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -224,28 +227,32 @@ export default {
                   v-model.trim="ownername"
                   placeholder="Select Supervisor"
                   label="value"
-                @change="getid()"
-                  :options="owners"
+                class="form-control"
+                :options="owners"
+                  @change="getid"
                 ></b-form-select>
-
-                    <!-- Default input name -->
+                  </b-col>
+                  <b-col>
+                     <!-- Default input name -->
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Equipment Id</label
                     >
                     <input
+<<<<<<< HEAD
                       type="number"
+=======
+>>>>>>> 9a31dbc5d06310382f9d4965c35d4e9f05c89064
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="equipmentid"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
-                  <br />
                 </b-row>
-                  <b-row>
-                    
-                      <b-col>
+                  <b-row class="mb-3">
+                    <b-col>
                     <!-- Default input text -->
                     <label
                       for="defaultFormCardtextEx"
@@ -256,13 +263,17 @@ export default {
                   v-model.trim="servingarea"
                   placeholder="Select Supervisor"
                   label="value"
+                  class="form-control"
                   :options="item"
                 ></b-form-select>
+                  </b-col>
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Manufacture Date</label
                     >
+<<<<<<< HEAD
                     <datetime 
                       v-model="manufacturedate"
                       :format="{
@@ -275,6 +286,18 @@ export default {
                   </b-col>
                
                  <b-col md="9">
+=======
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="manufacturedate"
+                      type="text"
+                      class="form-control"
+                    />
+                  </b-col>
+                  </b-row>
+                  <b-row class="mb-3">
+                 <b-col>
+>>>>>>> 9a31dbc5d06310382f9d4965c35d4e9f05c89064
                     <!-- Default input text -->
                     <label
                       for="defaultFormCardtextEx"
@@ -282,27 +305,36 @@ export default {
                       >Total Kms Served</label
                     >
                     <input
+<<<<<<< HEAD
                       type="number"
+=======
+>>>>>>> 9a31dbc5d06310382f9d4965c35d4e9f05c89064
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="totalkmsserved"
+                      type="text"
+                      class="form-control"
                     />
-
+                  </b-col>
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Total Hours Served</label
                     >
                     <input
+<<<<<<< HEAD
                       type="number"
+=======
+>>>>>>> 9a31dbc5d06310382f9d4965c35d4e9f05c89064
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="totalhoursserved"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                   
                 </b-row>
-                <b-row>
+                <b-row class="mb-3">
                      <b-col>
                     <!-- Default input text -->
                     <label
@@ -311,15 +343,14 @@ export default {
                       >Description</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="description"
+                      type="text"
+                      class="form-control"
                     />
 
                      </b-col>
                 </b-row>
-                <br />
                 <b-button
                   class="btn btn-custome float-right btn-secondary mb-3"
                   text="Create Tenant"

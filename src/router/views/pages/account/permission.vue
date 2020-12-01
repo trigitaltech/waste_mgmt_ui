@@ -173,17 +173,18 @@ export default {
             <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({name:'CreatePermission'})"
+            @click="$router.push({ name: 'CreatePermission' })"
           >Create Permission</b-button>
         </b-col>
         <div class="mt-3">
           <b-table
+            id="my-table"
             :dark="dark"
             :hover="hover"
             :striped="striped"
+            ref="roles"
             :bordered="bordered"
             :filter="filter"
-            id="my-table"
             :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
@@ -192,7 +193,6 @@ export default {
             :fields="permissionColumns"
             :items="item"
             class="mt-3"
-            ref="roles"
           >
           <template v-slot:cell(createdDate)="data">
                             <div class="table-row">{{ getDate(data.item.createdDate) }}</div>

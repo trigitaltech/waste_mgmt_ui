@@ -167,9 +167,9 @@ this.userdata()
                      Area Name</label
                     >
                     <input
-                      type="text"
-                    
                       v-model="areaname"
+                    
+                      type="text"
                        oninvalid="this.setCustomValidity('Area Name is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Area Name"
@@ -238,9 +238,9 @@ this.userdata()
                       >Area SqKm</label
                     >
                     <input
-                      type="text"
-                    
                       v-model="areasqkm"
+                    
+                      type="text"
                        oninvalid="this.setCustomValidity('Area Sqkm is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Area Sqkm"
@@ -259,9 +259,9 @@ this.userdata()
                       >Description</label
                     >
                     <input
-                      type="text"
-                     
                       v-model="description"
+                     
+                      type="text"
                        oninvalid="this.setCustomValidity('Description is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Description"
@@ -276,10 +276,10 @@ this.userdata()
                       >City</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="city"
+                      type="text"
+                      class="form-control"
                          placeholder="Enter city"
                     />
                   </b-col>
@@ -298,11 +298,11 @@ this.userdata()
                     >
                     <input
                    
-                      type="text"
                       id="defaultFormCardtextEx"
+                      v-model="state"
+                      type="text"
                       class="form-control"
                       placeholder="Enter state"
-                      v-model="state"
                     />
  <br/>
                 
@@ -319,12 +319,12 @@ this.userdata()
                       >Country</label
                     >
                     <input
-                    placeholder="Enter country"
+                    id="defaultFormCardtextEx"
                   
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="country"
+                      placeholder="Enter country"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                 
@@ -336,11 +336,11 @@ this.userdata()
                       >Zip</label
                     >
                     <input
-                   placeholder="Enter Zip"
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                   id="defaultFormCardtextEx"
                       v-model="zip"
+                      placeholder="Enter Zip"
+                      type="text"
+                      class="form-control"
                     />
                      </b-col>
                 </b-row>

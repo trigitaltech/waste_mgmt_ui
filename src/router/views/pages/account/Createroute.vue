@@ -190,10 +190,10 @@ export default {
                      Route Name</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardNameEx"
-                     
                       v-model="routename"
+                     
+                      type="text"
                          oninvalid="this.setCustomValidity('Route Name is required ')"
                                 oninput="setCustomValidity('')"
                               placeholder="Enter Routename"
@@ -255,7 +255,7 @@ export default {
                                 class="form-control"
                                 required
               
-                       @change="getid()"
+                       @change="getid"
                     ></b-form-select>
                     <!-- Default input name -->
                   
@@ -297,10 +297,10 @@ export default {
                       >Route Distance</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                   
                       v-model="routedistance"
+                   
+                      type="text"
                          oninvalid="this.setCustomValidity('Route distance is required ')"
                                 oninput="setCustomValidity('')"
                                placeholder="Enter Route Distance"
@@ -320,10 +320,10 @@ export default {
                       >Description</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="description"
+                      type="text"
+                      class="form-control"
                       placeholder="Enter Description"
                     />
                   </b-col>
@@ -334,10 +334,10 @@ export default {
                       >City</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="city"
+                      type="text"
+                      class="form-control"
                       placeholder="Enter city"
                     />
                   </b-col>

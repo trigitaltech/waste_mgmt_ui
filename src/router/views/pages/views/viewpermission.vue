@@ -140,11 +140,11 @@ export default {
                       name</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                    id="defaultFormCardNameEx"
                       v-model="name"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                  
@@ -159,11 +159,11 @@ export default {
                       Url</label
                     >
                     <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                    id="defaultFormCardEmailEx"
                       v-model="url"
+                      disabled
+                      type="email"
+                      class="form-control"
                     />
 
                     <br />
@@ -188,11 +188,11 @@ export default {
                       >Operation</label
                     >
                      <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                    id="defaultFormCardEmailEx"
                       v-model="operation"
+                      disabled
+                      type="email"
+                      class="form-control"
                     />
                   </b-col>
                  

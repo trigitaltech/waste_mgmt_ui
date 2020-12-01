@@ -354,12 +354,13 @@ export default {
         </b-col>
         <div class="mt-3">
           <b-table
+            id="my-table"
             :dark="dark"
             :hover="hover"
             :striped="striped"
             :bordered="bordered"
+            ref="roles"
             :filter="filter"
-            id="my-table"
             :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
@@ -369,7 +370,6 @@ export default {
             :fields="TripdetailColumns"
             :items="item"
             class="mt-3"
-            ref="roles"
           >
             <template slot="actions" slot-scope="data">
               <span class="mr-2" @click="editTripdetail(data)">
@@ -405,27 +405,27 @@ export default {
             </template>
           </b-table>
 
-          <b-modal v-model="TripdetailModal" id="roleModal">
+          <b-modal id="roleModal" v-model="TripdetailModal">
             <div slot="modal-header">{{ header }}</div>
             <div>
               <b-input v-model="Tripdetail" />
 
-              <b-input class="mt-2" v-model="Tripdetail" />
+              <b-input v-model="Tripdetail" class="mt-2" />
 
               <multiselect
+                v-model="Tripdetail"
                 class="perm_input"
                 :options="methods"
                 placeholder="Select a Method"
                 label="value"
                 track-by="value"
                 :multiple="false"
-                v-model="Tripdetail"
               ></multiselect>
             </div>
             <div slot="modal-footer">
-              <b-button @click="handleEdit" variant="primary">Submit</b-button>
+              <b-button variant="primary" @click="handleEdit">Submit</b-button>
 
-              <b-button @click="clearModal" class="ml-2" variant="secondary"
+              <b-button class="ml-2" variant="secondary" @click="clearModal"
                 >Cancel</b-button
               >
             </div>

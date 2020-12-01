@@ -245,16 +245,17 @@ this.employeedata()
                   @change="getid"
                   
                 ></b-form-select>
-             
-                    <label
+                  </b-col>
+                  <b-col>
+                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Task Ref No</label
                     >
                     <input
-                      type="text"
-                    
                       v-model="taskref"
+                    
+                      type="text"
                       
                                 placeholder="Enter Task ref no "
                                 class="form-control"
@@ -277,7 +278,8 @@ this.employeedata()
                       placeholder="SELECT RECORD DATE"
                       name="startdate"
                     ></flat-pickr>
-
+                  </b-col>
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"

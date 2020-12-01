@@ -138,20 +138,20 @@ export default {
                   <b-col>
                     <!-- Default input name -->
                    <input
+                      id="defaultFormCardNameEx"
                       type="text"
                       disabled
-                      id="defaultFormCardNameEx"
                       class="form-control"
                       placeholder="Role Name"
                     />
                   </b-col>
                   <b-col style="margin-left:50px">
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                    id="defaultFormCardNameEx"
                       v-model="name"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                   </b-col>

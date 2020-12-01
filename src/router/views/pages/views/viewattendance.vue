@@ -233,9 +233,9 @@ console.log(this.$route.params)
                     >
 
                     <input
-                      type="text"
-                    
                       v-model="ownername"
+                    
+                      type="text"
                       disabled
                              
                  class="form-control"
@@ -248,9 +248,9 @@ console.log(this.$route.params)
                       >Task Ref No</label
                     >
                     <input
-                      type="text"
-                    
                       v-model="taskref"
+                    
+                      type="text"
                       disabled
                                 placeholder="Enter Task ref no "
                                 class="form-control"

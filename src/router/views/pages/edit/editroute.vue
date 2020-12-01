@@ -192,10 +192,10 @@ export default {
                      Route Name</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardNameEx"
-                     
                       v-model="routename"
+                     
+                      type="text"
                          oninvalid="this.setCustomValidity('Route Name is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Select Routename"
@@ -257,7 +257,7 @@ export default {
                                 class="form-control"
                                 required
               
-                       @change="getid()"
+                       @change="getid"
                     ></b-form-select>
                     <!-- Default input name -->
                   
@@ -291,17 +291,18 @@ export default {
                                 required
               
                 ></b-form-select>
-
+                  </b-col>
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Route Distance</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                   
                       v-model="routedistance"
+                   
+                      type="text"
                          oninvalid="this.setCustomValidity('Route distance is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Select Route Distance"
@@ -310,7 +311,9 @@ export default {
               
                     />
                   </b-col>
+                  </b-row>
                 <br/>
+                <b-row>
                  <b-col>
                     <!-- Default input text -->
                     <label
@@ -319,22 +322,23 @@ export default {
                       >Description</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="description"
+                      type="text"
+                      class="form-control"
                     />
-
-                    <label
+                  </b-col>
+                  <b-col>
+                      <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >City</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="city"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                   

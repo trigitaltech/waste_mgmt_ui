@@ -176,8 +176,8 @@ export default {
       >
         <div class="mt-3">
               <!-- Default form subscription -->
-              <form @submit.prevent="create">
-                <b-row>
+               <form @submit.prevent="create">
+                <b-row class="mb-3">
                   <b-col>
                     <!-- Default input name -->
                     <label
@@ -187,17 +187,18 @@ export default {
                      Dumping Area Name</label
                     >
                     <input
-                      type="text"
-                    
                       v-model="dumpname"
+                    
+                      type="text"
                        oninvalid="this.setCustomValidity('Dumping Area Name is required ')"
                                 oninput="setCustomValidity('')"
-                               
+                               placeholder="Enter Dumping area name"
                                 class="form-control"
                                 required
                     />
-
-                   <label
+                  </b-col>
+                    <b-col>
+                      <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
                       >Dumping Type</label
@@ -211,11 +212,9 @@ export default {
                                 class="form-control"
                                 required
                     ></b-form-select>
-
-                    <br />
-
-                    <!-- Default input text -->
-                  </b-col>
+                    </b-col>
+                </b-row>
+                <b-row class="mb-3">
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -223,17 +222,18 @@ export default {
                       >Address</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="address"
+                      type="text"
+                      class="form-control"
                        oninvalid="this.setCustomValidity('Address is required ')"
                                 oninput="setCustomValidity('')"
                                
-                              
+                              placeholder="Enter Address"
                                 required
                     />
-
+                  </b-col>
+                  <b-col>
                     <!-- Default input name -->
                     <label
                       for="defaultFormCardtextEx"
@@ -241,22 +241,16 @@ export default {
                       >State</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="state"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter state"
                     />
                   </b-col>
-              
-                  <br />
-                
-                
-                  
-               
                 </b-row>
-                  <b-row>
-                    
-                      <b-col>
+                  <b-row class="mb-3">
+                    <b-col>
                     <!-- Default input text -->
                     <label
                       for="defaultFormCardtextEx"
@@ -274,26 +268,27 @@ export default {
                                 class="form-control"
                                 required
                 ></b-form-select>
-
+                  </b-col>
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Working Hours</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="workinghours"
+                      type="text"
+                      class="form-control"
                        oninvalid="this.setCustomValidity('Working Hours is required ')"
                                 oninput="setCustomValidity('')"
-                               
-                               
+                               placeholder="Enter working hours"
                                 required
                     />
                   </b-col>
-               
-                 <b-col>
+                  </b-row>
+                  <b-row class="mb-3">
+                  <b-col>
                     <!-- Default input text -->
                     <label
                       for="defaultFormCardtextEx"
@@ -301,39 +296,44 @@ export default {
                       >City</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="city"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter city"
                     />
-
+                  </b-col>
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Country</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="country"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter country"
                     />
                   </b-col>
-                  
                 </b-row>
-                <b-row>
-                    
-                     <b-col md="3">
-                     <p class="head">Location</p>
-                        <GmapAutocomplete
-                          @place_changed="setPlace"
-                          :placeholder="'Select Target Location'"
-                          class="form-control"
-                        ></GmapAutocomplete>
-                      </b-col>
-                  
-                  
-<b-col>
+                <b-row class="mb-3">
+                  <b-col>
+                     <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Holiday Message</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="message"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter holidaymessage"
+                    />
+                  </b-col>
+                  <b-col>
                     <!-- Default input text -->
                     <label
                       for="defaultFormCardtextEx"
@@ -341,28 +341,28 @@ export default {
                       >Description</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="description"
-                    />
-
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Holiday Message</label
-                    >
-                    <input
                       type="text"
-                      id="defaultFormCardtextEx"
                       class="form-control"
-                      v-model="message"
+                      placeholder="Enter description"
                     />
                   </b-col>
                 </b-row>
-               
-                <b-row>
-                <b-col>
+                <b-row class="mb-3">
+                     <b-col>
+                     <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Location</label
+                    >
+                        <GmapAutocomplete
+                          :placeholder="'Select Target Location'"
+                          class="form-control"
+                          @place_changed="setPlace"
+                        ></GmapAutocomplete>
+                      </b-col>   
+                      <b-col>
                     <!-- Default input text -->
                     <label
                       for="defaultFormCardtextEx"
@@ -370,13 +370,12 @@ export default {
                       >Zip</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="zip"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter zip"
                     />
-
-                  
                   </b-col>
                    <b-col>
                     <!-- Default input text -->
@@ -386,12 +385,13 @@ export default {
                       >Area</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="area"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter area"
                     />
-                  </b-col>
+                  </b-col>         
                 </b-row>
                 <br />
                <button

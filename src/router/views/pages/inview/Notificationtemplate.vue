@@ -348,17 +348,18 @@ export default {
             <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({path:'/create'})"
+            @click="$router.push({ path: '/create' })"
           >Create NotificationTemplate</b-button>
         </b-col>
         <div class="mt-3">
           <b-table
+            id="my-table"
             :dark="dark"
             :hover="hover"
             :striped="striped"
             :bordered="bordered"
+            ref="roles"
             :filter="filter"
-            id="my-table"
             :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
@@ -368,7 +369,6 @@ export default {
             :fields="NotificationTemplateColumns"
             :items="item"
             class="mt-3"
-            ref="roles"
           >
             <template slot="actions" slot-scope="data">
               <span class="mr-3" @click="editNotificationTemplate(data)">
@@ -404,27 +404,27 @@ export default {
             </template>
           </b-table>
 
-          <b-modal v-model="NotificationTemplateModal" id="roleModal">
+          <b-modal id="roleModal" v-model="NotificationTemplateModal">
             <div slot="modal-header">{{ header }}</div>
             <div>
               <b-input v-model="NotificationTemplate" />
 
-              <b-input class="mt-2" v-model="NotificationTemplate" />
+              <b-input v-model="NotificationTemplate" class="mt-2" />
 
               <multiselect
+                v-model="NotificationTemplate"
                 class="perm_input"
                 :options="methods"
                 placeholder="Select a Method"
                 label="value"
                 track-by="value"
                 :multiple="false"
-                v-model="NotificationTemplate"
               ></multiselect>
             </div>
             <div slot="modal-footer">
-              <b-button @click="handleEdit" variant="primary">Submit</b-button>
+              <b-button variant="primary" @click="handleEdit">Submit</b-button>
 
-              <b-button @click="clearModal" class="ml-2" variant="secondary"
+              <b-button class="ml-2" variant="secondary" @click="clearModal"
                 >Cancel</b-button
               >
             </div>

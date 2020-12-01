@@ -127,7 +127,7 @@
         :customer-lastname="customers.lastname"
         :custom-title="customers.displayName"
         :close="close"
-       paymentOptions= "card,ussd,qr,barter"
+       payment-options= "card,ussd,qr,barter"
 
         :hosted-payment="paymentPayload.hostedPayment"
         currency="NGN"

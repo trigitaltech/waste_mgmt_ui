@@ -183,13 +183,14 @@ export default {
         </b-col>
         <div class="mt-3">
           <b-table
+            id="my-table"
             show-empty
             :dark="dark"
             :hover="hover"
             :striped="striped"
+            ref="roles"
             :bordered="bordered"
             :filter="filter"
-            id="my-table"
             :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
@@ -198,7 +199,6 @@ export default {
             :fields="AttendanceColumns"
             :items="item"
             class="mt-3"
-            ref="roles"
           >
             <template v-slot:cell(time_in)="data">
               <div>{{ data.item.time_in | formatdatetime }}</div>

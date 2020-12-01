@@ -219,11 +219,11 @@ export default {
                      Vehicle No</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                    id="defaultFormCardNameEx"
                       v-model="vehicleno"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                    <label
@@ -232,11 +232,11 @@ export default {
                       >Vehicle Type</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                    id="defaultFormCardNameEx"
                       v-model="vehicletype"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                     <br />
@@ -257,11 +257,11 @@ export default {
                   :options="owners"
                 ></b-form-select> -->
                  <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="ownername"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                     <!-- Default input name -->
@@ -271,11 +271,11 @@ export default {
                       >Plate NO</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="plateno"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                   <br />
@@ -290,11 +290,11 @@ export default {
                       >Serving Area</label
                     >
                      <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="servingarea"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
                     <label
                       for="defaultFormCardtextEx"
@@ -302,11 +302,11 @@ export default {
                       >Serving Route</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="servingroute"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                
@@ -318,11 +318,11 @@ export default {
                       >Total Kms Served</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="totalkmsserved"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                     <label
@@ -331,11 +331,11 @@ export default {
                       >Total Hours Served</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="totalhoursserved"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                   
@@ -349,11 +349,11 @@ export default {
                       >Description</label
                     >
                     <input
-            disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+            id="defaultFormCardtextEx"
                       v-model="description"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
                      </b-col>
                      <b-col>
@@ -363,11 +363,11 @@ export default {
                       >Equipment Id</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="equipmentid"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                      </b-col>
@@ -382,11 +382,11 @@ export default {
                       >ManufactureDate</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="manufacturedate"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
                      </b-col>
                      <b-col>
