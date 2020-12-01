@@ -5,6 +5,7 @@ import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
 import NProgress from 'nprogress/nprogress'
+import moment from 'moment'
 import {
   ValidationProvider,
   ValidationObserver,
@@ -120,6 +121,15 @@ export default {
   this.userdata()
   },
   methods: {
+      getDate(timeStamp) {
+    
+      //  console.log(timeStamp)
+      let date
+      // if (timeStamp !== undefined){
+        date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
+      return moment(date).format('MMM Do YYYY')
+      // }
+    },
     async deleteReq(data) {
        console.log("data",data.item.id)
        var id = data.item.id
@@ -208,8 +218,11 @@ export default {
              
                 :filter-included-fields="filterOn"
                 @filtered="onFiltered"
-          >
+          > <template v-slot:cell(createdDate)="data">
+                            <div class="table-row">{{ getDate(data.item.createdDate) }}</div>
+                        </template>
               <template v-slot:cell(actions)="data">
+                
              <router-link :to="{ name: 'Viewuser', params: data.item }">
                 <span class="mr-2" >
                  <i class="fa fa-eye edit"></i>

@@ -128,22 +128,17 @@ export default {
       try {
         const payload = {
             equipmentType:this.equipmenttype,
-            equipmentNo:this.equipmentno,
+            equipmentNo:parseInt(this.equipmentno),
             ownerName: String(this.ownername),
             ownerId:this.ownerid,
-            equipmentId:this.equipmentid,
+            equipmentId:parseInt(this.equipmentid),
             servingArea:this.servingarea,
             manufactureDate: this.manufacturedate,
             warrantyStatus: "NOT EXPIRED",
-            totalKmServed: this.totalkmsserved,
-            totalHourServed: this.totalhoursserved,
+            totalKmServed: parseInt(this.totalkmsserved),
+            totalHourServed: parseInt(this.totalhoursserved),
             description:this.description,
-            isDeleted: false,
-            status: 22,
-            createdDate: this.createddate,
-            createdBy: this.createdby,
-            modifiedDate: this.modifydate,
-            modifiedBy: this.modifyby
+            isDeleted: false
         }
         let result = await createequipment(payload)
         if (result) {
@@ -196,7 +191,7 @@ export default {
                      Equipment No</label
                     >
                     <input
-                      type="text"
+                      type="number"
                       id="defaultFormCardNameEx"
                       class="form-control"
                       v-model="equipmentno"
@@ -240,7 +235,7 @@ export default {
                       >Equipment Id</label
                     >
                     <input
-                      type="text"
+                      type="number"
                       id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="equipmentid"
@@ -287,7 +282,7 @@ export default {
                       >Total Kms Served</label
                     >
                     <input
-                      type="text"
+                      type="number"
                       id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="totalkmsserved"
@@ -299,7 +294,7 @@ export default {
                       >Total Hours Served</label
                     >
                     <input
-                      type="text"
+                      type="number"
                       id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="totalhoursserved"
