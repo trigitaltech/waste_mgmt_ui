@@ -366,12 +366,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >ManufactureDate</label
                     >
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
+                    <flat-pickr
+                      v-model="manufactureDate"
                       class="form-control"
-                      v-model="manufacturedate"
-                    />
+                      placeholder="SELECT DATE"
+                    ></flat-pickr>
                      </b-col>
                      <b-col>
                    
