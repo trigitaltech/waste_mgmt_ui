@@ -77,12 +77,13 @@ export default {
       options: ['DAF'],
       servieoffice:"",
       file:"",
-      personalidno:"",
+     
       item: {
         value: '',
         text: '',
       },
      form: {
+        personalidno:"",
         personalTitle: '',
         firstName: '',
         middleName: '',

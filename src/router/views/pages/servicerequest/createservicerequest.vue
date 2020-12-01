@@ -96,10 +96,12 @@ export default {
   },
   methods: {
     getoid() {
-    this.emplys.map(e=>{
-     
+      console.log("hai")
+      
+    this.employe.map(e=>{
+    
          if(this.operatorname === e.type){ 
-        this.oid === e.id
+        this.oid = e.id
         console.log("id",this.oid)
          }
       })
@@ -107,7 +109,7 @@ export default {
     getuid() {
        this.item1.map(e=>{
          if(this.controlcheckername === e.userName){ 
-        this.cid === e.id
+        this.cid = e.id
          }
       })
            

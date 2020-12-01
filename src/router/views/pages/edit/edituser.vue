@@ -77,12 +77,13 @@ export default {
       options: ['DAF'],
       servieoffice:this.$route.params.service_Office,
       file:"",
-      personalidno:this.$route.params.personalIdNo,
+    
       item: {
         value: '',
         text: '',
       },
      form: {
+         personalidno:this.$route.params.personalIdNo,
         personalTitle:this.$route.params.salutation,
         firstName: this.$route.params.firstName,
         middleName: this.$route.params.middleName,
@@ -176,7 +177,7 @@ export default {
                 personalIdNo: this.form.personalidno,
                 idProofDocURL: this.file,
                 type: null,
-                role: this.rolename,
+                 roles:[ this.rolename],
                 isDeleted: false,
                 status: 200,
                 createdDate: this.createddate,
