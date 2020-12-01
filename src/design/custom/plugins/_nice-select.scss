@@ -8,6 +8,7 @@
   min-height: $input-height !important;
   padding: $input-padding-y $input-padding-x !important;
   font-family: $font-family-base !important;
+  border-bottom: 4px solid #e2e7f1 !important;
 
   @include font-size($input-font-size);
 
@@ -16,7 +17,6 @@
   color: $input-color !important;
   background-color: $input-bg !important;
   background-clip: padding-box;
-  border: $input-border-width solid $input-border-color !important;
 }
 
 .multiselect__option--highlight,

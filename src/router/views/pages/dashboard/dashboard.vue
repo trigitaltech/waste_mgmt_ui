@@ -226,13 +226,15 @@ export default {
       <div class="col-xl-3 col-md-6 mb-4">
 
         <!-- Card Primary -->
-        <div class="card classic-admin-card primary-color">
+        <div class="card classic-admin-card primary-color" style="background-color: #21D4FD;
+background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+">
           <div class="card-body py-3">
             <i class="far fa-money-bill-alt"></i>
             <p class="small">SALES</p>
             <h4>2000$</h4>
           </div>
-          <div class="progress md-progress">
+          <div class="progress md-progress mx-2">
             <div class="progress-bar grey darken-3" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <div class="card-body pt-2 pb-3">
@@ -248,13 +250,15 @@ export default {
       <div class="col-xl-3 col-md-6 mb-4">
 
         <!-- Card Yellow -->
-        <div class="card classic-admin-card warning-color">
+        <div class="card classic-admin-card warning-color"  style="background-color: #8BC6EC;
+    background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);">
+    <div>
           <div class="card-body py-3">
             <i class="fas fa-chart-line"></i>
             <p class="small">SUBSCRIPTIONS</p>
             <h4>200</h4>
           </div>
-          <div class="progress md-progress">
+          <div class="progress md-progress mx-2">
             <div class="progress-bar bg grey darken-3" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <div class="card-body pt-2 pb-3">
@@ -262,7 +266,7 @@ export default {
           </div>
         </div>
         <!-- Card Yellow -->
-
+        </div>
       </div>
       <!-- Grid column -->
 
@@ -270,13 +274,15 @@ export default {
       <div class="col-xl-3 col-md-6 mb-4">
 
         <!-- Card Blue -->
-        <div class="card classic-admin-card light-blue lighten-1">
+        <div class="card classic-admin-card light-blue lighten-1"  style="background-color: #FBAB7E;
+background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
+">
           <div class="card-body py-3">
             <i class="fas fa-chart-pie"></i>
             <p class="small">TRAFFIC</p>
             <h4>20000</h4>
           </div>
-          <div class="progress md-progress">
+          <div class="progress md-progress mx-2">
             <div class="progress-bar grey darken-3" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <div class="card-body pt-2 pb-3">
@@ -292,13 +298,15 @@ export default {
       <div class="col-xl-3 col-md-6 mb-4">
 
         <!-- Card Red -->
-        <div class="card classic-admin-card red accent-2">
+        <div class="card classic-admin-card red accent-2" style="background-color: #FAACA8;
+background-image: linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%);
+">
           <div class="card-body py-3">
             <i class="fas fa-chart-bar"></i>
             <p class="small">ORGANIC TRAFFIC</p>
             <h4>2000</h4>
           </div>
-          <div class="progress md-progress">
+          <div class="progress md-progress mx-2">
             <div class="progress-bar grey darken-3" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <div class="card-body pt-2 pb-3">

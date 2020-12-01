@@ -143,7 +143,7 @@ console.log(this.$route.params)
       // for(i=0;i<data.length;i++){
       //   this.item[i]=data[i].userName
       // }
-debugger
+// debugger
       this.emp.map(e=>{
           if(this.$route.params.employeeId === e.id)
              this.ownername=e.userName
@@ -174,10 +174,6 @@ debugger
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
-          <!-- Card -->
-          <div class="card mx-xl-5">
-            <!-- Card body -->
-            <div class="card-body">
               <!-- Default form subscription -->
              <form @submit.prevent="create">
                 <b-row>
@@ -237,9 +233,9 @@ debugger
                     >
 
                     <input
-                      type="text"
-                    
                       v-model="ownername"
+                    
+                      type="text"
                       disabled
                              
                  class="form-control"
@@ -252,9 +248,9 @@ debugger
                       >Task Ref No</label
                     >
                     <input
-                      type="text"
-                    
                       v-model="taskref"
+                    
+                      type="text"
                       disabled
                                 placeholder="Enter Task ref no "
                                 class="form-control"
@@ -367,15 +363,11 @@ debugger
                           style="
                             background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
                           type="submit"
-                         class="btn btn-info float-right mr-2"
+                         class="btn btn-custome float-right mr-2"
                           >Submit</button
                         > -->
               </form>
               <!-- Default form subscription -->
-            </div>
-            <!-- Card body -->
-          </div>
-          <!-- Card -->
         </div>
       </b-card>
     </div>
@@ -385,7 +377,7 @@ debugger
 
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

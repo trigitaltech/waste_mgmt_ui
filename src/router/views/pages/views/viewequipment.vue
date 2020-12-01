@@ -184,10 +184,6 @@ export default {
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
-          <!-- Card -->
-          <div class="card mx-xl-5">
-            <!-- Card body -->
-            <div class="card-body">
               <!-- Default form subscription -->
               <form>
                 <b-row>
@@ -200,11 +196,11 @@ export default {
                      Equipment No</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                    id="defaultFormCardNameEx"
                       v-model="equipmentno"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                    <label
@@ -213,11 +209,11 @@ export default {
                       >Equipment Type</label
                     >
                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="equipmenttype"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                     <br />
@@ -231,11 +227,11 @@ export default {
                       >Owner Name</label
                     >
                      <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="ownername"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                     <!-- Default input name -->
@@ -245,11 +241,11 @@ export default {
                       >Equipment Id</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="equipmentid"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                   <br />
@@ -264,11 +260,11 @@ export default {
                       >Serving Area</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="servingarea"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
                     <label
                       for="defaultFormCardtextEx"
@@ -276,11 +272,11 @@ export default {
                       >Manufacture Date</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="manufacturedate"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                
@@ -292,11 +288,11 @@ export default {
                       >Total Kms Served</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="totalkmsserved"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                     <label
@@ -305,11 +301,11 @@ export default {
                       >Total Hours Served</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="totalhoursserved"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                   
@@ -323,11 +319,11 @@ export default {
                       >Description</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                    id="defaultFormCardtextEx"
                       v-model="description"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                      </b-col>
@@ -336,17 +332,13 @@ export default {
                 <!-- <b-button
                   style="
                     background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-info float-right mr-2"
+                  class="btn btn-custome float-right mr-2"
                   text="Create Tenant"
                   @click="create"
                   >Create</b-button
                 > -->
               </form>
               <!-- Default form subscription -->
-            </div>
-            <!-- Card body -->
-          </div>
-          <!-- Card -->
         </div>
       </b-card>
     </div>
@@ -356,7 +348,7 @@ export default {
 
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

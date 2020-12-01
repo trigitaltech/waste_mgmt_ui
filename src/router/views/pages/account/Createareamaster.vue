@@ -155,10 +155,6 @@ this.userdata()
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
-          <!-- Card -->
-          <div class="card mx-xl-5">
-            <!-- Card body -->
-            <div class="card-body">
               <!-- Default form subscription -->
              <form @submit.prevent="create">
                 <b-row>
@@ -171,9 +167,9 @@ this.userdata()
                      Area Name</label
                     >
                     <input
-                      type="text"
-                    
                       v-model="areaname"
+                    
+                      type="text"
                        oninvalid="this.setCustomValidity('Area Name is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Area Name"
@@ -234,16 +230,17 @@ this.userdata()
                   :options="item"
                   
                 ></b-form-select>
-             
+                  </b-col>
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Area SqKm</label
                     >
                     <input
-                      type="text"
-                    
                       v-model="areasqkm"
+                    
+                      type="text"
                        oninvalid="this.setCustomValidity('Area Sqkm is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Area Sqkm"
@@ -251,9 +248,9 @@ this.userdata()
                                 required
                     />
                   </b-col>
-
+                  </b-row>
                 <br/>
-                
+                <b-row>
                  <b-col>
                     <!-- Default input text -->
                     <label
@@ -262,30 +259,30 @@ this.userdata()
                       >Description</label
                     >
                     <input
-                      type="text"
-                     
                       v-model="description"
+                     
+                      type="text"
                        oninvalid="this.setCustomValidity('Description is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Description"
                                 class="form-control"
                                 required
                     />
-
+                  </b-col>
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >City</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="city"
+                      type="text"
+                      class="form-control"
                          placeholder="Enter city"
                     />
                   </b-col>
-                  
                 </b-row>
                  <br/>
 
@@ -301,11 +298,11 @@ this.userdata()
                     >
                     <input
                    
-                      type="text"
                       id="defaultFormCardtextEx"
+                      v-model="state"
+                      type="text"
                       class="form-control"
                       placeholder="Enter state"
-                      v-model="state"
                     />
  <br/>
                 
@@ -322,12 +319,12 @@ this.userdata()
                       >Country</label
                     >
                     <input
-                    placeholder="Enter country"
+                    id="defaultFormCardtextEx"
                   
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="country"
+                      placeholder="Enter country"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                 
@@ -339,11 +336,11 @@ this.userdata()
                       >Zip</label
                     >
                     <input
-                   placeholder="Enter Zip"
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
+                   id="defaultFormCardtextEx"
                       v-model="zip"
+                      placeholder="Enter Zip"
+                      type="text"
+                      class="form-control"
                     />
                      </b-col>
                 </b-row>
@@ -416,19 +413,12 @@ this.userdata()
               
                 <br />
                <button
-                         
-                          style="
-                            background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
                           type="submit"
-                         class="btn btn-info float-right mr-2"
+                         class="btn btn-custome float-right btn-secondary mb-3"
                           >Submit</button
                         >
               </form>
               <!-- Default form subscription -->
-            </div>
-            <!-- Card body -->
-          </div>
-          <!-- Card -->
         </div>
       </b-card>
     </div>
@@ -439,7 +429,7 @@ this.userdata()
 </style>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

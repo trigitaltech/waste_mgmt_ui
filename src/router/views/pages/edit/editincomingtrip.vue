@@ -26,7 +26,14 @@ export default {
   },
   data() {
     return {
-      trip:null,
+      trip:this.$route.params.id,
+      tripDate:this.$route.params.tripDate,
+      tripStartTime:this.$route.params.collectionStartTime,
+      plate:this.$route.params.plateNo,
+      truckType:this.$route.params.truckType,
+      body:this.$route.params.bodyNo,
+      driver:this.$route.params.driverName,
+      collector:this.$route.params.driverName,
       servingArea:null,
       lgu:null,
       items: [
@@ -47,8 +54,9 @@ export default {
     },
   },
   mounted() {
+    console.log(this.$route.params)
     this.getTripDetails();
-  },
+  },  
   methods: {
     async getTripDetails() {
       let result = await Tripdownload(7);
@@ -88,10 +96,11 @@ export default {
                       <input
                         class="ml-2"
                         v-model="trip"
-                        readonly
                         name="trip"
                         id="trip"
+                        readonly
                       />
+                      
                     </div>
                   </b-col>
                   <b-col></b-col>
@@ -155,6 +164,7 @@ export default {
                       >
                       <input
                         class="ml-2 form-control"
+                        readonly
                         v-model="tripDate"
                       />
                     </div>
@@ -167,6 +177,7 @@ export default {
                       >
                       <input
                         class="ml-2 form-control"
+                        readonly
                         v-model="tripStartTime"
                       />
                     </div>
@@ -181,6 +192,7 @@ export default {
                       >
                       <input
                         class="ml-2 form-control"
+                        readonly
                         v-model="plate"
                       />
                     </div>
@@ -193,6 +205,7 @@ export default {
                       >
                       <input
                         class="ml-2 form-control"
+                        readonly
                         v-model="truckType"
                       />
                     </div>
@@ -207,6 +220,7 @@ export default {
                       >
                       <input
                         class="ml-2 form-control"
+                        readonly
                         v-model="body"
                       />
                     </div>
@@ -233,6 +247,7 @@ export default {
                       >
                       <input
                         class="ml-2 form-control"
+                        readonly
                         v-model="driver"
                       />
                     </div>
@@ -259,7 +274,8 @@ export default {
                       >
                       <input
                         class="ml-2 form-control"
-                        v-model="driver"
+                        readonly
+                        v-model="collector"
                       />
                     </div>
                   </b-col>

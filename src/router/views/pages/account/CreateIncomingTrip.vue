@@ -46,14 +46,16 @@ export default {
   methods:{
     async areadata() {
       try {
-        const result = await Areamasters()
+        const result = await Areamasters();
         var data = result.data.response.areaMaster
-        data.map(e=>{
-        this.servingAreas.push(e.areaName)
-        console.log("user",e)
-      })
-       console.log("users",this.item)
-      } catch (error) {}
+          data.map(e=>{
+            if(e.areaName!=null)
+              this.servingAreas.push(e.areaName);
+        })
+      } catch (error) { 
+        console.log(error);
+      }
+      console.log(this.servingAreas);
     },
     async routedata() {
       try {
@@ -61,24 +63,48 @@ export default {
         console.log(result);
         var data = result.data.response.RouteMaster
         data.map(e=>{
-        this.servingRoutes.push(e.routeName)
-        console.log("user",e)
+        if(e.routeName != null) 
+          this.servingRoutes.push(e.routeName);
       })
-       console.log("users",this.item)
       } catch (error) {}
     },
     async create() {
       try{
         let payload = {
-          tripDate: this.tripDate,
-          bodyNo: this.body,
-          plateNo: this.plate,
-          truckType: this.trucktype,
-          servingArea: this.area,
-          servingRoute: this.route,
-          collectionStartTime: this.startTime,
-          status: 1
+          bodyNo: "",
+          collectionEndTime: null,
+          collectionStartTime: "2020-11-10T05:00:00.000+00:00",
+          contractor_DISPATCHER_ID: 1212,
+          contractor_DISPATCHER_MEASURED_VOLUME: 345,
+          contractor_DISPATCHER_NAME: "ram",
+          contractor_DISPATCHER_VERIFIED: 1,
+          controlNo: 7261,
+          createdBy: "admin",
+          createdDate: "2020-11-30T12:14:44.000+00:00",
+          driverId: 12412,
+          driverName: "samuel",
+          guide: "guide",
+          isDeleted: false,
+          lgu: "NY",
+          id: 1,
+          lgu_CHECKER_ID: 1721,
+          lgu_CHECKER_MEASURED_VOLUME: "234",
+          lgu_CHECKER_NAME: "shyam",
+          lgu_CHECKER_VERIFIED: 1,
+          mmda_Verified: true,
+          mmda_revewer_ID: 5632,
+          mmda_revewer_NAME: "sam",
+          modifiedBy: "admin",
+          modifiedDate: "2020-11-30T12:14:44.000+00:00",
+          plateNo: "GHKD463",
+          servingArea: {id: 2, areaName: null, areaType: null, supervisor: null, areaSqKm: null, isDeleted: null},
+          servingRoute: {id: 2, routeName: null, routeType: null, supervisor: null, route_distance: null, areaId: null},
+          status: null,
+          totalKmServed: 23,
+          tripDate: "2020-11-10T05:00:00.000+00:00",
+          truckType: "heavyLoad"
         };
+        console.log(payload);
         const result = await CreateIncomingTrip(payload);
         if (result) {
           this.$swal({

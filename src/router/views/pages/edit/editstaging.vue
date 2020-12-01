@@ -171,13 +171,9 @@ export default {
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
-          <!-- Card -->
-          <div class="card mx-xl-5">
-            <!-- Card body -->
-            <div class="card-body">
               <!-- Default form subscription -->
                 <form @submit.prevent="create">
-                <b-row>
+                <b-row class="mb-3">
                   <b-col>
                     <!-- Default input name -->
                     <label
@@ -187,18 +183,20 @@ export default {
                      Staging Area Name</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardNameEx"
-                    
                       v-model="areaname"
+                    
+                      type="text"
                       oninvalid="this.setCustomValidity('Area Name is required ')"
                                 oninput="setCustomValidity('')"
-                                placeholder="Select Area Name"
+                                placeholder="Enter  Area Name"
                                 class="form-control"
                                 required
                     />
-
-                   <label
+                    <!-- Default input text -->
+                  </b-col>
+                  <b-col>
+                                       <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
                       >Staging Type</label
@@ -212,11 +210,9 @@ export default {
                                 class="form-control"
                                 required
                     ></b-form-select>
-
-                    <br />
-
-                    <!-- Default input text -->
                   </b-col>
+                  </b-row>
+                  <b-row class="mb-3">
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -224,34 +220,35 @@ export default {
                       >Address</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                     
                       v-model="address"
+                     
+                      type="text"
                         oninvalid="this.setCustomValidity('Address is required ')"
                                 oninput="setCustomValidity('')"
-                                placeholder="Select Address"
+                           placeholder="Enter Address"
                                 class="form-control"
                                 required
                     />
-
-                    <!-- Default input name -->
+                  </b-col>
+                  <b-col>
+                                        <!-- Default input name -->
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >State</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="state"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter state"
                     />
                   </b-col>
                   <br />
                 </b-row>
-                  <b-row>
-                    
+                  <b-row class="mb-3">
                       <b-col>
                     <!-- Default input text -->
                     <label
@@ -271,19 +268,23 @@ export default {
                                 required
                   
                 ></b-form-select>
-                    <label
+                  </b-col>
+                <b-col>
+                                      <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Working Hours</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="workinghours"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter working hours"
                     />
-                  </b-col>
-               
+                </b-col>
+                  </b-row>
+                  <b-row class="mb-3">
                  <b-col>
                     <!-- Default input text -->
                     <label
@@ -292,36 +293,30 @@ export default {
                       >City</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="city"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter city"
                     />
-
-                    <label
+                  </b-col>
+                  <b-col>
+                                        <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Country</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="country"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter country"
                     />
                   </b-col>
-                  
                 </b-row>
-                <b-row>
-                  <b-col md="3">
-                     <p class="head">Location</p>
-                        <GmapAutocomplete
-                          @place_changed="setPlace"
-                          :placeholder="'Select Target Location'"
-                          class="form-control"
-                        ></GmapAutocomplete>
-                      </b-col>
-                   <b-col>
+                <b-row class="mb-3">
+                   <b-col >
                     <!-- Default input text -->
                     <label
                       for="defaultFormCardtextEx"
@@ -329,22 +324,25 @@ export default {
                       >Description</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="description"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter description"
                     />
-
-                    <label
+                  </b-col>
+                  <b-col>
+                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Holiday Message</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="message"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter holiday message"
                     />
                   </b-col>
                    <!-- <b-col> -->
@@ -376,12 +374,19 @@ export default {
                     />
                   </b-col> -->
                 </b-row>
-                <b-row>
-                   
-                  
-                  
-                </b-row>
-                <b-row>
+                <b-row class="mb-3">
+                   <b-col>
+                      <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Location</label
+                    >
+                        <GmapAutocomplete
+                          :placeholder="'Select Target Location'"
+                          class="form-control"
+                          @place_changed="setPlace"
+                        ></GmapAutocomplete>
+                      </b-col>
                 <b-col>
                     <!-- Default input text -->
                     <label
@@ -390,10 +395,11 @@ export default {
                       >Zip</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="zip"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter zip"
                     />
 
                   
@@ -405,29 +411,23 @@ export default {
                       >Area</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="area"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter area"
                     />
                   </b-col>
                   
                 </b-row>
                 <br />
                <button
-                         
-                          style="
-                            background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
                           type="submit"
-                         class="btn btn-info float-right mr-2"
+                         class="btn btn-custome float-right btn-secondary mb-3"
                           >Submit</button
                         >
               </form>
               <!-- Default form subscription -->
-            </div>
-            <!-- Card body -->
-          </div>
-          <!-- Card -->
         </div>
       </b-card>
     </div>
@@ -437,7 +437,7 @@ export default {
 
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

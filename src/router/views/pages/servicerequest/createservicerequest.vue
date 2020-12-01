@@ -47,10 +47,10 @@ export default {
       dumparea:"",
       drivername:"",
       driverid:"",
-      controlcheckerid:"",
+      cid:"",
       controlcheckername:"",
-      operatorid:"",
-      operatorname:"",
+
+      item1:[],
       dump:[],
       createdby: "",
       createddate: new Date(),
@@ -63,13 +63,16 @@ export default {
       ],
       title: 'Register',
      item:[{ value: null, text: 'Please select an user' }],
+     emplys:[],
+     oid:"",
+     driverid:"",
       items: [
         {
-          text: 'Setup',
+          text: 'Servicerequest',
           href: '/',
         },
         {
-          text: 'ServiceRequests / Create Servicerequest',
+          text: '/ Create Servicerequest',
           active: true,
         },
       ],
@@ -93,10 +96,21 @@ export default {
     this.getemployees()
   },
   methods: {
-    async getuid(){
-       this.users.map(e=>{
+    getoid() {
+      console.log("hai")
+      
+    this.employe.map(e=>{
+    
+         if(this.operatorname === e.type){ 
+        this.oid = e.id
+        console.log("id",this.oid)
+         }
+      })
+    },
+    getuid() {
+       this.item1.map(e=>{
          if(this.controlcheckername === e.userName){ 
-        this.controlcheckerid === e.id
+        this.cid = e.id
          }
       })
            
@@ -105,8 +119,8 @@ export default {
        try {
     
       const result = await users()
-      var item = result.data.response.Users
-      item.map(e=>{
+      this.item1 = result.data.response.Users
+      this.item1.map(e=>{
         this.users.push(e.userName)
       })
      
@@ -145,28 +159,30 @@ this.operators.push(e.type)
       console.log("hai")
       try {
         const payload = {
-               tripDate: this.tripdate ,
+                        
+                serviceNo: null,
+                tripDate:this.tripdate ,
                 equipmentNo: this.equipmentno,
                 equipmentId: this.equipmentid,
                 equipmentType: this.equipmenttype,
-                jobStartTime: this.time,
-                jobEndTime: "",
+                jobStartTime:  this.time,
                 requestType: this.requesttype,
-                dumpingArea: this.dumparea,
-                driverName:this.drivername,
+                dumpingArea:"hyderabad",
+                driverName: this.drivername,
                 driverId: this.driverid,
-                operatorId:this.operatorid,
-                controlCheckerid: this.controlcheckerid,
+                operatorId: this.oid,
+                controlCheckerid: this.cid,
                 controlChekerName: this.controlcheckername,
-                isDeleted: "false",
-                createdBy: this.createdby,
-                modifiedBy: this.modifyby,
-                equipment_PERFORMANCE: this.equipmentperformance,
+                totalKmServed: null,
+                isDeleted: false,
+                mmda_Verified: null,
+                lgu: "Admin",
+                truck_TRIP_KMs:null,
+                operatorName: this.operatorname,
                 equipment_USAGE:this.equipmentusage,
-                lgu: "",
-                operatorName:this.operatorname
-            }
-            console.log("hello")
+                equipment_PERFORMANCE:this.equipmentperformance
+        }
+            // console.log("hello")
         let result = await createservicerequest(payload)
         console.log("hi",result)
         if (result) {
@@ -177,7 +193,7 @@ this.operators.push(e.type)
             duration: 5000,
           })
          
-           this.$router.push({path:'/Servicerequests'})
+           this.$router.push({path:'/Servicerequestdetails'})
             
         }
       } catch (e) {
@@ -191,8 +207,8 @@ this.operators.push(e.type)
        try {
       
       const result = await  equipment()
-      var item = result.data.response.equipment
-       item.map(e=>{
+      this.emplys = result.data.response.equipment
+       this.emplys.map(e=>{
       this.type.push(e.equipmentType)
       console.log("user",e)
       })
@@ -217,9 +233,7 @@ this.operators.push(e.type)
     <div class="animated fadeIn">
       <b-card
         header="Create Servicerequest"
-        header-bg-variant="info"
-        border-variant="info"
-        header-text-variant="white"
+      
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
@@ -274,7 +288,8 @@ this.operators.push(e.type)
                       >Trip Start Time</label
                     >
                     <b-col >
-                <vue-timepicker v-model="time" format="hh:mm A" input-class="form-control"></vue-timepicker>
+                       <datetime type="datetime" v-model="time" input-class="form-control"></datetime>
+                <!-- <vue-timepicker v-model="time" format="hh:mm A" input-class="form-control"></vue-timepicker> -->
                     </b-col>
                     <!-- Default input name -->
                   </b-col>
@@ -287,27 +302,27 @@ this.operators.push(e.type)
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Plate</label
+                      >Driver Id</label
                     >
                 <input
                       type="text"
                       id="defaultFormCardtextEx"
                       class="form-control"
-                      v-model="plate"
+                      v-model="driverid"
                         placeholder="Enter Plate"
                     />
 
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Body</label
+                      >Vehicle No</label
                     >
                     <input
                       type="text"
                       id="defaultFormCardtextEx"
                       class="form-control"
                       v-model="body"
-                        placeholder="Enter BODY"
+                        placeholder="Enter Vehicle No"
                     
                     />
                   </b-col>
@@ -438,7 +453,7 @@ this.operators.push(e.type)
                    <b-form-select
                       v-model="operatorname"
                       :options="operators"
-                    
+                    @change="getoid()"
                     ></b-form-select>
                   </b-col>
                   <b-col>
@@ -456,11 +471,9 @@ this.operators.push(e.type)
                     </b-col>
                 </b-row>
                 <br />
-               <b-button
-                  style="
-                    background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-info float-right mr-2"
-                  text="Create Tenant"
+                <b-button
+            class="btn btn-custome float-right btn-secondary mb-3"
+            text="Create Tenant"
                   @click="create()"
                   >Create</b-button
                 >
@@ -492,12 +505,6 @@ this.operators.push(e.type)
     background-clip: padding-box;
     border: 1px solid #e2e7f1;
     border-radius: 0.3rem;
-}
-.card-header {
-  padding: 0.75rem 1.25rem;
-  margin-bottom: 0;
-  background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
-  border-bottom: 0 solid rgba(0, 0, 0, 0.125);
 }
 </style>
 <style lang="sass" scoped>
