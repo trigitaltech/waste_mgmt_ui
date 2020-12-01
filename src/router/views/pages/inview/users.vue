@@ -122,12 +122,12 @@ export default {
   },
   methods: {
       getDate(timeStamp) {
-    
+    // debugger
       //  console.log(timeStamp)
       let date
       // if (timeStamp !== undefined){
-        date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
-      return moment(date).format('MMM Do YYYY')
+        // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
+      return moment(timeStamp).format('MMM Do YYYY')
       // }
     },
     async deleteReq(data) {
@@ -253,6 +253,7 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
+
 <style lang="sass" scoped>
 .edit
   color: #a7a7a7 !important

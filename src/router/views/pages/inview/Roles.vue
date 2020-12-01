@@ -5,6 +5,7 @@ import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
 import NProgress from 'nprogress/nprogress'
+import moment from 'moment'
 import {
   ValidationProvider,
   ValidationObserver,
@@ -94,6 +95,15 @@ export default {
     this.role()
   },
   methods: {
+     getDate(timeStamp) {
+    // debugger
+      //  console.log(timeStamp)
+      let date
+      // if (timeStamp !== undefined){
+        // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
+      return moment(timeStamp).format('MMM Do YYYY')
+      // }
+    },
      async deleteReq(data) {
        console.log("data",data.item.id)
        var id = data.item.id
@@ -166,7 +176,9 @@ export default {
             :items="item"
             class="mt-3"
             ref="roles"
-          >
+          >   <template v-slot:cell(createdDate)="data">
+                            <div class="table-row">{{ getDate(data.item.createdDate) }}</div>
+                        </template>
    
              <template v-slot:cell(actions)="data">
               <router-link :to="{ name: 'Viewrole', params: data.item }">

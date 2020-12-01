@@ -713,6 +713,14 @@ const pagesRoutes = [
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
+    path: '/Viewservicerequest',
+    name: 'Viewservicerequest',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewservicerequest')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
     path: '/Viewincomingtrip',
     name: 'Viewincomingtrip',
     icon: 'check-square',
