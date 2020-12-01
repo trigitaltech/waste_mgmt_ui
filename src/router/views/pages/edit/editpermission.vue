@@ -223,7 +223,7 @@ export default {
                
                 <button
                           type="submit"
-                         class="btn btn-custome float-right mr-2"
+                         class="btn btn-custome float-right btn-secondary mb-3"
                           >Submit</button
                         >
               </form>
@@ -236,7 +236,7 @@ export default {
 </template>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

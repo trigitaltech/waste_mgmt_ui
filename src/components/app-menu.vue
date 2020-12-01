@@ -102,7 +102,7 @@ export default {
 
 <template>
   <!--- Sidemenu -->
-<div>
+<div class="mm-active">
   <ul id="side-menu" class="metismenu">
     <li
       v-for="item in menuItems"

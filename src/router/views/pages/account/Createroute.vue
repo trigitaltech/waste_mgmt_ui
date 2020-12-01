@@ -289,8 +289,9 @@ export default {
                                 required
               
                 ></b-form-select>
-
-                    <label
+                  </b-col>
+                  <b-col>
+                                        <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Route Distance</label
@@ -308,7 +309,9 @@ export default {
               
                     />
                   </b-col>
+                  </b-row>
                 <br/>
+                <b-row>
                  <b-col>
                     <!-- Default input text -->
                     <label
@@ -323,8 +326,9 @@ export default {
                       v-model="description"
                       placeholder="Enter Description"
                     />
-
-                    <label
+                  </b-col>
+                  <b-col>
+                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >City</label
@@ -412,7 +416,7 @@ export default {
                 <br />
                 <button
                           type="submit"
-                         class="btn btn-custome float-right mr-2"
+                         class="btn btn-custome float-right btn-secondary mb-3"
                           >Submit</button
                         >
               </form>
@@ -425,7 +429,7 @@ export default {
 </template>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

@@ -169,7 +169,7 @@ export default {
         class="mt-10 ml-10 mr-10 mx-auto"
       >
       <b-row>
-        <b-col md="6">
+        <b-col md="3">
            
                     <b-form-input
                       v-model="filter"
@@ -179,9 +179,9 @@ export default {
                     ></b-form-input>
            
         </b-col>
-        <b-col md="6">
+        <b-col md="9">
           <b-button
-            class="btn float-right mr-2 mb-1 btn-custm"
+            class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ name: 'CreateUser' })" 
             >Create User</b-button
@@ -196,7 +196,7 @@ export default {
             :bordered="bordered"
             :filter="filter"
             id="my-table"
-            responsive="sm"
+            :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
             :small="small"
@@ -211,18 +211,18 @@ export default {
           >
               <template v-slot:cell(actions)="data">
              <router-link :to="{ name: 'Viewuser', params: data.item }">
-                <b-button size="sm" class="mr-2" variant="primary">
-                 <i class="fa fa-eye"></i>
-                </b-button>
+                <span class="mr-2" >
+                 <i class="fa fa-eye edit"></i>
+                </span>
               </router-link>
              <router-link :to="{ name: 'Edituser', params: data.item }">
-                <b-button size="sm" class="mr-2" variant="primary">
+                <span class="mr-2">
                   <i class="fas fa-pencil-alt edit"></i>
-                </b-button>
+                </span>
               </router-link>
-            <b-button size="sm" class="mr-2" variant="danger" @click="deleteReq(data)">
-              <i class="fa fa-times bin"></i>
-            </b-button>
+            <span @click="deleteReq(data)">
+              <i class="fa fa-times edit"></i>
+            </span>
            </template>
           </b-table>
           <div style="float: right">
@@ -231,8 +231,6 @@ export default {
               :per-page="perPage"
               :total-rows="item"
               aria-controls="my-table"
-              prev-text="Prev"
-              next-text="Next"
               hide-goto-end-buttons
             ></b-pagination>
           </div>
@@ -242,29 +240,9 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
-<style lang="scss">
-.btn-custm {
-  background-image: linear-gradient(19deg, #0008ff 0%, #c242ff 100%);
-  opacity: 0.8;
-  border: none;
-  position: relative;
-}
-.btn-custm::before {
-  content: ' ';
-  -webkit-filter: blur(20px);
-  filter: blur(20px);
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  background-image: linear-gradient(19deg, #0008ff 0%, #c242ff 100%);
-}
-</style>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

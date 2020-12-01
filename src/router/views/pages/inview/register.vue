@@ -162,8 +162,6 @@ export default {
         <div class="col-xl-12 mt-10 mx-auto">
           <b-card
             header="Register Customer"
-            border-variant="info"
-            header-text-variant="white"
             style="margin-top: 50px"
           >
             <div class="card-body">

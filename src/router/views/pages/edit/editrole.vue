@@ -156,7 +156,7 @@ export default {
                   </b-col>
                   <b-col>
                      <b-button
-                  class="btn btn-custome float-right mr-2"
+                  class="btn btn-custome float-right btn-secondary mb-3"
                   text="Create Tenant"
                   @click="create"
                   >Save</b-button
@@ -175,7 +175,7 @@ export default {
 </template>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

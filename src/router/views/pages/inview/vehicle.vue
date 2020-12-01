@@ -161,7 +161,7 @@ export default {
       >
         <b-col md="12">
           <b-button
-            class="btn btn-custome float-right mr-2"
+            class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/Createvehicle' })"
             >Create Vehicle</b-button
@@ -175,7 +175,7 @@ export default {
             :bordered="bordered"
             :filter="filter"
             id="my-table"
-            responsive="sm"
+            :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
             :small="small"
@@ -207,8 +207,6 @@ export default {
               :per-page="perPage"
               :total-rows="permissions"
               aria-controls="my-table"
-              prev-text="Prev"
-              next-text="Next"
               hide-goto-end-buttons
             ></b-pagination>
           </div>
@@ -220,7 +218,7 @@ export default {
 </template>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

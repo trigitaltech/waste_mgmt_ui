@@ -4,6 +4,13 @@
 .form-control {
   border-bottom: 4px solid #e2e7f1;
  }
+ .custom-file-label {
+  overflow-x: inherit !important;
+  border-bottom: 4px solid #e2e7f1;
+ }
+ .was-validated .custom-file-input:invalid ~ .custom-file-label, .custom-file-input.is-invalid ~ .custom-file-label {
+  border-color: #e2e7f1 !important;
+ }
 // Form-control light
 .form-control-light {
   background-color: $gray-100;

@@ -45,38 +45,44 @@ export default {
       AreamasterColumns: [
         {
           key: 'id',
-
           label: 'ID',
+          sortable: true
         },
        
          {
           key: 'description',
           label: 'Description',
+          sortable: true
         },
          {
           key: 'createdDate',
           label: 'Created Date',
+          sortable: true
         },
          {
           key: 'createdBy',
           label: 'Created By',
+          sortable: true
         },
          {
           key: 'areaName',
           label: 'Area Name',
+          sortable: true
         },
 
         {
           key: 'city',
           label: 'City',
+          sortable: true
         },
          {
           key: 'state',
           label: 'State',
+          sortable: true
         },
         {
           key: 'actions',
-          sortable: true,
+          sortable: true
         },
       ],
       items: [
@@ -155,7 +161,7 @@ export default {
       >
         <b-col md="12">
             <b-button
-            class="btn btn-custome float-right mr-2"
+            class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({path:'/CreateArea'})"
           >Create Area</b-button>
@@ -168,7 +174,7 @@ export default {
             :bordered="bordered"
             :filter="filter"
             id="my-table"
-            responsive="sm"
+            :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
             :small="small"
@@ -180,18 +186,18 @@ export default {
           >
             <template v-slot:cell(actions)="data">
              <router-link :to="{ name: 'Viewarea', params: data.item }">
-                <b-button size="sm" class="mr-2" variant="primary">
-                 <i class="fa fa-eye"></i>
-                </b-button>
+                <span class="mr-3" >
+                 <i class="fa fa-eye edit"></i>
+                </span>
               </router-link>
              <router-link :to="{ name: 'Editarea', params: data.item }">
-                <b-button size="sm" class="mr-2" variant="primary">
+               <span class="mr-3">
                   <i class="fas fa-pencil-alt edit"></i>
-                </b-button>
+                </span>
               </router-link>
-            <b-button size="sm" class="mr-2" variant="danger" @click="deleteReq(data)">
-              <i class="fa fa-times bin"></i>
-            </b-button>
+             <span class="mr-3" @click="deleteReq(data)">
+              <i class="fa fa-times edit"></i>
+            </span>
             <!-- <b-button size="sm" class="mr-2" variant="html5 icon" @click="deleteAreamaster(data)">
               <i class="fa fa-times"></i>
             </b-button>  -->
@@ -206,8 +212,6 @@ export default {
               :per-page="perPage"
               :total-rows="Area"
               aria-controls="my-table"
-              prev-text="Prev"
-              next-text="Next"
               hide-goto-end-buttons
             ></b-pagination>
           </div>
@@ -219,7 +223,7 @@ export default {
 </template>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

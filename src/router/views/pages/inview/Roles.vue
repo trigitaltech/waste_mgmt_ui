@@ -139,14 +139,12 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-       
         header="Roles"
-
           class="mt-10 ml-10 mr-10 mx-auto"
       >
          <b-col md="12">
           <b-button
-            class="btn btn-custome float-right mr-2"
+            class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({path:'/CreateRole'})"
           >Create Role</b-button>
@@ -159,7 +157,7 @@ export default {
             :bordered="bordered"
             :filter="filter"
             id="my-table"
-            responsive="sm"
+            :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
             :small="small"

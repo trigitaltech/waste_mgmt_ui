@@ -161,7 +161,7 @@ export default {
       >
         <b-col md="12">
             <b-button
-            class="btn btn-custome float-right mr-2"
+            class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({name:'CreatePermission'})"
           >Create Permission</b-button>
@@ -174,7 +174,7 @@ export default {
             :bordered="bordered"
             :filter="filter"
             id="my-table"
-            responsive="sm"
+            :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
             :small="small"

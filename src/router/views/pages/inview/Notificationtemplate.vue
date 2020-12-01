@@ -346,7 +346,7 @@ export default {
       >
         <b-col md="12">
             <b-button
-            class="btn btn-custome float-right mr-2"
+            class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({path:'/create'})"
           >Create NotificationTemplate</b-button>
@@ -359,7 +359,7 @@ export default {
             :bordered="bordered"
             :filter="filter"
             id="my-table"
-            responsive="sm"
+            :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
             thead-class="header"
@@ -371,22 +371,12 @@ export default {
             ref="roles"
           >
             <template slot="actions" slot-scope="data">
-              <b-button
-                size="sm"
-                class="mr-2"
-                variant="primary"
-                @click="editNotificationTemplate(data)"
-              >
-                <i class="fas fa-pencil-alt edit"></i>
-              </b-button>
-              <b-button
-                size="sm"
-                class="mr-2"
-                variant="danger"
-                @click="deleteNotificationTemplate(data)"
-              >
-                <i class="fa fa-times bin"></i>
-              </b-button>
+              <span class="mr-3" @click="editNotificationTemplate(data)">
+                  <i class="fas fa-pencil-alt edit"></i>
+                </span>
+                 <span class="mr-3" @click="deleteNotificationTemplate(data)">
+              <i class="fa fa-times edit"></i>
+            </span>
               <!-- <b-button size="sm" class="mr-2" variant="html5 icon" @click="deleteNotificationTemplate(data)">
               <i class="fa fa-times"></i>
             </b-button>
@@ -445,8 +435,6 @@ export default {
               :per-page="perPage"
               :total-rows="Area"
               aria-controls="my-table"
-              prev-text="Prev"
-              next-text="Next"
               hide-goto-end-buttons
             ></b-pagination>
           </div>
@@ -458,7 +446,7 @@ export default {
 </template>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

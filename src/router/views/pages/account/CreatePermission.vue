@@ -210,10 +210,10 @@ export default {
                 </b-col> -->
                 </b-row>
                
-                <button
+                <v-button
                           type="submit"
-                         class="btn btn-custome float-right mr-2"
-                          >Submit</button
+                         class="btn btn-custome float-right btn-secondary mb-3"
+                          >Submit</v-button
                         >
               </form>
               <!-- Default form subscription -->
@@ -225,7 +225,7 @@ export default {
 </template>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

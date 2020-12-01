@@ -166,7 +166,7 @@ export default {
       >
         <b-col md="12">
             <b-button
-            class="btn btn-custome float-right mr-2"
+            class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({path:'/CreateStaging'})"
           >Create StagingArea</b-button>
@@ -179,7 +179,7 @@ export default {
             :bordered="bordered"
             :filter="filter"
             id="my-table"
-            responsive="sm"
+            :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
             :small="small"
@@ -191,18 +191,18 @@ export default {
           >
              <template v-slot:cell(actions)="data">
              <router-link :to="{ name: 'Viewstaging', params: data.item }">
-                <b-button size="sm" class="mr-2" variant="primary">
-                 <i class="fa fa-eye"></i>
-                </b-button>
+                 <span class="mr-3" >
+                 <i class="fa fa-eye edit"></i>
+                </span>
               </router-link>
            <router-link :to="{ name: 'Editstaging', params: data.item }">
-                <b-button size="sm" class="mr-2" variant="primary">
+                <span class="mr-3">
                   <i class="fas fa-pencil-alt edit"></i>
-                </b-button>
+                </span>
               </router-link>
-            <b-button size="sm" class="mr-2" variant="danger" @click="deleteReq(data)">
-              <i class="fa fa-times bin"></i>
-            </b-button>
+            <span class="mr-3" @click="deleteReq(data)">
+              <i class="fa fa-times edit"></i>
+            </span>
            </template>
           </b-table>
           <div style="float: right">
@@ -211,8 +211,6 @@ export default {
               :per-page="perPage"
               :total-rows="Area"
               aria-controls="my-table"
-              prev-text="Prev"
-              next-text="Next"
               hide-goto-end-buttons
             ></b-pagination>
           </div>
@@ -224,7 +222,7 @@ export default {
 </template>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

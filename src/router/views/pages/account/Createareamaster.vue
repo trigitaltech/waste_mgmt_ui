@@ -230,7 +230,8 @@ this.userdata()
                   :options="item"
                   
                 ></b-form-select>
-             
+                  </b-col>
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -247,9 +248,9 @@ this.userdata()
                                 required
                     />
                   </b-col>
-
+                  </b-row>
                 <br/>
-                
+                <b-row>
                  <b-col>
                     <!-- Default input text -->
                     <label
@@ -267,7 +268,8 @@ this.userdata()
                                 class="form-control"
                                 required
                     />
-
+                  </b-col>
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -281,7 +283,6 @@ this.userdata()
                          placeholder="Enter city"
                     />
                   </b-col>
-                  
                 </b-row>
                  <br/>
 
@@ -413,7 +414,7 @@ this.userdata()
                 <br />
                <button
                           type="submit"
-                         class="btn btn-custome float-right mr-2"
+                         class="btn btn-custome float-right btn-secondary mb-3"
                           >Submit</button
                         >
               </form>
@@ -428,7 +429,7 @@ this.userdata()
 </style>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

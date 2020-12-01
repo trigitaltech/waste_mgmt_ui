@@ -249,7 +249,7 @@ export default {
                   </b-col>
                   <b-col>
                      <b-button
-                  class="btn btn-custome float-right mr-2"
+                  class="btn btn-custome float-right btn-secondary mb-3"
                   text="Create Tenant"
                   @click="create"
                   >Save</b-button
@@ -272,8 +272,6 @@ export default {
           <b-card
             class="card-wrap"
             header="Add Permission To Role"
-            border-variant="info"
-            header-text-variant="white"
           >
            
             <div>
@@ -306,7 +304,7 @@ export default {
 </template>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label
@@ -320,21 +318,13 @@ export default {
 </style>
 <style>
 .list-box-wrapper .list-box-item .bulk-action .select-all {
- background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
+ background: #3757F5;
 }
 .btn-action {
- background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
+background: #3757F5;
 }
 .list-box-wrapper .list-box-item .bulk-action .deselect-all {
   background-color: #c7c7ca;
   color: black;
-}
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 10px;
 }
 </style>
