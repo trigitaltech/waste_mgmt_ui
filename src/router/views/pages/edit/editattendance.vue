@@ -239,8 +239,9 @@ this.employeedata()
                   @change="getid"
                   
                 ></b-form-select>
-             
-                    <label
+                  </b-col>
+                  <b-col>
+                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Task Ref No</label
@@ -271,7 +272,8 @@ this.employeedata()
                       placeholder="SELECT RECORD DATE"
                       name="startdate"
                     ></flat-pickr>
-
+                  </b-col>
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"

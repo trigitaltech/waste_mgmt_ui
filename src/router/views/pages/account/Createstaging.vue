@@ -373,7 +373,11 @@ export default {
                 </b-row>
                 <b-row class="mb-3">
                    <b-col>
-                     <p class="head">Location</p>
+                      <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Location</label
+                    >
                         <GmapAutocomplete
                           @place_changed="setPlace"
                           :placeholder="'Select Target Location'"

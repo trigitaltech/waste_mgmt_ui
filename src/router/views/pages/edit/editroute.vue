@@ -291,7 +291,8 @@ export default {
                                 required
               
                 ></b-form-select>
-
+                  </b-col>
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -310,7 +311,9 @@ export default {
               
                     />
                   </b-col>
+                  </b-row>
                 <br/>
+                <b-row>
                  <b-col>
                     <!-- Default input text -->
                     <label
@@ -324,8 +327,9 @@ export default {
                       class="form-control"
                       v-model="description"
                     />
-
-                    <label
+                  </b-col>
+                  <b-col>
+                      <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >City</label

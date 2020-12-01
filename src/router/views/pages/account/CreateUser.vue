@@ -558,7 +558,7 @@ export default {
                               </div>
                             </div>
                               
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                             
                            
                         
@@ -575,7 +575,7 @@ export default {
                            
                            
                             </div>
-                             <div class="col-md-4">
+                             <div class="col-md-3">
                             
                            
                         
@@ -592,7 +592,7 @@ export default {
                            
                            
                             </div>
-                              <div class="col-md-4">
+                              <div class="col-md-3">
                             
                            
                         
@@ -609,7 +609,7 @@ export default {
                            
                            
                             </div>
-                             <div class="col-md-4">
+                             <div class="col-md-3">
                             
                            
                         
@@ -623,6 +623,7 @@ export default {
                           v-model.trim="rolename"
                           placeholder="Select Supervisor"
                           label="value"
+                          class="form-control"
                           :options="roles"
                         ></b-form-select>
                               </div>

@@ -559,24 +559,8 @@ export default {
                                 />
                               </div>
                             </div>
-                               <div class="col-md-4">
-                            
-                           
-                        
-                              <div class="form-group mt-3 mt-sm-0">
-                                   <label for="default">ID Proof</label>
-                                 
-                                <b-form-file
-                                @change="readAgreement"
-                                :state="Boolean(file)"
-                                placeholder="Choose a file..."
-                                drop-placeholder="Drop file here..."
-                                ></b-form-file>
-                                    </div>
-                           
-                           
-                            </div>
-                            <div class="col-md-4">
+                              
+                            <div class="col-md-3">
                             
                            
                         
@@ -593,7 +577,24 @@ export default {
                            
                            
                             </div>
-                              <div class="col-md-4">
+                             <div class="col-md-3">
+                            
+                           
+                        
+                              <div class="form-group mt-3 mt-sm-0">
+                                   <label for="default">ID Proof</label>
+                                 
+                                <b-form-file
+                                @change="readAgreement"
+                                :state="Boolean(file)"
+                                placeholder="Choose a file..."
+                                drop-placeholder="Drop file here..."
+                                ></b-form-file>
+                                    </div>
+                           
+                           
+                            </div>
+                              <div class="col-md-3">
                             
                            
                         
@@ -610,7 +611,7 @@ export default {
                            
                            
                             </div>
-                             <div class="col-md-4">
+                             <div class="col-md-3">
                             
                            
                         
@@ -624,6 +625,7 @@ export default {
                           v-model.trim="rolename"
                           placeholder="Select Supervisor"
                           label="value"
+                          class="form-control"
                           :options="roles"
                         ></b-form-select>
                               </div>

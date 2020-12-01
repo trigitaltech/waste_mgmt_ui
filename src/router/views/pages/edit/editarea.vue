@@ -162,7 +162,7 @@ this.userdata()
         <div class="mt-3">
               <!-- Default form subscription -->
              <form @submit.prevent="create">
-                <b-row>
+                <b-row class="mb-3">
                   <b-col>
                     <!-- Default input name -->
                     <label
@@ -181,10 +181,6 @@ this.userdata()
                                 class="form-control"
                                 required
                     />
-
-                
-
-                  
                     <!-- Default input text -->
                   </b-col>
                   
@@ -207,17 +203,9 @@ this.userdata()
                     <!-- Default input name -->
                   
                   </b-col>
-              
-                  <br />
-                
-                
-                  
-               
                 </b-row>
-                 <br/>
-                  <b-row>
-                    
-                      <b-col>
+                  <b-row class="mb-3">
+                    <b-col>
                     <!-- Default input text -->
                     <label
                       for="defaultFormCardtextEx"
@@ -235,8 +223,9 @@ this.userdata()
                   :options="item"
                   
                 ></b-form-select>
-             
-                    <label
+                </b-col>
+                <b-col>
+                  <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Area SqKm</label
@@ -251,11 +240,10 @@ this.userdata()
                                 class="form-control"
                                 required
                     />
-                  </b-col>
-
-                <br/>
-                
-                 <b-col>
+                </b-col>
+                  </b-row>
+                  <b-row class="mb-3">
+                <b-col>
                     <!-- Default input text -->
                     <label
                       for="defaultFormCardtextEx"
@@ -272,7 +260,8 @@ this.userdata()
                                 class="form-control"
                                 required
                     />
-
+                </b-col>
+                <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -285,12 +274,10 @@ this.userdata()
                       v-model="city"
                       
                     />
-                  </b-col>
-                  
+                </b-col>
                 </b-row>
-                 <br/>
 
-  <b-row>
+  <b-row class="mb-3">
                   
                   
                    <b-col>
@@ -310,9 +297,6 @@ this.userdata()
  <br/>
                 
                   </b-col>
-
-                  <br/>
-
                    <b-col>
                     <!-- Default input text -->
                   
@@ -346,8 +330,6 @@ this.userdata()
                     />
                      </b-col>
                 </b-row>
-<br/>
-                
                 <b-row>
                   
                   
@@ -411,8 +393,6 @@ this.userdata()
                     />
                   </b-col> -->
                 </b-row>
-              
-              
                 <br />
                <button
                           type="submit"

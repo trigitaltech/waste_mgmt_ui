@@ -580,24 +580,19 @@ export default {
                                 />
                               </div>
                             </div>
-                            <div class="col-md-4">
-                            
-                           
-                        
+                            <div class="col-md-3">
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Employee Type</label>
                                  
                                            <b-form-select
                                            v-model.trim="employeetype"
-                                            
+                                            class="form-control"
                                            :options="item"
                                               
                                            ></b-form-select>
                                     </div>
-                           
-                           
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Service office</label>
                                  
@@ -606,13 +601,13 @@ export default {
                                            v-model.trim="serviceoffice"
                                             @change="getid()"
                                            :options="item2"
-                                              
+                                              class="form-control"
                                 ></b-form-select>
                                     </div>
                            
                            
                             </div>
-                              <div class="col-md-4">
+                              <div class="col-md-3">
                             
                            
                         
@@ -629,7 +624,7 @@ export default {
                            
                            
                             </div>
-                             <div class="col-md-4">
+                             <div class="col-md-3">
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">ID Proof</label>
                                  

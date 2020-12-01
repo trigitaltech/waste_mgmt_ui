@@ -372,22 +372,12 @@ export default {
             ref="roles"
           >
             <template slot="actions" slot-scope="data">
-              <b-button
-                size="sm"
-                class="mr-2"
-                variant="primary"
-                @click="editSettlement(data)"
-              >
-                <i class="fas fa-pencil-alt edit"></i>
-              </b-button>
-              <b-button
-                size="sm"
-                class="mr-2"
-                variant="danger"
-                @click="deleteSettlement(data)"
-              >
-                <i class="fa fa-times bin"></i>
-              </b-button>
+              <span class="mr-2" @click="editSettlement(data)">
+                 <i class="fas fa-pencil-alt edit"></i>
+                </span>
+                <span  @click="deleteSettlement(data)">
+                 <i class="fa fa-times edit"></i>
+                </span>
               <!-- <b-button size="sm" class="mr-2" variant="html5 icon" @click="deleteSettlement(data)">
               <i class="fa fa-times"></i>
             </b-button>
