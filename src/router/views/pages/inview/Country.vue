@@ -158,12 +158,13 @@ export default {
         </b-col>
         <div class="mt-3">
           <b-table
+            id="my-table"
             :dark="dark"
             :hover="hover"
             :striped="striped"
             :bordered="bordered"
+            ref="roles"
             :filter="filter"
-            id="my-table"
             :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
@@ -173,7 +174,6 @@ export default {
             :fields="CountryColumns"
             :items="item"
             class="mt-3"
-            ref="roles"
           >
             <template slot="actions" slot-scope="data">
               <b-button

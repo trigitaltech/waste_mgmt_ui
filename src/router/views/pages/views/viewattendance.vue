@@ -233,9 +233,9 @@ debugger
                     >
 
                     <input
-                      type="text"
-                    
                       v-model="ownername"
+                    
+                      type="text"
                       disabled
                              
                  class="form-control"
@@ -248,9 +248,9 @@ debugger
                       >Task Ref No</label
                     >
                     <input
-                      type="text"
-                    
                       v-model="taskref"
+                    
+                      type="text"
                       disabled
                                 placeholder="Enter Task ref no "
                                 class="form-control"

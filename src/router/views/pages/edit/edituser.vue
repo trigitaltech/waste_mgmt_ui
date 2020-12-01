@@ -264,9 +264,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.userName"
                                 for="firstname"
                                 type="text"
-                                v-model.trim="form.userName"
                                 oninvalid="this.setCustomValidity('User Name is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter UserName"
@@ -292,9 +292,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.password"
                                 for="firstname"
                                 type="text"
-                                v-model.trim="form.password"
                                 oninvalid="this.setCustomValidity('Password is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Password"
@@ -320,9 +320,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.firstName"
                                 for="firstname"
                                 type="text"
-                                v-model.trim="form.firstName"
                                 oninvalid="this.setCustomValidity('First Name is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter FirstName"
@@ -360,9 +360,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.middleName"
                                 for="lastname"
                                 type="text"
-                                v-model.trim="form.middleName"
                                 oninvalid="this.setCustomValidity('last name is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter LastName"
@@ -388,9 +388,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.lastName"
                                 for="lastname"
                                 type="text"
-                                v-model.trim="form.lastName"
                                 oninvalid="this.setCustomValidity('last name is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter LastName"
@@ -412,9 +412,9 @@ export default {
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Email</label>
                               <input
+                                v-model.trim="form.email"
                                 for="email"
                                 type="email"
-                                v-model.trim="form.email"
                                 oninvalid="this.setCustomValidity('Please Use @gmail.com ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Email"
@@ -432,9 +432,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.number"
                                 for="number"
                                 type="number"
-                                v-model.trim="form.number"
                                 oninvalid="this.setCustomValidity('Phone number is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Phone Number"
@@ -461,9 +461,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.address"
                                 for="address"
                                 type="text"
-                                v-model.trim="form.address"
                                 oninvalid="this.setCustomValidity('Address Lane1 is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Address"
@@ -489,9 +489,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.address2"
                                 for="address"
                                 type="text"
-                                v-model.trim="form.address2"
                                 oninvalid="this.setCustomValidity('Address Lane2 is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Address"
@@ -585,10 +585,10 @@ export default {
                                    <label for="default">ID Proof</label>
                                  
                                 <b-form-file
-                                @change="readAgreement"
                                 :state="Boolean(file)"
                                 placeholder="Choose a file..."
                                 drop-placeholder="Drop file here..."
+                                @change="readAgreement"
                                 ></b-form-file>
                                     </div>
                            

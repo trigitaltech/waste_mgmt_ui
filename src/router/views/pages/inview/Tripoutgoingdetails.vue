@@ -242,20 +242,20 @@ export default {
                   <b-col>
                     <!-- Default input name -->
                    <input
+                      id="defaultFormCardNameEx"
                       type="text"
                       disabled
-                      id="defaultFormCardNameEx"
                       class="form-control"
                       placeholder="Trip ID"
                     />
                   </b-col>
                   <b-col style="margin-left:50px">
                     <input
+                      id="defaultFormCardNameEx"
+                      v-model="id"
                       type="text"
                       placeholder="Enter Trip Id"
-                      id="defaultFormCardNameEx"
                       class="form-control"
-                      v-model="id"
                     />
 
                   </b-col>

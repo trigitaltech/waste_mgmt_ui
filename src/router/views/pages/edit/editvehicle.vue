@@ -219,10 +219,10 @@ export default {
                      Vehicle No</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardNameEx"
-                      class="form-control"
                       v-model="vehicleno"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                   <b-col>
@@ -232,10 +232,10 @@ export default {
                       >Vehicle Type</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardNameEx"
-                      class="form-control"
                       v-model="vehicletype"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                 </b-row>
@@ -251,8 +251,8 @@ export default {
                   placeholder="Select Supervisor"
                   label="value"
                   class="form-control"
-                @change="getid()"
-                  :options="owners"
+                :options="owners"
+                  @change="getid"
                 ></b-form-select>
 
                     <!-- Default input name --> 
@@ -264,10 +264,10 @@ export default {
                       >Plate NO</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="plateno"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                 </b-row>
@@ -312,10 +312,10 @@ export default {
                       >Total Kms Served</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="totalkmsserved"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                   <b-col>
@@ -325,10 +325,10 @@ export default {
                       >Total Hours Served</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="totalhoursserved"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                 </b-row>
@@ -341,10 +341,10 @@ export default {
                       >ManufactureDate</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="manufacturedate"
+                      type="text"
+                      class="form-control"
                     />
                      </b-col>
                      <b-col>
@@ -354,10 +354,10 @@ export default {
                       >Equipment Id</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="equipmentid"
+                      type="text"
+                      class="form-control"
                     />
 
                      </b-col>
@@ -371,10 +371,10 @@ export default {
                       >Description</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="description"
+                      type="text"
+                      class="form-control"
                     />
                      </b-col>
                 </b-row>

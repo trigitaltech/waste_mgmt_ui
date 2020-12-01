@@ -130,9 +130,9 @@ export default {
                       name</label
                     >
                     <input
-                    for="name"
-                                type="text"
-                     v-model.trim="name"
+                    v-model.trim="name"
+                                for="name"
+                     type="text"
                                 oninvalid="this.setCustomValidity('name is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Name"
@@ -153,9 +153,9 @@ export default {
                       Url</label
                     >
                     <input
-                       for="name"
-                                type="text"
-                     v-model.trim="url"
+                       v-model.trim="url"
+                                for="name"
+                     type="text"
                                 oninvalid="this.setCustomValidity('Url is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Url"
@@ -185,10 +185,10 @@ export default {
                       >Operation</label
                     >
                     <b-form-select
+                      id="defaultFormCardEmailEx"
                       v-model="Operation"
                       :options="option"
                       class="form-control"
-                      id="defaultFormCardEmailEx"
                        oninvalid="this.setCustomValidity('Operation is required ')"
                                 oninput="setCustomValidity('')"
                                 required

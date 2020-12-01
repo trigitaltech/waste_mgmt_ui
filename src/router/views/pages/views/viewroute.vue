@@ -163,11 +163,11 @@ export default {
                      Route Name</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                    id="defaultFormCardNameEx"
                       v-model="routename"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                 
@@ -183,11 +183,11 @@ export default {
                       >Route Type</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                    id="defaultFormCardNameEx"
                       v-model="routetype"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                     <!-- Default input name -->
@@ -211,11 +211,11 @@ export default {
                      Area ID</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                    id="defaultFormCardNameEx"
                       v-model="areaid"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                 
@@ -232,11 +232,11 @@ export default {
                      Area Name</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                    id="defaultFormCardNameEx"
                       v-model="areaname"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
                     <!-- Default input name -->
                   
@@ -259,11 +259,11 @@ export default {
                       >Supervisor</label
                     >
                  <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                    id="defaultFormCardNameEx"
                       v-model="supervisor"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                     <label
@@ -272,11 +272,11 @@ export default {
                       >Route Distance</label
                     >
                     <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                    id="defaultFormCardEmailEx"
                       v-model="routedistance"
+                      disabled
+                      type="email"
+                      class="form-control"
                     />
                   </b-col>
                 <br/>
@@ -288,11 +288,11 @@ export default {
                       >Description</label
                     >
                     <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                    id="defaultFormCardEmailEx"
                       v-model="description"
+                      disabled
+                      type="email"
+                      class="form-control"
                     />
 
                     <label
@@ -301,11 +301,11 @@ export default {
                       >City</label
                     >
                     <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                    id="defaultFormCardEmailEx"
                       v-model="city"
+                      disabled
+                      type="email"
+                      class="form-control"
                     />
                   </b-col>
                   

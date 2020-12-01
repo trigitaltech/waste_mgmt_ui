@@ -60,9 +60,7 @@ mobile:this.username
                duration: 7000
              })
             this.tryingToLogIn = false
-            this.authError = error
-              ? error
-              : ''
+            this.authError = error || ''
             this.isAuthError = true
           })
       } catch (error) {
@@ -113,21 +111,21 @@ mobile:this.username
 
                         <!-- Name -->
                         <input
-                          type="email"
                           id="defaultSubscriptionFormPassword"
+                          v-model="username"
+                          type="email"
                           class="form-control mb-4"
                           placeholder="Mobile No"
-                          v-model="username"
                           style="width: 250px"
                         />
 
                         <!-- Email -->
                         <input
-                          type="password"
                           id="defaultSubscriptionFormEmail"
+                          v-model="password"
+                          type="password"
                           class="form-control"
                           placeholder="Password"
-                          v-model="password"
                           style="width: 250px"
                         />
                         <!-- <large id="passwordHelpBlock" class="form-text  blue-text ">
@@ -146,7 +144,7 @@ mobile:this.username
                              <b-button
                             class="btn btn-outline-orange btn-rounded my-4 waves-effect"
                             text="Create Tenant"
-                              @click="$router.push({path:'/register'})"
+                              @click="$router.push({ path: '/register' })"
                             >Register</b-button
                           >
                         </div>

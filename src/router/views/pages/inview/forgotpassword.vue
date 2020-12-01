@@ -352,17 +352,18 @@ export default {
           <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({path:'/tenant/create'})"
+            @click="$router.push({ path: '/tenant/create' })"
           >Create Employee</b-button>
         </b-col>
         <div class="mt-3">
           <b-table
+            id="my-table"
             :dark="dark"
             :hover="hover"
             :striped="striped"
             :bordered="bordered"
+            ref="roles"
             :filter="filter"
-            id="my-table"
             :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
@@ -372,7 +373,6 @@ export default {
             :fields="permissionColumns"
             :items="item"
             class="mt-3"
-            ref="roles"
           >
             <template slot="actions" slot-scope="data">
               <b-button
@@ -418,27 +418,27 @@ export default {
             </template>
           </b-table>
 
-          <b-modal v-model="permissionModal" id="roleModal">
+          <b-modal id="roleModal" v-model="permissionModal">
             <div slot="modal-header">{{ header }}</div>
             <div>
               <b-input v-model="permission" />
 
-              <b-input class="mt-2" v-model="permission" />
+              <b-input v-model="permission" class="mt-2" />
 
               <multiselect
+                v-model="permission"
                 class="perm_input"
                 :options="methods"
                 placeholder="Select a Method"
                 label="value"
                 track-by="value"
                 :multiple="false"
-                v-model="permission"
               ></multiselect>
             </div>
             <div slot="modal-footer">
-              <b-button @click="handleEdit" variant="primary">Submit</b-button>
+              <b-button variant="primary" @click="handleEdit">Submit</b-button>
 
-              <b-button @click="clearModal" class="ml-2" variant="secondary"
+              <b-button class="ml-2" variant="secondary" @click="clearModal"
                 >Cancel</b-button
               >
             </div>

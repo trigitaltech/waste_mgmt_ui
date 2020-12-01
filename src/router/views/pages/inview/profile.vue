@@ -97,7 +97,7 @@ export default {
                 style="float:right;background-color:#26a69a"
                 type="submit"
                 class="btn btn"
-                @click="changepassword()"
+                @click="changepassword"
               >Change Password</button>
             </div>
             <!-- profile  -->
@@ -166,7 +166,7 @@ export default {
               ></b-form-input>
             </div>
           </div>
-          <b-button class="mt-3" variant="primary" block @click="updatepassword" style="background-color:#26a69a">Update</b-button>
+          <b-button class="mt-3" variant="primary" block style="background-color:#26a69a" @click="updatepassword">Update</b-button>
           <!-- <b-button variant="primary" @click="updatepassword">Updatepassword</b-button> -->
         </b-modal>
         <!-- end card -->

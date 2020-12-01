@@ -26,7 +26,7 @@
                   <button
                     class="btn btn-primary d-inline-flex align-items-center"
                     type="submit"
-                @click="add()"
+                @click="add"
                   >Add Permission To Role</button>
                 </div>
             </div>

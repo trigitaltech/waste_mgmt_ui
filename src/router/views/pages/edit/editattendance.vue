@@ -247,9 +247,9 @@ this.employeedata()
                       >Task Ref No</label
                     >
                     <input
-                      type="text"
-                    
                       v-model="taskref"
+                    
+                      type="text"
                       
                                 placeholder="Enter Task ref no "
                                 class="form-control"

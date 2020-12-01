@@ -190,12 +190,13 @@ export default {
       </b-row>
         <div class="mt-3">
           <b-table
+            id="my-table"
             :dark="dark"
             :hover="hover"
             :striped="striped"
+            ref="roles"
             :bordered="bordered"
             :filter="filter"
-            id="my-table"
             :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
@@ -204,7 +205,6 @@ export default {
             :fields="permissionColumns"
             :items="item"
             class="mt-3"
-            ref="roles"
              
                 :filter-included-fields="filterOn"
                 @filtered="onFiltered"

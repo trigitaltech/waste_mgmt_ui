@@ -194,10 +194,10 @@ export default {
                      Equipment No</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardNameEx"
-                      class="form-control"
                       v-model="equipmentno"
+                      type="text"
+                      class="form-control"
                     /> <!-- Default input text -->
                   </b-col>
                   <b-col>
@@ -226,9 +226,9 @@ export default {
                   v-model.trim="ownername"
                   placeholder="Select Supervisor"
                   label="value"
-                @change="getid()"
                 class="form-control"
-                  :options="owners"
+                :options="owners"
+                  @change="getid"
                 ></b-form-select>
                   </b-col>
                   <b-col>
@@ -239,10 +239,10 @@ export default {
                       >Equipment Id</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="equipmentid"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                 </b-row>
@@ -269,10 +269,10 @@ export default {
                       >Manufacture Date</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="manufacturedate"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                   </b-row>
@@ -285,10 +285,10 @@ export default {
                       >Total Kms Served</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="totalkmsserved"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                   <b-col>
@@ -298,10 +298,10 @@ export default {
                       >Total Hours Served</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="totalhoursserved"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                   
@@ -315,10 +315,10 @@ export default {
                       >Description</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="description"
+                      type="text"
+                      class="form-control"
                     />
 
                      </b-col>

@@ -177,7 +177,7 @@
                     <div class="col-md-4">
                       <button
                         class="btn btn-primary d-inline-flex align-items-center"
-                        @click="e=>$emit('edit',e)"
+                        @click="e => $emit('edit',e)"
                       >Back</button>
                     </div>
                     <div class="col-md-8">
@@ -206,11 +206,17 @@ import {
 } from 'vee-validate/dist/vee-validate.full'
 import { editcustomer, cityTemplete, registerTemplete } from '../services/auth'
 export default {
-  name: 'editcustomer',
+  name: 'Editcustomer',
   components: {
     Multiselect,
     ValidationProvider,
     ValidationObserver,
+  },
+  props: {
+    itemObj: {
+      type: Object,
+      required: true,
+    },
   },
 
   data() {
@@ -218,11 +224,9 @@ export default {
       cityOpt: [],
     }
   },
-  props: {
-    itemObj: {
-      type: Object,
-      required: true,
-    },
+  async mounted() {
+    console.log('hai', this.$props.itemObj)
+    this.getClientDetails()
   },
   methods: {
     async getClientDetails() {
@@ -292,10 +296,6 @@ export default {
       // });
       // }
     },
-  },
-  async mounted() {
-    console.log('hai', this.$props.itemObj)
-    this.getClientDetails()
   },
 }
 </script>

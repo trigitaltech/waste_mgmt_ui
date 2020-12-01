@@ -354,12 +354,13 @@ export default {
         </b-col>
         <div class="mt-3">
           <b-table
+            id="my-table"
             :dark="dark"
             :hover="hover"
             :striped="striped"
             :bordered="bordered"
+            ref="roles"
             :filter="filter"
-            id="my-table"
             :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
@@ -369,7 +370,6 @@ export default {
             :fields="RedcardColumns"
             :items="item"
             class="mt-3"
-            ref="roles"
           >
             <template slot="actions" slot-scope="data">
               <span class="mr-2" @click="editRedcard(data)">
@@ -405,27 +405,27 @@ export default {
             </template>
           </b-table>
 
-          <b-modal v-model="RedcardModal" id="roleModal">
+          <b-modal id="roleModal" v-model="RedcardModal">
             <div slot="modal-header">{{ header }}</div>
             <div>
               <b-input v-model="Redcard" />
 
-              <b-input class="mt-2" v-model="Redcard" />
+              <b-input v-model="Redcard" class="mt-2" />
 
               <multiselect
+                v-model="Redcard"
                 class="perm_input"
                 :options="methods"
                 placeholder="Select a Method"
                 label="value"
                 track-by="value"
                 :multiple="false"
-                v-model="Redcard"
               ></multiselect>
             </div>
             <div slot="modal-footer">
-              <b-button @click="handleEdit" variant="primary">Submit</b-button>
+              <b-button variant="primary" @click="handleEdit">Submit</b-button>
 
-              <b-button @click="clearModal" class="ml-2" variant="secondary"
+              <b-button class="ml-2" variant="secondary" @click="clearModal"
                 >Cancel</b-button
               >
             </div>
