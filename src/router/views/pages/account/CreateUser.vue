@@ -174,7 +174,7 @@ export default {
                 pin: this.form.postCode,
                 personalIdNo: this.form.personalidno,
                 idProofDocURL: this.file,
-                type: null,
+                type: 1,
                 role: this.rolename,
                 isDeleted: false,
                 status: 200,

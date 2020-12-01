@@ -8,8 +8,9 @@ import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
 // Vue.component('downloadExcel', JsonExcel)
 import {
   // eslint-disable-next-line no-unused-vars
- Tripdownload,Areamasters,routemaster, CreateIncomingTrip
+ Tripdownload,Areamasters,routemaster, CreateIncomingTrip,users
 } from '../../../../services/auth'
+import Multiselect from 'vue-multiselect'
 
 export default {
   page: {
@@ -18,6 +19,7 @@ export default {
   },
   data() {
     return{
+      users:{},
       area:null,
       route:null,
       driver:null,
@@ -38,12 +40,33 @@ export default {
       lguList:[]
     };
   },
-  components: { Layout, PageHeader,VueTimepicker  },
+  components: { Layout, PageHeader,VueTimepicker ,Multiselect },
   mounted() {
     this.areadata();
     this.routedata();
+    this.getUsers();
   },
   methods:{
+    async getUsers(){
+      try{
+        let result = await users();
+        this.users = result.data.response.Users;
+        console.log(this.users);
+        this.users.map(e => {
+          if(e.roles.length>0){
+            if(e.roles[0].name == "LGU")
+              this.lguList.push(e.userName);
+            if(e.roles[0].name == "CONTRACTOR")
+              this.contractorList.push(e.userName);
+          }
+        });
+        console.log(this.lguList);
+        console.log(this.contractorList);
+      }
+      catch(e){
+        console.log(e);
+      }
+    },
     async areadata() {
       try {
         const result = await Areamasters();
@@ -69,42 +92,57 @@ export default {
       } catch (error) {}
     },
     async create() {
-      try{
+      try {
+      let payload = {
+        controlNo:null,
+        tripDate:this.tripDate,
+        bodyNo:this.body,
+        plateNo:this.plate,
+        truckType:this.truckType,
+        servingArea:this.area,
+        servingRoute:this.route,
+        driverName:this.driver,
+        guide:null,
+        isDeleted:false,
+        lgu:this.lgu,
+        contractor_DISPATCHER_NAME:this.contractor
+      };
+      /*try{
         let payload = {
-          bodyNo: "",
+          bodyNo: this.body,
           collectionEndTime: null,
-          collectionStartTime: "2020-11-10T05:00:00.000+00:00",
-          contractor_DISPATCHER_ID: 1212,
-          contractor_DISPATCHER_MEASURED_VOLUME: 345,
-          contractor_DISPATCHER_NAME: "ram",
-          contractor_DISPATCHER_VERIFIED: 1,
-          controlNo: 7261,
-          createdBy: "admin",
-          createdDate: "2020-11-30T12:14:44.000+00:00",
-          driverId: 12412,
-          driverName: "samuel",
-          guide: "guide",
+          collectionStartTime: null,
+          contractor_DISPATCHER_ID: null,
+          contractor_DISPATCHER_MEASURED_VOLUME: null,
+          contractor_DISPATCHER_NAME: null,
+          contractor_DISPATCHER_VERIFIED: null,
+          controlNo: null,
+          createdBy: null,
+          createdDate: null,
+          driverId: null,
+          driverName: null,
+          guide: null,
           isDeleted: false,
-          lgu: "NY",
-          id: 1,
-          lgu_CHECKER_ID: 1721,
-          lgu_CHECKER_MEASURED_VOLUME: "234",
-          lgu_CHECKER_NAME: "shyam",
-          lgu_CHECKER_VERIFIED: 1,
-          mmda_Verified: true,
-          mmda_revewer_ID: 5632,
-          mmda_revewer_NAME: "sam",
-          modifiedBy: "admin",
-          modifiedDate: "2020-11-30T12:14:44.000+00:00",
-          plateNo: "GHKD463",
-          servingArea: {id: 2, areaName: null, areaType: null, supervisor: null, areaSqKm: null, isDeleted: null},
-          servingRoute: {id: 2, routeName: null, routeType: null, supervisor: null, route_distance: null, areaId: null},
+          lgu: null,
+          id: null,
+          lgu_CHECKER_ID: null,
+          lgu_CHECKER_MEASURED_VOLUME: null,
+          lgu_CHECKER_NAME: null,
+          lgu_CHECKER_VERIFIED: null,
+          mmda_Verified: null,
+          mmda_revewer_ID: null,
+          mmda_revewer_NAME: null,
+          modifiedBy: null,
+          modifiedDate: null,
+          plateNo: null,
+          servingArea: this.area,
+          servingRoute: {},
           status: null,
-          totalKmServed: 23,
-          tripDate: "2020-11-10T05:00:00.000+00:00",
-          truckType: "heavyLoad"
+          totalKmServed: null,
+          tripDate: "",
+          truckType: ""
         };
-        console.log(payload);
+        console.log(payload);*/
         const result = await CreateIncomingTrip(payload);
         if (result) {
           this.$swal({
@@ -112,7 +150,7 @@ export default {
             type: 'success',
             text: `Incoming Trip Created`,
             duration: 5000,
-          })
+          });
           this.$router.push({path:'/Trips/IncomingTrips'});
         }
       }
@@ -164,13 +202,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >Serving Area</label
                     >
-                    <b-form-select
-                      v-model.trim="area"
-                      class="form-control"        
-                      :options="servingAreas"
-                      @change="getAreaId" 
-                    >
-                    </b-form-select>
+                    <multiselect
+                      v-model="area"
+                      :multiple="true"
+                      :options="servingAreas">
+                    </multiselect>
                   </b-col>
                   <b-col>
                     <b-col>
@@ -217,7 +253,7 @@ export default {
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Plate</label
+                      >Plate No.</label
                     >
                     <input
                       v-model="plate"
@@ -243,7 +279,7 @@ export default {
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Body</label
+                      >Body No</label
                     >
                     <input
                       v-model="body"
@@ -294,13 +330,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >Garbage Collectors</label
                     >
-                    <b-form-select
-                      v-model.trim="collector"
-                      class="form-control"        
-                      :options="collectorList"
-                      @change="getCollectorId" 
-                    >
-                    </b-form-select>
+                    <multiselect
+                      v-model="collector"
+                      :multiple="true"
+                      :options="collectorList">
+                    </multiselect>
                   </b-col>
                   <b-col>
                     <b-col>
