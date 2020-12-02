@@ -3,6 +3,7 @@ import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import NProgress from 'nprogress/nprogress'
+import { Datetime } from 'vue-datetime';
 import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
 // import JsonExcel from 'vue-json-excel'
 // Vue.component('downloadExcel', JsonExcel)
@@ -28,7 +29,7 @@ export default {
       lgu:null,
       plate:null,
       body:null,
-      tripDate:null,
+      tripDate:"",
       trucktype:null,
       tripdate:null,
       startTime:"",
@@ -40,7 +41,7 @@ export default {
       lguList:[]
     };
   },
-  components: { Layout, PageHeader,VueTimepicker ,Multiselect },
+  components: { Layout, PageHeader,VueTimepicker ,Multiselect, datetime: Datetime, },
   mounted() {
     this.areadata();
     this.routedata();
@@ -94,18 +95,20 @@ export default {
     async create() {
       try {
       let payload = {
-        controlNo:null,
+        controlNo:7261,
         tripDate:this.tripDate,
+        collectionStartTime:this.startTime,
         bodyNo:this.body,
         plateNo:this.plate,
         truckType:this.truckType,
-        servingArea:this.area,
-        servingRoute:this.route,
-        driverName:this.driver,
-        guide:null,
+        servingArea:"hyderabad",
+        servingRoute:"uppal",
+        driverName:"sample",
+        driverId:1,
+        guide:"guide",
         isDeleted:false,
-        lgu:this.lgu,
-        contractor_DISPATCHER_NAME:this.contractor
+        lgu:"trg",
+        contractor_DISPATCHER_NAME:"fgh"
       };
       /*try{
         let payload = {
@@ -158,23 +161,9 @@ export default {
 
       }
     },
-    getAreaId() {
-
-    },
-    getRouteId() {
-
-    },
-    getDriverId() {
-
-    },
-    getContractorId() {
-
-    },
-    getCollectorId() {
-
-    },
-    getLguId() {
-
+    onSelect (option, id) {
+      this.route = this.servingRoutes[0];
+      this.route = Object.assign(this.route);
     }
   }
 }
@@ -215,13 +204,12 @@ export default {
                         class="grey-text font-weight-dark"
                         >Serving Route</label
                       >
-                      <b-form-select
-                        v-model.trim="route"
-                        class="form-control"        
+                      <multiselect
+                        v-model="route" 
+                        @select="onSelect"      
                         :options="servingRoutes"
-                        @change="getRouteId" 
                       >
-                      </b-form-select>
+                      </multiselect>
                     </b-col>
                   </b-col>
                 </b-row>
@@ -232,12 +220,17 @@ export default {
                       class="grey-text font-weight-dark"
                       >Trip Date</label
                     >
-                    <flat-pickr
+                    <datetime 
                       v-model="tripDate"
-                      class="form-control"
-                      placeholder="SELECT RECORD DATE"
-                      name="tripdate"
-                    ></flat-pickr>
+                      :format="{
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric'
+                      }"
+                      type="date"
+                      placeholder="SELECT Date"
+                      name="startdate"
+                 ></datetime>
                   </b-col>
                   <b-col class="ml-3 mt-4">
                     <label
@@ -245,7 +238,21 @@ export default {
                       class="grey-text font-weight-dark mr-2"
                       >Trip Start Time</label
                     >
-                    <vue-timepicker format="hh:mm A" v-model="startTime"></vue-timepicker>
+                    <datetime 
+                      v-model="startTime"
+                      :format="{
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        milisecond: '2-digit'
+                      }"
+                      type="time"
+                      placeholder="SELECT TIME"
+                      name="startdate"
+                 ></datetime>
                   </b-col>
                 </b-row>
                 <b-row class="mt-3">

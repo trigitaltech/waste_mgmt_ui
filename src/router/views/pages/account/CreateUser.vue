@@ -174,15 +174,14 @@ export default {
                 pin: this.form.postCode,
                 personalIdNo: this.form.personalidno,
                 idProofDocURL: this.file,
-                type: 1,
-                role: this.rolename,
+                type: this.rolename,
                 isDeleted: false,
                 status: 200,
                 createdDate: this.createddate,
                 modifiedDate: this.modifydate,
                 createdBy: this.createdby,
                 modifiedBy: this.modifyby,
-                service_Office: this.servieoffice
+                service_Office: this.serviceoffice
             
         }
         let result = await createuser(payload)
@@ -569,7 +568,7 @@ export default {
                                    <label for="default">Service office</label>
                                  
                               <input
-                                v-model.trim="serviceoffice"
+                                v-model="serviceoffice"
                                 placeholder="Enter Service office"
                                 class="form-control"
                                 type="number"
@@ -620,7 +619,7 @@ export default {
                                       <label
                               for="defaultFormCardEmailEx"
                               class="grey-text font-weight-dark"
-                              >Role</label
+                              >Type</label
                             >
                             <b-form-select
                           v-model.trim="rolename"
