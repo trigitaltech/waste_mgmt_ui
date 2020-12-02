@@ -335,11 +335,11 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >ManufactureDate</label
+                      >Description</label
                     >
                     <input
                       id="defaultFormCardtextEx"
-                      v-model="manufacturedate"
+                      v-model="description"
                       type="text"
                       class="form-control"
                     />
@@ -365,22 +365,13 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Description</label
+                      >Manufacture Date</label
                     >
-<<<<<<< HEAD
                     <flat-pickr
                       v-model="manufactureDate"
                       class="form-control"
                       placeholder="SELECT DATE"
                     ></flat-pickr>
-=======
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="description"
-                      type="text"
-                      class="form-control"
-                    />
->>>>>>> 9a31dbc5d06310382f9d4965c35d4e9f05c89064
                      </b-col>
                 </b-row>
                 <b-button

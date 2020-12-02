@@ -22,7 +22,9 @@ import Toasted from 'vue-toasted';
 import { Datetime } from 'vue-datetime';
  
 import 'vue-datetime/dist/vue-datetime.css'
+import VueTreeList from 'vue-tree-list'
  
+Vue.use(VueTreeList)
 Vue.use(Datetime)
 Vue.use(Notifications)
 Vue.use(VueFeather)

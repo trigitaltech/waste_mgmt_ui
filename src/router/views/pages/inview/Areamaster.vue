@@ -55,16 +55,7 @@ export default {
           label: 'Description',
           sortable: true
         },
-         {
-          key: 'createdDate',
-          label: 'Created Date',
-          sortable: true
-        },
-         {
-          key: 'createdBy',
-          label: 'Created By',
-          sortable: true
-        },
+        
          {
           key: 'areaName',
           label: 'Area Name',
@@ -79,6 +70,16 @@ export default {
          {
           key: 'state',
           label: 'State',
+          sortable: true
+        },
+         {
+          key: 'createdDate',
+          label: 'Created Date',
+          sortable: true
+        },
+         {
+          key: 'createdBy',
+          label: 'Created By',
           sortable: true
         },
         {
@@ -113,7 +114,7 @@ export default {
       let date
       // if (timeStamp !== undefined){
         // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
-      return moment(timeStamp).format('MMM Do YYYY')
+   return moment(timeStamp).format('DD/MM/YYYY')
       // }
     },
    async deleteReq(data) {

@@ -49,10 +49,7 @@ export default {
 
           label: 'Id',
         },
-         {
-          key: 'createdBy',
-          label: 'CreatedBy',
-        },
+        
         
         {
           key: 'dumpingAreaName',
@@ -83,6 +80,10 @@ export default {
           key: 'country',
           label: 'Country',
         },
+         {
+          key: 'createdBy',
+          label: 'CreatedBy',
+        }, 
 
         {
           key: 'actions',

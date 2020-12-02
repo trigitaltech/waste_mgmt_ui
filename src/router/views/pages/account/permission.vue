@@ -63,6 +63,11 @@ export default {
           sortable: true,
         },
          {
+          key: 'operation',
+          label: 'operation',
+          sortable: true,
+        },
+         {
           key: 'createdBy',
           label: 'createdBy',
           sortable: true,
@@ -72,11 +77,7 @@ export default {
           label: 'createdDate',
           sortable: true,
         },
-         {
-          key: 'operation',
-          label: 'operation',
-          sortable: true,
-        },
+        
         {
           key: 'actions',
           sortable: true,
@@ -116,7 +117,7 @@ export default {
       let date
       // if (timeStamp !== undefined){
         // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
-      return moment(timeStamp).format('MMM Do YYYY')
+     return moment(timeStamp).format('DD/MM/YYYY')
       // }
     },
      async deleteReq(data) {
