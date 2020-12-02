@@ -223,10 +223,10 @@ export default {
                   <div class="media p-3">
                     <div class="media-body">
                       <span
-                        class="text-muted text-uppercase font-size-12 font-weight-bold"
+                        class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
                         >SALES</span
                       >
-                      <h2 class="mb-0">2000$</h2>
+                      <h2 class="mb-0 text-dark-blue">2000$</h2>
                     </div>
                     <div class="align-self-center" style="position: relative;">
                       <i
@@ -263,10 +263,10 @@ export default {
                     <div class="media p-3">
                       <div class="media-body">
                         <span
-                          class="text-muted text-uppercase font-size-12 font-weight-bold"
+                          class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
                           >SUBSCRIPTIONS</span
                         >
-                        <h2 class="mb-0">200</h2>
+                        <h2 class="mb-0 text-dark-blue">200</h2>
                       </div>
                       <div
                         class="align-self-center"
@@ -304,10 +304,10 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
                   <div class="media p-3">
                     <div class="media-body">
                       <span
-                        class="text-muted text-uppercase font-size-12 font-weight-bold"
+                        class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
                         >TRAFFIC</span
                       >
-                      <h2 class="mb-0">20000</h2>
+                      <h2 class="mb-0 text-dark-blue">20000</h2>
                     </div>
                     <div class="align-self-center" style="position: relative;">
                       <i
@@ -341,10 +341,10 @@ background-image: linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%);
                   <div class="media p-3">
                     <div class="media-body">
                       <span
-                        class="text-muted text-uppercase font-size-12 font-weight-bold"
+                        class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
                         >ORGANIC TRAFFIC</span
                       >
-                      <h2 class="mb-0">2000</h2>
+                      <h2 class="mb-0 text-dark-blue">2000</h2>
                     </div>
                     <div class="align-self-center" style="position: relative;">
                       <i
@@ -371,8 +371,3 @@ background-image: linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%);
     </div>
   </Layout>
 </template>
-<style scoped>
-.text-muted {
-  color: black !important;
-}
-</style>
