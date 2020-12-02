@@ -60,9 +60,7 @@ mobile:this.username
                duration: 7000
              })
             this.tryingToLogIn = false
-            this.authError = error
-              ? error
-              : ''
+            this.authError = error || ''
             this.isAuthError = true
           })
       } catch (error) {
@@ -83,11 +81,6 @@ mobile:this.username
           <!--Section: Content-->
           <section
             class="p-5 my-md-5 text-center"
-            style="
-              background-image: linear-gradient(109.6deg, #30cfd0 11.2%, #330867 92.5%);
-              background-size: cover;
-              background-position: center center;
-            "
           >
             <form class="my-5 mx-md-5" action="">
               <div class="row">
@@ -118,21 +111,21 @@ mobile:this.username
 
                         <!-- Name -->
                         <input
-                          type="email"
                           id="defaultSubscriptionFormPassword"
+                          v-model="username"
+                          type="email"
                           class="form-control mb-4"
                           placeholder="Mobile No"
-                          v-model="username"
                           style="width: 250px"
                         />
 
                         <!-- Email -->
                         <input
-                          type="password"
                           id="defaultSubscriptionFormEmail"
+                          v-model="password"
+                          type="password"
                           class="form-control"
                           placeholder="Password"
-                          v-model="password"
                           style="width: 250px"
                         />
                         <!-- <large id="passwordHelpBlock" class="form-text  blue-text ">
@@ -143,23 +136,15 @@ mobile:this.username
                           <!-- <button type="button" class="btn btn-outline-orange btn-rounded my-4 waves-effect">Warning</button> -->
                          
                           <b-button
-                            style="
-                              background-image: linear-gradient(109.6deg, rgba(48, 207, 208, 1) 11.2%, rgba(51, 8, 103, 1) 92.5%);
-                            
-                            "
                             class="btn btn-outline-orange btn-rounded my-4 waves-effect"
                             text="Create Tenant"
                             @click="tryToLogIn"
                             >Login</b-button
                           >
                              <b-button
-                            style="
-                              background-image: linear-gradient(109.6deg, rgba(48, 207, 208, 1) 11.2%, rgba(51, 8, 103, 1) 92.5%);
-                              margin-left:50px
-                            "
                             class="btn btn-outline-orange btn-rounded my-4 waves-effect"
                             text="Create Tenant"
-                              @click="$router.push({path:'/register'})"
+                              @click="$router.push({ path: '/register' })"
                             >Register</b-button
                           >
                         </div>

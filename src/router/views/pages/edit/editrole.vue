@@ -132,37 +132,31 @@ export default {
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
-          <!-- Card -->
-          <div class="card mx-xl-5">
-            <!-- Card body -->
-            <div class="card-body">
               <!-- Default form subscription -->
               <form>
                 <b-row>
                   <b-col>
                     <!-- Default input name -->
                    <input
+                      id="defaultFormCardNameEx"
                       type="text"
                       disabled
-                      id="defaultFormCardNameEx"
                       class="form-control"
                       placeholder="Role Name"
                     />
                   </b-col>
                   <b-col style="margin-left:50px">
                     <input
-                      type="text"
                       id="defaultFormCardNameEx"
-                      class="form-control"
                       v-model="name"
+                      type="text"
+                      class="form-control"
                     />
 
                   </b-col>
                   <b-col>
                      <b-button
-                  style="
-                    background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-info float-right mr-2"
+                  class="btn btn-custome float-right btn-secondary mb-3"
                   text="Create Tenant"
                   @click="create"
                   >Save</b-button
@@ -173,10 +167,6 @@ export default {
                
               </form>
               <!-- Default form subscription -->
-            </div>
-            <!-- Card body -->
-          </div>
-          <!-- Card -->
         </div>
       </b-card>
     </div>
@@ -185,7 +175,7 @@ export default {
 </template>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

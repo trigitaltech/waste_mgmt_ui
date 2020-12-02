@@ -4,6 +4,7 @@ import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
+import moment from 'moment'
 import {
   ValidationProvider,
   ValidationObserver,
@@ -58,7 +59,7 @@ export default {
           key: 'requestType',
            label: 'requestType',
         },
-          {
+         {
           key: 'jobStartTime',
            label: 'jobStartTime',
         },
@@ -78,7 +79,7 @@ export default {
           key: 'controlChekerName',
            label: 'controlChekerName',
         },
-          {
+         {
           key: 'tripDate',
            label: 'tripDate',
         },
@@ -147,6 +148,15 @@ export default {
   this.servicerequest()
   },
   methods: {
+      getDate(timeStamp) {
+    // debugger
+      //  console.log(timeStamp)
+      let date
+      // if (timeStamp !== undefined){
+        // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
+      return moment(timeStamp).format('MMM Do YYYY')
+      // }
+    },
     async deleteReq(data) {
        console.log("data",data.item.id)
        var id = data.item.id
@@ -186,67 +196,78 @@ export default {
   },
 }
 </script>
-
 <template>
   <Layout>
     <PageHeader :items="items" />
 
     <div class="animated fadeIn">
       <b-card
-        header="Servicerequestdetailss"
-
+        header="ServiceRequests"
         class="mt-10 ml-10 mr-10 mx-auto"
       >
-        <b-col md="12">
+      <b-row>
+        <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+        <b-col md="9">
           <b-button
-            style="
-              background-image: linear-gradient(
-                109.6deg,
-                rgba(48, 207, 208, 1) 11.2%,
-                rgba(51, 8, 103, 1) 92.5%
-              );
-            "
-            class="btn btn-info float-right mr-2"
+            class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({ path: '/Createservicerequest' })"
-            >Create Servicerequest</b-button
+            @click="$router.push({ name: 'Createservicerequest' })" 
+            >Create servicerequest</b-button
           >
         </b-col>
+      </b-row>
         <div class="mt-3">
           <b-table
+            id="my-table"
             :dark="dark"
             :hover="hover"
             :striped="striped"
             :bordered="bordered"
+            ref="roles"
             :filter="filter"
-            id="my-table"
-            responsive="sm"
+            :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
-            thead-class="bg-dark"
             :small="small"
             :fixed="fixed"
             :fields="ServicerequestdetailsColumns"
             :items="item"
             class="mt-3"
-            ref="roles"
-          >
-             <template v-slot:cell(actions)="data">
+          
+             
+                :filter-included-fields="filterOn"
+                @filtered="onFiltered"
+           ><template v-slot:cell(jobStartTime)="data">
+                            <div class="table-row">{{ getDate(data.item.jobStartTime) }}</div>
+                        </template>
+                        <template v-slot:cell(tripDate)="data">
+                            <div class="table-row">{{ getDate(data.item.tripDate) }}</div>
+                        </template>
+          
+              <template v-slot:cell(actions)="data">
+                
              <router-link :to="{ name: 'Viewservicerequest', params: data.item }">
-                <b-button size="sm" class="mr-2" variant="primary">
-                 <i class="fa fa-eye"></i>
-                </b-button>
+                <span class="mr-2" >
+                 <i class="fa fa-eye edit"></i>
+                </span>
               </router-link>
              <router-link :to="{ name: 'Editservicerequest', params: data.item }">
-                <b-button size="sm" class="mr-2" variant="primary">
+                <span class="mr-2">
                   <i class="fas fa-pencil-alt edit"></i>
-                </b-button>
+                </span>
               </router-link>
-              <div v-if="data.item.status !== 'ASSIGNED'">
-            <b-button size="sm" class="mr-2" variant="danger" @click="deleteReq(data)">
-              <i class="fa fa-trash bin"></i>
-            </b-button>
-              </div>
+            <span @click="deleteReq(data)">
+              <i class="fa fa-times edit"></i>
+            </span>
            </template>
           </b-table>
           <div style="float: right">
@@ -255,8 +276,6 @@ export default {
               :per-page="perPage"
               :total-rows="item"
               aria-controls="my-table"
-              prev-text="Prev"
-              next-text="Next"
               hide-goto-end-buttons
             ></b-pagination>
           </div>
@@ -266,41 +285,11 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
-<style lang="scss">
-.table thead th {
-    outline: none !important;
-    color: white;
-}
-.card-header{
-    background-image: linear-gradient(
-    109.6deg,
-    rgba(48, 207, 208, 1) 11.2%,
-    rgba(51, 8, 103, 1) 92.5%
-  );
-}
-.btn-info {
-    color: #fff;
-    background-image: linear-gradient(
-    109.6deg,
-    rgba(48, 207, 208, 1) 11.2%,
-    rgba(51, 8, 103, 1) 92.5%
-  );
-  border-color: #5369f8;
-}
-.page-item.active .page-link {
-  z-index: 1;
-  color: #fff;
-  background-image: linear-gradient(
-    109.6deg,
-    rgba(48, 207, 208, 1) 11.2%,
-    rgba(51, 8, 103, 1) 92.5%
-  );
-  border-color: #5369f8;
-}
-</style>
+
+
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

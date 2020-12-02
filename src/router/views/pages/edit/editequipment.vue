@@ -184,13 +184,9 @@ export default {
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
-          <!-- Card -->
-          <div class="card mx-xl-5">
-            <!-- Card body -->
-            <div class="card-body">
               <!-- Default form subscription -->
-              <form>
-                <b-row>
+                            <form>
+                <b-row class="mb-3">
                   <b-col>
                     <!-- Default input name -->
                     <label
@@ -200,29 +196,28 @@ export default {
                      Equipment No</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardNameEx"
-                      class="form-control"
                       v-model="equipmentno"
-                    />
-
-                   <label
+                      type="text"
+                      class="form-control"
+                    /> <!-- Default input text -->
+                  </b-col>
+                  <b-col>
+                    <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
                       >Equipment Type</label
                     >
                     <b-form-select
                       v-model.trim="equipmenttype"
-                    
-                     
-                  
+                      placeholder="Select Equipment"
+                      label="value"
+                      class="form-control"
                       :options="item1"
                 ></b-form-select>
-
-                    <br />
-
-                    <!-- Default input text -->
                   </b-col>
+                </b-row>
+                <b-row class="mb-3">
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -231,29 +226,30 @@ export default {
                     >
                      <b-form-select
                   v-model.trim="ownername"
-                 
-                @change="getid()"
-                  :options="owners"
+                  placeholder="Select Supervisor"
+                  label="value"
+                class="form-control"
+                :options="owners"
+                  @change="getid"
                 ></b-form-select>
-
-                    <!-- Default input name -->
+                  </b-col>
+                  <b-col>
+                     <!-- Default input name -->
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Equipment Id</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="equipmentid"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
-                  <br />
                 </b-row>
-                  <b-row>
-                    
-                      <b-col>
+                  <b-row class="mb-3">
+                    <b-col>
                     <!-- Default input text -->
                     <label
                       for="defaultFormCardtextEx"
@@ -262,22 +258,27 @@ export default {
                     >
                     <b-form-select
                   v-model.trim="servingarea"
-               
+                  placeholder="Select Supervisor"
+                  label="value"
+                  class="form-control"
                   :options="item"
                 ></b-form-select>
+                  </b-col>
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Manufacture Date</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="manufacturedate"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
-               
+                  </b-row>
+                  <b-row class="mb-3">
                  <b-col>
                     <!-- Default input text -->
                     <label
@@ -286,27 +287,28 @@ export default {
                       >Total Kms Served</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="totalkmsserved"
+                      type="text"
+                      class="form-control"
                     />
-
+                  </b-col>
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Total Hours Served</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="totalhoursserved"
+                      type="text"
+                      class="form-control"
                     />
                   </b-col>
                   
                 </b-row>
-                <b-row>
+                <b-row class="mb-3">
                      <b-col>
                     <!-- Default input text -->
                     <label
@@ -315,38 +317,31 @@ export default {
                       >Description</label
                     >
                     <input
-                      type="text"
                       id="defaultFormCardtextEx"
-                      class="form-control"
                       v-model="description"
+                      type="text"
+                      class="form-control"
                     />
 
                      </b-col>
                 </b-row>
-                <br />
                 <b-button
-                  style="
-                    background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-info float-right mr-2"
+                  class="btn btn-custome float-right btn-secondary mb-3"
                   text="Create Tenant"
                   @click="create"
-                  >Edit</b-button
+                  >Create</b-button
                 >
               </form>
               <!-- Default form subscription -->
-            </div>
-            <!-- Card body -->
-          </div>
-          <!-- Card -->
         </div>
       </b-card>
     </div>
     <!-- end row -->
   </Layout>
 </template>
-<style lang="sass" scoped>
+<style lang="sass" scoped> 
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

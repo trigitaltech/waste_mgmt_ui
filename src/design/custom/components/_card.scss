@@ -29,8 +29,10 @@
 // Card title / Card Header
 .card-title,
 .card-header {
-    margin-top: 0;
+    margin: 4px;
     border-radius: 10px 10px 0px 0px;
+    text-align: left;
+    font-weight: 700;
 }
 
 .card-nav {

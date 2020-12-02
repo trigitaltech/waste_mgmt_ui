@@ -77,12 +77,13 @@ export default {
       options: ['DAF'],
       servieoffice:"",
       file:"",
-      personalidno:"",
+     
       item: {
         value: '',
         text: '',
       },
      form: {
+        personalidno:"",
         personalTitle: '',
         firstName: '',
         middleName: '',
@@ -220,9 +221,6 @@ export default {
         <div class="col-xl-12  mx-auto">
           <b-card
             header="Create User"
-            border-variant="info"
-            header-text-variant="white"
-            
           >
             <div class="card-body">
               <ValidationObserver v-slot="{ handleSubmit }">
@@ -264,9 +262,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.userName"
                                 for="firstname"
                                 type="text"
-                                v-model.trim="form.userName"
                                 oninvalid="this.setCustomValidity('User Name is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter UserName"
@@ -292,9 +290,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.password"
                                 for="firstname"
                                 type="text"
-                                v-model.trim="form.password"
                                 oninvalid="this.setCustomValidity('Password is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Password"
@@ -320,9 +318,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.firstName"
                                 for="firstname"
                                 type="text"
-                                v-model.trim="form.firstName"
                                 oninvalid="this.setCustomValidity('First Name is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter FirstName"
@@ -360,9 +358,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.middleName"
                                 for="lastname"
                                 type="text"
-                                v-model.trim="form.middleName"
                                 oninvalid="this.setCustomValidity('last name is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter LastName"
@@ -388,9 +386,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.lastName"
                                 for="lastname"
                                 type="text"
-                                v-model.trim="form.lastName"
                                 oninvalid="this.setCustomValidity('last name is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter LastName"
@@ -412,9 +410,9 @@ export default {
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Email</label>
                               <input
+                                v-model.trim="form.email"
                                 for="email"
                                 type="email"
-                                v-model.trim="form.email"
                                 oninvalid="this.setCustomValidity('Please Use @gmail.com ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Email"
@@ -432,9 +430,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.number"
                                 for="number"
                                 type="number"
-                                v-model.trim="form.number"
                                 oninvalid="this.setCustomValidity('Phone number is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Phone Number"
@@ -461,9 +459,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.address"
                                 for="address"
                                 type="text"
-                                v-model.trim="form.address"
                                 oninvalid="this.setCustomValidity('Address Lane1 is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Address"
@@ -489,9 +487,9 @@ export default {
                                   rules="required"
                                 >-->
                               <input
+                                v-model.trim="form.address2"
                                 for="address"
                                 type="text"
-                                v-model.trim="form.address2"
                                 oninvalid="this.setCustomValidity('Address Lane2 is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Address"
@@ -560,7 +558,7 @@ export default {
                               </div>
                             </div>
                               
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                             
                            
                         
@@ -577,7 +575,7 @@ export default {
                            
                            
                             </div>
-                             <div class="col-md-4">
+                             <div class="col-md-3">
                             
                            
                         
@@ -585,16 +583,16 @@ export default {
                                    <label for="default">ID Proof</label>
                                  
                                 <b-form-file
-                                @change="readAgreement"
                                 :state="Boolean(file)"
                                 placeholder="Choose a file..."
                                 drop-placeholder="Drop file here..."
+                                @change="readAgreement"
                                 ></b-form-file>
                                     </div>
                            
                            
                             </div>
-                              <div class="col-md-4">
+                              <div class="col-md-3">
                             
                            
                         
@@ -611,7 +609,7 @@ export default {
                            
                            
                             </div>
-                             <div class="col-md-4">
+                             <div class="col-md-3">
                             
                            
                         
@@ -625,6 +623,7 @@ export default {
                           v-model.trim="rolename"
                           placeholder="Select Supervisor"
                           label="value"
+                          class="form-control"
                           :options="roles"
                         ></b-form-select>
                               </div>
@@ -737,9 +736,6 @@ export default {
                             >Reset</button
                           > -->
                         <button
-                         
-                          style="
-                            background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
                           type="submit"
                           class="btn btn-primary d-inline-flex align-items-center"
                           >Submit</button
@@ -760,7 +756,7 @@ export default {
 </template>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

@@ -349,22 +349,22 @@ export default {
           class="mt-10 ml-10 mr-10 mx-auto"
       >
          <b-col md="12">
-          <b-button  style="
-  background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% )"
-            class="btn btn-info float-right mr-2"
+          <b-button
+            class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({path:'/tenant/create'})"
+            @click="$router.push({ path: '/tenant/create' })"
           >Create Employee</b-button>
         </b-col>
         <div class="mt-3">
           <b-table
+            id="my-table"
             :dark="dark"
             :hover="hover"
             :striped="striped"
             :bordered="bordered"
+            ref="roles"
             :filter="filter"
-            id="my-table"
-            responsive="sm"
+            :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
             thead-class="header"
@@ -373,7 +373,6 @@ export default {
             :fields="permissionColumns"
             :items="item"
             class="mt-3"
-            ref="roles"
           >
             <template slot="actions" slot-scope="data">
               <b-button
@@ -390,10 +389,10 @@ export default {
                 variant="danger"
                 @click="deletePermission(data)"
               >
-                <i class="fa fa-trash bin"></i>
+                <i class="fa fa-times bin"></i>
               </b-button>
               <!-- <b-button size="sm" class="mr-2" variant="html5 icon" @click="deletePermission(data)">
-              <i class="fa fa-trash"></i>
+              <i class="fa fa-times"></i>
             </b-button>
             <b-button size="sm" class="mr-2" variant="facebook" @click="editPermission(data)">
               <i class="fa fa-pencil"></i>
@@ -419,27 +418,27 @@ export default {
             </template>
           </b-table>
 
-          <b-modal v-model="permissionModal" id="roleModal">
+          <b-modal id="roleModal" v-model="permissionModal">
             <div slot="modal-header">{{ header }}</div>
             <div>
               <b-input v-model="permission" />
 
-              <b-input class="mt-2" v-model="permission" />
+              <b-input v-model="permission" class="mt-2" />
 
               <multiselect
+                v-model="permission"
                 class="perm_input"
                 :options="methods"
                 placeholder="Select a Method"
                 label="value"
                 track-by="value"
                 :multiple="false"
-                v-model="permission"
               ></multiselect>
             </div>
             <div slot="modal-footer">
-              <b-button @click="handleEdit" variant="primary">Submit</b-button>
+              <b-button variant="primary" @click="handleEdit">Submit</b-button>
 
-              <b-button @click="clearModal" class="ml-2" variant="secondary"
+              <b-button class="ml-2" variant="secondary" @click="clearModal"
                 >Cancel</b-button
               >
             </div>
@@ -450,8 +449,6 @@ export default {
               :per-page="perPage"
               :total-rows="permissions"
               aria-controls="my-table"
-              prev-text="Prev"
-              next-text="Next"
               hide-goto-end-buttons
             ></b-pagination>
           </div>
@@ -464,7 +461,7 @@ export default {
 
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

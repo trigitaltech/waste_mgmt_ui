@@ -222,41 +222,34 @@ export default {
     <div class="animated fadeIn">
       <b-card
         header="Create Role"
-
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
-          <!-- Card -->
-          <div class="card mx-xl-5">
-            <!-- Card body -->
-            <div class="card-body">
               <!-- Default form subscription -->
               <form>
                 <b-row>
                   <b-col>
                     <!-- Default input name -->
                    <input
+                      id="defaultFormCardNameEx"
                       type="text"
                       disabled
-                      id="defaultFormCardNameEx"
                       class="form-control"
                       placeholder="Role Name"
                     />
                   </b-col>
                   <b-col style="margin-left:50px">
                     <input
-                      type="text"
                       id="defaultFormCardNameEx"
-                      class="form-control"
                       v-model="name"
+                      type="text"
+                      class="form-control"
                     />
 
                   </b-col>
                   <b-col>
                      <b-button
-                  style="
-                    background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-info float-right mr-2"
+                  class="btn btn-custome float-right btn-secondary mb-3"
                   text="Create Tenant"
                   @click="create"
                   >Save</b-button
@@ -271,35 +264,23 @@ export default {
                
               </form>
               <!-- Default form subscription -->
-            </div>
-            <!-- Card body -->
-          </div>
-          <!-- Card -->
         </div>
-        <b-row>
-
-          
-  <div>
-    <div class="animated fadeIn">
+      </b-card>
+          <div class="animated fadeIn">
       <b-row >
-      <b-col md="8">
+      <b-col md="12">
           <b-card
             class="card-wrap"
             header="Add Permission To Role"
-            border-variant="info"
-            header-text-variant="white"
-            style="width:1250px"
           >
            
             <div>
-              <b-row style="margin-top:50px">
-               <DualListBox
+              <DualListBox
                   :source="source"
                   :destination="destination"
                   label="name"
                   @onChangeList="onChangeList"
                 />
-              </b-row>
             </div>
             <div class="row mt-1 justify-content-center">
             
@@ -307,9 +288,8 @@ export default {
            
                   <button
                     class="btn btn-primary d-inline-flex align-items-center"
-                    style="background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );"
                     type="submit"
-                @click="add()"
+                @click="add"
                   >Add Permission To Role</button>
                 </div>
             </div>
@@ -318,17 +298,13 @@ export default {
       </b-col>
       </b-row>
     </div>
-  </div>
-
-        </b-row>
-      </b-card>
     </div>
     <!-- end row -->
   </Layout>
 </template>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label
@@ -342,21 +318,13 @@ export default {
 </style>
 <style>
 .list-box-wrapper .list-box-item .bulk-action .select-all {
- background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
+ background: #3757F5;
 }
 .btn-action {
- background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
+background: #3757F5;
 }
 .list-box-wrapper .list-box-item .bulk-action .deselect-all {
   background-color: #c7c7ca;
   color: black;
-}
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 10px;
 }
 </style>

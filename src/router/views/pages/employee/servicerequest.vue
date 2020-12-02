@@ -346,14 +346,7 @@ export default {
       >
         <b-col md="12">
           <b-button
-            style="
-              background-image: linear-gradient(
-                109.6deg,
-                rgba(48, 207, 208, 1) 11.2%,
-                rgba(51, 8, 103, 1) 92.5%
-              );
-            "
-            class="btn btn-info float-right mr-2"
+            class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/create' })"
             >Create Servicerequests</b-button
@@ -361,13 +354,14 @@ export default {
         </b-col>
         <div class="mt-3">
           <b-table
+            id="my-table"
             :dark="dark"
             :hover="hover"
             :striped="striped"
             :bordered="bordered"
+            ref="roles"
             :filter="filter"
-            id="my-table"
-            responsive="sm"
+            :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
             thead-class="header"
@@ -376,27 +370,16 @@ export default {
             :fields="ServicerequestsColumns"
             :items="item"
             class="mt-3"
-            ref="roles"
           >
             <template slot="actions" slot-scope="data">
-              <b-button
-                size="sm"
-                class="mr-2"
-                variant="primary"
-                @click="editServicerequests(data)"
-              >
-                <i class="fas fa-pencil-alt edit"></i>
-              </b-button>
-              <b-button
-                size="sm"
-                class="mr-2"
-                variant="danger"
-                @click="deleteServicerequests(data)"
-              >
-                <i class="fa fa-trash bin"></i>
-              </b-button>
+              <span class="mr-2" @click="editServicerequests(data)">
+                  <i class="fas fa-pencil-alt edit"></i>
+                </span>
+               <span @click="deleteServicerequests(data)">
+              <i class="fa fa-times edit"></i>
+            </span>
               <!-- <b-button size="sm" class="mr-2" variant="html5 icon" @click="deleteServicerequests(data)">
-              <i class="fa fa-trash"></i>
+              <i class="fa fa-times"></i>
             </b-button>
             <b-button size="sm" class="mr-2" variant="facebook" @click="editServicerequests(data)">
               <i class="fa fa-pencil"></i>
@@ -422,27 +405,27 @@ export default {
             </template>
           </b-table>
 
-          <b-modal v-model="ServicerequestsModal" id="roleModal">
+          <b-modal id="roleModal" v-model="ServicerequestsModal">
             <div slot="modal-header">{{ header }}</div>
             <div>
               <b-input v-model="Servicerequests" />
 
-              <b-input class="mt-2" v-model="Servicerequests" />
+              <b-input v-model="Servicerequests" class="mt-2" />
 
               <multiselect
+                v-model="Servicerequests"
                 class="perm_input"
                 :options="methods"
                 placeholder="Select a Method"
                 label="value"
                 track-by="value"
                 :multiple="false"
-                v-model="Servicerequests"
               ></multiselect>
             </div>
             <div slot="modal-footer">
-              <b-button @click="handleEdit" variant="primary">Submit</b-button>
+              <b-button variant="primary" @click="handleEdit">Submit</b-button>
 
-              <b-button @click="clearModal" class="ml-2" variant="secondary"
+              <b-button class="ml-2" variant="secondary" @click="clearModal"
                 >Cancel</b-button
               >
             </div>
@@ -453,8 +436,6 @@ export default {
               :per-page="perPage"
               :total-rows="Servicerequests"
               aria-controls="my-table"
-              prev-text="Prev"
-              next-text="Next"
               hide-goto-end-buttons
             ></b-pagination>
           </div>
@@ -464,30 +445,9 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
-<style lang="scss">
-.btn-info {
-    color: #fff;
-    background-image: linear-gradient(
-    109.6deg,
-    rgba(48, 207, 208, 1) 11.2%,
-    rgba(51, 8, 103, 1) 92.5%
-  );
-  border-color: #5369f8;
-}
-.page-item.active .page-link {
-  z-index: 1;
-  color: #fff;
-  background-image: linear-gradient(
-    109.6deg,
-    rgba(48, 207, 208, 1) 11.2%,
-    rgba(51, 8, 103, 1) 92.5%
-  );
-  border-color: #5369f8;
-}
-</style>
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label

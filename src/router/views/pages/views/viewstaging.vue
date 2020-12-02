@@ -170,10 +170,6 @@ export default {
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
-          <!-- Card -->
-          <div class="card mx-xl-5">
-            <!-- Card body -->
-            <div class="card-body">
               <!-- Default form subscription -->
               <form>
                 <b-row>
@@ -186,11 +182,11 @@ export default {
                      Staging Area Name</label
                     >
                     <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                    id="defaultFormCardNameEx"
                       v-model="areaname"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
 
                    <label
@@ -199,11 +195,11 @@ export default {
                       >Staging Type</label
                     >
                      <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardNameEx"
-                      class="form-control"
+                    id="defaultFormCardNameEx"
                       v-model="stagingtype"
+                      disabled
+                      type="text"
+                      class="form-control"
                     />
                     <!-- <b-form-select
                       v-model="stagingtype"
@@ -223,11 +219,11 @@ export default {
                       >Address</label
                     >
                     <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                    id="defaultFormCardEmailEx"
                       v-model="address"
+                      disabled
+                      type="email"
+                      class="form-control"
                     />
 
                     <!-- Default input name -->
@@ -237,11 +233,11 @@ export default {
                       >State</label
                     >
                     <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                    id="defaultFormCardEmailEx"
                       v-model="state"
+                      disabled
+                      type="email"
+                      class="form-control"
                     />
                   </b-col>
                   <br />
@@ -256,11 +252,11 @@ export default {
                       >Supervisor</label
                     >
                     <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                    id="defaultFormCardEmailEx"
                       v-model="supervisor"
+                      disabled
+                      type="email"
+                      class="form-control"
                     />
 
 
@@ -270,11 +266,11 @@ export default {
                       >Working Hours</label
                     >
                     <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                    id="defaultFormCardEmailEx"
                       v-model="workinghours"
+                      disabled
+                      type="email"
+                      class="form-control"
                     />
                   </b-col>
                
@@ -286,11 +282,11 @@ export default {
                       >City</label
                     >
                     <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                    id="defaultFormCardEmailEx"
                       v-model="city"
+                      disabled
+                      type="email"
+                      class="form-control"
                     />
 
                     <label
@@ -299,11 +295,11 @@ export default {
                       >Country</label
                     >
                     <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                    id="defaultFormCardEmailEx"
                       v-model="country"
+                      disabled
+                      type="email"
+                      class="form-control"
                     />
                   </b-col>
                   
@@ -325,11 +321,11 @@ export default {
                       >Description</label
                     >
                     <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                    id="defaultFormCardEmailEx"
                       v-model="description"
+                      disabled
+                      type="email"
+                      class="form-control"
                     />
 
                     <label
@@ -338,11 +334,11 @@ export default {
                       >Holiday Message</label
                     >
                     <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                    id="defaultFormCardEmailEx"
                       v-model="message"
+                      disabled
+                      type="email"
+                      class="form-control"
                     />
                   </b-col>
                    <!-- <b-col> -->
@@ -388,11 +384,11 @@ export default {
                       >Zip</label
                     >
                     <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                    id="defaultFormCardEmailEx"
                       v-model="zip"
+                      disabled
+                      type="email"
+                      class="form-control"
                     />
 
                   
@@ -404,11 +400,11 @@ export default {
                       >Area</label
                     >
                     <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
+                    id="defaultFormCardEmailEx"
                       v-model="area"
+                      disabled
+                      type="email"
+                      class="form-control"
                     />
                   </b-col>
                   
@@ -417,17 +413,13 @@ export default {
                 <!-- <b-button
                   style="
                     background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-info float-right mr-2"
+                  class="btn btn-custome float-right mr-2"
                   text="Create Tenant"
                   @click="create"
                   >Edit</b-button
                 > -->
               </form>
               <!-- Default form subscription -->
-            </div>
-            <!-- Card body -->
-          </div>
-          <!-- Card -->
         </div>
       </b-card>
     </div>
@@ -437,7 +429,7 @@ export default {
 
 <style lang="sass" scoped>
 .edit
-  color: white !important
+  color: #a7a7a7 !important
 .text-center
   text-align: center
 .form-div label
