@@ -94,12 +94,12 @@
     display: block;
     width: 60px;
     height: $topbar-height;
-    margin-right: 45px;
+    // margin-right: 45px;
     font-size: 24px;
     line-height: $topbar-height;
     color: $gray-500;
     cursor: pointer;
-    background-color: transparent;
+    // background-color: transparent;
     border: none;
 
     &.disable-btn {
