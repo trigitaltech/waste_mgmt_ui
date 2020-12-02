@@ -40,7 +40,7 @@ export default {
       revenueAreaChart: revenueAreaChart,
       targetsBarChart: targetsBarChart,
       salesDonutChart: salesDonutChart,
-      salesDonutChartstb :salesDonutChartstb ,
+      salesDonutChartstb: salesDonutChartstb,
       ordersData: ordersData,
 
       maxHeight: '328px',
@@ -208,130 +208,171 @@ export default {
       <div class="col-sm-4 col-xl-6">
         <h4 class="mb-1 mt-0">Dashboard</h4>
       </div>
-<div class="container my-5">
-
-
-  
-  <!-- Section: Block Content -->
-  <section>
-    
-    <h6 class="font-weight-bold text-center grey-text text-uppercase small mb-4">Admin</h6>
-    <h3 class="font-weight-bold text-center dark-grey-text pb-2">Statistic Data</h3>
-    <hr class="w-header my-4">
-    <!-- <p class="lead text-center text-muted pt-2 mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit ex facere quas possimus.</p> -->
-
-    <div class="row white-text">
-
-      <!-- Grid column -->
-      <div class="col-xl-3 col-md-6 mb-4">
-
-        <!-- Card Primary -->
-        <div class="card classic-admin-card primary-color" style="background-color: #21D4FD;
-background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
-">
-          <div class="card-body py-3">
+      <div class="container my-3">
+        <!-- Section: Block Content -->
+        <section>
+          <!-- <hr class="w-header my-4" /> -->
+          <div class="row white-text">
+            <!-- Grid column -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <!-- Card Primary -->
+              <div
+                class="card classic-admin-card primary-color"
+                style="background-color: #21D4FD;background-image: linear-gradient(19deg, rgb(129 194 26) 0%,  rgb(235, 222, 63) 100%)">
+                <div class="card-body" style="overflow: hidden;">
+                  <div class="media p-3">
+                    <div class="media-body">
+                      <span
+                        class="text-muted text-uppercase font-size-12 font-weight-bold"
+                        >SALES</span
+                      >
+                      <h2 class="mb-0">2000$</h2>
+                    </div>
+                    <div class="align-self-center" style="position: relative;">
+                      <i
+                        class="far fa-money-bill-alt"
+                        style="font-size: 90px;position: absolute;right: -31px;top: -49px;opacity: 0.3;color: #fff;"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div>
             <i class="far fa-money-bill-alt"></i>
-            <p class="small">SALES</p>
-            <h4>2000$</h4>
-          </div>
-          <div class="progress md-progress mx-2">
+          </div> -->
+                <!-- <div class="progress md-progress mx-2">
             <div class="progress-bar grey darken-3" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <div class="card-body pt-2 pb-3">
             <p class="small mb-0">Better than last week (25%)</p>
-          </div>
-        </div>
-        <!-- Card Primary -->
+          </div> -->
+              </div>
+              <!-- Card Primary -->
+            </div>
+            <!-- Grid column -->
 
-      </div>
-      <!-- Grid column -->
-
-      <!-- Grid column -->
-      <div class="col-xl-3 col-md-6 mb-4">
-
-        <!-- Card Yellow -->
-        <div class="card classic-admin-card warning-color"  style="background-color: #8BC6EC;
-    background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);">
-    <div>
-          <div class="card-body py-3">
-            <i class="fas fa-chart-line"></i>
-            <p class="small">SUBSCRIPTIONS</p>
-            <h4>200</h4>
-          </div>
-          <div class="progress md-progress mx-2">
+            <!-- Grid column -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <!-- Card Yellow -->
+              <div
+                class="card classic-admin-card warning-color"
+                style="background-color: #8BC6EC;
+    background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);"
+              >
+                <div>
+                  <div class="card-body" style="overflow: hidden;">
+                    <div class="media p-3">
+                      <div class="media-body">
+                        <span
+                          class="text-muted text-uppercase font-size-12 font-weight-bold"
+                          >SUBSCRIPTIONS</span
+                        >
+                        <h2 class="mb-0">200</h2>
+                      </div>
+                      <div
+                        class="align-self-center"
+                        style="position: relative;"
+                      >
+                        <i
+                          class="fas fa-chart-line"
+                          style="font-size: 100px;position: absolute;right: -33px;top: -55px;opacity: 0.3;color: #fff;"
+                        ></i>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="progress md-progress mx-2">
             <div class="progress-bar bg grey darken-3" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <div class="card-body pt-2 pb-3">
             <p class="small mb-0">Worse than last week (25%)</p>
-          </div>
-        </div>
-        <!-- Card Yellow -->
-        </div>
-      </div>
-      <!-- Grid column -->
+          </div> -->
+                </div>
+                <!-- Card Yellow -->
+              </div>
+            </div>
+            <!-- Grid column -->
 
-      <!-- Grid column -->
-      <div class="col-xl-3 col-md-6 mb-4">
-
-        <!-- Card Blue -->
-        <div class="card classic-admin-card light-blue lighten-1"  style="background-color: #FBAB7E;
+            <!-- Grid column -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <!-- Card Blue -->
+              <div
+                class="card classic-admin-card light-blue lighten-1"
+                style="background-color: #FBAB7E;
 background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
-">
-          <div class="card-body py-3">
-            <i class="fas fa-chart-pie"></i>
-            <p class="small">TRAFFIC</p>
-            <h4>20000</h4>
-          </div>
-          <div class="progress md-progress mx-2">
+"
+              >
+                <div class="card-body" style="overflow: hidden;">
+                  <div class="media p-3">
+                    <div class="media-body">
+                      <span
+                        class="text-muted text-uppercase font-size-12 font-weight-bold"
+                        >TRAFFIC</span
+                      >
+                      <h2 class="mb-0">20000</h2>
+                    </div>
+                    <div class="align-self-center" style="position: relative;">
+                      <i
+                        class="fas fa-chart-pie"
+                        style="font-size: 100px;position: absolute;right: -33px;top: -55px;opacity: 0.3;color: #fff;"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="progress md-progress mx-2">
             <div class="progress-bar grey darken-3" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <div class="card-body pt-2 pb-3">
             <p class="small mb-0">Better than last week (75%)</p>
-          </div>
-        </div>
-        <!-- Card Blue -->
+          </div> -->
+              </div>
+              <!-- Card Blue -->
+            </div>
+            <!-- Grid column -->
 
-      </div>
-      <!-- Grid column -->
-
-      <!-- Grid column -->
-      <div class="col-xl-3 col-md-6 mb-4">
-
-        <!-- Card Red -->
-        <div class="card classic-admin-card red accent-2" style="background-color: #FAACA8;
+            <!-- Grid column -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <!-- Card Red -->
+              <div
+                class="card classic-admin-card red accent-2"
+                style="background-color: #FAACA8;
 background-image: linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%);
-">
-          <div class="card-body py-3">
-            <i class="fas fa-chart-bar"></i>
-            <p class="small">ORGANIC TRAFFIC</p>
-            <h4>2000</h4>
-          </div>
-          <div class="progress md-progress mx-2">
+"
+              >
+                <div class="card-body" style="overflow: hidden;">
+                  <div class="media p-3">
+                    <div class="media-body">
+                      <span
+                        class="text-muted text-uppercase font-size-12 font-weight-bold"
+                        >ORGANIC TRAFFIC</span
+                      >
+                      <h2 class="mb-0">2000</h2>
+                    </div>
+                    <div class="align-self-center" style="position: relative;">
+                      <i
+                        class="fas fa-chart-bar"
+                        style="font-size: 100px;position: absolute;right: -33px;top: -55px;opacity: 0.3;color: #fff;"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="progress md-progress mx-2">
             <div class="progress-bar grey darken-3" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <div class="card-body pt-2 pb-3">
             <p class="small mb-0">Better than last week (25%)</p>
+          </div> -->
+              </div>
+              <!-- Card Red -->
+            </div>
+            <!-- Grid column -->
           </div>
-        </div>
-        <!-- Card Red -->
-
+        </section>
+        <!-- Section: Block Content -->
       </div>
-      <!-- Grid column -->
-
     </div>
-
-  </section>
-  <!-- Section: Block Content -->
-  
-
-</div>
-</div>
-
-
   </Layout>
 </template>
 <style scoped>
 .text-muted {
-    color: black!important;
+  color: black !important;
 }
 </style>
