@@ -53,10 +53,7 @@ export default {
 
           label: 'Area Name',
         },
-         {
-          key: 'createdBy',
-          label: 'CreatedBy',
-        },
+       
         
         {
           key: 'routeName',
@@ -76,7 +73,10 @@ export default {
           key: 'city',
           label: 'City',
         },
-       
+         {
+          key: 'createdBy',
+          label: 'CreatedBy',
+        },
 
         {
           key: 'actions',

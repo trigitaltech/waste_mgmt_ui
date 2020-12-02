@@ -141,12 +141,12 @@ mobile:this.username
                             @click="tryToLogIn"
                             >Login</b-button
                           >
-                             <b-button
+                             <!-- <b-button
                             class="btn btn-outline-orange btn-rounded my-4 waves-effect"
                             text="Create Tenant"
                               @click="$router.push({ path: '/register' })"
                             >Register</b-button
-                          >
+                          > -->
                         </div>
                       </form>
                       <!-- Form -->

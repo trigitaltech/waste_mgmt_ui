@@ -49,10 +49,7 @@ export default {
 
           label: 'Id',
         },
-         {
-          key: 'createdBy',
-          label: 'CreatedBy',
-        },
+        
         
         {
           key: 'stagingAreaName',
@@ -83,7 +80,10 @@ export default {
           key: 'country',
           label: 'Country',
         },
-
+        {
+          key: 'createdBy',
+          label: 'CreatedBy',
+        },
         {
           key: 'actions',
           sortable: true,
