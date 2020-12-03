@@ -12,6 +12,14 @@ export const Attendance = () => serviceMaker(`/attendence/employee/admin/`, meth
 
 export const stagingarea = () => serviceMaker(`/stagingarea/all`, methods.GET, api.NGB)
 
+export const address = () => serviceMaker(`/location/addressmaster`, methods.GET, api.NGB)
+
+export const countries = () => serviceMaker(`/location/countries`, methods.GET, api.NGB)
+
+export const cities = (countryCode) => serviceMaker(`/location/cities/${countryCode}`, methods.GET, api.NGB)
+
+export const area = (cityCode) => serviceMaker(`/location/area/${cityCode}`, methods.GET, api.NGB)
+
 export const permissions = () => serviceMaker(`/permissions/admin/all`, methods.GET, api.NGB)
 
 export const roles = () => serviceMaker(`/roles/admin/all`, methods.GET, api.NGB)
@@ -82,6 +90,7 @@ export const createvehicle = (payload) => serviceMaker(`/vehicles/admin/encoders
 
 export const createequipment = (payload) => serviceMaker(`/equipment/admin/encoders/`, methods.POST, api.NGB, payload)
 
+export const createcountry = (payload) => serviceMaker(`/location/createcountry`, methods.POST, api.NGB, payload)
 
 export const editservicerequest = (payload) => serviceMaker(`/serviceticket/system/issue`, methods.PUT, api.NGB, payload)
 

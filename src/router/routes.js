@@ -187,6 +187,15 @@ const inviewRoutes = [
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
+      {
+        path: 'AddressMaster',
+        name: 'Address Master',
+        
+        icon: 'check-square',
+        component: () => lazyLoadView(import('@views/pages/inview/address')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
      
       {
         path: 'AreaMaster',
@@ -477,6 +486,22 @@ const inviewRoutes = [
 
 // pageRoute
 const pagesRoutes = [
+  {
+    path: '/Treeview',
+    name: 'Treeview',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/inview/tree')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Createaddress',
+    name: 'Createaddress',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/Createaddress')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
   {
     path: '/Createservicerequest',
     name: 'Createservicerequest',

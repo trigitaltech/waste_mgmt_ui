@@ -154,7 +154,7 @@ export default {
       let date
       // if (timeStamp !== undefined){
         // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
-      return moment(timeStamp).format('MMM Do YYYY')
+      return moment(timeStamp).format('DD/MM/YYYY')
       // }
     },
     async deleteReq(data) {

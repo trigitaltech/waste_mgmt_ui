@@ -436,12 +436,13 @@ export default {
                            <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">City</label>
-                                <multiselect
+                               <input
                                   v-model.trim="form.city"
-                                  placeholder="Select City"
-                                  :options="cityOpt"
+                                  class="form-control"
+                                  type="text"
+                                  placeholder="Enter City"
                                 
-                                ></multiselect>
+                                />
                               </div>
                             </div>
                             <div class="col-md-4">
