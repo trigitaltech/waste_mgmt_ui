@@ -134,10 +134,7 @@ export default {
             areaId:this.areaid,
             areaName: this.areaname,
             "isDeleted": false,
-         createdDate: this.createddate,
-          createdBy: this.createdby,
-          modifiedDate: this.modifydate,
-          modifiedBy: this.modifyby,
+       
             description:this.description,
             city:this.city
         }

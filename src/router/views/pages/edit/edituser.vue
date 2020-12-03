@@ -40,6 +40,8 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
+      roledata1:[],
+      rolesarray:[],
        item: 
            {key:'resource',value
            :'Frozen Yogurt', name: '159'},
@@ -75,7 +77,7 @@ export default {
       selected: null,
       clientId: '',
       options: ['DAF'],
-      servieoffice:this.$route.params.service_Office,
+      serviceoffice:this.$route.params.service_Office,
       file:"",
     
       item: {
@@ -135,18 +137,25 @@ export default {
     console.log(this.$route.params)
   },
   methods: {
+       getroles(){
+        this.roledata1.map(e=>{
+          if(this.rolename === e.name){
+            this.rolesarray.push(e)
+          }
+        })
+    },
      async roledata() {
        try {
       
       const result = await roles()
-      var data = result.data.response.RoleMaster
+      this.roledata1 = result.data.response.RoleMaster
       // console.log("users",data[0].userName)
       // JSON.parse(JSON.stringify(result))
       // for(i=0;i<data.length;i++){
       //   this.item[i]=data[i].userName
       // }
 
-      data.map(e=>{
+      this.roledata1.map(e=>{
       this.roles.push(e.name)
       // console.log("user",e)
       })
@@ -176,15 +185,12 @@ export default {
                 pin: this.form.postCode,
                 personalIdNo: this.form.personalidno,
                 idProofDocURL: this.file,
-                type: null,
-                 roles:[ this.rolename],
+                type: this.rolename,
+                roles:this.rolesarray,
                 isDeleted: false,
                 status: 200,
-                createdDate: this.createddate,
-                modifiedDate: this.modifydate,
-                createdBy: this.createdby,
-                modifiedBy: this.modifyby,
-                service_Office: this.servieoffice
+               
+                service_Office: this.serviceoffice
             
         }
         let result = await Edituser(payload ,this.$route.params.id)

@@ -44,9 +44,12 @@ export default {
 
       RootmasterColumns: [
           {
-          key: 'areaId',
-
-          label: 'Area Id',
+          key: 'id',
+          label: 'Route ID',
+        },
+        {
+          key: 'routeName',
+          label: 'Route Name',
         },
          {
           key: 'areaName',
@@ -55,13 +58,9 @@ export default {
         },
        
         
-        {
-          key: 'routeName',
-          label: 'Route Name',
-        },
          {
           key: 'routeType',
-          label: 'Route Name',
+          label: 'Route Type',
         },
 
          {
@@ -97,6 +96,9 @@ export default {
     }
   },
   computed: {
+     rows(){
+     return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -202,7 +204,7 @@ export default {
             <b-pagination
               v-model="currentPage"
               :per-page="perPage"
-              :total-rows="Area"
+              :total-rows="rows"
               aria-controls="my-table"
               hide-goto-end-buttons
             ></b-pagination>

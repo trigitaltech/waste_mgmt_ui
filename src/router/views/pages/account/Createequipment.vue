@@ -191,13 +191,10 @@ export default {
                      Equipment No</label
                     >
                     <input
-<<<<<<< HEAD
                       type="number"
-=======
->>>>>>> 9a31dbc5d06310382f9d4965c35d4e9f05c89064
                       id="defaultFormCardNameEx"
                       v-model="equipmentno"
-                      type="text"
+                     
                       class="form-control"
                     /> <!-- Default input text -->
                   </b-col>
@@ -216,7 +213,7 @@ export default {
                 ></b-form-select>
                   </b-col>
                 </b-row>
-                <b-row class="mb-3">
+                <b-row >
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -231,8 +228,7 @@ export default {
                 :options="owners"
                   @change="getid"
                 ></b-form-select>
-                  </b-col>
-                  <b-col>
+               
                      <!-- Default input name -->
                     <label
                       for="defaultFormCardtextEx"
@@ -240,18 +236,15 @@ export default {
                       >Equipment Id</label
                     >
                     <input
-<<<<<<< HEAD
                       type="number"
-=======
->>>>>>> 9a31dbc5d06310382f9d4965c35d4e9f05c89064
                       id="defaultFormCardtextEx"
                       v-model="equipmentid"
-                      type="text"
+                    
                       class="form-control"
                     />
                   </b-col>
                 </b-row>
-                  <b-row class="mb-3">
+                  <b-row >
                     <b-col>
                     <!-- Default input text -->
                     <label
@@ -266,14 +259,12 @@ export default {
                   class="form-control"
                   :options="item"
                 ></b-form-select>
-                  </b-col>
-                  <b-col>
+                
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Manufacture Date</label
                     >
-<<<<<<< HEAD
                     <datetime 
                       v-model="manufacturedate"
                       :format="{
@@ -285,19 +276,7 @@ export default {
                  ></datetime>
                   </b-col>
                
-                 <b-col md="9">
-=======
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="manufacturedate"
-                      type="text"
-                      class="form-control"
-                    />
-                  </b-col>
-                  </b-row>
-                  <b-row class="mb-3">
-                 <b-col>
->>>>>>> 9a31dbc5d06310382f9d4965c35d4e9f05c89064
+                 <b-col >
                     <!-- Default input text -->
                     <label
                       for="defaultFormCardtextEx"
@@ -305,13 +284,10 @@ export default {
                       >Total Kms Served</label
                     >
                     <input
-<<<<<<< HEAD
                       type="number"
-=======
->>>>>>> 9a31dbc5d06310382f9d4965c35d4e9f05c89064
                       id="defaultFormCardtextEx"
                       v-model="totalkmsserved"
-                      type="text"
+                    
                       class="form-control"
                     />
                   </b-col>
@@ -322,19 +298,15 @@ export default {
                       >Total Hours Served</label
                     >
                     <input
-<<<<<<< HEAD
                       type="number"
-=======
->>>>>>> 9a31dbc5d06310382f9d4965c35d4e9f05c89064
                       id="defaultFormCardtextEx"
                       v-model="totalhoursserved"
-                      type="text"
+                   
                       class="form-control"
                     />
                   </b-col>
                   
-                </b-row>
-                <b-row class="mb-3">
+              
                      <b-col>
                     <!-- Default input text -->
                     <label
