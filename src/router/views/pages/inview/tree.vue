@@ -4,8 +4,8 @@ import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
- import { VueTreeList,  TreeNode } from 'vue-tree-list'
-  import Tree from 'vuejs-tree'
+ import { VueTreeList,  Tree,TreeNode } from 'vue-tree-list'
+  // import Tree from 'vuejs-tree'
 import {
   ValidationProvider,
   ValidationObserver,
@@ -22,7 +22,7 @@ export default {
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
-    Tree,
+    // Tree,
     VueTreeList,
     Layout,
     PageHeader,
@@ -33,6 +33,8 @@ export default {
   },
   data() {
     return {
+       newTree: {},
+        data1: [],
       plandata: '',
       striped: false,
       bordered: true,
@@ -228,15 +230,31 @@ export default {
    
     },
      async getcountrys() {
-       try {;
+       try {
          this.treeDisplayData = []
-      // debugger
+      debugger
       const result = await  countries()
       var coun = result.data.response.result
+      var i =0;
       coun.map(e=>{
-        this.treeDisplayData.push({text:e.name, code:e.countryCode,nodes:[]})
+        
+        this.treeDisplayData.push({name:e.name, id: i, pid: 0,
+            dragDisabled: true,
+            addTreeNodeDisabled: true,
+            addLeafNodeDisabled: true,
+            editNodeDisabled: true,
+            delNodeDisabled: true,
+            children:[]})
+        i = i+1
       })
       
+      this.data1 = new Tree([]);
+      this.data1.children = [];
+      this.treeDisplayData.map(e=>{
+          this.data1.children.push(e)
+      })
+      debugger
+      console.log(this.data1)
       } catch (error) {}
    
     },
@@ -306,8 +324,36 @@ export default {
       >
       <div>
     <!-- <button @click="addNode">Add Node</button> -->
-   <Tree id="my-tree-id" ref="my-tree-ref" :custom-options="myCustomOptions" :custom-styles="myCustomStyles" :nodes="treeDisplayData"></Tree>
-  
+   <!-- <Tree id="my-tree-id" ref="my-tree-ref" :custom-options="myCustomOptions" :custom-styles="myCustomStyles" :nodes="treeDisplayData"></Tree> -->
+   <div>
+    <!-- <button @click="addNode">Add Node</button> -->
+    <vue-tree-list
+      @click="onClick"
+      @change-name="onChangeName"
+      @delete-node="onDel"
+      @add-node="onAddNode"
+      :model="data1"
+      default-tree-node-name="new node"
+      default-leaf-node-name="new leaf"
+      v-bind:default-expanded="false"
+    >
+      <template v-slot:leafNameDisplay="slotProps">
+        <span>
+          {{ slotProps.model.name }} <span class="muted">#{{ slotProps.model.id }}</span>
+        </span>
+      </template>
+      <span class="icon" slot="addTreeNodeIcon">📂</span>
+      <span class="icon" slot="addLeafNodeIcon">＋</span>
+      <span class="icon" slot="editNodeIcon">📃</span>
+      <span class="icon" slot="delNodeIcon">✂️</span>
+      <span class="icon" slot="leafNodeIcon">🍃</span>
+      <span class="icon" slot="treeNodeIcon">🌲</span>
+    </vue-tree-list>
+    <!-- <button @click="getNewTree">Get new tree</button>
+    <pre>
+      {{newTree}}
+    </pre> -->
+  </div>
   </div>
       
       </b-card>
