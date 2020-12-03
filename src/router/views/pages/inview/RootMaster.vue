@@ -49,7 +49,7 @@ export default {
           label: 'Area Id',
         },
          {
-          key: 'areaName',
+          key: 'areaName.areaName',
 
           label: 'Area Name',
         },

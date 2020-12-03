@@ -166,22 +166,23 @@ export default {
                 firstName: this.form.firstName,
                 middleName: this.form.middleName,
                 lastName: this.form.lastName,
-                addressLine1: this.form.address,
-                addressLine2: this.form.address2,
+                addressLane1: this.form.address,
+                addressLane2: this.form.address2,
                 area: this.form.area,
                 city: this.form.city,
                 state: this.form.state,
                 country: this.form.country,
                 pin: this.form.postCode,
-                personalIdNo: this.form.personalidno,
-                idProofDocURL: this.file,
+                //personalIdNo: this.form.personalidno,
+                //idProofDocURL: this.file,
                 type: this.rolename,
+                roles:[{"id":this.rolename}],
                 isDeleted: false,
-                status: 200,
-                createdDate: this.createddate,
-                modifiedDate: this.modifydate,
-                createdBy: this.createdby,
-                modifiedBy: this.modifyby,
+                //status: 200,
+                //createdDate: this.createddate,
+                //modifiedDate: this.modifydate,
+                //createdBy: this.createdby,
+                //modifiedBy: this.modifyby,
                 service_Office: this.serviceoffice
             
         }
@@ -466,7 +467,7 @@ export default {
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Address"
                                 class="form-control"
-                                required
+                                
                               />
                               <!-- <input
                                     v-model.trim="form.address"
@@ -494,7 +495,7 @@ export default {
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Address"
                                 class="form-control"
-                                required
+                                
                               />
                             </div>
                             </div> 
