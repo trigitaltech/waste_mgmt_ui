@@ -8,7 +8,7 @@ import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
 // Vue.component('downloadExcel', JsonExcel)
 import {
   // eslint-disable-next-line no-unused-vars
- Tripdownload,Areamasters,routemaster, CreateIncomingTrip
+ Tripdownload,Areamasters,routemaster, CreateIncomingTrip,employees
 } from '../../../../services/auth'
 
 export default {
@@ -18,19 +18,28 @@ export default {
   },
   data() {
     return{
-      area:null,
-      route:null,
-      driver:null,
-      contractor:null,
+      areadata:[],
+      areaarray:[],
+      routedate:[],
+      routearray:[],
+      emp:[],
+      area:"",
+      route:"",
+      driver:"",
+      contractor:"",
       collector:null,
-      lgu:null,
-      plate:null,
-      body:null,
-      tripDate:null,
-      trucktype:null,
-      tripdate:null,
+      lgu:"",
+      plate:"",
+      body:"",
+      tripDate:"",
+      trucktype:"",
+      tripdate:"",
+      driverid:"",
       startTime:"",
+      owners:[],
       servingAreas:[],
+      route:"",
+      driver:"",
       servingRoutes:[],
       driverList:[],
       contractorList:[],
@@ -40,15 +49,58 @@ export default {
   },
   components: { Layout, PageHeader,VueTimepicker  },
   mounted() {
-    this.areadata();
-    this.routedata();
+    this.areas();
+    this.routes();
+    this.employeedata()
   },
   methods:{
-    async areadata() {
+     getroutes(){
+        this.routedata.map(e=>{
+          if(this.route === e.routeName){
+          
+            this.routearray.push(e)
+          }
+        })
+    },
+      getareas(){
+        this.areadata.map(e=>{
+          if(this.area === e.areaName){
+            this.areaarray.push(e)
+          }
+        })
+    },
+       getid(){
+        console.log("haiiiiii",)
+        this.emp.map(e=>{
+            if(this.driver === e.userName){
+                this.driverid = e.id    
+                       }
+        })
+      },
+       async employeedata() {
+       try {
+      
+      const result = await employees()
+      this.emp = result.data.response.result
+    //   console.log("users",data[0].userName)
+      // JSON.parse(JSON.stringify(result))
+      // for(i=0;i<data.length;i++){
+      //   this.item[i]=data[i].userName
+      // }
+
+      this.emp.map(e=>{
+      this.owners.push(e.userName)
+      console.log("user",e)
+      })
+       console.log("users",this.item)
+     
+      } catch (error) {}
+     },
+    async areas() {
       try {
         const result = await Areamasters();
-        var data = result.data.response.areaMaster
-          data.map(e=>{
+        this.areadata = result.data.response.areaMaster
+        this.areadata.map(e=>{
             if(e.areaName!=null)
               this.servingAreas.push(e.areaName);
         })
@@ -57,12 +109,12 @@ export default {
       }
       console.log(this.servingAreas);
     },
-    async routedata() {
+    async routes() {
       try {
         const result = await routemaster();
         console.log(result);
-        var data = result.data.response.RouteMaster
-        data.map(e=>{
+        this.routedata = result.data.response.RouteMaster
+        this.routedata.map(e=>{
         if(e.routeName != null) 
           this.servingRoutes.push(e.routeName);
       })
@@ -71,39 +123,21 @@ export default {
     async create() {
       try{
         let payload = {
-          bodyNo: "",
-          collectionEndTime: null,
-          collectionStartTime: "2020-11-10T05:00:00.000+00:00",
-          contractor_DISPATCHER_ID: 1212,
-          contractor_DISPATCHER_MEASURED_VOLUME: 345,
-          contractor_DISPATCHER_NAME: "ram",
-          contractor_DISPATCHER_VERIFIED: 1,
-          controlNo: 7261,
-          createdBy: "admin",
-          createdDate: "2020-11-30T12:14:44.000+00:00",
-          driverId: 12412,
-          driverName: "samuel",
-          guide: "guide",
-          isDeleted: false,
-          lgu: "NY",
-          id: 1,
-          lgu_CHECKER_ID: 1721,
-          lgu_CHECKER_MEASURED_VOLUME: "234",
-          lgu_CHECKER_NAME: "shyam",
-          lgu_CHECKER_VERIFIED: 1,
-          mmda_Verified: true,
-          mmda_revewer_ID: 5632,
-          mmda_revewer_NAME: "sam",
-          modifiedBy: "admin",
-          modifiedDate: "2020-11-30T12:14:44.000+00:00",
-          plateNo: "GHKD463",
-          servingArea: {id: 2, areaName: null, areaType: null, supervisor: null, areaSqKm: null, isDeleted: null},
-          servingRoute: {id: 2, routeName: null, routeType: null, supervisor: null, route_distance: null, areaId: null},
-          status: null,
-          totalKmServed: 23,
-          tripDate: "2020-11-10T05:00:00.000+00:00",
-          truckType: "heavyLoad"
-        };
+            controlNo: this.controlno,
+            tripDate: this.tripdate,
+            bodyNo: this.body,
+            plateNo: this.plate,
+            truckType: this.trucktype,
+            collectionStartTime: this.startTime,
+            servingArea: this.areaarray,
+            servingRoute: this.routearray,
+            driverName: this.driver,
+            driverId: this.driverid,
+            guide: "guide",
+            isDeleted: false,
+            contractor_DISPATCHER_NAME: this.contractor,
+            lgu: this.lgu
+            }
         console.log(payload);
         const result = await CreateIncomingTrip(payload);
         if (result) {
@@ -148,8 +182,7 @@ export default {
     <div class="animated fadeIn">
       <b-card
         header="Create Incoming Trip"
-        header-bg-variant="info"
-        border-variant="info"
+       
         header-text-variant="white"
         class="mt-10 ml-10 mr-10 mx-auto"
       >
@@ -168,7 +201,7 @@ export default {
                       v-model.trim="area"
                       class="form-control"        
                       :options="servingAreas"
-                      @change="getAreaId" 
+                      @change="getareas" 
                     >
                     </b-form-select>
                   </b-col>
@@ -183,7 +216,7 @@ export default {
                         v-model.trim="route"
                         class="form-control"        
                         :options="servingRoutes"
-                        @change="getRouteId" 
+                        @change="getroutes" 
                       >
                       </b-form-select>
                     </b-col>
@@ -197,7 +230,7 @@ export default {
                       >Trip Date</label
                     >
                     <flat-pickr
-                      v-model="tripDate"
+                      v-model="tripdate"
                       class="form-control"
                       placeholder="SELECT RECORD DATE"
                       name="tripdate"
@@ -262,11 +295,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >Driver Name</label
                     >
-                    <b-form-select
+                     <b-form-select
                       v-model.trim="driver"
                       class="form-control"        
-                      :options="driverList"
-                      @change="getDriverId" 
+                      :options="owners"
+                      @change="getid" 
                     >
                     </b-form-select>
                   </b-col>
@@ -277,13 +310,13 @@ export default {
                         class="grey-text font-weight-dark"
                         >Contractor</label
                       >
-                      <b-form-select
-                        v-model.trim="contractor"
-                        class="form-control"        
-                        :options="contractorList"
-                        @change="getContractorId" 
-                      >
-                      </b-form-select>
+                       <b-form-select
+                      v-model.trim="contractor"
+                      class="form-control"        
+                      :options="owners"
+                     
+                    >
+                    </b-form-select>
                     </b-col>
                   </b-col>
                 </b-row>
@@ -294,13 +327,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >Garbage Collectors</label
                     >
-                    <b-form-select
-                      v-model.trim="collector"
-                      class="form-control"        
-                      :options="collectorList"
-                      @change="getCollectorId" 
-                    >
-                    </b-form-select>
+                      <input
+                      v-model="garbage"
+                      class="form-control"
+                      name="body"
+                    />
                   </b-col>
                   <b-col>
                     <b-col>
@@ -309,20 +340,16 @@ export default {
                         class="grey-text font-weight-dark"
                         >LGU</label
                       >
-                      <b-form-select
-                        v-model.trim="lgu"
-                        class="form-control"        
-                        :options="lguList"
-                        @change="getLguId" 
-                      >
-                      </b-form-select>
+                       <input
+                      v-model="lgu"
+                      class="form-control"
+                      name="body"
+                    />
                     </b-col>
                   </b-col>
                 </b-row>
                 <button
-                  style="background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  type="submit"
-                  class="btn btn-info mt-3"
+                   class="btn btn-custome float-right btn-secondary mt-3 mr-2"
                   >Submit</button>
               </form>
             </div>
@@ -333,56 +360,8 @@ export default {
   </Layout>
 </template>
 <style lang="scss" scoped media="print">
-.page-item.active .page-link {
-  z-index: 1;
-  color: #fff;
-  background-color: #26a69a;
-  border-color: #5369f8;
-}
-.pdf-content {
-  background: #fff;
-  font-family: sans-serif;
-  .chart-container {
-    padding: 20px;
-    background: #e5e0dd;
-    border: 3px dotted #ddd;
-    pointer-events: none;
-    //   .vaucher {
-    //     width: 100%;
-    //   }
-    //   .voucher-value {
-    //     position: absolute;
-    //   }
-  }
-  .brack {
-    page-break-inside: avoid;
-  }
-}
-.card-header {
-  padding: 0.75rem 1.25rem;
-  margin-bottom: 0;
-  background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
-  border-bottom: 0 solid rgba(0, 0, 0, 0.125);
-}
-.print-voucher-text {
-  position: absolute;
-  top: 36%;
-  left: 14%;
-  font-size: 17px;
-  font-weight: 700;
-  color: #000;
-}
-@media all {
-  .page-break {
-    display: none;
-  }
-}
-.text-muted {
-    color: black!important;
-}
-.page-break {
-  display: block;
-  page-break-before: always;
+.cardheader.title{
+  color:black
 }
 </style>
 <style lang="stylus" scoped>

@@ -102,6 +102,9 @@ export default {
     }
   },
   computed: {
+    permissions(){
+      return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },

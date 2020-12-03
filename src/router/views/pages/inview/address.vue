@@ -111,7 +111,11 @@ export default {
       clientTemplete: {},
     }
   },
+
   computed: {
+     rows(){
+     return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
