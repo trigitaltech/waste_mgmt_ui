@@ -19,9 +19,9 @@ export default {
   data() {
     return{
       areadata:[],
-      areaarray:null,
+      areaarray:"",
       routedate:[],
-      routearray:null,
+      routearray:"",
       emp:[],
       controlno:"",
       area:"",
@@ -59,14 +59,14 @@ export default {
         this.routedata.map(e=>{
           if(this.route === e.routeName){
           
-            this.routearray.push(e)
+            this.routearray = e
           }
         })
     },
       getareas(){
         this.areadata.map(e=>{
           if(this.area === e.areaName){
-            this.areaarray.push(e)
+            this.areaarray = e
           }
         })
     },
