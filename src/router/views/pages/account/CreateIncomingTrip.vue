@@ -19,10 +19,11 @@ export default {
   data() {
     return{
       areadata:[],
-      areaarray:[],
+      areaarray:null,
       routedate:[],
-      routearray:[],
+      routearray:null,
       emp:[],
+      controlno:"",
       area:"",
       route:"",
       driver:"",
@@ -229,11 +230,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >Trip Date</label
                     >
-                    <flat-pickr
+                   <flat-pickr
                       v-model="tripdate"
                       class="form-control"
-                      placeholder="SELECT RECORD DATE"
-                      name="tripdate"
+                      placeholder="SELECT TRIP DATE"
+                      name="startdate"
                     ></flat-pickr>
                   </b-col>
                   <b-col class="ml-3 mt-4">
@@ -284,9 +285,21 @@ export default {
                       name="body"
                     />
                   </b-col>
-                  <b-col>
-                     
+                   <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >CONTROL NO</label
+                    >
+                    <input
+                      v-model="controlno"
+                      class="form-control"
+                      name="body"
+                    />
                   </b-col>
+                 
+                     
+                 
                 </b-row>
                 <b-row class="mt-3">
                   <b-col>

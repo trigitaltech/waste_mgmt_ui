@@ -304,3 +304,10 @@ export default {
   .role-details
     margin: 10px
 </style>
+<style scoped>
+.table thead th {
+    outline: none !important;
+    color: black;
+}
+
+</style>
