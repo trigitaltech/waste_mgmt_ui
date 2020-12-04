@@ -345,7 +345,7 @@ export default {
                     />
                      </b-col>
                      <b-col>
-                     <label
+                     <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Equipment Id</label
@@ -355,12 +355,8 @@ export default {
                       v-model="equipmentid"
                       type="text"
                       class="form-control"
-                    />
-
-                     </b-col>
-                </b-row>
-                 <b-row class="mb-3">
-                   <b-col cols="12">
+                    /> -->
+  
                     <!-- Default input text -->
                     <label
                       for="defaultFormCardtextEx"
@@ -373,6 +369,10 @@ export default {
                       placeholder="SELECT DATE"
                     ></flat-pickr>
                      </b-col>
+                </b-row>
+                 <b-row class="mb-3">
+                 
+                     <!-- </b-col> -->
                 </b-row>
                 <b-button
                   class="btn btn-custome float-right btn-secondary mb-3"

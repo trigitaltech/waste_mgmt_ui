@@ -75,7 +75,7 @@ export default {
       selected: null,
       clientId: '',
       options: ['DAF'],
-      servieoffice:this.$route.params.service_Office,
+      serviceoffice:this.$route.params.service_Office,
       file:"",
       personalidno:this.$route.params.personalIdNo,
       item: {
@@ -179,11 +179,7 @@ export default {
                 role: this.rolename,
                 isDeleted: false,
                 status: 200,
-                createdDate: this.createddate,
-                modifiedDate: this.modifydate,
-                createdBy: this.createdby,
-                modifiedBy: this.modifyby,
-                service_Office: this.servieoffice
+                service_Office: this.serviceoffice
             
         }
         let result = await Edituser(payload ,this.$route.params.id)

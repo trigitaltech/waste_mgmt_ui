@@ -111,7 +111,11 @@ export default {
       clientTemplete: {},
     }
   },
+
   computed: {
+     rows(){
+     return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -240,6 +244,13 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
+<style scoped>
+.table thead th {
+    outline: none !important;
+    color: black;
+}
+
+</style>
 <style lang="sass" scoped>
 .edit
   color: #a7a7a7 !important

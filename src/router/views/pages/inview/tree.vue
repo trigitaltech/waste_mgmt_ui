@@ -202,12 +202,12 @@ export default {
       // debugger
       const result = await  cities("PHP")
       var cityData = result.data.response.result
-      debugger
+      // debugger
       this.treeDisplayData.map(e=>{
-        debugger
+        // debugger
         if(e.code === "PHP"){
           cityData.map(e1=>{
-            debugger
+            // debugger
         e.nodes.push({text:e1.cityName})
       })
           

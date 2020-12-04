@@ -75,13 +75,15 @@ export default {
       selected: null,
       clientId: '',
       options: ['DAF'],
-      servieoffice:"",
+      serviceoffice:"",
       file:"",
      
       item: {
         value: '',
         text: '',
       },
+      roledata1:[],
+      rolesarray:[],
      form: {
         personalidno:"",
         personalTitle: '',
@@ -134,18 +136,25 @@ export default {
     this.roledata()
   },
   methods: {
+            getroles(){
+        this.roledata1.map(e=>{
+          if(this.rolename === e.name){
+            this.rolesarray.push(e)
+          }
+        })
+    },
      async roledata() {
        try {
       
       const result = await roles()
-      var data = result.data.response.RoleMaster
+      this.roledata1 = result.data.response.RoleMaster
       // console.log("users",data[0].userName)
       // JSON.parse(JSON.stringify(result))
       // for(i=0;i<data.length;i++){
       //   this.item[i]=data[i].userName
       // }
 
-      data.map(e=>{
+      this.roledata1.map(e=>{
       this.roles.push(e.name)
       // console.log("user",e)
       })
@@ -173,16 +182,13 @@ export default {
                 state: this.form.state,
                 country: this.form.country,
                 pin: this.form.postCode,
-                //personalIdNo: this.form.personalidno,
-                //idProofDocURL: this.file,
+                personalIdNo: this.form.personalidno,
+                idProofDocURL: this.file,
                 type: this.rolename,
-                roles:[{"id":this.rolename}],
+                roles:this.rolesarray,
                 isDeleted: false,
-                //status: 200,
-                //createdDate: this.createddate,
-                //modifiedDate: this.modifydate,
-                //createdBy: this.createdby,
-                //modifiedBy: this.modifyby,
+                status: 200,
+               
                 service_Office: this.serviceoffice
             
         }
@@ -626,6 +632,7 @@ export default {
                           label="value"
                           class="form-control"
                           :options="roles"
+                          @change="getroles"
                         ></b-form-select>
                               </div>
                              </div>

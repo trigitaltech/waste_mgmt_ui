@@ -117,6 +117,9 @@ export default {
     }
   },
   computed: {
+     rows(){
+     return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -223,7 +226,7 @@ export default {
             <b-pagination
               v-model="currentPage"
               :per-page="perPage"
-              :total-rows="permissions"
+              :total-rows="rows"
               aria-controls="my-table"
               hide-goto-end-buttons
             ></b-pagination>
@@ -234,6 +237,13 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
+<style scoped>
+.table thead th {
+    outline: none !important;
+    color: black;
+}
+
+</style>
 <style lang="sass" scoped>
 .edit
   color: #a7a7a7 !important

@@ -9,7 +9,11 @@ import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
 // Vue.component('downloadExcel', JsonExcel)
 import {
   // eslint-disable-next-line no-unused-vars
+<<<<<<< HEAD
  Tripdownload,Areamasters,routemaster, CreateIncomingTrip,users
+=======
+ Tripdownload,Areamasters,routemaster, CreateIncomingTrip,employees
+>>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
 } from '../../../../services/auth'
 import Multiselect from 'vue-multiselect'
 
@@ -20,6 +24,7 @@ export default {
   },
   data() {
     return{
+<<<<<<< HEAD
       users:{},
       area:null,
       route:null,
@@ -32,8 +37,31 @@ export default {
       tripDate:"",
       trucktype:null,
       tripdate:null,
+=======
+      areadata:[],
+      areaarray:"",
+      routedate:[],
+      routearray:"",
+      emp:[],
+      controlno:"",
+      area:"",
+      route:"",
+      driver:"",
+      contractor:"",
+      collector:null,
+      lgu:"",
+      plate:"",
+      body:"",
+      tripDate:"",
+      trucktype:"",
+      tripdate:"",
+      driverid:"",
+>>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
       startTime:"",
+      owners:[],
       servingAreas:[],
+      route:"",
+      driver:"",
       servingRoutes:[],
       driverList:[],
       contractorList:[],
@@ -43,6 +71,7 @@ export default {
   },
   components: { Layout, PageHeader,VueTimepicker ,Multiselect, datetime: Datetime, },
   mounted() {
+<<<<<<< HEAD
     this.areadata();
     this.routedata();
     this.getUsers();
@@ -69,10 +98,60 @@ export default {
       }
     },
     async areadata() {
+=======
+    this.areas();
+    this.routes();
+    this.employeedata()
+  },
+  methods:{
+     getroutes(){
+        this.routedata.map(e=>{
+          if(this.route === e.routeName){
+          
+            this.routearray = e
+          }
+        })
+    },
+      getareas(){
+        this.areadata.map(e=>{
+          if(this.area === e.areaName){
+            this.areaarray = e
+          }
+        })
+    },
+       getid(){
+        console.log("haiiiiii",)
+        this.emp.map(e=>{
+            if(this.driver === e.userName){
+                this.driverid = e.id    
+                       }
+        })
+      },
+       async employeedata() {
+       try {
+      
+      const result = await employees()
+      this.emp = result.data.response.result
+    //   console.log("users",data[0].userName)
+      // JSON.parse(JSON.stringify(result))
+      // for(i=0;i<data.length;i++){
+      //   this.item[i]=data[i].userName
+      // }
+
+      this.emp.map(e=>{
+      this.owners.push(e.userName)
+      console.log("user",e)
+      })
+       console.log("users",this.item)
+     
+      } catch (error) {}
+     },
+    async areas() {
+>>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
       try {
         const result = await Areamasters();
-        var data = result.data.response.areaMaster
-          data.map(e=>{
+        this.areadata = result.data.response.areaMaster
+        this.areadata.map(e=>{
             if(e.areaName!=null)
               this.servingAreas.push(e.areaName);
         })
@@ -81,12 +160,12 @@ export default {
       }
       console.log(this.servingAreas);
     },
-    async routedata() {
+    async routes() {
       try {
         const result = await routemaster();
         console.log(result);
-        var data = result.data.response.RouteMaster
-        data.map(e=>{
+        this.routedata = result.data.response.RouteMaster
+        this.routedata.map(e=>{
         if(e.routeName != null) 
           this.servingRoutes.push(e.routeName);
       })
@@ -112,6 +191,7 @@ export default {
       };
       /*try{
         let payload = {
+<<<<<<< HEAD
           bodyNo: this.body,
           collectionEndTime: null,
           collectionStartTime: null,
@@ -146,6 +226,24 @@ export default {
           truckType: ""
         };
         console.log(payload);*/
+=======
+            controlNo: this.controlno,
+            tripDate: this.tripdate,
+            bodyNo: this.body,
+            plateNo: this.plate,
+            truckType: this.trucktype,
+            collectionStartTime: this.startTime,
+            servingArea: this.areaarray,
+            servingRoute: this.routearray,
+            driverName: this.driver,
+            driverId: this.driverid,
+            guide: "guide",
+            isDeleted: false,
+            contractor_DISPATCHER_NAME: this.contractor,
+            lgu: this.lgu
+            }
+        console.log(payload);
+>>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
         const result = await CreateIncomingTrip(payload);
         if (result) {
           this.$swal({
@@ -175,8 +273,7 @@ export default {
     <div class="animated fadeIn">
       <b-card
         header="Create Incoming Trip"
-        header-bg-variant="info"
-        border-variant="info"
+       
         header-text-variant="white"
         class="mt-10 ml-10 mr-10 mx-auto"
       >
@@ -191,11 +288,21 @@ export default {
                       class="grey-text font-weight-dark"
                       >Serving Area</label
                     >
+<<<<<<< HEAD
                     <multiselect
                       v-model="area"
                       :multiple="true"
                       :options="servingAreas">
                     </multiselect>
+=======
+                    <b-form-select
+                      v-model.trim="area"
+                      class="form-control"        
+                      :options="servingAreas"
+                      @change="getareas" 
+                    >
+                    </b-form-select>
+>>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
                   </b-col>
                   <b-col>
                     <b-col>
@@ -208,6 +315,10 @@ export default {
                         v-model="route" 
                         @select="onSelect"      
                         :options="servingRoutes"
+<<<<<<< HEAD
+=======
+                        @change="getroutes" 
+>>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
                       >
                       </multiselect>
                     </b-col>
@@ -220,6 +331,7 @@ export default {
                       class="grey-text font-weight-dark"
                       >Trip Date</label
                     >
+<<<<<<< HEAD
                     <datetime 
                       v-model="tripDate"
                       :format="{
@@ -231,6 +343,14 @@ export default {
                       placeholder="SELECT Date"
                       name="startdate"
                  ></datetime>
+=======
+                   <flat-pickr
+                      v-model="tripdate"
+                      class="form-control"
+                      placeholder="SELECT TRIP DATE"
+                      name="startdate"
+                    ></flat-pickr>
+>>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
                   </b-col>
                   <b-col class="ml-3 mt-4">
                     <label
@@ -294,9 +414,21 @@ export default {
                       name="body"
                     />
                   </b-col>
-                  <b-col>
-                     
+                   <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >CONTROL NO</label
+                    >
+                    <input
+                      v-model="controlno"
+                      class="form-control"
+                      name="body"
+                    />
                   </b-col>
+                 
+                     
+                 
                 </b-row>
                 <b-row class="mt-3">
                   <b-col>
@@ -305,11 +437,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >Driver Name</label
                     >
-                    <b-form-select
+                     <b-form-select
                       v-model.trim="driver"
                       class="form-control"        
-                      :options="driverList"
-                      @change="getDriverId" 
+                      :options="owners"
+                      @change="getid" 
                     >
                     </b-form-select>
                   </b-col>
@@ -320,13 +452,13 @@ export default {
                         class="grey-text font-weight-dark"
                         >Contractor</label
                       >
-                      <b-form-select
-                        v-model.trim="contractor"
-                        class="form-control"        
-                        :options="contractorList"
-                        @change="getContractorId" 
-                      >
-                      </b-form-select>
+                       <b-form-select
+                      v-model.trim="contractor"
+                      class="form-control"        
+                      :options="owners"
+                     
+                    >
+                    </b-form-select>
                     </b-col>
                   </b-col>
                 </b-row>
@@ -337,11 +469,19 @@ export default {
                       class="grey-text font-weight-dark"
                       >Garbage Collectors</label
                     >
+<<<<<<< HEAD
                     <multiselect
                       v-model="collector"
                       :multiple="true"
                       :options="collectorList">
                     </multiselect>
+=======
+                      <input
+                      v-model="garbage"
+                      class="form-control"
+                      name="body"
+                    />
+>>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
                   </b-col>
                   <b-col>
                     <b-col>
@@ -350,20 +490,16 @@ export default {
                         class="grey-text font-weight-dark"
                         >LGU</label
                       >
-                      <b-form-select
-                        v-model.trim="lgu"
-                        class="form-control"        
-                        :options="lguList"
-                        @change="getLguId" 
-                      >
-                      </b-form-select>
+                       <input
+                      v-model="lgu"
+                      class="form-control"
+                      name="body"
+                    />
                     </b-col>
                   </b-col>
                 </b-row>
                 <button
-                  style="background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  type="submit"
-                  class="btn btn-info mt-3"
+                   class="btn btn-custome float-right btn-secondary mt-3 mr-2"
                   >Submit</button>
               </form>
             </div>
@@ -374,56 +510,8 @@ export default {
   </Layout>
 </template>
 <style lang="scss" scoped media="print">
-.page-item.active .page-link {
-  z-index: 1;
-  color: #fff;
-  background-color: #26a69a;
-  border-color: #5369f8;
-}
-.pdf-content {
-  background: #fff;
-  font-family: sans-serif;
-  .chart-container {
-    padding: 20px;
-    background: #e5e0dd;
-    border: 3px dotted #ddd;
-    pointer-events: none;
-    //   .vaucher {
-    //     width: 100%;
-    //   }
-    //   .voucher-value {
-    //     position: absolute;
-    //   }
-  }
-  .brack {
-    page-break-inside: avoid;
-  }
-}
-.card-header {
-  padding: 0.75rem 1.25rem;
-  margin-bottom: 0;
-  background-image: linear-gradient( 109.6deg, rgba(48,207,208,1) 11.2%, rgba(51,8,103,1) 92.5% );
-  border-bottom: 0 solid rgba(0, 0, 0, 0.125);
-}
-.print-voucher-text {
-  position: absolute;
-  top: 36%;
-  left: 14%;
-  font-size: 17px;
-  font-weight: 700;
-  color: #000;
-}
-@media all {
-  .page-break {
-    display: none;
-  }
-}
-.text-muted {
-    color: black!important;
-}
-.page-break {
-  display: block;
-  page-break-before: always;
+.cardheader.title{
+  color:black
 }
 </style>
 <style lang="stylus" scoped>

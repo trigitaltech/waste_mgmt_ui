@@ -140,6 +140,9 @@ export default {
     }
   },
   computed: {
+     rows(){
+     return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -274,7 +277,7 @@ export default {
             <b-pagination
               v-model="currentPage"
               :per-page="perPage"
-              :total-rows="item"
+              :total-rows="rows"
               aria-controls="my-table"
               hide-goto-end-buttons
             ></b-pagination>
@@ -300,4 +303,11 @@ export default {
   box-shadow: 0 0 10px #ccc
   .role-details
     margin: 10px
+</style>
+<style scoped>
+.table thead th {
+    outline: none !important;
+    color: black;
+}
+
 </style>

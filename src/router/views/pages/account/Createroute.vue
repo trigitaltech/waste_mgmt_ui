@@ -131,11 +131,8 @@ export default {
             route_distance:this.routedistance,
             areaId:this.areaid,
             areaName: this.areaname,
-            isDeleted: false,
-         createdDate: this.createddate,
-          createdBy: this.createdby,
-          modifiedDate: this.modifydate,
-          modifiedBy: this.modifyby,
+            "isDeleted": false,
+        
             description:this.description,
             city:this.city
         }

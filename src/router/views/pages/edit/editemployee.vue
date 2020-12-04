@@ -316,11 +316,10 @@ export default {
                                 v-model.trim="form.password"
                                 for="firstname"
                                 type="text"
-                                oninvalid="this.setCustomValidity('Password is required ')"
-                                oninput="setCustomValidity('')"
+                              
                                 placeholder="Enter Password"
                                 class="form-control"
-                                required
+                               
                               />
                               <!-- <input
                                     v-model.trim="form.firstName"
