@@ -3,19 +3,13 @@ import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import NProgress from 'nprogress/nprogress'
-import { Datetime } from 'vue-datetime';
 import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
 // import JsonExcel from 'vue-json-excel'
 // Vue.component('downloadExcel', JsonExcel)
 import {
   // eslint-disable-next-line no-unused-vars
-<<<<<<< HEAD
- Tripdownload,Areamasters,routemaster, CreateIncomingTrip,users
-=======
  Tripdownload,Areamasters,routemaster, CreateIncomingTrip,employees
->>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
 } from '../../../../services/auth'
-import Multiselect from 'vue-multiselect'
 
 export default {
   page: {
@@ -24,20 +18,6 @@ export default {
   },
   data() {
     return{
-<<<<<<< HEAD
-      users:{},
-      area:null,
-      route:null,
-      driver:null,
-      contractor:null,
-      collector:null,
-      lgu:null,
-      plate:null,
-      body:null,
-      tripDate:"",
-      trucktype:null,
-      tripdate:null,
-=======
       areadata:[],
       areaarray:"",
       routedate:[],
@@ -56,7 +36,6 @@ export default {
       trucktype:"",
       tripdate:"",
       driverid:"",
->>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
       startTime:"",
       owners:[],
       servingAreas:[],
@@ -69,36 +48,8 @@ export default {
       lguList:[]
     };
   },
-  components: { Layout, PageHeader,VueTimepicker ,Multiselect, datetime: Datetime, },
+  components: { Layout, PageHeader,VueTimepicker  },
   mounted() {
-<<<<<<< HEAD
-    this.areadata();
-    this.routedata();
-    this.getUsers();
-  },
-  methods:{
-    async getUsers(){
-      try{
-        let result = await users();
-        this.users = result.data.response.Users;
-        console.log(this.users);
-        this.users.map(e => {
-          if(e.roles.length>0){
-            if(e.roles[0].name == "LGU")
-              this.lguList.push(e.userName);
-            if(e.roles[0].name == "CONTRACTOR")
-              this.contractorList.push(e.userName);
-          }
-        });
-        console.log(this.lguList);
-        console.log(this.contractorList);
-      }
-      catch(e){
-        console.log(e);
-      }
-    },
-    async areadata() {
-=======
     this.areas();
     this.routes();
     this.employeedata()
@@ -147,7 +98,6 @@ export default {
       } catch (error) {}
      },
     async areas() {
->>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
       try {
         const result = await Areamasters();
         this.areadata = result.data.response.areaMaster
@@ -172,61 +122,8 @@ export default {
       } catch (error) {}
     },
     async create() {
-      try {
-      let payload = {
-        controlNo:7261,
-        tripDate:this.tripDate,
-        collectionStartTime:this.startTime,
-        bodyNo:this.body,
-        plateNo:this.plate,
-        truckType:this.truckType,
-        servingArea:"hyderabad",
-        servingRoute:"uppal",
-        driverName:"sample",
-        driverId:1,
-        guide:"guide",
-        isDeleted:false,
-        lgu:"trg",
-        contractor_DISPATCHER_NAME:"fgh"
-      };
-      /*try{
+      try{
         let payload = {
-<<<<<<< HEAD
-          bodyNo: this.body,
-          collectionEndTime: null,
-          collectionStartTime: null,
-          contractor_DISPATCHER_ID: null,
-          contractor_DISPATCHER_MEASURED_VOLUME: null,
-          contractor_DISPATCHER_NAME: null,
-          contractor_DISPATCHER_VERIFIED: null,
-          controlNo: null,
-          createdBy: null,
-          createdDate: null,
-          driverId: null,
-          driverName: null,
-          guide: null,
-          isDeleted: false,
-          lgu: null,
-          id: null,
-          lgu_CHECKER_ID: null,
-          lgu_CHECKER_MEASURED_VOLUME: null,
-          lgu_CHECKER_NAME: null,
-          lgu_CHECKER_VERIFIED: null,
-          mmda_Verified: null,
-          mmda_revewer_ID: null,
-          mmda_revewer_NAME: null,
-          modifiedBy: null,
-          modifiedDate: null,
-          plateNo: null,
-          servingArea: this.area,
-          servingRoute: {},
-          status: null,
-          totalKmServed: null,
-          tripDate: "",
-          truckType: ""
-        };
-        console.log(payload);*/
-=======
             controlNo: this.controlno,
             tripDate: this.tripdate,
             bodyNo: this.body,
@@ -243,7 +140,6 @@ export default {
             lgu: this.lgu
             }
         console.log(payload);
->>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
         const result = await CreateIncomingTrip(payload);
         if (result) {
           this.$swal({
@@ -251,7 +147,7 @@ export default {
             type: 'success',
             text: `Incoming Trip Created`,
             duration: 5000,
-          });
+          })
           this.$router.push({path:'/Trips/IncomingTrips'});
         }
       }
@@ -259,9 +155,23 @@ export default {
 
       }
     },
-    onSelect (option, id) {
-      this.route = this.servingRoutes[0];
-      this.route = Object.assign(this.route);
+    getAreaId() {
+
+    },
+    getRouteId() {
+
+    },
+    getDriverId() {
+
+    },
+    getContractorId() {
+
+    },
+    getCollectorId() {
+
+    },
+    getLguId() {
+
     }
   }
 }
@@ -288,13 +198,6 @@ export default {
                       class="grey-text font-weight-dark"
                       >Serving Area</label
                     >
-<<<<<<< HEAD
-                    <multiselect
-                      v-model="area"
-                      :multiple="true"
-                      :options="servingAreas">
-                    </multiselect>
-=======
                     <b-form-select
                       v-model.trim="area"
                       class="form-control"        
@@ -302,7 +205,6 @@ export default {
                       @change="getareas" 
                     >
                     </b-form-select>
->>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
                   </b-col>
                   <b-col>
                     <b-col>
@@ -311,16 +213,13 @@ export default {
                         class="grey-text font-weight-dark"
                         >Serving Route</label
                       >
-                      <multiselect
-                        v-model="route" 
-                        @select="onSelect"      
+                      <b-form-select
+                        v-model.trim="route"
+                        class="form-control"        
                         :options="servingRoutes"
-<<<<<<< HEAD
-=======
                         @change="getroutes" 
->>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
                       >
-                      </multiselect>
+                      </b-form-select>
                     </b-col>
                   </b-col>
                 </b-row>
@@ -331,26 +230,12 @@ export default {
                       class="grey-text font-weight-dark"
                       >Trip Date</label
                     >
-<<<<<<< HEAD
-                    <datetime 
-                      v-model="tripDate"
-                      :format="{
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: 'numeric'
-                      }"
-                      type="date"
-                      placeholder="SELECT Date"
-                      name="startdate"
-                 ></datetime>
-=======
                    <flat-pickr
                       v-model="tripdate"
                       class="form-control"
                       placeholder="SELECT TRIP DATE"
                       name="startdate"
                     ></flat-pickr>
->>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
                   </b-col>
                   <b-col class="ml-3 mt-4">
                     <label
@@ -358,21 +243,7 @@ export default {
                       class="grey-text font-weight-dark mr-2"
                       >Trip Start Time</label
                     >
-                    <datetime 
-                      v-model="startTime"
-                      :format="{
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: 'numeric',
-                        hour: 'numeric',
-                        minute: '2-digit',
-                        second: '2-digit',
-                        milisecond: '2-digit'
-                      }"
-                      type="time"
-                      placeholder="SELECT TIME"
-                      name="startdate"
-                 ></datetime>
+                    <vue-timepicker format="hh:mm A" v-model="startTime"></vue-timepicker>
                   </b-col>
                 </b-row>
                 <b-row class="mt-3">
@@ -380,7 +251,7 @@ export default {
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Plate No.</label
+                      >Plate</label
                     >
                     <input
                       v-model="plate"
@@ -406,7 +277,7 @@ export default {
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Body No</label
+                      >Body</label
                     >
                     <input
                       v-model="body"
@@ -469,19 +340,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >Garbage Collectors</label
                     >
-<<<<<<< HEAD
-                    <multiselect
-                      v-model="collector"
-                      :multiple="true"
-                      :options="collectorList">
-                    </multiselect>
-=======
                       <input
                       v-model="garbage"
                       class="form-control"
                       name="body"
                     />
->>>>>>> f669fa8483a19604c52a546820e1b5d81efacab6
                   </b-col>
                   <b-col>
                     <b-col>
