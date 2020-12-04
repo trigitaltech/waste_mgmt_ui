@@ -134,12 +134,12 @@ export default {
             equipmentId:this.equipmentid,
             servingArea:this.servingarea,
             manufactureDate: this.manufacturedate,
-            warrantyStatus: "NOT EXPIRED",
+            warrantyStatus: "EXPIRED",
             totalKmServed: this.totalkmsserved,
             totalHourServed: this.totalhoursserved,
             description:this.description,
             isDeleted: false,
-            status: 22,
+            status: "WORKING",
             createdDate: this.createddate,
             createdBy: this.createdby,
             modifiedDate: this.modifydate,
@@ -270,12 +270,12 @@ export default {
                       class="grey-text font-weight-dark"
                       >Manufacture Date</label
                     >
-                    <input
-                      id="defaultFormCardtextEx"
+                   <flat-pickr
                       v-model="manufacturedate"
-                      type="text"
                       class="form-control"
-                    />
+                      placeholder="SELECT  DATE"
+                      name="startdate"
+                    ></flat-pickr>
                   </b-col>
                   </b-row>
                   <b-row class="mb-3">

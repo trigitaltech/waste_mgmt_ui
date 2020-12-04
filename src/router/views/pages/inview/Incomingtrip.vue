@@ -177,7 +177,7 @@ export default {
             responsive="sm"
             :current-page="currentPage"
             :per-page="perPage"
-            thead-class="bg-dark"
+          
             :small="small"
             :fixed="fixed"
             :fields="TripColumns"
@@ -224,6 +224,6 @@ export default {
 <style lang="scss">
 .table thead th {
     outline: none !important;
-    color: white;
+    color:black;
 }
 </style>

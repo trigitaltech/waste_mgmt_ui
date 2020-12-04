@@ -19,17 +19,13 @@
                 />
               </b-row>
             </div>
-            <div class="row mt-1 justify-content-center">
-            
-              <div class="col-md-11" style="margin-top:50px">
            
                   <button
-                    class="btn btn-primary d-inline-flex align-items-center"
+                   class="btn btn-custome float-right btn-secondary mb-3"
                     type="submit"
                 @click="add"
                   >Add Permission To Role</button>
-                </div>
-            </div>
+              
         
           </b-card>
       </b-col>

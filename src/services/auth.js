@@ -102,7 +102,7 @@ export const Editpermission = (payload) => serviceMaker (`/permissions/admin`, m
 
 export const Edituser = (payload,id) => serviceMaker (`/users/admin/edit/${id}`, methods.PUT, api.NGB, payload)
 
-export const Editemployee = (payload,id) => serviceMaker (`/employees/admin/edit/${id}`, methods.PUT, api.NGB, payload)
+export const Editemployee = (payload) => serviceMaker (`/employees/admin/edit`, methods.PUT, api.NGB, payload)
 
 export const editroute = (payload) => serviceMaker (`/routemaster/admin`, methods.PUT, api.NGB, payload)  
 
