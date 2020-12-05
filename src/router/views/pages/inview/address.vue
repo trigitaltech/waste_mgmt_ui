@@ -44,24 +44,21 @@ export default {
 
       cityColumns: [
         {
-          key: 'areaName',
-
-          label: 'areaName',
-        },
-        {
-          key: 'cityCode.cityName',
-          label: 'city',
-        },
-          {
           key: 'cityCode.countryCode.name',
           label: 'Country',
         },
-         
-
         {
-          key: 'actions',
-          sortable: true,
+          key: 'cityCode.countryCode.countryCode',
+          label: 'Country Code',
         },
+        {
+          key: 'cityCode.cityName',
+          label: 'City',
+        },
+        {
+          key: 'areaName',
+          label: 'Area',
+        }
       ],
       items: [
         {
@@ -164,7 +161,7 @@ export default {
                 rgba(51, 8, 103, 1) 92.5%
               );
             "
-            class="btn btn-custome float-right btn-secondary mb-3"
+            class="btn btn-custome float-right btn-secondary"
             text="Create Tenant"
             @click="$router.push({ path: '/Createaddress' })"
             >Create Country</b-button
@@ -178,16 +175,17 @@ export default {
                 rgba(51, 8, 103, 1) 92.5%
               );
             "
-            class="btn btn-custome float-right btn-secondary mb-3 mr-3"
+            class="btn btn-custome float-right btn-secondary mr-3"
             text="Create Tenant"
             @click="$router.push({ path: '/Treeview' })"
             >TreeView</b-button
           >
       
       </b-col>
-        <div class="mt-3">
+        <div>
           <b-table
             id="my-table"
+            class="w-75"
             :dark="dark"
             :hover="hover"
             :striped="striped"
@@ -202,7 +200,6 @@ export default {
             :fixed="fixed"
             :fields="cityColumns"
             :items="item"
-            class="mt-3"
           >
             <template slot="actions" slot-scope="data">
               <b-button

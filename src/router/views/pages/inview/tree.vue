@@ -2,19 +2,7 @@
 import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
-import Multiselect from 'vue-multiselect'
-import { ModelSelect } from 'vue-search-select'
- import { VueTreeList,  Tree,TreeNode } from 'vue-tree-list'
-  // import Tree from 'vuejs-tree'
-import {
-  ValidationProvider,
-  ValidationObserver,
-} from 'vee-validate/dist/vee-validate.full'
-import {
-  countries,
-  countrys,
-  cities,area
-} from '../../../../services/auth'
+import { countries,cities,area,createcity,createarea1 } from '../../../../services/auth'
 
 export default {
   page: {
@@ -22,356 +10,336 @@ export default {
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
-    // Tree,
-    VueTreeList,
     Layout,
-    PageHeader,
-    Multiselect,
-    ValidationProvider,
-    ValidationObserver,
-    ModelSelect,
+    PageHeader
   },
   data() {
     return {
-       newTree: {},
-        data1: [],
-      plandata: '',
-      striped: false,
-      bordered: true,
-      filter: '',
-      perPage: 10,
-      hover: true,
-      currentPage: 1,
-      small: false,
-      dark: false,
-      fixed: false,
-      amount: '',
-      submitted: false,
-      title: 'Register',
-      item: { key: 'resource', value: 'Frozen Yogurt', name: '159' },
-      data:[],
-      CountryColumns: [
-        {
-          key: 'resource',
-
-          label: 'Resource',
-        },
-        {
-          key: 'name',
-          label: 'Country',
-        },
-
-        {
-          key: 'actions',
-          sortable: true,
-        },
-      ],
-      items: [
-        {
-          text: 'Home',
-          href: '/',
-        },
-        {
-          text: 'TreeView',
-          active: true,
-        },
-      ],
-       treeDisplayData: [],
-      finalModel: {},
-      selected: null,
-      clientId: '',
-      options: ['DAF'],
-      // item: {
-      //   value: '',
-      //   text: '',
-      // },
-     
+      addressData:[],
+      newTree: {},
+      data1: [],
+      treeDisplayData:[],
+      showLine: true,
+      showIcon: false,
+      expandedKeys: [],
+      autoExpandParent: true,
+      checkedKeys: [],
+      selectedKeys: [],
+      treeData:[],
+      visible:false,
+      cityForm:false,
+      areaForm:false,
+      hideFooter:true,
+      hideHeader:true,
+      cityName:null,
+      cityCode:null,
+      areaName:null,
+      areaCode:null,
+      selectedCountry:null,
+      selectedCity:null,
+      node:null,
+      cities:null,
+      areas:null,
+      toggle:null
     }
   },
-  computed: {
-  myCustomStyles() {
-    return {
-      tree: {
-        height: 'auto',
-        maxHeight: '300px',
-        overflowY: 'visible',
-        display: 'inline-block'
-      },
-      row: {
-        width: '500px',
-        cursor: 'pointer',
-        child: {
-          height: '35px'
-        }
-      },
-      addNode: {
-        class: 'custom_class',
-        style: {
-          color: '#007AD5'
-        }
-      },
-      editNode: {
-        class: 'custom_class',
-        style: {
-          color: '#007AD5'
-        }
-      },
-      deleteNode: {
-        class: 'custom_class',
-        style: {
-          color: '#EE5F5B'
-        }
-      },
-      selectIcon: {
-        class: 'custom_class',
-        style: {
-          color: '#007AD5'
-        },
-        active: {
-          class: 'custom_class',
-          style: {
-            color: '#2ECC71'
-          }
-        }
-      },
-      text: {
-        style: {},
-        active: {
-          style: {
-            'font-weight': 'bold',
-            color: '#2ECC71'
-          }
-        }
-      }
-    };
-  },
-  myCustomOptions() {
-    return {
-      treeEvents: {
-        expanded: {
-          state: true,
-          fn: null,
-        },
-        collapsed: {
-          state: true,
-          fn: null,
-        },
-        selected: {
-          state: true,
-          fn: null
-        },
-        checked: {
-          state: true,
-          fn: this.myCheckedFunction,
-        }
-      },
-      events: {
-        expanded: {
-          state: true,
-          fn: null,
-        },
-        selected: {
-          state: true,
-          fn: this.getcities,
-        },
-        checked: {
-          state: false,
-          fn: null,
-        },
-        editableName: {
-          state: true,
-          fn: null,
-          calledEvent: null,
-        }
-      },
-      // addNode: { state: true, fn: null, appearOnHover: true },
-      // editNode: { state: true, fn: null, appearOnHover: true },
-      // deleteNode: { state: true, fn: null, appearOnHover: true },
-      showTags: true,
-    };
-  }
-},
   mounted() {
-  this.getcountrys()
-  // this.getcities()
-  this.getareas()
+    this.getaddresss();
+  },
+  watch: {
+    checkedKeys(val) {
+      console.log('onCheck', val);
+    },
   },
   methods: {
-     async getcities() {
-       try {
-      // debugger
-      const result = await  cities("PHP")
-      var cityData = result.data.response.result
-      // debugger
-      this.treeDisplayData.map(e=>{
-        // debugger
-        if(e.code === "PHP"){
-          cityData.map(e1=>{
-            // debugger
-        e.nodes.push({text:e1.cityName})
-      })
-          
-        } 
-      })
-      
-      
-      } catch (error) {}
-   
-    },
-     async getareas() {
-       try {
-      // debugger
-      const result = await  area("You")
-      var coun = result.data.response.result
-      coun.map(e=>{
-      })
-      
-      } catch (error) {}
-   
-    },
-     async getcountrys() {
-       try {
-         this.treeDisplayData = []
-      debugger
-      const result = await  countries()
-      var coun = result.data.response.result
-      var i =0;
-      coun.map(e=>{
-        
-        this.treeDisplayData.push({name:e.name, id: i, pid: 0,
-            dragDisabled: true,
-            addTreeNodeDisabled: true,
-            addLeafNodeDisabled: true,
-            editNodeDisabled: true,
-            delNodeDisabled: true,
-            children:[]})
-        i = i+1
-      })
-      
-      this.data1 = new Tree([]);
-      this.data1.children = [];
-      this.treeDisplayData.map(e=>{
-          this.data1.children.push(e)
-      })
-      debugger
-      console.log(this.data1)
-      } catch (error) {}
-   
-    },
-   onDel(node) {
-        console.log(node)
-        node.remove()
-      },
- 
-      onChangeName(params) {
-        console.log(params)
-      },
- 
-      onAddNode(params) {
-        console.log(params)
-      },
- 
-      onClick(params) {
-        console.log(params)
-      },
- 
-      addNode() {
-        var node = new TreeNode({ name: 'new node', isLeaf: false })
-        if (!this.data.children) this.data.children = []
-        this.data.addChildren(node)
-      },
- 
-      getNewTree() {
-        var vm = this
-        function _dfs(oldNode) {
-          var newNode = {}
- 
-          for (var k in oldNode) {
-            if (k !== 'children' && k !== 'parent') {
-              newNode[k] = oldNode[k]
-            }
+    async addCity() {
+      try {
+        const payload = {
+          cityName: this.cityName,
+          cityCode: this.cityCode,
+          countryCode : {
+            id: this.node.id,
+            name: this.selectedCountry,
+            countryCode: this.node.code
           }
- 
-          if (oldNode.children && oldNode.children.length > 0) {
-            newNode.children = []
-            for (var i = 0, len = oldNode.children.length; i < len; i++) {
-              newNode.children.push(_dfs(oldNode.children[i]))
-            }
-          }
-          return newNode
+        };
+        console.log(payload)
+        let result = await createcity(payload)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `City Added`,
+            duration: 5000,
+          })
+          this.treeData = [];
+          this.getaddresss()
+          this.cityForm = false
         }
- 
-        vm.newTree = _dfs(vm.data)
-      },
-    async refresh() {
-      setTimeout(function () {
-        location.reload()
-      }, 200)
+      }
+      catch(e) {
+        console.log(e);
+      }
     },
+    async addArea() {
+      try {
+        const payload = {
+          areaName: this.areaName,
+          areaCode: this.areaCode,
+          cityCode: {
+            id: this.node.id,
+            cityName: this.node.title,
+            cityCode: this.node.code,
+            countryCode: {
+              id: this.node.cid,
+              name: this.node.cname,
+              countryCode: this.node.ccode
+            }
+          }
+        };
+        console.log(payload)
+        let result = await createarea1(payload)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `Area Added`,
+            duration: 5000,
+          })
+          this.treeData = [];
+          this.getaddresss()
+          this.areaForm = false
+        }
+      }
+      catch(e) {
+        console.log(e);
+      }
+    },
+    rightClick({event,node}) {
+      console.log(node)
+      if(node.dataRef.pid == 0) {
+        this.node = node.dataRef
+        this.selectedCountry = node.dataRef.title
+        this.visible = true
+        this.toggle = 0
+      }
+      if(node.dataRef.pid == 1) {
+        this.node = node.dataRef
+        this.selectedCity = node.dataRef.title
+        this.visible = true
+        this.toggle = 1
+      }
+      console.log(this.toggle+''+this.visible)
+    },
+    hide() {
+      console.log(111);
+      this.visible = false;
+    },
+    onExpand(expandedKeys) {
+      this.expandedKeys = expandedKeys;
+      this.autoExpandParent = false;
+    },
+    onCheck(checkedKeys) {
+      this.checkedKeys = checkedKeys;
+    },
+    onSelect(selectedKeys, info) {
+      this.selectedKeys = selectedKeys;
+    },
+    getNodes(object,pid) {
+      if(pid == 0) {
+        const node = {
+          pid:pid,
+          title:object.name,
+          code:object.countryCode,
+          id:object.id,
+          children:[]
+        };
+        return node;
+      }
+      if(pid == 1) {
+        const node = {
+          pid:pid,
+          title:object.cityName,
+          code:object.cityCode,
+          id:object.id,
+          cid:object.countryCode.id,
+          cname:object.countryCode.name,
+          ccode:object.countryCode.countryCode,
+          children:[]
+        };
+        return node;
+      }
+      if(pid == 2) {
+        const node = {
+          pid:pid,
+          title:object.areaName,
+          id:object.id
+        };
+        return node;
+      }
+    },
+    async getcities(code) {
+      var data = await cities(code)
+      this.cities = data.data.response.result
+      console.log(this.cities)
+      return this.cities
+    },
+    async getareas(code) {
+      var data = await area(code)
+      this.areas = data.data.response.result
+      return this.areas
+    },
+    async getaddresss() {
+      try {
+        const result = await countries()
+        var data =  result.data.response.result
+        data.map(async (e,i) => {
+          this.treeData.push(this.getNodes(e,0))
+          const result1 = await this.getcities(e.countryCode)
+          result1.map(async (d,j) => {
+            this.treeData[i].children.push(this.getNodes(d,1))
+            const result2 = await this.getareas(d.cityCode)
+            result2.map(async (c,k) => {
+              this.treeData[i].children[j].children.push(this.getNodes(c,2))
+            })
+          })
+        })
+        console.log(this.treeData)
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    onSelect(selectedKeys, info) {
+      console.log('selected', selectedKeys, info);
+    },
+    openAddCityModal() {
+      this.visible = false
+      this.cityForm = true
+    },
+    openAddAreaModal() {
+      this.visible = false
+      this.areaForm = true
+    }
   },
 }
 </script>
 
 <template>
   <Layout>
-    <PageHeader :items="items" />
-
+    <PageHeader />
     <div class="animated fadeIn">
       <b-card
         header="Tree View"
-
         class="mt-10 ml-10 mr-10 mx-auto"
       >
-      <div>
-    <!-- <button @click="addNode">Add Node</button> -->
-   <!-- <Tree id="my-tree-id" ref="my-tree-ref" :custom-options="myCustomOptions" :custom-styles="myCustomStyles" :nodes="treeDisplayData"></Tree> -->
-   <div>
-    <!-- <button @click="addNode">Add Node</button> -->
-    <vue-tree-list
-      @click="onClick"
-      @change-name="onChangeName"
-      @delete-node="onDel"
-      @add-node="onAddNode"
-      :model="data1"
-      default-tree-node-name="new node"
-      default-leaf-node-name="new leaf"
-      v-bind:default-expanded="false"
-    >
-      <template v-slot:leafNameDisplay="slotProps">
-        <span>
-          {{ slotProps.model.name }} <span class="muted">#{{ slotProps.model.id }}</span>
-        </span>
-      </template>
-      <span class="icon" slot="addTreeNodeIcon">📂</span>
-      <span class="icon" slot="addLeafNodeIcon">＋</span>
-      <span class="icon" slot="editNodeIcon">📃</span>
-      <span class="icon" slot="delNodeIcon">✂️</span>
-      <span class="icon" slot="leafNodeIcon">🍃</span>
-      <span class="icon" slot="treeNodeIcon">🌲</span>
-    </vue-tree-list>
-    <!-- <button @click="getNewTree">Get new tree</button>
-    <pre>
-      {{newTree}}
-    </pre> -->
-  </div>
-  </div>
-      
+        <div>
+          <a-tree
+            :show-line="showLine"
+            :show-icon="showIcon"
+            v-model="checkedKeys"
+            :expanded-keys="expandedKeys"
+            :auto-expand-parent="autoExpandParent"
+            :selected-keys="selectedKeys"
+            :tree-data="treeData"
+            @expand="onExpand"
+            @select="onSelect"
+            @rightClick="rightClick"
+          >
+          </a-tree>
+          <b-modal v-model="visible" v-if="toggle==0" size="sm" :hide-header="hideHeader" :hide-footer="hideFooter">
+            <b-list-group>
+              <b-list-group-item button variant="light" @click="openAddCityModal">Add City</b-list-group-item>
+            </b-list-group>
+          </b-modal>
+          <b-modal v-model="visible" v-if="toggle==1" size="sm" :hide-header="hideHeader" :hide-footer="hideFooter">
+            <b-list-group>
+              <b-list-group-item button variant="light" @click="openAddAreaModal">Add Area</b-list-group-item>
+            </b-list-group>
+          </b-modal>
+          <b-modal v-model="cityForm" title="Add State" size="md" :hide-header="hideHeader" :hide-footer="hideFooter">
+            <h2 class="text-center">Add City</h2>
+            <form @submit.prevent="addCity">
+              <label
+                for="defaultFormCardNameEx"
+                class="grey-text font-weight-dark"
+              >City Name</label>
+              <input
+                v-model="cityName"
+                type="text"
+                placeholder="Enter City Name"
+                class="form-control"
+                required
+              />
+              <label
+                for="defaultFormCardNameEx"
+                class="grey-text font-weight-dark"
+              >City Code</label>
+              <input
+                v-model="cityCode"
+                type="text"
+                placeholder="Enter City Code"
+                class="form-control"
+                required
+              />
+              <label
+                for="defaultFormCardNameEx"
+                class="grey-text font-weight-dark"
+              >Country</label>
+              <input
+                v-model="selectedCountry"
+                type="text"
+                class="form-control"
+                readonly
+              />
+              <button
+                type="submit"
+                class="btn text-center btn-secondary"
+              >Submit</button>
+            </form>
+          </b-modal>
+          <b-modal v-model="areaForm" title="Add Area" size="md" :hide-header="hideHeader" :hide-footer="hideFooter">
+            <h2 class="text-center">Add Area</h2>
+            <form @submit.prevent="addArea">
+              <label
+                for="defaultFormCardNameEx"
+                class="grey-text font-weight-dark"
+              >Area Name</label>
+              <input
+                v-model="areaName"
+                type="text"
+                placeholder="Enter Area Name"
+                class="form-control"
+                required
+              />
+              <label
+                for="defaultFormCardNameEx"
+                class="grey-text font-weight-dark"
+              >Area Code</label>
+              <input
+                v-model="areaCode"
+                type="text"
+                placeholder="Enter Area Code"
+                class="form-control"
+                required
+              />
+              <label
+                for="defaultFormCardNameEx"
+                class="grey-text font-weight-dark"
+              >City</label>
+              <input
+                v-model="selectedCity"
+                type="text"
+                class="form-control"
+                readonly
+              />
+              <button
+                type="submit"
+                class="btn text-center btn-secondary"
+              >Submit</button>
+            </form>
+          </b-modal>
+        </div>
       </b-card>
     </div>
-    <!-- end row -->
   </Layout>
 </template>
-<style lang="sass" scoped>
-.edit
-    color: #a7a7a7 !important
-.text-center
-    text-align: center
-.form-div label
-    margin-top: 8px
-</style>
-<style lang="sass" scoped>
-.card-wrap
-    box-shadow: 0 0 10px #ccc
-.role-details
-    margin: 10px
-</style>
