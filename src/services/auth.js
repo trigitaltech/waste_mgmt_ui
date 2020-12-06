@@ -92,6 +92,10 @@ export const createequipment = (payload) => serviceMaker(`/equipment/admin/encod
 
 export const createcountry = (payload) => serviceMaker(`/location/createcountry`, methods.POST, api.NGB, payload)
 
+export const createcity = (payload) => serviceMaker(`/location/createcity`, methods.POST, api.NGB, payload)
+
+export const createarea1 = (payload) => serviceMaker(`/location/createarea`, methods.POST, api.NGB, payload)
+
 export const editservicerequest = (payload) => serviceMaker(`/serviceticket/system/issue`, methods.PUT, api.NGB, payload)
 
 export const editrole = (payload) => serviceMaker(`/roles/admin`, methods.PUT, api.NGB, payload)

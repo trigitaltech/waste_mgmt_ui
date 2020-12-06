@@ -52,7 +52,7 @@ export default {
           label: 'Route Name',
         },
          {
-          key: 'areaName',
+          key: 'areaName.areaName',
 
           label: 'Area Name',
         },

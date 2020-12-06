@@ -175,8 +175,8 @@ export default {
                 firstName: this.form.firstName,
                 middleName: this.form.middleName,
                 lastName: this.form.lastName,
-                addressLine1: this.form.address,
-                addressLine2: this.form.address2,
+                addressLane1: this.form.address,
+                addressLane2: this.form.address2,
                 area: this.form.area,
                 city: this.form.city,
                 state: this.form.state,
@@ -473,7 +473,7 @@ export default {
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Address"
                                 class="form-control"
-                                required
+                                
                               />
                               <!-- <input
                                     v-model.trim="form.address"
@@ -501,7 +501,7 @@ export default {
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Address"
                                 class="form-control"
-                                required
+                                
                               />
                             </div>
                             </div> 
@@ -573,7 +573,7 @@ export default {
                                    <label for="default">Service office</label>
                                  
                               <input
-                                v-model.trim="serviceoffice"
+                                v-model="serviceoffice"
                                 placeholder="Enter Service office"
                                 class="form-control"
                                 type="number"
@@ -624,7 +624,7 @@ export default {
                                       <label
                               for="defaultFormCardEmailEx"
                               class="grey-text font-weight-dark"
-                              >Role</label
+                              >Type</label
                             >
                             <b-form-select
                           v-model.trim="rolename"

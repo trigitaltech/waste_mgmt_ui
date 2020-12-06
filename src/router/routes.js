@@ -746,14 +746,6 @@ const pagesRoutes = [
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
-    path: '/Viewincomingtrip',
-    name: 'Viewincomingtrip',
-    icon: 'check-square',
-    component: () => lazyLoadView(import('@views/pages/views/ViewIncomingTrip')),
-    meta: { authRequired: true },
-    props: (route) => ({ user: store.state.auth.currentUser || {} }),
-  },
-  {
     path: '/Viewattendance',
     name: 'Viewattendance',
     icon: 'check-square',

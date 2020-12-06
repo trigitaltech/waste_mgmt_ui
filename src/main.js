@@ -7,6 +7,7 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import BootstrapVue from 'bootstrap-vue'
 import VueApexCharts from 'vue-apexcharts'
 import Vuelidate from 'vuelidate'
+import Antd from 'ant-design-vue'
 import VueMask from 'v-mask'
 import vco from 'v-click-outside'
 import VueRouter from 'vue-router'
@@ -22,8 +23,10 @@ import Toasted from 'vue-toasted';
 import { Datetime } from 'vue-datetime';
  
 import 'vue-datetime/dist/vue-datetime.css'
+import 'ant-design-vue/dist/antd.css'
 import VueTreeList from 'vue-tree-list'
- 
+
+Vue.use(Antd)
 Vue.use(VueTreeList)
 Vue.use(Datetime)
 Vue.use(Notifications)
