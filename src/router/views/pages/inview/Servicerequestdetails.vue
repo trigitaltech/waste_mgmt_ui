@@ -61,7 +61,7 @@ export default {
         },
          {
           key: 'jobStartTime',
-           label: 'jobStartTime',
+           label: 'JobStartTime',
         },
           {
           key: 'dumpingArea',
@@ -77,11 +77,11 @@ export default {
         },
          {
           key: 'controlChekerName',
-           label: 'controlChekerName',
+           label: 'controlCheckerName',
         },
          {
           key: 'tripDate',
-           label: 'tripDate',
+           label: 'TripDate',
         },
          {
           key: 'status',
@@ -173,7 +173,7 @@ export default {
             text: `You Deleted Servicerequest Successfully`,
             duration: 5000,
           })
-         this.refresh()
+        //  this.refresh()
         }
       } catch (e) {
          this.$toasted.error(e.message.error, {

@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- Edituser,roles
+ Edituser,roles,Areamasters
 } from '../../../../services/auth'
 
 export default {
@@ -76,6 +76,7 @@ export default {
       finalModel: {},
       selected: null,
       clientId: '',
+        role:['ENCODER', 'PAYROLL', 'INSPECTOR', 'BILLING', 'ADMIN'],
       options: ['DAF'],
       serviceoffice:this.$route.params.service_Office,
       file:"",
@@ -114,6 +115,8 @@ export default {
       cityOpt: [],
        createdby: "",
       createddate: new Date(),
+      sid:"",
+      item2:[],
       modifydate: new Date(),
       modifyby:"",
       bouquetsOpt: [
@@ -134,9 +137,37 @@ export default {
      this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     this.roledata()
+    this.getplans()
     console.log(this.$route.params)
   },
   methods: {
+     getid(){
+        // console.log("haiiiiii",this.item2)
+        this.areas.map(e=>{
+            if(this.serviceoffice === e.areaName){
+                this.sid = e.id    
+                       }
+                        //  console.log("haiiiiii",this.sid)
+        })
+      },
+     async getplans() {
+       try {
+        const result = await Areamasters()
+      this.areas = result.data.response.areaMaster
+    //   console.log("users",data[0].userName)
+      // JSON.parse(JSON.stringify(result))
+      // for(i=0;i<data.length;i++){
+      //   this.item[i]=data[i].userName
+      // }
+
+      this.areas.map(e=>{
+      this.item2.push(e.areaName)
+      console.log("user",e)
+      })
+       console.log("users",this.item)
+     
+      } catch (error) {}
+     },
        getroles(){
         this.roledata1.map(e=>{
           if(this.rolename === e.name){
@@ -155,10 +186,10 @@ export default {
       //   this.item[i]=data[i].userName
       // }
 
-      this.roledata1.map(e=>{
-      this.roles.push(e.name)
+      // this.roledata1.map(e=>{
+      // this.roles.push(e.name)
       // console.log("user",e)
-      })
+      // })
       //  console.log("users",this.item)
      
       } catch (error) {}
@@ -190,7 +221,7 @@ export default {
                 isDeleted: false,
                 status: 200,
                
-                service_Office: this.serviceoffice
+                service_Office: this.sid
             
         }
         let result = await Edituser(payload ,this.$route.params.id)
@@ -302,11 +333,9 @@ export default {
                                 v-model.trim="form.password"
                                 for="firstname"
                                 type="text"
-                                oninvalid="this.setCustomValidity('Password is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Enter Password"
+                            
                                 class="form-control"
-                                required
+                              disabled
                               />
                               <!-- <input
                                     v-model.trim="form.firstName"
@@ -574,12 +603,12 @@ export default {
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Service office</label>
                                  
-                              <input
-                                v-model.trim="serviceoffice"
-                                placeholder="Enter Service office"
-                                class="form-control"
-                                type="number"
-                              />
+                               <b-form-select
+                                           v-model.trim="serviceoffice"
+                                            :options="item2"
+                                           class="form-control"
+                                              @change="getid"
+                                ></b-form-select>
                                     </div>
                            
                            
@@ -626,14 +655,15 @@ export default {
                                       <label
                               for="defaultFormCardEmailEx"
                               class="grey-text font-weight-dark"
-                              >Role</label
+                              >Type</label
                             >
                             <b-form-select
                           v-model.trim="rolename"
                           placeholder="Select Supervisor"
                           label="value"
                           class="form-control"
-                          :options="roles"
+                          @change="getroles"
+                          :options="role"
                         ></b-form-select>
                               </div>
                              </div>

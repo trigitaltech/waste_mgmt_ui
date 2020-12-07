@@ -5,7 +5,7 @@ import PageHeader from '@components/page-header'
 import NProgress from 'nprogress/nprogress'
 import moment from "moment";
 import {
- Tripdownload,incomingtrips
+ Tripdownload,incomingtrips,deletetripincoming
 } from '../../../../services/auth'
 
 export default {
@@ -129,6 +129,28 @@ export default {
     }
   },
   methods: {
+      async deleteReq(data) {
+       console.log("data",data.item.id)
+       var id = data.item.id
+     try{
+          
+        const result = await deletetripincoming(data.item.id)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `You Deleted Tripincoming Successfully`,
+            duration: 5000,
+          })
+         this.refresh()
+        }
+      } catch (e) {
+         this.$toasted.error(e.message.error, {
+          duration: 7000,
+        })
+      }
+     
+    },
     async getTrips() {
       try{
         let result = await incomingtrips();
@@ -199,6 +221,9 @@ export default {
                   <i class="fas fa-pencil-alt edit"></i>
                 </b-button>
               </router-link>
+               <span @click="deleteReq(data)">
+              <i class="fa fa-times edit"></i>
+            </span>
            </template>
           </b-table>
           <div style="float: right">

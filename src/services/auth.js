@@ -40,6 +40,8 @@ export const simpleactivation = (payload) => serviceMaker(`/auth/signup`, method
 
 export const reviewAttendance = (payload) => serviceMaker('/attendence/checker/admin/review',methods.POST,api.NGB,payload)
 
+export const deletetripincoming = (id) => serviceMaker(`/tripincoming/admin/${id}`, methods.DELETE, api.NGB)
+
 export const deletevehicle = (id) => serviceMaker(`/vehicles/admin/encoders/${id}`, methods.DELETE, api.NGB) 
 
 export const deletepermission = (id) => serviceMaker(`/permissions/admin/${id}`, methods.DELETE, api.NGB) 

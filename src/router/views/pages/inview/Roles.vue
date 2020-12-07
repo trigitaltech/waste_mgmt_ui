@@ -205,6 +205,13 @@ export default {
             <span class="mr-3" @click="deleteReq(data)">
               <i class="fa fa-times edit"></i>
             </span>
+             <!-- <router-link :to="{ name: 'Editrole', params: data.item }">
+              <button
+                     class="btn btn-custome float-right btn-secondary mb-3"
+                    type="submit"
+              
+                  >Add Permission To Role</button>
+             </router-link> -->
            </template>
           
           </b-table>
