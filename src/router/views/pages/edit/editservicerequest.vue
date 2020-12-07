@@ -39,6 +39,8 @@ export default {
       time:this.$route.params.jobStartTime,
       requesttype:this.$route.params.requestType,
       equipmentno:"",
+      tripkms:"",
+      mmda:"",
       equipmentid:"",
       equipmentperformance:"",
       equipmentusage:"",
@@ -75,7 +77,7 @@ export default {
         },
       ],
    
-    
+    oid:"",
     }
   },
   computed: {
@@ -95,6 +97,18 @@ export default {
     this.getemployees()
   },
   methods: {
+     getoid() {
+      console.log("hai")
+      
+    this.employe.map(e=>{
+    
+         if(this.operatorname === e.type){ 
+        this.oid = e.id
+        console.log("id",this.oid)
+         }
+      })
+    },
+  
     async getuid(){
        this.users.map(e=>{
          if(this.controlcheckername === e.userName){ 
@@ -149,28 +163,28 @@ this.operators.push(e.type)
         const payload = {
              
                 id: this.$route.params.id,
-              "tripDate": "2020-11-26T10:00:44.000+00:00" ,
-                "equipmentNo": "635GH",
-                "equipmentId": "DS513",
-                "equipmentType": "Compactt",
-                "jobStartTime": "2020-11-26T10:00:44.000+00:00",
-                "jobEndTime": "2020-11-26T10:00:44.000+00:00",
-                "requestType": "soil Truck",
-                "dumpingArea": "kukatpally",
-                "driverName": "cindy",
-                "driverId": 321,
-                "operatorId": 41321,
-                "controlCheckerid": 421,
-                "controlChekerName": "Candy",
-                "totalKmServed": 11,
-                "isDeleted": "false",
-                "status": "ASSIGNED",
-                "createdBy": "encoder",
-                "modifiedBy": "Admin",
-                "equipment_PERFORMANCE": 36,
-                "equipment_USAGE": 33,
-                "lgu": "Admin",
-                "operatorName": "Mindy"
+               tripDate: this.tripdate ,
+                equipmentNo: this.equipmentno,
+                equipmentId: this.equipmentid,
+                equipmentType: this.equipmenttype,
+                jobStartTime: this.time,
+                jobEndTime: "2020-11-26T10:00:44.000+00:00",
+                requestType: this.requesttype,
+                dumpingArea: this.dumparea,
+                driverName: this.drivername,
+                driverId: this.driverid,
+                operatorId: this.oid,
+                controlCheckerid: this.cid,
+                controlChekerName: this.controlcheckername,
+                totalKmServed: null,
+                isDeleted: "false",
+                status: "ASSIGNED",
+                createdBy: "encoder",
+                modifiedBy: "Admin",
+                   equipment_USAGE:this.equipmentusage,
+                equipment_PERFORMANCE:this.equipmentperformance,
+                lgu: "Admin",
+                  operatorName: this.operatorname,
            
             }
             console.log("hello")
@@ -443,7 +457,7 @@ this.operators.push(e.type)
                    <b-form-select
                       v-model="operatorname"
                       :options="operators"
-                    
+                     @change="getoid()"
                     ></b-form-select>
                   </b-col>
                   <b-col>
@@ -460,6 +474,39 @@ this.operators.push(e.type)
                     
                     </b-col>
                 </b-row>
+                  <b-row>
+                    <!-- Default input text -->
+                    <b-col >
+                          <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Trip KMS</label>
+                    <input
+                      type="text"
+                      id="defaultFormCardtextEx"
+                      class="form-control"
+                      v-model="tripkms"
+                        placeholder="Enter Tripkms"
+                    
+                    />
+                    </b-col>
+                     <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >MMDA </label>
+                    <input
+                      type="text"
+                      id="defaultFormCardtextEx"
+                      class="form-control"
+                      v-model="mmda"
+                        placeholder="Enter MMDA"
+                    
+                    />
+                  
+                    
+                    </b-col>
+                  </b-row>
                 <br />
                <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
