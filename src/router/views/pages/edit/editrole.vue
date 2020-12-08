@@ -102,12 +102,9 @@ export default {
       console.log("destination",this.destination)
       this.planList = this.destination.map(function (x) {
         return {
-         id: x.id,
-        name: x.name,
-        isDeleted: x.isDeleted,
-        url: x.url,
-        status: x.status,
-        operation: x.operation,
+        
+        name: x.label,
+      
         }
       })
       // this.amount = 0;
@@ -119,12 +116,9 @@ export default {
     
       this.payloadData = this.planList.map(function (e) {
         return {
-           id: e.id,
+          
         name: e.name,
-        isDeleted: e.isDeleted,
-        url: e.url,
-        status: e.status,
-        operation: e.operation,
+        
         }
       })
         // console.log('destination', this.planList[0].label)
@@ -137,12 +131,9 @@ export default {
       // this.item = result.data.response.PermissionMaster
       this.source = result.data.response.PermissionMaster.map(function (x) {
           return {
-            id: x.id,
+          
             label:x.name,
-           isDeleted: x.isDeleted,
-        url: x.url,
-        status: x.status,
-        operation: x.operation,
+         
           }
         })
      

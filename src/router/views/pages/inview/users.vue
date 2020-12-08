@@ -35,7 +35,7 @@ export default {
       striped: false,
       bordered: true,
       filter: '',
-      perPage: 2,
+      perPage: 10,
       hover: true,
       currentPage: 1,
       small: false,
