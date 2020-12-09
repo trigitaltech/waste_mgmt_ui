@@ -511,6 +511,22 @@ const pagesRoutes = [
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
+    path: '/Servicerequestmmda',
+    name: 'Servicerequestmmda',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/servicerequest/mmdasr')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Servicerequestbilling',
+    name: 'Servicerequestbilling',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/servicerequest/billingsr')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
     path: '/Createattendance',
     name: 'Createattendance',
     icon: 'check-square',
