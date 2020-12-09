@@ -91,7 +91,8 @@ export default {
           key: 'actions',
           sortable: true,
         },
-      ]
+      ],
+      loginUserType:null
     }
   },
   computed: {
@@ -103,8 +104,10 @@ export default {
     },
   },
   created() {
-    this.voucherId = this.$route.params.id
-    console.log(this.voucherId)
+    var loginDetails = localStorage.getItem("auth.currentUser")
+    loginDetails = JSON.parse(loginDetails)
+    this.loginUserType = loginDetails.roles[0].code;
+    console.log(loginDetails)
     let query = this.$route.query.name
     if (query) {
       this.tabIndex = 1
@@ -149,7 +152,7 @@ export default {
 
 <template>
   <Layout>
-    <PageHeader :items="items" />
+    <PageHeader  />
    <div class="animated fadeIn">
       <b-card
         header="Incoming Trips"
@@ -157,7 +160,7 @@ export default {
       >
         <div class="mt-3">
           <div class="card mx-xl-5">
-            <div class="float-right">
+            <div class="float-right" v-show="loginUserType == 'ENCODER'">
                 <b-button
                   class="btn btn-custome float-right btn-secondary mt-3 mr-2"
                   text="Create Tenant"
@@ -181,7 +184,6 @@ export default {
             :small="small"
             :fixed="fixed"
             :fields="TripColumns"
-            :items="item"
             class="mt-3"
             ref="roles"
           >
@@ -205,7 +207,6 @@ export default {
             <b-pagination
               v-model="currentPage"
               :per-page="perPage"
-              :total-rows="Attendance"
               aria-controls="my-table"
               prev-text="Prev"
               next-text="Next"
