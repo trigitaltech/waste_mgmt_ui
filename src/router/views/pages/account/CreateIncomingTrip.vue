@@ -1,14 +1,16 @@
 <script>
+import Vue from 'vue'
 import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import NProgress from 'nprogress/nprogress'
 import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
-// import JsonExcel from 'vue-json-excel'
-// Vue.component('downloadExcel', JsonExcel)
+import { Datetime } from 'vue-datetime';
+import Multiselect from 'vue-multiselect'
+Vue.component('multiselect', Multiselect)
 import {
   // eslint-disable-next-line no-unused-vars
- Tripdownload,Areamasters,routemaster, CreateIncomingTrip,employees
+ Tripdownload,Areamasters,routemaster, CreateIncomingTrip,employees,vehicle
 } from '../../../../services/auth'
 
 export default {
@@ -31,30 +33,44 @@ export default {
       collector:null,
       lgu:"",
       plate:"",
+      plates:[],
       body:"",
       tripDate:"",
       trucktype:"",
-      tripdate:"",
       driverid:"",
       startTime:"",
-      owners:[],
+      drivers:[],
+      helpers:[],
+      vehicles:[],
       servingAreas:[],
       route:"",
       driver:"",
+      helper:null,
       servingRoutes:[],
       driverList:[],
+      hauler:"",
+      haulerList:[],
       contractorList:[],
-      collectorList:[],
-      lguList:[]
+      garbage:null,
+      lgu:null
     };
   },
-  components: { Layout, PageHeader,VueTimepicker  },
+  components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime, },
   mounted() {
     this.areas();
     this.routes();
     this.employeedata()
+    this.getvehicles()
   },
   methods:{
+    async getvehicles() {
+      const result = await vehicle()
+      this.vehicles = result.data.response.vehicles
+      this.vehicles.map(e => {
+        this.plates.push(e.plateNo)
+      })
+      console.log(this.plates)
+    },
      getroutes(){
         this.routedata.map(e=>{
           if(this.route === e.routeName){
@@ -78,23 +94,17 @@ export default {
                        }
         })
       },
-       async employeedata() {
-       try {
-      
-      const result = await employees()
-      this.emp = result.data.response.result
-    //   console.log("users",data[0].userName)
-      // JSON.parse(JSON.stringify(result))
-      // for(i=0;i<data.length;i++){
-      //   this.item[i]=data[i].userName
-      // }
-
-      this.emp.map(e=>{
-      this.owners.push(e.userName)
-      console.log("user",e)
-      })
-       console.log("users",this.item)
-     
+      async employeedata() {
+        try {
+          const result = await employees()
+          this.emp = result.data.response.result
+          console.log(this.emp)
+          this.emp.map(e=>{
+            if(e.type == "DRIVER")
+              this.drivers.push(e.userName)
+            if(e.type == "HELPER")
+              this.helpers.push(e.userName)
+          })
       } catch (error) {}
      },
     async areas() {
@@ -122,23 +132,55 @@ export default {
       } catch (error) {}
     },
     async create() {
-      try{
+      try{        
+        console.log(this.areaarray)
         let payload = {
             controlNo: this.controlno,
-            tripDate: this.tripdate,
+            tripDate: this.tripDate,
             bodyNo: this.body,
             plateNo: this.plate,
             truckType: this.trucktype,
             collectionStartTime: this.startTime,
-            servingArea: this.areaarray,
-            servingRoute: this.routearray,
+            "servingArea": {
+                "id": this.areaarray.id,
+                "areaName": this.areaarray.areaName,
+                "areaType": this.areaarray.areaType,
+                "supervisor": this.areaarray.supervisor,
+                "areaSqKm": this.areaarray.areaSqKm,
+                "isDeleted": true,
+                "createdDate": this.areaarray.createdDate,
+                "createdBy": this.areaarray.createdBy,
+                "modifiedDate": this.areaarray.modifiedDate,
+                "modifiedBy": this.areaarray.modifiedBy,
+                "state": this.areaarray.state,
+                "country": this.areaarray.country,
+                "description": this.areaarray.description,
+                "city": this.areaarray.city,
+                "zip": this.areaarray.zip
+            },
+            "servingRoute": {
+                "id": this.routearray.id,
+                "routeName": this.routearray.routeName,
+                "routeType": this.routearray.routeType,
+                "supervisor": this.routearray.supervisor,
+                "route_distance": this.routearray.route_distance,
+                "areaId": this.routearray.areaId,
+                "areaName": this.areaarray.areaName,
+                "isDeleted": false,
+                "createdDate": this.routearray.createdDate,
+                "createdBy": "",
+                "modifiedDate": this.routearray.modifiedDate,
+                "modifiedBy": "",
+                "description": this.routearray.description,
+                "city": this.routearray.city
+            },
             driverName: this.driver,
             driverId: this.driverid,
             guide: "guide",
             isDeleted: false,
             contractor_DISPATCHER_NAME: this.contractor,
             lgu: this.lgu
-            }
+        }
         console.log(payload);
         const result = await CreateIncomingTrip(payload);
         if (result) {
@@ -154,6 +196,13 @@ export default {
       catch(e) {
 
       }
+    },
+    getTruckType(){
+      this.vehicles.map( e => {
+        if(e.plateNo == this.plate)
+          this.trucktype = e.truckType
+      })
+      console.log(this.trucktype)
     },
     getAreaId() {
 
@@ -179,12 +228,10 @@ export default {
 
 <template>
   <Layout>
-    <PageHeader :title="title" :items="items" />
-    <div class="animated fadeIn">
+    <PageHeader :items="items" />
+    <div class="animated">
       <b-card
         header="Create Incoming Trip"
-       
-        header-text-variant="white"
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-1">
@@ -196,7 +243,7 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Serving Area</label
+                      >Baranggay</label
                     >
                     <b-form-select
                       v-model.trim="area"
@@ -207,21 +254,34 @@ export default {
                     </b-form-select>
                   </b-col>
                   <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >CONTROL NO</label
+                    >
+                    <input
+                      v-model="controlno"
+                      class="form-control"
+                      name="body"
+                    />
+                  </b-col>
+                </b-row>
+                <b-row class="mt-3">
                     <b-col>
                       <label
                         for="defaultFormCardtextEx"
                         class="grey-text font-weight-dark"
                         >Serving Route</label
                       >
-                      <b-form-select
-                        v-model.trim="route"
-                        class="form-control"        
+                      <multiselect
+                        v-model="route"
+                        :multiple="true"       
                         :options="servingRoutes"
-                        @change="getroutes" 
                       >
-                      </b-form-select>
+                      </multiselect>
                     </b-col>
                   </b-col>
+                  <b-col></b-col>
                 </b-row>
                 <b-row class="mt-3">
                   <b-col>
@@ -230,49 +290,51 @@ export default {
                       class="grey-text font-weight-dark"
                       >Trip Date</label
                     >
-                   <flat-pickr
-                      v-model="tripdate"
-                      class="form-control"
-                      placeholder="SELECT TRIP DATE"
-                      name="startdate"
-                    ></flat-pickr>
+                   <datetime 
+                      v-model="tripDate"
+                      :format="{
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric'
+                      }"
+                      type="date"
+                      placeholder="SELECT Date"
+                 ></datetime>
                   </b-col>
-                  <b-col class="ml-3 mt-4">
+                  <b-col class="ml-3">
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark mr-2"
                       >Trip Start Time</label
                     >
-                    <vue-timepicker format="hh:mm A" v-model="startTime"></vue-timepicker>
+                    <datetime 
+                      v-model="startTime"
+                      :format="{
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit'
+                      }"
+                      type="datetime"
+                      placeholder="SELECT Time"
+                 ></datetime>
                   </b-col>
                 </b-row>
                 <b-row class="mt-3">
                   <b-col>
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Plate</label
-                    >
-                    <input
-                      v-model="plate"
-                      class="form-control"
-                      name="plate"
-                    />
-                  </b-col>
-                  <b-col class="ml-4">
                      <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Truck Type</label
+                      >Hauler</label
                     >
-                   <input
-                      v-model="trucktype"
-                      class="form-control"
-                      name="trucktype"
-                    />
+                   <b-form-select
+                      v-model="hauler"
+                      class="form-control"        
+                      :options="haulerList"
+                    >
+                    </b-form-select>
                   </b-col>
-                </b-row>
-                <b-row class="mt-3">
                   <b-col>
                     <label
                       for="defaultFormCardNameEx"
@@ -285,21 +347,35 @@ export default {
                       name="body"
                     />
                   </b-col>
-                   <b-col>
+                </b-row>
+                <b-row class="mt-3">
+                  <b-col>
                     <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Plate No</label
+                    >
+                     <b-form-select
+                      v-model="plate"
+                      :options="plates"
+                      class="form-control"
+                      @change="getTruckType"
+                    >
+                    </b-form-select>
+                  </b-col>
+                  <b-col class="ml-4">
+                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >CONTROL NO</label
+                      >Truck Type</label
                     >
-                    <input
-                      v-model="controlno"
+                   <input
+                      v-model="trucktype"
                       class="form-control"
-                      name="body"
+                      name="trucktype"
+                      readonly
                     />
                   </b-col>
-                 
-                     
-                 
                 </b-row>
                 <b-row class="mt-3">
                   <b-col>
@@ -311,26 +387,23 @@ export default {
                      <b-form-select
                       v-model.trim="driver"
                       class="form-control"        
-                      :options="owners"
+                      :options="drivers"
                       @change="getid" 
                     >
                     </b-form-select>
                   </b-col>
                   <b-col>
-                    <b-col>
                       <label
                         for="defaultFormCardtextEx"
                         class="grey-text font-weight-dark"
-                        >Contractor</label
+                        >LGU</label
                       >
-                       <b-form-select
-                      v-model.trim="contractor"
+                      <b-form-select
+                      v-model="hauler"
                       class="form-control"        
-                      :options="owners"
-                     
+                      :options="haulerList"
                     >
                     </b-form-select>
-                    </b-col>
                   </b-col>
                 </b-row>
                 <b-row class="mt-3">
@@ -338,27 +411,28 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Garbage Collectors</label
+                      >Helper</label
                     >
-                      <input
-                      v-model="garbage"
-                      class="form-control"
-                      name="body"
-                    />
+                     <b-form-select
+                      v-model.trim="helper"
+                      class="form-control"        
+                      :options="helpers"
+                      @change="getid" 
+                    >
+                    </b-form-select>
                   </b-col>
                   <b-col>
-                    <b-col>
-                      <label
-                        for="defaultFormCardtextEx"
-                        class="grey-text font-weight-dark"
-                        >LGU</label
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Garbage Collectors</label
+                    >
+                    <multiselect
+                        v-model="route"
+                        :multiple="true"       
+                        :options="servingRoutes"
                       >
-                       <input
-                      v-model="lgu"
-                      class="form-control"
-                      name="body"
-                    />
-                    </b-col>
+                    </multiselect>
                   </b-col>
                 </b-row>
                 <button
@@ -372,6 +446,8 @@ export default {
     </div>
   </Layout>
 </template>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="scss" scoped media="print">
 .cardheader.title{
   color:black
