@@ -102,7 +102,9 @@ export default {
     async create() {
       try {
         const payload = {
-            dumpingAreaName: this.dumpname,
+           dumpingAreaName: {
+        areaName: this.dumpname
+    },
             dumpingType: this.dumptype,
              supervisor: this.supervisor,
                 working_hrs:this.workinghours,

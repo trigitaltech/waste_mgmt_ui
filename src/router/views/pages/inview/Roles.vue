@@ -42,7 +42,7 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-       item: {},
+       item: [],
       permissionColumns: [
          {
           key: 'id',
@@ -54,11 +54,7 @@ export default {
           label: 'NAME',
           sortable: true,
         },
-         {
-          key: 'permissions.name',
-          label: 'permissions',
-          sortable: true,
-        },
+         
          {
           key: 'createdBy',
           label: 'createdBy',

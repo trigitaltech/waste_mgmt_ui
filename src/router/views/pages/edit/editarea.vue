@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- Edituser,users
+ editarea,users
 } from '../../../../services/auth'
 
 export default {
@@ -103,7 +103,7 @@ this.userdata()
         
 
         }
-        let result = await Edituser(payload)
+        let result = await editarea(payload)
         if (result) {
           this.$swal({
             group: 'alert',

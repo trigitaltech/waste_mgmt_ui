@@ -110,7 +110,7 @@ export default {
           href: '/',
         },
         {
-          text: 'Equipment',
+          text: 'Hauler / Equipment',
           active: true,
         },
       ],

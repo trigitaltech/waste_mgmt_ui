@@ -88,7 +88,7 @@ export default {
           href: '/',
         },
         {
-          text: 'Vehicles',
+          text: 'Hauler / Vehicles',
           active: true,
         },
       ],

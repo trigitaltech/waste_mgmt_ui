@@ -210,10 +210,10 @@ export default {
                 </b-col> -->
                 </b-row>
                
-                <v-button
+                <b-button
                           type="submit"
                          class="btn btn-custome float-right btn-secondary mb-3"
-                          >Submit</v-button
+                          >Submit</b-button
                         >
               </form>
               <!-- Default form subscription -->

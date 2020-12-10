@@ -28,6 +28,32 @@ export default {
   data() {
     return {
       plandata: '',
+       item:this.$route.params.permissions,
+      permissionColumns: [
+         {
+          key: 'id',
+          label: 'Id',
+          sortable: true,
+        },
+        {
+          key: 'name',
+          label: 'NAME',
+          sortable: true,
+        },
+         
+         {
+          key: 'operation',
+          label: 'Operation',
+          sortable: true,
+        },
+         {
+          key: 'url',
+          label: 'Url',
+          sortable: true,
+        },
+        
+      ],
+     
       striped: false,
       bordered: true,
       filter: '',
@@ -70,6 +96,9 @@ export default {
 
   },
   computed: {
+     rows(){
+     return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -172,6 +201,50 @@ export default {
               <!-- Default form subscription -->
         </div>
       </b-card>
+       <div class="animated fadeIn" v-if="this.$route.params.permissions.length > 0">
+      <b-row >
+      <b-col md="12">
+          <b-card
+            class="card-wrap"
+            header="View Permissions"
+          >
+           
+           <div class="mt-3">
+          <b-table
+            id="my-table"
+            :dark="dark"
+            :hover="hover"
+            :striped="striped"
+            ref="roles"
+            :bordered="bordered"
+            :filter="filter"
+            :responsive="true"
+            :current-page="currentPage"
+            :per-page="perPage"
+            :small="small"
+            :fixed="fixed"
+            :fields="permissionColumns"
+            :items="item"
+            class="mt-3"
+         
+          >    </b-table>
+
+        
+          <div style="float: right">
+            <b-pagination
+              v-model="currentPage"
+              :per-page="perPage"
+              :total-rows="rows"
+              aria-controls="my-table"
+              hide-goto-end-buttons
+            ></b-pagination>
+          </div>
+        </div>
+        
+          </b-card>
+      </b-col>
+      </b-row>
+                 </div>
     </div>
     <!-- end row -->
   </Layout>
