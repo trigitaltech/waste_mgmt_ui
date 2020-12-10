@@ -5,18 +5,17 @@ import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
 import NProgress from 'nprogress/nprogress'
-import moment from 'moment'
 import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- users,deleteuser
+ employees,deleteemployee
 } from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Users',
+    title: 'Employees',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -29,8 +28,6 @@ export default {
   },
   data() {
     return {
-        filter: '',
-      filterOn: [],
       plandata: '',
       striped: false,
       bordered: true,
@@ -44,50 +41,52 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-      item: { },
-
+       item: {},
+        
+        
       permissionColumns: [
         {
-          key: 'id',
+          key: 'personal_ID_NO',
 
-          label: 'ID',
+          label: 'Personal ID NO',
         },
-        {
+         {
           key: 'userName',
           label: 'userName',
         },
          {
-          key: 'firstName',
-          label: 'firstName',
+          key: 'phone',
+
+          label: 'phone',
         },
          {
           key: 'email',
+
           label: 'email',
         },
         {
-          key: 'phone',
-          label: 'Phone',
-        },
-         {
-          key: 'addressLine1',
-          label: 'addressLine1',
+          key: 'area',
+
+          label: 'Area',
         },
          {
           key: 'city',
-          label: 'city',
+
+          label: 'City',
         },
          {
           key: 'state',
-          label: 'state',
+
+          label: 'State',
         },
+        
          {
           key: 'country',
-          label: 'country',
+
+          label: 'Country',
         },
-          {
-          key: 'createdDate',
-          label: 'createdDate',
-        },
+         
+       
 
         {
           key: 'actions',
@@ -100,16 +99,10 @@ export default {
           href: '/',
         },
         {
-          text: 'Users',
+          text: 'Hauler / Employees',
           active: true,
         },
       ],
-      finalModel: {},
-      selected: null,
-      clientId: '',
-      options: ['DAF'],
-      item: {},
-      
     }
   },
   computed: {
@@ -121,29 +114,21 @@ export default {
     },
   },
   mounted() {
-  this.userdata()
+  
+    this.getemployees()
   },
   methods: {
-      getDate(timeStamp) {
-    // debugger
-      //  console.log(timeStamp)
-      let date
-      // if (timeStamp !== undefined){
-        // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
-    return moment(timeStamp).format('DD/MM/YYYY')
-      // }
-    },
     async deleteReq(data) {
        console.log("data",data.item.id)
        var id = data.item.id
      try{
           
-        const result = await deleteuser(data.item.id)
+        const result = await deleteemployee(data.item.id)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You Deleted User Successfully`,
+            text: `You Deleted Employee Successfully`,
             duration: 5000,
           })
          this.refresh()
@@ -155,14 +140,16 @@ export default {
       }
      
     },
-     async userdata() {
+    async getemployees() {
        try {
         NProgress.start()
-      const result = await users()
-      this.item = result.data.response.Users
+      const result = await  employees()
+      this.item = result.data.response.result
        NProgress.done()
       } catch (error) {}
-     },
+   
+    },
+    
     async refresh() {
       setTimeout(function () {
         location.reload()
@@ -178,29 +165,18 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="Users"
-        class="mt-10 ml-10 mr-10 mx-auto"
+       
+        header="Hauler Employees"
+
+          class="mt-10 ml-10 mr-10 mx-auto"
       >
-      <b-row>
-        <b-col md="3">
-           
-                    <b-form-input
-                      v-model="filter"
-                      type="search"
-                      placeholder="Search..."
-                      class="form-control ml-2"
-                    ></b-form-input>
-           
-        </b-col>
-        <b-col md="9">
-          <b-button
+         <b-col md="12">
+          <!-- <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({ name: 'CreateUser' })" 
-            >Create User</b-button
-          >
+            @click="$router.push({ path: '/Createemployee' })"
+          >Create Employee</b-button> -->
         </b-col>
-      </b-row>
         <div class="mt-3">
           <b-table
             id="my-table"
@@ -218,20 +194,14 @@ export default {
             :fields="permissionColumns"
             :items="item"
             class="mt-3"
-             
-                :filter-included-fields="filterOn"
-                @filtered="onFiltered"
-          > <template v-slot:cell(createdDate)="data">
-                            <div class="table-row">{{ getDate(data.item.createdDate) }}</div>
-                        </template>
-              <template v-slot:cell(actions)="data">
-                
-             <router-link :to="{ name: 'Viewuser', params: data.item }">
+          >
+            <template v-slot:cell(actions)="data">
+             <router-link :to="{ name: 'Viewemployee', params: data.item }">
                 <span class="mr-2" >
                  <i class="fa fa-eye edit"></i>
                 </span>
               </router-link>
-             <router-link :to="{ name: 'Edituser', params: data.item }">
+             <router-link :to="{ name: 'Editemployee', params: data.item }">
                 <span class="mr-2">
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>
@@ -239,7 +209,7 @@ export default {
             <span @click="deleteReq(data)">
               <i class="fa fa-times edit"></i>
             </span>
-           </template>
+            </template>
           </b-table>
           <div style="float: right">
             <b-pagination
@@ -256,7 +226,13 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
+<style scoped>
+.table thead th {
+    outline: none !important;
+    color: black;
+}
 
+</style>
 <style lang="sass" scoped>
 .edit
   color: #a7a7a7 !important
@@ -270,11 +246,4 @@ export default {
   box-shadow: 0 0 10px #ccc
   .role-details
     margin: 10px
-</style>
-<style scoped>
-.table thead th {
-    outline: none !important;
-    color: black;
-}
-
 </style>

@@ -104,14 +104,16 @@ export default {
       try {
         const payload = {
            id: this.$route.params.id,
-            dumpingAreaName: this.dumpname,
+           dumpingAreaName: {
+        areaName: this.dumpname
+    },
             dumpingType: this.dumptype,
              supervisor: this.supervisor,
                 working_hrs:this.workinghours,
                 geoLat: this.geoLat,
                 geoLong: this.geoLong,
-            "isDeleted": true,
-            "status": 404,
+            "isDeleted": false,
+           
              createdDate: this.createddate,
           createdBy: this.createdby,
           modifiedDate: this.modifydate,

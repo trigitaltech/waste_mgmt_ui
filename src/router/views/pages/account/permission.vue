@@ -44,7 +44,7 @@ export default {
       submitted: false,
       header:"",
       title: 'Register',
-      item: { },
+      item: [],
 
       permissionColumns: [
         {
@@ -97,7 +97,7 @@ export default {
       selected: null,
       clientId: '',
       options: ['DAF'],
-       item: {},
+       item: [],
     
     }
   },
