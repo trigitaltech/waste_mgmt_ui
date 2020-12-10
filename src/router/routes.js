@@ -437,7 +437,7 @@ const inviewRoutes = [
         path: 'OutgoingTrips',
         name: 'Outgoing Trips',
         icon: 'check-square',
-        component: () => lazyLoadView(import('@views/pages/inview/Tripoutgoingdetails.vue')),
+        component: () => lazyLoadView(import('@views/pages/inview/Outgoingtrip.vue')),
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       }
@@ -619,6 +619,14 @@ const pagesRoutes = [
     name: 'CreateIncomingTrip',
     icon: 'check-square',
     component: () => lazyLoadView(import('@views/pages/account/CreateIncomingTrip')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/CreateOutgoingTrip',
+    name: 'CreateOutgoingTrip',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/CreateOutgoingTrip')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },

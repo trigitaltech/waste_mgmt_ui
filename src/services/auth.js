@@ -36,6 +36,8 @@ export const equipment = () => serviceMaker(`/equipment/admin/encoders/owner`, m
 
 export const vehicle = () => serviceMaker(`/vehicles/admin/encoders/owner `, methods.GET, api.NGB)
 
+export const vehicleTypes = () => serviceMaker(`/vehicles/vehicletypes`, methods.GET,api.NGB)
+
 export const simpleactivation = (payload) => serviceMaker(`/auth/signup`, methods.POST, api.NGB, payload)
 
 export const reviewAttendance = (payload) => serviceMaker('/attendence/checker/admin/review',methods.POST,api.NGB,payload)

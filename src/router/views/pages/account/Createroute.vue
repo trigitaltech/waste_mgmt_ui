@@ -131,8 +131,7 @@ export default {
             route_distance:this.routedistance,
             areaId:this.areaid,
             areaName: this.areaname,
-            "isDeleted": false,
-        
+            isDeleted: false,
             description:this.description,
             city:this.city
         }
@@ -149,9 +148,9 @@ export default {
             
         }
       } catch (e) {
-        this.$toasted.error(e.message.errors[0].developerMessage, {
+        /*this.$toasted.error(e.message.errors[0].developerMessage, {
           duration: 7000,
-        })
+        })*/
       }
     },
  
