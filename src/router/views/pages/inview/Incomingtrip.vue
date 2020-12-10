@@ -160,7 +160,7 @@ export default {
       >
         <div class="mt-3">
           <div class="card mx-xl-5">
-            <div class="float-right" v-show="loginUserType == 'ENCODER'">
+            <div class="float-right">
                 <b-button
                   class="btn btn-custome float-right btn-secondary mt-3 mr-2"
                   text="Create Tenant"

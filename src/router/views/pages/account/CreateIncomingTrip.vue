@@ -281,7 +281,18 @@ export default {
                       </multiselect>
                     </b-col>
                   </b-col>
-                  <b-col></b-col>
+                  <b-col>
+                      <label
+                        for="defaultFormCardtextEx"
+                        class="grey-text font-weight-dark"
+                        >LGU</label
+                      >
+                      <input
+                       class="form-control"
+                       v-model="lgu"
+                       readonly
+                      />
+                  </b-col>
                 </b-row>
                 <b-row class="mt-3">
                   <b-col>
@@ -392,19 +403,7 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
-                  <b-col>
-                      <label
-                        for="defaultFormCardtextEx"
-                        class="grey-text font-weight-dark"
-                        >LGU</label
-                      >
-                      <b-form-select
-                      v-model="hauler"
-                      class="form-control"        
-                      :options="haulerList"
-                    >
-                    </b-form-select>
-                  </b-col>
+                  <b-col></b-col>
                 </b-row>
                 <b-row class="mt-3">
                   <b-col>
