@@ -224,7 +224,7 @@ export default {
                     <div class="media-body">
                       <span
                         class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
-                        >SALES</span
+                        >TRIPS INCOMING</span
                       >
                       <h2 class="mb-0 text-dark-blue">2000$</h2>
                     </div>
@@ -264,7 +264,7 @@ export default {
                       <div class="media-body">
                         <span
                           class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
-                          >SUBSCRIPTIONS</span
+                          >TRIP OUTGOING</span
                         >
                         <h2 class="mb-0 text-dark-blue">200</h2>
                       </div>
@@ -305,7 +305,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
                     <div class="media-body">
                       <span
                         class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
-                        >TRAFFIC</span
+                        >STAFF ATTENDANCE</span
                       >
                       <h2 class="mb-0 text-dark-blue">20000</h2>
                     </div>
@@ -342,7 +342,7 @@ background-image: linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%);
                     <div class="media-body">
                       <span
                         class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
-                        >ORGANIC TRAFFIC</span
+                        >FUEL CONSUMED</span
                       >
                       <h2 class="mb-0 text-dark-blue">2000</h2>
                     </div>

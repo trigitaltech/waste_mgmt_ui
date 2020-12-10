@@ -419,7 +419,11 @@ this.operators.push(e.type)
                     
                     />
                   </b-col>
-                     <b-col >
+                  
+                </b-row>
+             <b-row>
+                    <!-- Default input text -->
+                    <b-col v-if="this.requesttype === 'EQUIPMENT'">
                           <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -433,10 +437,6 @@ this.operators.push(e.type)
                     
                     />
                     </b-col>
-                </b-row>
-             <b-row>
-                    <!-- Default input text -->
-                 
                     <b-col>
                    
                   
@@ -470,7 +470,6 @@ this.operators.push(e.type)
                     
                     </b-col>
                 </b-row>
-                
                 <br />
                 <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
