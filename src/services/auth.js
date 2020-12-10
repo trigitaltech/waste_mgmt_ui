@@ -10,6 +10,12 @@ export const dumpinglocation = () => serviceMaker(`/dumpinglocation/all`, method
 
 export const Attendance = () => serviceMaker(`/attendence/employee/admin/`, methods.GET, api.NGB)
 
+export const classmaster = () => serviceMaker(`/trips/class/all`, methods.GET, api.NGB)
+
+export const days = () => serviceMaker(`/trips/days/all`, methods.GET, api.NGB)
+
+export const type = () => serviceMaker(`/trips/type/all`, methods.GET, api.NGB)
+
 export const stagingarea = () => serviceMaker(`/stagingarea/all`, methods.GET, api.NGB)
 
 export const address = () => serviceMaker(`/location/addressmaster`, methods.GET, api.NGB)
@@ -68,7 +74,7 @@ export const deleterole = (id) => serviceMaker(`/roles/admin/${id}`, methods.DEL
 
 export const createpermission = (payload) => serviceMaker(`/permissions/admin`, methods.POST, api.NGB, payload)
 
-export const createroute = (payload) => serviceMaker(`/routemaster/admin`, methods.POST, api.NGB, payload)
+export const createroute = (payload) => serviceMaker(`/routemaster/admin/create`, methods.POST, api.NGB, payload)
 
 export const createstaging = (payload) => serviceMaker(`/stagingarea/admin`, methods.POST, api.NGB, payload)
 

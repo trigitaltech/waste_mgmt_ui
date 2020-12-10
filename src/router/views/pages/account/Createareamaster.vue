@@ -25,6 +25,7 @@ export default {
   },
   data() {
     return {
+      districtcode:"",
         cityOpt: [],
       description: '',
       supervisor: null,
@@ -32,7 +33,7 @@ export default {
       areaname: '',
       areaid: '',
       areasqkm: '',
-      country: '',
+      countrys: '',
       state: '',
       zip: '',
       classtype: '',
@@ -95,6 +96,16 @@ export default {
     this.getaddresss()
   },
   methods: {
+   async getcity(){
+// console.log('ahahahahha')
+this.addres.map(e=>{
+  if(this.district === e.districtName){
+    this.districtcode = e.districtCode
+    this.state = e.stateCode.stateName
+    this.countrys = e.stateCode.countryCode.countryName
+  }
+})
+    },
      async getaddresss() {
        try {
       
@@ -112,20 +123,20 @@ export default {
     async create() {
       try {
         const payload = {
-          code: '2222',
-          areaName: 'f Deveent Bank',
-          areaType: 'Urban',
-          classType: 'MAINROAD',
-          dayType: 'SUNDAY',
-          supervisor: '1234567890',
-          areaSqKm: 3,
+          code:this.code,
+          areaName: this.areaname,
+          areaType: this.areatype,
+          classType: this.classtype,
+          dayType:"",
+          supervisor: this.supervisor,
+          areaSqKm: this.areasqkm,
           isDeleted: false,
-          state: 'Metro Manila',
-          country: 'Philippines',
-          description: 'Asian Development Bank',
-          city: 'San Juan',
-          zip: '410',
-          districtCode: 'AP',
+          state: this.state,
+          country: this.countrys,
+          description: this.description,
+          city: "",
+          zip:this.zip,
+          districtCode: this.districtcode,
         }
         let result = await createarea(payload)
         if (result) {
@@ -217,24 +228,7 @@ export default {
                 <!-- Default input text -->
               </b-col>
 
-              <b-col>
-                <label
-                  for="defaultFormCardNameEx"
-                  class="grey-text font-weight-dark"
-                  >Area Type</label
-                >
-                <b-form-select
-                  v-model="areatype"
-                  :options="option"
-                  oninvalid="this.setCustomValidity('Area Type is required ')"
-                  oninput="setCustomValidity('')"
-                  placeholder="Select Area Type"
-                  class="form-control"
-                  required
-                ></b-form-select>
-
-                <!-- Default input name -->
-              </b-col>
+              
 
               <br />
             </b-row>
@@ -258,18 +252,18 @@ export default {
 
                 <!-- Default input name -->
               </b-col>
-              <b-col>
+            <b-col>
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
-                  >Day Type</label
+                  >Area Type</label
                 >
                 <b-form-select
-                  v-model="daytype"
-                  :options="days"
+                  v-model="areatype"
+                  :options="option"
                   oninvalid="this.setCustomValidity('Area Type is required ')"
                   oninput="setCustomValidity('')"
-                  placeholder="Select Day Type"
+                  placeholder="Select Area Type"
                   class="form-control"
                   required
                 ></b-form-select>
@@ -345,6 +339,7 @@ export default {
                   v-model.trim="district"
                    placeholder="Select distict"
                    :options="distopt"
+                   @input ="getcity"
                    ></multiselect>
               </b-col>
             </b-row>
@@ -364,6 +359,7 @@ export default {
                   type="text"
                   class="form-control"
                   placeholder="Enter state"
+                  disabled
                 />
                 <br />
               </b-col>
@@ -379,8 +375,9 @@ export default {
                   >Country</label
                 >
                 <input
+                disabled
                   id="defaultFormCardtextEx"
-                  v-model="country"
+                  v-model="countrys"
                   placeholder="Enter country"
                   type="text"
                   class="form-control"
