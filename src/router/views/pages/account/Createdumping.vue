@@ -47,9 +47,9 @@ export default {
       modifydate: new Date(),
       modifyby:"",
        option: [
-        { value: null, text: 'Please select an option' },
+        
         { value: 'solidwaste', text: 'Solidwaste' },
-        { value: 'organicewaste', text: 'Organicwaste)' },
+        { value: 'organicewaste', text: 'Organicwaste' },
       ],
       title: 'Register',
      item:[{ value: null, text: 'Please select an user' }],
@@ -102,9 +102,9 @@ export default {
     async create() {
       try {
         const payload = {
-           dumpingAreaName: {
-        areaName: this.dumpname
-    },
+         
+        dumpingAreaName: this.dumpname,
+  
             dumpingType: this.dumptype,
              supervisor: this.supervisor,
                 working_hrs:this.workinghours,
@@ -233,21 +233,7 @@ export default {
                                 required
                     />
                   </b-col>
-                  <b-col>
-                    <!-- Default input name -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >State</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="state"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter state"
-                    />
-                  </b-col>
+                 
                 </b-row>
                   <b-row class="mb-3">
                     <b-col>
@@ -293,28 +279,43 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >City</label
+                      >District</label
                     >
                     <input
                       id="defaultFormCardtextEx"
-                      v-model="city"
+                      v-model="district"
                       type="text"
                       class="form-control"
-                      placeholder="Enter city"
+                      placeholder="Enter district"
                     />
                   </b-col>
-                  <b-col>
+                  <b-col> 
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Country</label
                     >
-                    <input
+                     <input
                       id="defaultFormCardtextEx"
                       v-model="country"
                       type="text"
                       class="form-control"
                       placeholder="Enter country"
+                    />
+                  </b-col>
+                   <b-col>
+                    <!-- Default input name -->
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >State</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="state"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter state"
                     />
                   </b-col>
                 </b-row>

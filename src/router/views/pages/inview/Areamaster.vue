@@ -41,7 +41,7 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-      item: {},
+      item: [],
 
       AreamasterColumns: [
         {
@@ -49,7 +49,11 @@ export default {
           label: 'ID',
           sortable: true
         },
-       
+        {
+          key: 'code',
+          label: 'Code',
+          sortable: true
+        },
          {
           key: 'description',
           label: 'Description',
@@ -58,13 +62,24 @@ export default {
         
          {
           key: 'areaName',
-          label: 'Area Name',
+          label: 'AreaName',
           sortable: true
         },
+         {
+          key: 'areaSqKm',
+          label: 'AreaSqKm',
+          sortable: true
+        },
+         {
+          key: 'classType',
+          label: 'ClassType',
+          sortable: true
+        },
+       
 
-        {
-          key: 'city',
-          label: 'City',
+         {
+          key: 'districtId[0].districtName',
+          label: 'DistrictName',
           sortable: true
         },
          {
@@ -72,14 +87,19 @@ export default {
           label: 'State',
           sortable: true
         },
+          {
+          key: 'country',
+          label: 'Country',
+          sortable: true
+        },
          {
           key: 'createdDate',
-          label: 'Created Date',
+          label: 'CreatedDate',
           sortable: true
         },
          {
           key: 'createdBy',
-          label: 'Created By',
+          label: 'CreatedBy',
           sortable: true
         },
         {
