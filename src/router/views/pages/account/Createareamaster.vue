@@ -8,9 +8,7 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import {
- createarea,users
-} from '../../../../services/auth'
+import { createarea, users ,address} from '../../../../services/auth'
 
 export default {
   page: {
@@ -27,29 +25,48 @@ export default {
   },
   data() {
     return {
-       description:"",
-      supervisor:null,
-      city:"",
-    areaname:"",
-    areaid:"",
-    areasqkm:"",
-    country:"",
-    state:"",
-    zip:"",
-      message:"",
-      areatype:null,
-      createdby: "",
+        cityOpt: [],
+      description: '',
+      supervisor: null,
+      city: '',
+      areaname: '',
+      areaid: '',
+      areasqkm: '',
+      country: '',
+      state: '',
+      zip: '',
+      classtype: '',
+      daytype: '',
+      message: '',
+      areatype: null,
+      createdby: '',
       createddate: new Date(),
       modifydate: new Date(),
-      modifyby:"",
-      item:[ { value: null, text: 'Please select an user' }],
-      ite:[],
-       option: [
+      modifyby: '',
+      code: '',
+      district:"",
+      item: [{ value: null, text: 'Please select an user' }],
+      ite: [],
+      option: [
         { value: null, text: 'Please select an option' },
         { value: 'urban', text: 'Urban' },
         { value: 'rural', text: 'Rural' },
-        
       ],
+      classes: [
+        { value: 'MAINROAD', text: 'MAINROAD' },
+        { value: 'SPECIAL TRIP', text: 'SPECIAL TRIP' },
+        { value: 'BARANGGAY', text: 'BARANGGAY' },
+      ],
+      days: [
+        { value: 'SUNDAY', text: 'SUNDAY' },
+        { value: 'MONDAY', text: 'MONDAY' },
+        { value: 'TUESDAY', text: 'TUESDAY' },
+        { value: 'WEDNESDAY', text: 'WEDNESDAY' },
+        { value: 'THURSDAY', text: 'THURSDAY' },
+        { value: 'FRIDAY', text: 'FRIDAY' },
+        { value: 'SATURDAY', text: 'SATURDAY' },
+      ],
+      distopt:[],
       items: [
         {
           text: 'Setup',
@@ -60,8 +77,7 @@ export default {
           active: true,
         },
       ],
-   
-    
+      addres:[],
     }
   },
   computed: {
@@ -70,34 +86,46 @@ export default {
     },
   },
   mounted() {
-     this.createdby = this.getUserDetails.user.username
+    this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     // this.getClientDetails()
     // this.getplans()
-this.userdata() 
-
+    console.log("hiiiii",this.distopt)
+    this.userdata()
+    this.getaddresss()
   },
   methods: {
+     async getaddresss() {
+       try {
+      
+      const result = await  address()
+      this.addres = result.data.response.result
+      console.log("address",this.addres)
+    this.addres.map(e=>{
+      // debugger
+      this.distopt.push(e.districtName)
+    })
+      
+      } catch (error) {}
+   
+    },
     async create() {
       try {
-        const payload =  {
-          
-            areaName : this.areaname,
-            areaType: this.areatype,
-            supervisor: this.supervisor,
-            areaSqKm:this.areasqkm,
-            isDeleted: true,
-           createdDate: this.createddate,
-          createdBy: this.createdby,
-          modifiedDate: this.modifydate,
-          modifiedBy: this.modifyby,
-            state: this.state,
-            country: this.country,
-            description: this.description,
-            city: this.city,
-            zip: this.zip
-        
-
+        const payload = {
+          code: '2222',
+          areaName: 'f Deveent Bank',
+          areaType: 'Urban',
+          classType: 'MAINROAD',
+          dayType: 'SUNDAY',
+          supervisor: '1234567890',
+          areaSqKm: 3,
+          isDeleted: false,
+          state: 'Metro Manila',
+          country: 'Philippines',
+          description: 'Asian Development Bank',
+          city: 'San Juan',
+          zip: '410',
+          districtCode: 'AP',
         }
         let result = await createarea(payload)
         if (result) {
@@ -107,9 +135,8 @@ this.userdata()
             text: `You Created Area Successfully`,
             duration: 5000,
           })
-         
-           this.$router.push({path:'/Setup/AreaMaster'})
-            
+
+          this.$router.push({ path: '/Setup/AreaMaster' })
         }
       } catch (e) {
         this.$toasted.error(e.message.errors[0].developerMessage, {
@@ -117,25 +144,23 @@ this.userdata()
         })
       }
     },
-  async userdata() {
-       try {
-      
-      const result = await users()
-      var data = result.data.response.Users
-      console.log("users",data[0].userName)
-      // JSON.parse(JSON.stringify(result))
-      // for(i=0;i<data.length;i++){
-      //   this.item[i]=data[i].userName
-      // }
+    async userdata() {
+      try {
+        const result = await users()
+        var data = result.data.response.Users
+        console.log('users', data[0].userName)
+        // JSON.parse(JSON.stringify(result))
+        // for(i=0;i<data.length;i++){
+        //   this.item[i]=data[i].userName
+        // }
 
-      data.map(e=>{
-      this.item.push(e.userName)
-      console.log("user",e)
-      })
-       console.log("users",this.item)
-     
+        data.map((e) => {
+          this.item.push(e.userName)
+          console.log('user', e)
+        })
+        console.log('users', this.item)
       } catch (error) {}
-     },
+    },
     async refresh() {
       setTimeout(function () {
         location.reload()
@@ -150,208 +175,240 @@ this.userdata()
     <PageHeader :items="items" />
 
     <div class="animated fadeIn">
-      <b-card
-        header="Create Area"
-        class="mt-10 ml-10 mr-10 mx-auto"
-      >
+      <b-card header="Create Area" class="mt-10 ml-10 mr-10 mx-auto">
         <div class="mt-3">
-              <!-- Default form subscription -->
-             <form @submit.prevent="create">
-                <b-row>
-                  <b-col>
-                    <!-- Default input name -->
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                    >
-                     Area Name</label
-                    >
-                    <input
-                      v-model="areaname"
-                    
-                      type="text"
-                       oninvalid="this.setCustomValidity('Area Name is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Enter Area Name"
-                                class="form-control"
-                                required
-                    />
+          <!-- Default form subscription -->
+          <form @submit.prevent="create">
+            <b-row>
+              <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Code</label
+                >
+                <input
+                  v-model="code"
+                  type="text"
+                  oninvalid="this.setCustomValidity('Code is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Enter Code"
+                  class="form-control"
+                  required
+                />
+              </b-col>
+              <b-col>
+                <!-- Default input name -->
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Area Name</label
+                >
+                <input
+                  v-model="areaname"
+                  type="text"
+                  oninvalid="this.setCustomValidity('Area Name is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Enter Area Name"
+                  class="form-control"
+                  required
+                />
 
-                
+                <!-- Default input text -->
+              </b-col>
 
-                  
-                    <!-- Default input text -->
-                  </b-col>
-                  
-                  <b-col>
-                     <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Area Type</label
-                    >
-                    <b-form-select
-                      v-model="areatype"
-                      :options="option"
-                      oninvalid="this.setCustomValidity('Area Type is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Select Area Type"
-                                class="form-control"
-                                required
-                    ></b-form-select>
-
-                    <!-- Default input name -->
-                  
-                  </b-col>
-              
-                  <br />
-                
-                
-                  
-               
-                </b-row>
-                 <br/>
-                  <b-row>
-                    
-                      <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Supervisor</label
-                    >
-
-                   <b-form-select
-                  v-model.trim="supervisor"
-                 oninvalid="this.setCustomValidity('Supervisor is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Select Supervisor"
-                                class="form-control"
-                                required
-                  :options="item"
-                  
+              <b-col>
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                  >Area Type</label
+                >
+                <b-form-select
+                  v-model="areatype"
+                  :options="option"
+                  oninvalid="this.setCustomValidity('Area Type is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Select Area Type"
+                  class="form-control"
+                  required
                 ></b-form-select>
-                  </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Area SqKm</label
-                    >
-                    <input
-                      v-model="areasqkm"
-                    
-                      type="text"
-                       oninvalid="this.setCustomValidity('Area Sqkm is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Enter Area Sqkm"
-                                class="form-control"
-                                required
-                    />
-                  </b-col>
-                  </b-row>
-                <br/>
-                <b-row>
-                 <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Description</label
-                    >
-                    <input
-                      v-model="description"
-                     
-                      type="text"
-                       oninvalid="this.setCustomValidity('Description is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Enter Description"
-                                class="form-control"
-                                required
-                    />
-                  </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >City</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="city"
-                      type="text"
-                      class="form-control"
-                         placeholder="Enter city"
-                    />
-                  </b-col>
-                </b-row>
-                 <br/>
 
-  <b-row>
-                  
-                  
-                   <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >State</label
-                    >
-                    <input
-                   
-                      id="defaultFormCardtextEx"
-                      v-model="state"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter state"
-                    />
- <br/>
-                
-                  </b-col>
+                <!-- Default input name -->
+              </b-col>
 
-                  <br/>
+              <br />
+            </b-row>
+            <br />
+            <b-row>
+              <b-col>
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                  >Class Type</label
+                >
+                <b-form-select
+                  v-model="classtype"
+                  :options="classes"
+                  oninvalid="this.setCustomValidity('Area Type is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Select Class Type"
+                  class="form-control"
+                  required
+                ></b-form-select>
 
-                   <b-col>
-                    <!-- Default input text -->
-                  
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Country</label
-                    >
-                    <input
-                    id="defaultFormCardtextEx"
-                  
-                      v-model="country"
-                      placeholder="Enter country"
-                      type="text"
-                      class="form-control"
-                    />
-                  </b-col>
-                
-                     <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Zip</label
-                    >
-                    <input
-                   id="defaultFormCardtextEx"
-                      v-model="zip"
-                      placeholder="Enter Zip"
-                      type="text"
-                      class="form-control"
-                    />
-                     </b-col>
-                </b-row>
-<br/>
-                
-                <b-row>
-                  
-                  
-                   <!-- <b-col> -->
-                    <!-- Default input text -->
-                    <!-- <label
+                <!-- Default input name -->
+              </b-col>
+              <b-col>
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                  >Day Type</label
+                >
+                <b-form-select
+                  v-model="daytype"
+                  :options="days"
+                  oninvalid="this.setCustomValidity('Area Type is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Select Day Type"
+                  class="form-control"
+                  required
+                ></b-form-select>
+
+                <!-- Default input name -->
+              </b-col>
+            </b-row>
+            <br />
+
+            <b-row>
+              <b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Supervisor</label
+                >
+
+                <b-form-select
+                  v-model.trim="supervisor"
+                  oninvalid="this.setCustomValidity('Supervisor is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Select Supervisor"
+                  class="form-control"
+                  required
+                  :options="item"
+                ></b-form-select>
+              </b-col>
+              <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Area SqKm</label
+                >
+                <input
+                  v-model="areasqkm"
+                  type="text"
+                  oninvalid="this.setCustomValidity('Area Sqkm is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Enter Area Sqkm"
+                  class="form-control"
+                  required
+                />
+              </b-col>
+            </b-row>
+            <br />
+            <b-row>
+              <b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Description</label
+                >
+                <input
+                  v-model="description"
+                  type="text"
+                  oninvalid="this.setCustomValidity('Description is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Enter Description"
+                  class="form-control"
+                  required
+                />
+              </b-col>
+              <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >District</label
+                >
+                 <multiselect
+               
+                  v-model.trim="district"
+                   placeholder="Select distict"
+                   :options="distopt"
+                   ></multiselect>
+              </b-col>
+            </b-row>
+            <br />
+
+            <b-row>
+              <b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >State</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="state"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter state"
+                />
+                <br />
+              </b-col>
+
+              <br />
+
+              <b-col>
+                <!-- Default input text -->
+
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Country</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="country"
+                  placeholder="Enter country"
+                  type="text"
+                  class="form-control"
+                />
+              </b-col>
+
+              <b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Zip</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="zip"
+                  placeholder="Enter Zip"
+                  type="text"
+                  class="form-control"
+                />
+              </b-col>
+            </b-row>
+            <br />
+
+            <b-row>
+              <!-- <b-col> -->
+              <!-- Default input text -->
+              <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Created Date</label
@@ -378,11 +435,11 @@ this.userdata()
                     />
                   </b-col> -->
 
-                  <!-- <br/>
+              <!-- <br/>
 
                    <b-col> -->
-                    <!-- Default input text -->
-                    <!-- <label
+              <!-- Default input text -->
+              <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Created By</label
@@ -408,17 +465,16 @@ this.userdata()
                       v-model="modifyby"
                     />
                   </b-col> -->
-                </b-row>
-              
-              
-                <br />
-               <button
-                          type="submit"
-                         class="btn btn-custome float-right btn-secondary mb-3"
-                          >Submit</button
-                        >
-              </form>
-              <!-- Default form subscription -->
+            </b-row>
+
+            <br />
+            <button
+              type="submit"
+              class="btn btn-custome float-right btn-secondary mb-3"
+              >Submit</button
+            >
+          </form>
+          <!-- Default form subscription -->
         </div>
       </b-card>
     </div>

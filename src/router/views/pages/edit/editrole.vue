@@ -48,9 +48,7 @@ export default {
                 
                
             ],
-            destination: [
-               
-            ],
+            destination:this.$route.params.permissions,
       submitted: false,
       title: 'Register',
     
@@ -99,11 +97,13 @@ export default {
      onChangeList: function ({ source, destination }) {
       this.source = source
       this.destination = destination
+      // debugger
       console.log("destination",this.destination)
       this.planList = this.destination.map(function (x) {
+        // debugger
         return {
         
-        name: x.label,
+        name: x.label !== undefined ? x.label: x.name,
       
         }
       })

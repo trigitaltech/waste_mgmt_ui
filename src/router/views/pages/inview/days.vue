@@ -10,13 +10,12 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  deleteequipment,
- equipment
+ employees,deleteemployee
 } from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Equipment',
+    title: 'Days',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -44,57 +43,47 @@ export default {
       title: 'Register',
        item: {},
         
-      
+        
       permissionColumns: [
         {
-          key: 'equipmentId',
+          key: 'personal_ID_NO',
 
-          label: 'EquipmentId',
+          label: 'Personal ID NO',
         },
          {
-          key: 'equipmentNo',
-          label: 'EquipmentNo',
+          key: 'userName',
+          label: 'userName',
         },
          {
-          key: 'equipmentType',
+          key: 'phone',
 
-          label: 'EquipmentType',
+          label: 'phone',
         },
          {
-          key: 'ownerId',
+          key: 'email',
 
-          label: 'OwnerId',
+          label: 'email',
         },
         {
-          key: 'ownerName',
+          key: 'area',
 
-          label: 'OwnerName',
+          label: 'Area',
         },
          {
-          key: 'servingArea',
+          key: 'city',
 
-          label: 'ServingArea',
+          label: 'City',
         },
          {
-          key: 'status',
+          key: 'state',
 
-          label: 'Status',
+          label: 'State',
         },
         
          {
-          key: 'totalHourServed',
+          key: 'country',
 
-          label: 'TotalHourServed',
-        },
-         {
-          key: 'totalKmServed',
-
-          label: 'TotalKmServed',
-        },
-         {
-          key: 'warrantyStatus',
-
-          label: 'WarrantyStatus',
+          label: 'Country',
         },
          
        
@@ -110,7 +99,7 @@ export default {
           href: '/',
         },
         {
-          text: 'Hauler / Equipment',
+          text: 'Days',
           active: true,
         },
       ],
@@ -126,20 +115,20 @@ export default {
   },
   mounted() {
   
-    this.getequipment()
+    this.getemployees()
   },
   methods: {
-   async deleteReq(data) {
+    async deleteReq(data) {
        console.log("data",data.item.id)
        var id = data.item.id
      try{
           
-        const result = await deleteequipment(data.item.id)
+        const result = await deleteemployee(data.item.id)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You Deleted Equipment Successfully`,
+            text: `You Deleted Employee Successfully`,
             duration: 5000,
           })
          this.refresh()
@@ -151,11 +140,11 @@ export default {
       }
      
     },
-    async getequipment() {
+    async getemployees() {
        try {
         NProgress.start()
-      const result = await  equipment()
-      this.item = result.data.response.equipment
+      const result = await  employees()
+      this.item = result.data.response.result
        NProgress.done()
       } catch (error) {}
    
@@ -177,16 +166,16 @@ export default {
     <div class="animated fadeIn">
       <b-card
        
-        header="Equipments"
+        header="Days"
 
           class="mt-10 ml-10 mr-10 mx-auto"
       >
          <b-col md="12">
-          <b-button
+          <!-- <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({ path: '/Createequipment' })"
-          >Create Equipment</b-button>
+            @click="$router.push({ path: '/Createemployee' })"
+          >Create Employee</b-button> -->
         </b-col>
         <div class="mt-3">
           <b-table
@@ -207,12 +196,12 @@ export default {
             class="mt-3"
           >
             <template v-slot:cell(actions)="data">
-              <router-link :to="{ name: 'Viewequipment', params: data.item }">
+             <router-link :to="{ name: 'Viewemployee', params: data.item }">
                 <span class="mr-2" >
                  <i class="fa fa-eye edit"></i>
                 </span>
               </router-link>
-             <router-link :to="{ name: 'Editequipment', params: data.item }">
+             <router-link :to="{ name: 'Editemployee', params: data.item }">
                 <span class="mr-2">
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>

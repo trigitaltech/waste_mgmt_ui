@@ -74,7 +74,7 @@ export const createstaging = (payload) => serviceMaker(`/stagingarea/admin`, met
 
 export const createdumping = (payload) => serviceMaker(`/dumpinglocation/admin`, methods.POST, api.NGB, payload)
 
-export const createarea = (payload) => serviceMaker(`/areamaster/admin`, methods.POST, api.NGB, payload)
+export const createarea = (payload) => serviceMaker(`/areamaster/admin/create`, methods.POST, api.NGB, payload)
 
 export const createuser = (payload) => serviceMaker(`/users/admin/create`, methods.POST, api.NGB, payload)
 
@@ -101,6 +101,8 @@ export const createarea1 = (payload) => serviceMaker(`/location/createDistrict`,
 export const editservicerequest = (payload) => serviceMaker(`/serviceticket/system/issue`, methods.PUT, api.NGB, payload)
 
 export const editrole = (payload) => serviceMaker(`/roles/admin`, methods.PUT, api.NGB, payload)
+
+export const editarea = (payload) => serviceMaker(`/areamaster/admin`, methods.PUT, api.NGB, payload)
 
 export const editattendance = (payload) => serviceMaker(`/attendence/checker/admin/`, methods.PUT, api.NGB, payload)
 
