@@ -56,6 +56,8 @@ Vue.use(BootstrapVue)
 Vue.use(Vuelidate)
 Vue.use(VueMask)
 
+import Multiselect from 'vue-multiselect'
+Vue.component('multiselect', Multiselect)
 Vue.component('apexchart', VueApexCharts)
 
 // Uncomment this if you are having api served through other url or do not want to use fake backend

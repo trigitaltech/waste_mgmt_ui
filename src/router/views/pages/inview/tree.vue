@@ -2,7 +2,7 @@
 import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
-import { countries,cities,area,createcity,createarea1 } from '../../../../services/auth'
+import { countries,states,districts,createcity,createarea1 } from '../../../../services/auth'
 
 export default {
   page: {
@@ -27,19 +27,19 @@ export default {
       selectedKeys: [],
       treeData:[],
       visible:false,
-      cityForm:false,
-      areaForm:false,
+      stateForm:false,
+      districtForm:false,
       hideFooter:true,
       hideHeader:true,
-      cityName:null,
-      cityCode:null,
-      areaName:null,
-      areaCode:null,
+      stateName:null,
+      stateCode:null,
+      districtName:null,
+      districtCode:null,
       selectedCountry:null,
-      selectedCity:null,
+      selectedState:null,
       node:null,
       cities:null,
-      areas:null,
+      districts:null,
       toggle:null
     }
   },
@@ -52,11 +52,11 @@ export default {
     },
   },
   methods: {
-    async addCity() {
+    async addState() {
       try {
         const payload = {
-          cityName: this.cityName,
-          cityCode: this.cityCode,
+          stateName: this.stateName,
+          stateCode: this.stateCode,
           countryCode : {
             id: this.node.id,
             name: this.selectedCountry,
@@ -69,27 +69,27 @@ export default {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `City Added`,
+            text: `state Added`,
             duration: 5000,
           })
           this.treeData = [];
           this.getaddresss()
-          this.cityForm = false
+          this.stateForm = false
         }
       }
       catch(e) {
         console.log(e);
       }
     },
-    async addArea() {
+    async addDistrict() {
       try {
         const payload = {
-          areaName: this.areaName,
-          areaCode: this.areaCode,
-          cityCode: {
+          districtName: this.districtName,
+          districtCode: this.districtCode,
+          stateCode: {
             id: this.node.id,
-            cityName: this.node.title,
-            cityCode: this.node.code,
+            stateName: this.node.title,
+            stateCode: this.node.code,
             countryCode: {
               id: this.node.cid,
               name: this.node.cname,
@@ -103,12 +103,12 @@ export default {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `Area Added`,
+            text: `District Added`,
             duration: 5000,
           })
           this.treeData = [];
           this.getaddresss()
-          this.areaForm = false
+          this.districtForm = false
         }
       }
       catch(e) {
@@ -125,7 +125,7 @@ export default {
       }
       if(node.dataRef.pid == 1) {
         this.node = node.dataRef
-        this.selectedCity = node.dataRef.title
+        this.selectedState = node.dataRef.title
         this.visible = true
         this.toggle = 1
       }
@@ -149,7 +149,7 @@ export default {
       if(pid == 0) {
         const node = {
           pid:pid,
-          title:object.name,
+          title:object.countryName,
           code:object.countryCode,
           id:object.id,
           children:[]
@@ -159,8 +159,8 @@ export default {
       if(pid == 1) {
         const node = {
           pid:pid,
-          title:object.cityName,
-          code:object.cityCode,
+          title:object.stateName,
+          code:object.stateCode,
           id:object.id,
           cid:object.countryCode.id,
           cname:object.countryCode.name,
@@ -172,33 +172,34 @@ export default {
       if(pid == 2) {
         const node = {
           pid:pid,
-          title:object.areaName,
+          title:object.districtName,
           id:object.id
         };
         return node;
       }
     },
     async getcities(code) {
-      var data = await cities(code)
+      var data = await states(code)
       this.cities = data.data.response.result
       console.log(this.cities)
       return this.cities
     },
-    async getareas(code) {
-      var data = await area(code)
-      this.areas = data.data.response.result
-      return this.areas
+    async getdistricts(code) {
+      var data = await districts(code)
+      this.districts = data.data.response.result
+      return this.districts
     },
     async getaddresss() {
       try {
         const result = await countries()
         var data =  result.data.response.result
+        console.log(data)
         data.map(async (e,i) => {
           this.treeData.push(this.getNodes(e,0))
           const result1 = await this.getcities(e.countryCode)
           result1.map(async (d,j) => {
             this.treeData[i].children.push(this.getNodes(d,1))
-            const result2 = await this.getareas(d.cityCode)
+            const result2 = await this.getdistricts(d.stateCode)
             result2.map(async (c,k) => {
               this.treeData[i].children[j].children.push(this.getNodes(c,2))
             })
@@ -212,13 +213,13 @@ export default {
     onSelect(selectedKeys, info) {
       console.log('selected', selectedKeys, info);
     },
-    openAddCityModal() {
+    openAddStateModal() {
       this.visible = false
-      this.cityForm = true
+      this.stateForm = true
     },
-    openAddAreaModal() {
+    openAddDistrictModal() {
       this.visible = false
-      this.areaForm = true
+      this.districtForm = true
     }
   },
 }
@@ -248,36 +249,36 @@ export default {
           </a-tree>
           <b-modal v-model="visible" v-if="toggle==0" size="sm" :hide-header="hideHeader" :hide-footer="hideFooter">
             <b-list-group>
-              <b-list-group-item button variant="light" @click="openAddCityModal">Add City</b-list-group-item>
+              <b-list-group-item button variant="light" @click="openAddStateModal">Add State</b-list-group-item>
             </b-list-group>
           </b-modal>
           <b-modal v-model="visible" v-if="toggle==1" size="sm" :hide-header="hideHeader" :hide-footer="hideFooter">
             <b-list-group>
-              <b-list-group-item button variant="light" @click="openAddAreaModal">Add Area</b-list-group-item>
+              <b-list-group-item button variant="light" @click="openAddDistrictModal">Add District</b-list-group-item>
             </b-list-group>
           </b-modal>
-          <b-modal v-model="cityForm" title="Add State" size="md" :hide-header="hideHeader" :hide-footer="hideFooter">
-            <h2 class="text-center">Add City</h2>
-            <form @submit.prevent="addCity">
+          <b-modal v-model="stateForm" title="Add State" size="md" :hide-header="hideHeader" :hide-footer="hideFooter">
+            <h2 class="text-center">Add State</h2>
+            <form @submit.prevent="addState">
               <label
                 for="defaultFormCardNameEx"
                 class="grey-text font-weight-dark"
-              >City Name</label>
+              >State Name</label>
               <input
-                v-model="cityName"
+                v-model="stateName"
                 type="text"
-                placeholder="Enter City Name"
+                placeholder="Enter State Name"
                 class="form-control"
                 required
               />
               <label
                 for="defaultFormCardNameEx"
                 class="grey-text font-weight-dark"
-              >City Code</label>
+              >State Code</label>
               <input
-                v-model="cityCode"
+                v-model="stateCode"
                 type="text"
-                placeholder="Enter City Code"
+                placeholder="Enter State Code"
                 class="form-control"
                 required
               />
@@ -297,37 +298,37 @@ export default {
               >Submit</button>
             </form>
           </b-modal>
-          <b-modal v-model="areaForm" title="Add Area" size="md" :hide-header="hideHeader" :hide-footer="hideFooter">
-            <h2 class="text-center">Add Area</h2>
-            <form @submit.prevent="addArea">
+          <b-modal v-model="districtForm" title="Add District" size="md" :hide-header="hideHeader" :hide-footer="hideFooter">
+            <h2 class="text-center">Add District</h2>
+            <form @submit.prevent="addDistrict">
               <label
                 for="defaultFormCardNameEx"
                 class="grey-text font-weight-dark"
-              >Area Name</label>
+              >District Name</label>
               <input
-                v-model="areaName"
+                v-model="districtName"
                 type="text"
-                placeholder="Enter Area Name"
+                placeholder="Enter District Name"
                 class="form-control"
                 required
               />
               <label
                 for="defaultFormCardNameEx"
                 class="grey-text font-weight-dark"
-              >Area Code</label>
+              >District Code</label>
               <input
-                v-model="areaCode"
+                v-model="districtCode"
                 type="text"
-                placeholder="Enter Area Code"
+                placeholder="Enter District Code"
                 class="form-control"
                 required
               />
               <label
                 for="defaultFormCardNameEx"
                 class="grey-text font-weight-dark"
-              >City</label>
+              >state</label>
               <input
-                v-model="selectedCity"
+                v-model="selectedState"
                 type="text"
                 class="form-control"
                 readonly

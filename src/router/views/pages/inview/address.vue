@@ -44,20 +44,16 @@ export default {
 
       cityColumns: [
         {
-          key: 'cityCode.countryCode.name',
+          key: 'stateCode.countryCode.countryName',
           label: 'Country',
         },
         {
-          key: 'cityCode.countryCode.countryCode',
-          label: 'Country Code',
+          key: 'stateCode.stateName',
+          label: 'State',
         },
         {
-          key: 'cityCode.cityName',
-          label: 'City',
-        },
-        {
-          key: 'areaName',
-          label: 'Area',
+          key: 'districtName',
+          label: 'District',
         }
       ],
       items: [
