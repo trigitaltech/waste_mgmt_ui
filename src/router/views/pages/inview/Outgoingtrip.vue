@@ -177,7 +177,7 @@ export default {
     <PageHeader  />
    <div class="animated fadeIn">
       <b-card
-        header="Incoming Trips"
+        header="Outgoing Trips"
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div>
@@ -186,8 +186,8 @@ export default {
                 <b-button
                   class="btn btn-custome float-right btn-secondary mb-4 mr-2"
                   text="Create Tenant"
-                  @click="$router.push({path:'/CreateIncomingTrip'})"
-                  >Create Incoming Trip</b-button
+                  @click="$router.push({path:'/CreateOutgoingTrip'})"
+                  >Create Outgoing Trip</b-button
                 >
               </div>
             <div class="card-body">

@@ -261,7 +261,7 @@ export default {
                   </b-col>
                   <b-col>
                      <b-button
-                  class="btn btn-custome float-right btn-secondary mb-3"
+                  class="btn btn-custome ml-4 btn-secondary mb-3"
                   text="Create Tenant"
                   @click="create"
                   >Generate</b-button

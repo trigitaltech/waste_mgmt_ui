@@ -231,7 +231,7 @@ export default {
     <PageHeader :items="items" />
     <div class="animated">
       <b-card
-        header="Create Incoming Trip"
+        header="Create Outgoing Trip"
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-1">
@@ -243,7 +243,7 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Baranggay</label
+                      >Staging Area</label
                     >
                     <b-form-select
                       v-model.trim="area"

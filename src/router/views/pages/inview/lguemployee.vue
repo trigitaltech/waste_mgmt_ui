@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- employees,deleteemployee
+ lguEmployees,deleteemployee
 } from '../../../../services/auth'
 
 export default {
@@ -99,7 +99,7 @@ export default {
           href: '/',
         },
         {
-          text: 'LGU / Employees',
+          text: 'LGU',
           active: true,
         },
       ],
@@ -115,7 +115,7 @@ export default {
   },
   mounted() {
   
-    // this.getemployees()
+    this.getemployees()
   },
   methods: {
     async deleteReq(data) {
@@ -133,7 +133,7 @@ export default {
           })
          this.refresh()
         }
-      } catch (e) {
+      } catch  (e) {
          this.$toasted.error(e.message.error, {
           duration: 7000,
         })
@@ -143,11 +143,11 @@ export default {
     async getemployees() {
        try {
         NProgress.start()
-      const result = await  employees()
-      this.item = result.data.response.result
-       NProgress.done()
+        const result = await  lguEmployees()
+        this.item = result.data.response.LGUMaster
+          console.log(this.item)
+        NProgress.done()
       } catch (error) {}
-   
     },
     
     async refresh() {
@@ -166,16 +166,16 @@ export default {
     <div class="animated fadeIn">
       <b-card
        
-        header="Lgu Employees"
+        header="LGU"
 
           class="mt-10 ml-10 mr-10 mx-auto"
       >
          <b-col md="12">
-          <!-- <b-button
+          <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({ path: '/Createemployee' })"
-          >Create Employee</b-button> -->
+            @click="$router.push({ path: '/CreateLguEmployee' })"
+          >Create LGU</b-button> 
         </b-col>
         <div class="mt-3">
           <b-table

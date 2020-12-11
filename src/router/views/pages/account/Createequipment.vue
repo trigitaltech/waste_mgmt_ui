@@ -132,13 +132,14 @@ export default {
             ownerName: String(this.ownername),
             ownerId:this.ownerid,
             equipmentId:parseInt(this.equipmentid),
-            servingArea:this.servingarea,
             manufactureDate: this.manufacturedate,
             warrantyStatus: "NOT EXPIRED",
             totalKmServed: parseInt(this.totalkmsserved),
             totalHourServed: parseInt(this.totalhoursserved),
             description:this.description,
-            isDeleted: false
+            isDeleted: false,
+            status:"WORKING",
+            createdBy: this.createdby
         }
         let result = await createequipment(payload)
         if (result) {
@@ -149,7 +150,7 @@ export default {
             duration: 5000,
           })
          
-           this.$router.push({path:'/Equipment'})
+           this.$router.push({path:'/Hauler/Equipment'})
             
         }
       } catch (e) {
@@ -247,7 +248,7 @@ export default {
                   <b-row >
                     <b-col>
                     <!-- Default input text -->
-                    <label
+                    <!--<label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Serving Area</label
@@ -258,7 +259,7 @@ export default {
                   label="value"
                   class="form-control"
                   :options="item"
-                ></b-form-select>
+                ></b-form-select>-->
                 
                     <label
                       for="defaultFormCardtextEx"

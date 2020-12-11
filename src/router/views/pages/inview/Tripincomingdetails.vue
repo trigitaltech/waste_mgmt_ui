@@ -246,17 +246,7 @@ export default {
       >
         <div class="mt-3">
           <!-- Card -->
-          <div class="card mx-xl-5">
-            <div class="float-right">
-                <b-button
-                  style="
-                    background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-info float-right mr-4 mt-3 mb-2"
-                  text="Create Tenant"
-                  @click="$router.push({path:'/CreateIncomingTrip'})"
-                  >Create Incoming Trip</b-button
-                >
-              </div>
+          <div class="mx-xl-5">
             <!-- Card body -->
             <div class="card-body">
               <!-- Default form subscription -->
@@ -284,7 +274,7 @@ export default {
                   </b-col>
                   <b-col>
                      <b-button
-                  class="btn btn-custome float-right btn-secondary mb-3"
+                  class="btn btn-custome ml-4 btn-secondary mb-3"
                   text="Create Tenant"
                   @click="create"
                   >Generate</b-button

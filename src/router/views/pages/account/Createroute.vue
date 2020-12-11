@@ -160,9 +160,9 @@ export default {
           this.$router.push({ path: '/Setup/RouteMaster' })
         }
       } catch (e) {
-        this.$toasted.error(e.message.errors[0].developerMessage, {
+        /*this.$toasted.error(e.message.errors[0].developerMessage, {
           duration: 7000,
-        })
+        })*/
       }
     },
 
