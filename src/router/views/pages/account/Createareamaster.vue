@@ -12,7 +12,7 @@ import { createarea, users ,address} from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Create AreaMaster',
+    title: 'Create Baranggay',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -73,8 +73,12 @@ export default {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Baranggay',
+          href: '#/Setup/AreaMaster',
+        },
         {
-          text: 'Areamaster / Create Area',
+          text: 'Create Baranggay',
           active: true,
         },
       ],
@@ -186,7 +190,7 @@ this.addres.map(e=>{
     <PageHeader :items="items" />
 
     <div class="animated fadeIn">
-      <b-card header="Create Area" class="mt-10 ml-10 mr-10 mx-auto">
+      <b-card header="Create Baranggay" class="mt-10 ml-10 mr-10 mx-auto">
         <div class="mt-3">
           <!-- Default form subscription -->
           <form @submit.prevent="create">

@@ -45,7 +45,11 @@ export default {
           href: '/',
         },
         {
-          text: 'Permissions / ViewPermission',
+          text: 'Permissions',
+          href: '#/Setup/Permissions',
+        },
+        {
+          text: 'ViewPermission',
           active: true,
         },
       ],

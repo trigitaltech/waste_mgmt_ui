@@ -14,7 +14,7 @@ import {
 
 export default {
   page: {
-    title: 'Create AreaMaster',
+    title: 'View Baranggay',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -57,8 +57,12 @@ export default {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Baranggay',
+          href: '#/Setup/AreaMaster',
+        },
         {
-          text: 'Areas / View Areas',
+          text: 'View Baranggay',
           active: true,
         },
       ],
@@ -157,7 +161,7 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="View Areas"
+        header="View Baranggay"
 
         class="mt-10 ml-10 mr-10 mx-auto"
       >

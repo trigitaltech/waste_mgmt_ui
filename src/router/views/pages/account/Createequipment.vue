@@ -51,11 +51,17 @@ export default {
         { value: 'Machine', text: 'Machine' }],
       items: [
         {
-          text: 'Home',
+          text: 'Haulers',
           href: '/',
         },
+         {
+          text: 'HaulerEquipment',
+          href: '#/Hauler/Equipment',
+        },
+        
+        
         {
-          text: 'Equipment / Create Equipment',
+          text: 'Create Equipment',
           active: true,
         },
       ],

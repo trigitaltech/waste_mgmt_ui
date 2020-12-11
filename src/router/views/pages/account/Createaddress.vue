@@ -57,8 +57,12 @@ export default {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Address',
+          href: '#/Setup/AddressMaster',
+        },
         {
-          text: 'Addressmaster / Create Address',
+          text: 'Create Address',
           active: true,
         },
       ],

@@ -42,11 +42,13 @@ export default {
       code: '',
       areas: [],
       roads: [],
-       inputs: [{
-        code:'',
-        roadname: '',
-        routename: ''
-      }],
+      inputs: [
+        {
+          code: '',
+          roadname: '',
+          routename: '',
+        },
+      ],
       option: [
         { value: null, text: 'Please select an option' },
         { value: 'mainroad', text: 'Mainroad' },
@@ -60,8 +62,12 @@ export default {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Route Master',
+          href: '#/Setup/RouteMaster',
+        },
         {
-          text: 'RouteMaster / Create Route',
+          text: 'Create Route',
           active: true,
         },
       ],
@@ -80,16 +86,16 @@ export default {
     this.userdata()
   },
   methods: {
-     add () {
+    add() {
       this.inputs.push({
-        code:'',
+        code: '',
         roadname: '',
-        routename: ''
+        routename: '',
       })
       console.log(this.inputs)
     },
 
-    remove (index) {
+    remove(index) {
       this.inputs.splice(index, 1)
     },
     getid() {
@@ -146,7 +152,7 @@ export default {
           routeDistance: this.routedistance,
           description: this.description,
           isDeleted: false,
-          routeRoads:this.inputs
+          routeRoads: this.inputs,
         }
         let result = await createroute(payload)
         if (result) {
@@ -186,23 +192,23 @@ export default {
           <form @submit.prevent="create">
             <b-row>
               <b-col>
-                <!-- Default input name -->
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
                 >
-                  Code</label
+                  Area Name</label
                 >
-                <input
-                  id="defaultFormCardNameEx"
-                  v-model="code"
-                  type="text"
-                  oninvalid="this.setCustomValidity('code is required ')"
+                <b-form-select
+                  v-model="areaname"
+                  :options="item2"
+                  oninvalid="this.setCustomValidity('Area Name is required ')"
                   oninput="setCustomValidity('')"
-                  placeholder="Enter code"
+                  placeholder="Select Area Name"
                   class="form-control"
                   required
-                />
+                  @change="getid"
+                ></b-form-select>
+                <!-- Default input name -->
               </b-col>
               <b-col>
                 <!-- Default input name -->
@@ -250,25 +256,24 @@ export default {
               </b-col>
 
               <b-col>
+                <!-- Default input name -->
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
                 >
-                  Area Name</label
+                  Code</label
                 >
-                <b-form-select
-                  v-model="areaname"
-                  :options="item2"
-                  oninvalid="this.setCustomValidity('Area Name is required ')"
+                <input
+                  id="defaultFormCardNameEx"
+                  v-model="code"
+                  type="text"
+                  oninvalid="this.setCustomValidity('code is required ')"
                   oninput="setCustomValidity('')"
-                  placeholder="Select Area Name"
+                  placeholder="Enter code"
                   class="form-control"
                   required
-                  @change="getid"
-                ></b-form-select>
-                <!-- Default input name -->
+                />
               </b-col>
-
               <br />
             </b-row>
             <br />
@@ -424,50 +429,73 @@ export default {
               </b-col>
             </b-row> -->
 
-            <br/>
+            <br />
 
-         <b-row v-for="(input,k) in inputs" :key="k">
-           
-             
+            <b-row v-for="(input, k) in inputs" :key="k">
               <b-col md="4">
-               <label
+                <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
                 >
                   Code</label
                 >
 
-              <input    id="defaultFormCardtextEx" type="text" class="form-control" v-model="input.code" placeholder="Enter code">
+                <input
+                  id="defaultFormCardtextEx"
+                  type="text"
+                  class="form-control"
+                  v-model="input.code"
+                  placeholder="Enter code"
+                />
               </b-col>
               <b-col md="4">
-               <label
+                <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
                 >
                   Road Name</label
                 >
-              <input    id="defaultFormCardtextEx" type="text" class="form-control" v-model="input.roadname" placeholder="Enter roadname">
+                <input
+                  id="defaultFormCardtextEx"
+                  type="text"
+                  class="form-control"
+                  v-model="input.roadname"
+                  placeholder="Enter roadname"
+                />
               </b-col>
               <b-col md="4">
-               <label
+                <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
                 >
                   Route Name</label
                 >
-              <input    id="defaultFormCardtextEx" type="text" class="form-control" v-model="input.routename" placeholder="Enter routename">
+                <input
+                  id="defaultFormCardtextEx"
+                  type="text"
+                  class="form-control"
+                  v-model="input.routename"
+                  placeholder="Enter routename"
+                />
               </b-col>
               <b-col>
-              <span>
-                <i class="fas fa-minus-circle" @click="remove(k)" v-show="k || ( !k && inputs.length > 1)">Remove</i>
-                <i class="fas fa-plus-circle" @click="add(k)" v-show="k == inputs.length-1">Add Roads</i>
-              </span>
+                <span>
+                  <i
+                    class="fas fa-minus-circle"
+                    @click="remove(k)"
+                    v-show="k || (!k && inputs.length > 1)"
+                    >Remove</i
+                  >
+                  <i
+                    class="fas fa-plus-circle"
+                    @click="add(k)"
+                    v-show="k == inputs.length - 1"
+                    >Add Roads</i
+                  >
+                </span>
               </b-col>
-</b-row>
-         
-       
-        
-           
+            </b-row>
+
             <button
               type="submit"
               class="btn btn-custome float-right btn-secondary mb-3"

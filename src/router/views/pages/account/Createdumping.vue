@@ -58,8 +58,12 @@ export default {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Dumping Location',
+          href: '#/Setup/DumpingLocation',
+        },
         {
-          text: 'Dumping Location / Create Dumping',
+          text: 'Create Dumping',
           active: true,
         },
       ],

@@ -15,7 +15,7 @@ import {
 import NProgress from 'nprogress/nprogress'
 export default {
   page: {
-    title: 'Areamaster',
+    title: 'Baranggay',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -115,7 +115,7 @@ export default {
           href: '/',
         },
         {
-          text: 'Areamaster',
+          text: 'Baranggay',
           active: true,
         },
       ],
@@ -191,7 +191,7 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="Areas"
+        header="Baranggay"
 
         class="mt-10 ml-10 mr-10 mx-auto"
       >
@@ -211,7 +211,7 @@ export default {
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/CreateArea' })"
-          >Create Area</b-button>
+          >Create Baranggay</b-button>
         </b-col>
        </b-row>
         <div class="mt-3">

@@ -64,12 +64,17 @@ export default {
       serviceoffice:this.$route.params.service_OFFICE,
       personalidno:this.$route.params.personal_ID_NO,
       items: [
-        {
+         {
           text: 'Home',
           href: '/',
         },
+        
+         {
+          text: 'Employees',
+          href: '#/Employee/Employees',
+        },
         {
-          text: 'Employees/ Edit Employee',
+          text: 'Edit Employee',
           active: true,
         },
       ],

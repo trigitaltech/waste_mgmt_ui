@@ -48,12 +48,16 @@ export default {
       ],
       item:[ ],
       items: [
-        {
+         {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Route Master',
+          href: '#/Setup/RouteMaster',
+        },
         {
-          text: 'Routes / View Routes',
+          text: 'View Routes',
           active: true,
         },
       ],

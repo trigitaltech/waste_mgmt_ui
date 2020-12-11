@@ -61,8 +61,12 @@ export default {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Roles',
+          href: '#/Setup/Roles',
+        },
         {
-          text: 'Roles / Create Role',
+          text: 'Create Role',
           active: true,
         },
       ],

@@ -48,12 +48,17 @@ export default {
       ],
       item:[ ],
       items: [
-        {
-          text: 'Home',
+         {
+          text: 'Haulers',
           href: '/',
         },
+         {
+          text: 'HaulerVehicles',
+          href: '#/Hauler/Vehicle',
+        },
+        
         {
-          text: 'Vehicle / View Vehicle',
+          text: 'View Vehicle',
           active: true,
         },
       ],

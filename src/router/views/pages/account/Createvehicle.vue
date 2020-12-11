@@ -50,11 +50,15 @@ export default {
       item:[ ],
       items: [
         {
-          text: 'Home',
+          text: 'Haulers',
           href: '/',
         },
+         {
+          text: 'HaulerVehicles',
+          href: '#/Hauler/Vehicle',
+        },
         {
-          text: 'Vehicle / Create Vehicle',
+          text: 'Create Vehicle',
           active: true,
         },
       ],
@@ -297,7 +301,7 @@ export default {
                   <!--<b-row class="mb-3">
                     
                       <b-col>
-                    <!-- Default input text 
+                    <!- Default input text 
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"

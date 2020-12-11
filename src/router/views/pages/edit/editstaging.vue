@@ -50,12 +50,16 @@ export default {
       ],
       item:[ ],
       items: [
-        {
+         {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Staging Area',
+          href: '#/Setup/StagingArea',
+        },
         {
-          text: 'Staging Area / Edit Staging',
+          text: 'Edit Staging',
           active: true,
         },
       ],
