@@ -28,6 +28,8 @@ export default {
   },
   data() {
     return {
+        filter: '',
+      filterOn: [],
       plandata: '',
       striped: false,
       bordered: true,
@@ -193,13 +195,25 @@ export default {
 
         class="mt-10 ml-10 mr-10 mx-auto"
       >
-        <b-col md="12">
+       <b-row>
+        <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+        <b-col >
             <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/CreateArea' })"
           >Create Area</b-button>
         </b-col>
+       </b-row>
         <div class="mt-3">
           <b-table
             id="my-table"
@@ -217,6 +231,7 @@ export default {
             :fields="AreamasterColumns"
             :items="item"
             class="mt-3"
+           
           >
              <template v-slot:cell(createdDate)="data">
                             <div class="table-row">{{ getDate(data.item.createdDate) }}</div>

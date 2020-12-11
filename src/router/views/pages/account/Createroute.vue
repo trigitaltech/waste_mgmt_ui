@@ -437,7 +437,7 @@ export default {
                   Code</label
                 >
 
-              <input type="text" class="form-control" v-model="input.code" placeholder="Enter code">
+              <input    id="defaultFormCardtextEx" type="text" class="form-control" v-model="input.code" placeholder="Enter code">
               </b-col>
               <b-col md="4">
                <label
@@ -446,7 +446,7 @@ export default {
                 >
                   Road Name</label
                 >
-              <input type="text" class="form-control" v-model="input.roadname" placeholder="Enter roadname">
+              <input    id="defaultFormCardtextEx" type="text" class="form-control" v-model="input.roadname" placeholder="Enter roadname">
               </b-col>
               <b-col md="4">
                <label
@@ -455,12 +455,12 @@ export default {
                 >
                   Route Name</label
                 >
-              <input type="text" class="form-control" v-model="input.routename" placeholder="Enter routename">
+              <input    id="defaultFormCardtextEx" type="text" class="form-control" v-model="input.routename" placeholder="Enter routename">
               </b-col>
               <b-col>
               <span>
                 <i class="fas fa-minus-circle" @click="remove(k)" v-show="k || ( !k && inputs.length > 1)">Remove</i>
-                <i class="fas fa-plus-circle" @click="add(k)" v-show="k == inputs.length-1">Add fields</i>
+                <i class="fas fa-plus-circle" @click="add(k)" v-show="k == inputs.length-1">Add Roads</i>
               </span>
               </b-col>
 </b-row>

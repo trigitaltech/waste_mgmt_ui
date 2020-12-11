@@ -27,6 +27,7 @@ export default {
   },
   data() {
     return {
+      file:"",
       plandata: '',
       striped: false,
       sid:"",
@@ -68,7 +69,7 @@ export default {
           href: '/',
         },
         {
-          text: 'LGU/ Create LGU Employee',
+          text: 'LGU/ Create LGU',
           active: true,
         },
       ],
@@ -150,6 +151,16 @@ export default {
                         //  console.log("haiiiiii",this.sid)
         })
       },
+       readAgreement(e) {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      this.file = reader.result;
+    };
+    reader.onerror = err => {
+      console.error("reader : ", err);
+    };
+  },
      async getplans() {
        try {
         const result = await Areamasters()
@@ -257,7 +268,7 @@ export default {
       <div class="row">
         <div class="col-xl-12  mx-auto">
           <b-card
-            header="Create LGU Employee"
+            header="Create LGU"
           >
             <div class="card-body">
               <ValidationObserver v-slot="{ handleSubmit }">

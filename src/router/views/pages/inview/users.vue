@@ -44,7 +44,7 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-      item: { },
+      item: [],
 
       permissionColumns: [
         {
@@ -108,7 +108,7 @@ export default {
       selected: null,
       clientId: '',
       options: ['DAF'],
-      item: {},
+      item: [],
       
     }
   },
@@ -219,8 +219,7 @@ export default {
             :items="item"
             class="mt-3"
              
-                :filter-included-fields="filterOn"
-                @filtered="onFiltered"
+              
           > <template v-slot:cell(createdDate)="data">
                             <div class="table-row">{{ getDate(data.item.createdDate) }}</div>
                         </template>

@@ -12,6 +12,7 @@ import {
   routemaster,deleteroute
 } from '../../../../services/auth'
 import NProgress from 'nprogress/nprogress'
+import Createstaging from '../account/Createstaging.vue'
 export default {
   page: {
     title: 'Rootmaster',
@@ -24,9 +25,12 @@ export default {
     ValidationProvider,
     ValidationObserver,
     ModelSelect,
+    Createstaging,
   },
   data() {
     return {
+        filter: '',
+      filterOn: [],
       plandata: '',
       striped: false,
       bordered: true,
@@ -159,14 +163,26 @@ export default {
         header="Routemasters"
 
         class="mt-10 ml-10 mr-10 mx-auto"
-      >
-        <b-col md="12">
+      ><b-row>
+         <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+        <b-col >
+        
             <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/CreateRoute' })"
           >Create Route</b-button>
         </b-col>
+        </b-row>
         <div class="mt-3">
           <b-table
             id="my-table"
@@ -184,6 +200,7 @@ export default {
             :fields="RootmasterColumns"
             :items="item"
             class="mt-3"
+             
           >
            <template v-slot:cell(actions)="data">
             <router-link :to="{ name: 'Viewroute', params: data.item }">

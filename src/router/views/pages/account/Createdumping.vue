@@ -215,7 +215,11 @@ export default {
                     </b-col>
                 </b-row>
                 <b-row class="mb-3">
-                  <b-col>
+                
+                 
+                </b-row>
+                  <b-row class="mb-3">
+                     <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -232,28 +236,6 @@ export default {
                               placeholder="Enter Address"
                                 required
                     />
-                  </b-col>
-                 
-                </b-row>
-                  <b-row class="mb-3">
-                    <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Supervisor</label
-                    >
-                   <b-form-select
-                  v-model.trim="supervisor"
-                  placeholder="Select Supervisor"
-                  label="value"
-                  :options="item"
-                   oninvalid="this.setCustomValidity('Supervisor is required ')"
-                                oninput="setCustomValidity('')"
-                               
-                                class="form-control"
-                                required
-                ></b-form-select>
                   </b-col>
                   <b-col>
                     <label

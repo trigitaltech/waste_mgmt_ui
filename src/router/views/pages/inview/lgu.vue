@@ -10,12 +10,12 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- employees,deleteemployee,type
+ lguEmployees,deleteemployee
 } from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Type',
+    title: 'Lgu Employees',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -41,31 +41,57 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-       item: [],
+       item: {},
         
         
       permissionColumns: [
-         {
-          key: 'id',
+        {
+          key: 'personal_ID_NO',
 
-          label: 'ID',
+          label: 'Personal ID NO',
         },
          {
-          key: 'code',
-          label:'CODE',
+          key: 'userName',
+          label: 'userName',
         },
          {
-          key: 'tripType',
+          key: 'phone',
 
-          label: 'TripType',
+          label: 'phone',
+        },
+         {
+          key: 'email',
+
+          label: 'email',
+        },
+        {
+          key: 'area',
+
+          label: 'Area',
+        },
+         {
+          key: 'city',
+
+          label: 'City',
+        },
+         {
+          key: 'state',
+
+          label: 'State',
+        },
+        
+         {
+          key: 'country',
+
+          label: 'Country',
         },
          
        
 
-        // {
-        //   key: 'actions',
-        //   sortable: true,
-        // },
+        {
+          key: 'actions',
+          sortable: true,
+        },
       ],
       items: [
         {
@@ -73,7 +99,7 @@ export default {
           href: '/',
         },
         {
-          text: 'Type',
+          text: 'LGU',
           active: true,
         },
       ],
@@ -89,7 +115,7 @@ export default {
   },
   mounted() {
   
-    this.gettypes()
+    this.getemployees()
   },
   methods: {
     async deleteReq(data) {
@@ -97,7 +123,7 @@ export default {
        var id = data.item.id
      try{
           
-        const result = await typ(data.item.id)
+        const result = await deleteemployee(data.item.id)
         if (result) {
           this.$swal({
             group: 'alert',
@@ -107,21 +133,21 @@ export default {
           })
          this.refresh()
         }
-      } catch (e) {
+      } catch  (e) {
          this.$toasted.error(e.message.error, {
           duration: 7000,
         })
       }
      
     },
-    async gettypes() {
+    async getemployees() {
        try {
         NProgress.start()
-      const result = await  type()
-      this.item = result.data.response.TripType
-       NProgress.done()
+        const result = await  lguEmployees()
+        this.item = result.data.response.LGUMaster
+          console.log(this.item)
+        NProgress.done()
       } catch (error) {}
-   
     },
     
     async refresh() {
@@ -140,16 +166,16 @@ export default {
     <div class="animated fadeIn">
       <b-card
        
-        header="Type"
+        header="LGU"
 
           class="mt-10 ml-10 mr-10 mx-auto"
       >
          <b-col md="12">
-          <!-- <b-button
+          <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({ path: '/Createemployee' })"
-          >Create Employee</b-button> -->
+            @click="$router.push({ path: '/CreateLgu' })"
+          >Create LGU</b-button> 
         </b-col>
         <div class="mt-3">
           <b-table

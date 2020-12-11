@@ -48,6 +48,7 @@ export default {
         { value: 'Centralstaging', text: 'Central Staging' },
       ],
       item:[ { value: null, text: 'Please select an user' }],
+      lgu:"",
       items: [
         {
           text: 'Setup',
@@ -110,7 +111,7 @@ export default {
         const payload = {
                 stagingAreaName:this.areaname,
                 staging_type: this.stagingtype,
-                supervisor: this.supervisor,
+                supervisor:"",
                 working_hrs:this.workinghours,
                 geoLat: this.geoLat,
                 geoLong: this.geoLong,
@@ -251,14 +252,14 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Supervisor</label
+                      >LGU</label
                     >
                     <b-form-select
-                  v-model.trim="supervisor"
-                  placeholder="Select Supervisor"
+                  v-model.trim="lgu"
+                  placeholder="Select LGU"
                   label="value"
                   :options="item"
-                   oninvalid="this.setCustomValidity('supervisor is required ')"
+                   oninvalid="this.setCustomValidity('lgu is required ')"
                                 oninput="setCustomValidity('')"
                              
                                 class="form-control"
