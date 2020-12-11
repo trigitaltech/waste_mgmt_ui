@@ -27,11 +27,14 @@ export default {
   },
   data() {
     return {
-      areaid:this.$route.params.areaId,
+      code:this.$route.params.code,
+      classtype:this.$route.params.areaName.classType,
+      roads:this.$route.params.routeRoads,
+      areaid:this.$route.params.areaName.id,
       supervisor:this.$route.params.supervisor,
      routename:this.$route.params.routeName,
      routetype:this.$route.params.routeType,
-     areaname:this.$route.params.areaName,
+     areaname:this.$route.params.areaName.areaName,
      routedistance:this.$route.params.route_distance,
      description:this.$route.params.description,
      city:this.$route.params.city,
@@ -61,11 +64,24 @@ export default {
           active: true,
         },
       ],
+      permissionColumns:[],
+        striped: false,
+      bordered: true,
+      filter: '',
+      perPage: 10,
+      hover: true,
+      currentPage: 1,
+      small: false,
+      dark: false,
+      fixed: false,
    
     
     }
   },
   computed: {
+     rows(){
+     return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -157,6 +173,47 @@ export default {
         <div class="mt-3">
               <!-- Default form subscription -->
               <form>
+                 <b-row>
+                  <b-col>
+                    <!-- Default input name -->
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                    >
+                     code</label
+                    >
+                    <input
+                    id="defaultFormCardNameEx"
+                      v-model="code"
+                      disabled
+                      type="text"
+                      class="form-control"
+                    />
+
+                
+
+                  
+                    <!-- Default input email -->
+                  </b-col>
+                  
+                  <b-col>
+                     <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >Class Type</label
+                    >
+                    <input
+                    id="defaultFormCardNameEx"
+                      v-model="classtype"
+                      disabled
+                      type="text"
+                      class="form-control"
+                    />
+
+                    <!-- Default input name -->
+                  
+                  </b-col>
+              </b-row>
                 <b-row>
                   <b-col>
                     <!-- Default input name -->
@@ -397,6 +454,51 @@ export default {
               <!-- Default form subscription -->
         </div>
       </b-card>
+
+    <div class="animated fadeIn" >
+      <b-row >
+      <b-col md="12">
+          <b-card
+            class="card-wrap"
+            header="View Roads"
+          >
+           
+           <div class="mt-3">
+          <b-table
+            id="my-table"
+            :dark="dark"
+            :hover="hover"
+            :striped="striped"
+            ref="roles"
+            :bordered="bordered"
+            :filter="filter"
+            :responsive="true"
+            :current-page="currentPage"
+            :per-page="perPage"
+            :small="small"
+            :fixed="fixed"
+            :fields="permissionColumns"
+            :items="roads"
+            class="mt-3"
+         
+          >    </b-table>
+
+        
+          <div style="float: right">
+            <b-pagination
+              v-model="currentPage"
+              :per-page="perPage"
+              :total-rows="rows"
+              aria-controls="my-table"
+              hide-goto-end-buttons
+            ></b-pagination>
+          </div>
+        </div>
+        
+          </b-card>
+      </b-col>
+      </b-row>
+                 </div>
     </div>
     <!-- end row -->
   </Layout>

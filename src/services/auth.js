@@ -60,6 +60,9 @@ export const deletearea = (id) => serviceMaker(`/areamaster/admin/${id}`, method
 
 export const deleteroute = (id) => serviceMaker(`/routemaster/admin/${id}`, methods.DELETE, api.NGB)
 
+export const deletelgu = (id) => serviceMaker(`/LGU/admin/${id}`, methods.DELETE, api.NGB)
+
+
 export const deleteemployee = (id) => serviceMaker(`/employees/admin/delete/${id}`, methods.DELETE, api.NGB)
 
 export const deletestagingarea = (id) => serviceMaker(`/stagingarea/admin/${id}`, methods.DELETE, api.NGB) 
