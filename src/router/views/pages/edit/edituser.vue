@@ -74,6 +74,7 @@ export default {
         },
       ],
       finalModel: {},
+      file:"",
       selected: null,
       clientId: '',
         role:['ENCODER', 'PAYROLL', 'INSPECTOR', 'BILLING', 'ADMIN'],
@@ -141,6 +142,16 @@ export default {
     console.log(this.$route.params)
   },
   methods: {
+     readAgreement(e) {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      this.file = reader.result;
+    };
+    reader.onerror = err => {
+      console.error("reader : ", err);
+    };
+  },
      getid(){
         // console.log("haiiiiii",this.item2)
         this.areas.map(e=>{
@@ -543,7 +554,7 @@ export default {
                                   v-model.trim="form.area"
                                   class="form-control"
                                   type="text"
-                                  placeholder="Enter Country"
+                                  placeholder="Enter Area"
                                 
                                 />
                               </div>

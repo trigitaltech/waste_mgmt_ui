@@ -166,7 +166,7 @@ export default {
     <div class="animated fadeIn">
       <b-card
        
-        header="LGU"
+        header="LGU Employee"
 
           class="mt-10 ml-10 mr-10 mx-auto"
       >
@@ -175,7 +175,7 @@ export default {
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/CreateLguEmployee' })"
-          >Create LGU</b-button> 
+          >Create LGU Employee</b-button> 
         </b-col>
         <div class="mt-3">
           <b-table

@@ -41,57 +41,29 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-       item: {},
+       item: [],
         
         
       permissionColumns: [
         {
-          key: 'personal_ID_NO',
+          key: 'id',
 
-          label: 'Personal ID NO',
+          label: 'ID',
         },
          {
-          key: 'userName',
-          label: 'userName',
+          key: 'code',
+          label:'CODE',
         },
          {
-          key: 'phone',
+          key: 'name',
 
-          label: 'phone',
+          label: 'NAME',
         },
-         {
-          key: 'email',
-
-          label: 'email',
-        },
-        {
-          key: 'area',
-
-          label: 'Area',
-        },
-         {
-          key: 'city',
-
-          label: 'City',
-        },
-         {
-          key: 'state',
-
-          label: 'State',
-        },
-        
-         {
-          key: 'country',
-
-          label: 'Country',
-        },
-         
        
-
-        {
-          key: 'actions',
-          sortable: true,
-        },
+        // {
+        //   key: 'actions',
+        //   sortable: true,
+        // },
       ],
       items: [
         {
@@ -144,7 +116,7 @@ export default {
        try {
         NProgress.start()
       const result = await  days()
-      this.item = result.data.response.result
+      this.item = result.data.response.TripDays
        NProgress.done()
       } catch (error) {}
    

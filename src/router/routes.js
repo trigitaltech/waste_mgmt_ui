@@ -334,6 +334,15 @@ const inviewRoutes = [
     meta: { label: 'Users' },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
+  {
+    path: '/Employee',
+    name: 'Employee',
+    
+    icon: 'users',
+    component: () => lazyLoadView(import('@views/pages/inview/employement')),
+    meta: { label: 'Users' },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
   /*{
 
     path: '/Employee',
@@ -383,7 +392,7 @@ const inviewRoutes = [
   {
 
     path: '/LGU',
-    name: 'Lgu',
+    name: 'LGU',
     
     icon: 'user-plus',
     meta: { label: 'LGU' },
@@ -392,8 +401,16 @@ const inviewRoutes = [
     },
     children: [
       {
-        path: 'LguEmployees',
-        name: 'Lgu Employees',
+        path: 'Lgu',
+        name: 'Lgu',
+        icon: 'user',
+        component: () => lazyLoadView(import('@views/pages/inview/lgu')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+      {
+        path: 'LguEmployee',
+        name: 'LguEmployee',
         icon: 'users',
         component: () => lazyLoadView(import('@views/pages/inview/lguemployee')),
         meta: { authRequired: true },
@@ -404,17 +421,25 @@ const inviewRoutes = [
   {
 
     path: '/Hauler',
-    name: 'Hauler',
+    name: 'HAULERS',
     
-    icon: 'users',
+    icon: 'user-check',
     meta: { label: 'Hauler' },
     component: {
       render(c) { return c('router-view') }
     },
     children: [
       {
-        path: 'Employees',
-        name: 'Employees',
+        path: 'Haulers',
+        name: 'Haulers',
+        icon: 'user',
+        component: () => lazyLoadView(import('@views/pages/inview/haulers')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+      {
+        path: 'HaulerEmployees',
+        name: 'HaulerEmployees',
         icon: 'users',
         component: () => lazyLoadView(import('@views/pages/inview/hauleremployee')),
         meta: { authRequired: true },
@@ -574,10 +599,10 @@ const pagesRoutes = [
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
-        path: '/CreateLguEmployee',
-        name: 'CreateLguEmployee',
+        path: '/CreateLgu',
+        name: 'CreateLgu',
         icon: 'users',
-        component: () => lazyLoadView(import('@views/pages/account/CreateLguEmployee')),
+        component: () => lazyLoadView(import('@views/pages/account/Createlgu')),
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
