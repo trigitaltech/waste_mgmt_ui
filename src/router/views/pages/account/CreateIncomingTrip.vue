@@ -200,9 +200,11 @@ export default {
     getTruckType(){
       this.vehicles.map( e => {
         if(e.plateNo == this.plate)
-          this.trucktype = e.truckType
+        {
+          this.trucktype = e.vehicleType.code
+          this.body = e.vehicleNo
+        }
       })
-      console.log(this.trucktype)
     },
     getAreaId() {
 
@@ -228,7 +230,7 @@ export default {
 
 <template>
   <Layout>
-    <PageHeader :items="items" />
+    <PageHeader/>
     <div class="animated">
       <b-card
         header="Create Incoming Trip"
@@ -280,7 +282,6 @@ export default {
                       >
                       </multiselect>
                     </b-col>
-                  </b-col>
                   <b-col>
                       <label
                         for="defaultFormCardtextEx"
@@ -347,16 +348,7 @@ export default {
                     </b-form-select>
                   </b-col>
                   <b-col>
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Body</label
-                    >
-                    <input
-                      v-model="body"
-                      class="form-control"
-                      name="body"
-                    />
+                    
                   </b-col>
                 </b-row>
                 <b-row class="mt-3">
@@ -391,6 +383,19 @@ export default {
                 <b-row class="mt-3">
                   <b-col>
                     <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >Body</label
+                    >
+                    <input
+                      v-model="body"
+                      class="form-control"
+                      name="body"
+                      readonly
+                    />
+                  </b-col>
+                  <b-col>
+                    <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Driver Name</label
@@ -403,7 +408,6 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
-                  <b-col></b-col>
                 </b-row>
                 <b-row class="mt-3">
                   <b-col>

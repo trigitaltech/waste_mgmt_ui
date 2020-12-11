@@ -27,26 +27,7 @@ export default {
   },
   data() {
     return {
-      file:"",
-      plandata: '',
-      striped: false,
-      sid:"",
-      bordered: true,
-      filter: '',
-      perPage: 10,
-      hover: true,
-      currentPage: 1,
-      small: false,
-      dark: false,
-      fixed: false,
-      amount: '',
-      submitted: false,
-      title: 'Register',
-       item: 
-           {key:'resource',value
-           :'Frozen Yogurt', name: '159'},
-        
-        
+      areas:[],  
       permissionColumns: [
         {
           key: 'resource',
@@ -86,6 +67,8 @@ export default {
       },
       roledata1:[],
       rolesarray:[],
+      servingAreas:[],
+      baranggayCode:"",
      form: {
         lguName:"",
         lguCode:"",
@@ -111,7 +94,7 @@ export default {
         voucherNo: '',
       },
       item2:[],
-      roles:['ENCODER', 'VOLUME CHECKER','DISPATCHER'],
+      roles:[],
       rolename:"",
       titles: ['Mr.', 'Sri.', 'Mrs'],
       vouchernumber: '',
@@ -136,12 +119,28 @@ export default {
   mounted() {
     // this.getClientDetails()
     // this.getplans()
+    this.roles.push("LGU")
      this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     this.roledata()
     this.getplans()
+    this.getareas()
   },
   methods: {
+    async getareas() {
+      try {
+        const result = await Areamasters();
+        this.areas = result.data.response.areaMaster
+        this.areas.map(e=>{
+            if(e.areaName!=null)
+              this.servingAreas.push(e.areaName);
+        })
+        console.log(this.servingAreas)
+      } catch (error) { 
+        console.log(error);
+      }
+      console.log(this.servingAreas);
+    },
     getid(){
         // console.log("haiiiiii",this.item2)
         this.areas.map(e=>{
@@ -186,6 +185,12 @@ export default {
           }
         })
     },
+    async getBaranggayCode() {
+      this.areas.map( e => {
+        if(e.areaName == this.baranggayCode)
+          this.baranggayCode = e.code
+      })
+    },
      async roledata() {
        try {
       
@@ -207,9 +212,10 @@ export default {
      },
     async create() {
       try {
+        console.log(this.form.lguCode)
         const payload = {
           code: this.form.lguCode,
-          lguName:this.form.lguName,
+          lguName:this.form.userName,
           userName: this.form.userName,
           password: this.form.password,
           passwordStatus: 1,
@@ -227,21 +233,21 @@ export default {
           pin: this.form.postCode,
           isDeleted: false,
           status: 200,
-          type: this.rolename,
+          type: null,
           personal_ID_NO:this.form.personalidno,
           service_OFFICE: this.sid,
-          id_PROOF_DOC_URL: null,
-          baranggayCode: this.baranggayCode
+          id_PROOF_DOC_URL: null
+          //baranggayCode: this.baranggayCode
         }
         let result = await createLGUemployee(payload)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `Your Employee created Successfully`,
+            text: `LGU created Successfully`,
             duration: 5000,
           })
-          this.$router.push({path:'/LGU/LGUEmployees'})
+          this.$router.push({path:'/LGU/Lgu'})
         }
       } catch (e) {
          this.$toasted.error(e.message.error, {
@@ -281,33 +287,17 @@ export default {
                         </legend>
 
                         <div class="row">
-                          <div class="col-md-4">
-                            
-                           
-                        
-                              <div class="form-group mt-3 mt-sm-0">
-                                   <label for="default">LGU Name</label>
-                                 
-                              <input
-                                v-model.trim="lguName"
-                                placeholder="Enter LGU Name"
-                                class="form-control"
-                                type="text"
-                              />
-                                    </div>
-                           
-                           
-                            </div>
+                          
                             <div class="col-md-4">
                             
                            
                         
                               <div class="form-group mt-3 mt-sm-0">
-                                   <label for="default">LGU Employee Code</label>
+                                   <label for="default">Code</label>
                                  
                               <input
-                                v-model.trim="lguCode"
-                                placeholder="LGU Employee Name"
+                                v-model.trim="form.lguCode"
+                                placeholder="Code"
                                 class="form-control"
                                 type="text"
                               />
@@ -665,7 +655,7 @@ export default {
                                    <label for="default">Personal ID No</label>
                                  
                               <input
-                                v-model.trim="personalidno"
+                                v-model.trim="form.personalidno"
                                 placeholder="Enter Personal ID"
                                 class="form-control"
                                 type="number"
@@ -694,6 +684,24 @@ export default {
                         ></b-form-select>
                               </div>
                              </div>
+                             <div class="col-md-4">
+                            
+                           
+                        
+                              <div class="form-group mt-3 mt-sm-0">
+                                   <label for="default">Baranggay</label>
+                                <b-form-select
+                          v-model.trim="baranggayCode"
+                          placeholder="Select Baranggay"
+                          label="value"
+                          class="form-control"
+                          :options="servingAreas"
+                          @change="getBaranggayCode"
+                        ></b-form-select>
+                                    </div>
+                           
+                           
+                            </div>
                           </div>
                         </fieldset>
                       </div>

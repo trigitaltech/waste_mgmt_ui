@@ -41,7 +41,7 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-       item: {},
+       item: [],
         
         
       permissionColumns: [
@@ -144,8 +144,12 @@ export default {
        try {
         NProgress.start()
         const result = await  lguEmployees()
-        this.item = result.data.response.LGUMaster
-          console.log(this.item)
+        var data = result.data.response.LGUMaster
+        data.map( e => {
+          if(e.type!="ENCODER" && e.type!="VOLUME_CHECKER" && e.type!="DISPATCHER")
+            this.item.push(e)
+        })
+        console.log(this.item)
         NProgress.done()
       } catch (error) {}
     },
