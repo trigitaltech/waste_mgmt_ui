@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- employees,deleteemployee
+ employees,deleteemployee, classmaster
 } from '../../../../services/auth'
 
 export default {
@@ -115,7 +115,7 @@ export default {
   },
   mounted() {
   
-    // this.getemployees()
+    this.getclass()
   },
   methods: {
     async deleteReq(data) {
@@ -123,7 +123,7 @@ export default {
        var id = data.item.id
      try{
           
-        const result = await deleteemployee(data.item.id)
+        const result = await classes(data.item.id)
         if (result) {
           this.$swal({
             group: 'alert',
@@ -140,10 +140,10 @@ export default {
       }
      
     },
-    async getemployees() {
+    async getclass() {
        try {
         NProgress.start()
-      const result = await  employees()
+      const result = await  classmaster()
       this.item = result.data.response.result
        NProgress.done()
       } catch (error) {}

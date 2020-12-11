@@ -40,12 +40,16 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-      item: { key: 'resource', value: 'Frozen Yogurt', name: '159' },
+      item: [],
 
       RootmasterColumns: [
           {
           key: 'id',
           label: 'Route ID',
+        },
+           {
+          key: 'code',
+          label: 'Code',
         },
         {
           key: 'routeName',
@@ -64,14 +68,11 @@ export default {
         },
 
          {
-          key: 'route_distance',
+          key: 'routeDistance',
           label: 'Route Distance',
         },
       
-         {
-          key: 'city',
-          label: 'City',
-        },
+      
          {
           key: 'createdBy',
           label: 'CreatedBy',

@@ -27,6 +27,8 @@ export default {
   },
   data() {
     return {
+        classtype:this.$route.params.classType,
+      code:this.$route.params.code,
        description:this.$route.params.description,
       supervisor: this.$route.params.supervisor,
       city: this.$route.params.city,
@@ -163,6 +165,21 @@ export default {
               <!-- Default form subscription -->
               <form>
                 <b-row>
+                   <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Code</label
+                >
+                <input
+                  v-model="code"
+                  type="text"
+               
+                  placeholder="Enter Code"
+                  class="form-control"
+               disabled
+                />
+              </b-col>
                   <b-col>
                     <!-- Default input name -->
                     <label
@@ -224,7 +241,8 @@ export default {
                       type="email"
                       class="form-control"
                     />
-             
+                      </b-col>
+                      <b-col>
                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
@@ -238,9 +256,24 @@ export default {
                       class="form-control"
                     />
                   </b-col>
-
+   <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Class Type</label
+                >
+                <input
+                  v-model="classtype"
+                  type="text"
+               
+                  placeholder="Enter Code"
+                  class="form-control"
+               disabled
+                />
+              </b-col>
+                  </b-row>
                 <br/>
-                
+               <b-row>
                  <b-col>
                     <!-- Default input email -->
                     <label
@@ -255,11 +288,12 @@ export default {
                       type="email"
                       class="form-control"
                     />
-
+                 </b-col>
+                 <b-col>
                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
-                      >City</label
+                      >District</label
                     >
                     <input
                     id="defaultFormCardEmailEx"

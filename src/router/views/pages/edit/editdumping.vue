@@ -104,9 +104,9 @@ export default {
       try {
         const payload = {
            id: this.$route.params.id,
-           dumpingAreaName: {
-        areaName: this.dumpname
-    },
+          
+        dumpingAreaName: this.dumpname,
+   
             dumpingType: this.dumptype,
              supervisor: this.supervisor,
                 working_hrs:this.workinghours,
@@ -132,7 +132,7 @@ export default {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You Created Dumping Successfully`,
+            text: `You Edited Dumping Successfully`,
             duration: 5000,
           })
          
@@ -192,11 +192,10 @@ export default {
                       v-model="dumpname"
                     
                       type="text"
-                       oninvalid="this.setCustomValidity('Dumping Area Name is required ')"
-                                oninput="setCustomValidity('')"
+                     
                                placeholder="Enter Dumping area name"
                                 class="form-control"
-                                required
+                              
                     />
                   </b-col>
                     <b-col>
