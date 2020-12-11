@@ -334,7 +334,7 @@ const inviewRoutes = [
     meta: { label: 'Users' },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
-  {
+  /*{
 
     path: '/Employee',
     name: 'Employee',
@@ -378,7 +378,7 @@ const inviewRoutes = [
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
     ]
-  },
+  },*/
   
   {
 
@@ -399,8 +399,6 @@ const inviewRoutes = [
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
-     
-    
     ]
   },
   {
@@ -574,6 +572,14 @@ const pagesRoutes = [
     component: () => lazyLoadView(import('@views/pages/account/Createaddress')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+        path: '/CreateLguEmployee',
+        name: 'CreateLguEmployee',
+        icon: 'users',
+        component: () => lazyLoadView(import('@views/pages/account/CreateLguEmployee')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
     path: '/Createservicerequest',

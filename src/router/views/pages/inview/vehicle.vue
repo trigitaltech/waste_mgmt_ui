@@ -71,7 +71,7 @@ export default {
           label: 'plateNo',
         },
          {
-          key: 'vehicleType',
+          key: 'vehicleType.truckType',
 
           label: 'vehicleType',
         },

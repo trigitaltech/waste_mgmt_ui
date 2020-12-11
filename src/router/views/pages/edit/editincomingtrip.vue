@@ -1,8 +1,10 @@
 <script>
+  import Vue from 'vue'
 import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
+Vue.component('multiselect', Multiselect)
 import { Datetime } from 'vue-datetime';
 import moment from 'moment'
 import { ModelSelect } from 'vue-search-select'
@@ -23,6 +25,7 @@ export default {
     datetime: Datetime,
     Layout,
     PageHeader,
+    Multiselect
   },
   data() {
     return {
@@ -35,6 +38,8 @@ export default {
       driver:this.$route.params.driverName,
       collector:this.$route.params.driverName,
       servingArea:null,
+      servingRoute:[],
+      route:"",
       lgu:null,
       items: [
         {
@@ -111,7 +116,7 @@ export default {
                       <label
                         for="servingArea"
                         class="grey-text font-weight-dark ml-3"
-                        >Serving Area: </label
+                        >Baranggay: </label
                       >
                       <input
                         class="ml-2 form-control"
@@ -126,11 +131,11 @@ export default {
                       <label
                         for="lgu"
                         class="grey-text font-weight-dark ml-3"
-                        >LGU: </label
+                        >Control No: </label
                       >
                       <input
                         class="ml-2 form-control"
-                        v-model="lgu"
+                        v-model="controlNo"
                         name="lgu"
                         id="lgu"
                       />
@@ -145,12 +150,12 @@ export default {
                         class="grey-text font-weight-dark ml-3"
                         >Serving Route: </label
                       >
-                      <input
-                        class="ml-2 form-control"
-                        v-model="servingRoute"
-                        name="servingRoute"
-                        id="servingRoute"
-                      />
+                      <multiselect
+                        v-model="route"
+                        :multiple="true"       
+                        :options="servingRoute"
+                      >
+                      </multiselect>
                     </div>
                   </b-col>
                   <b-col></b-col>
@@ -180,6 +185,44 @@ export default {
                         readonly
                         v-model="tripStartTime"
                       />
+                    </div>
+                  </b-col>
+                </b-row>
+                <b-row>
+                  <b-col>
+                    <div class="form-group">
+                      <label
+                        for="lgu"
+                        class="grey-text font-weight-dark ml-3"
+                        >Hauler: </label
+                      >
+                      <input
+                        class="ml-2 form-control"
+                        v-model="controlNo"
+                        name="lgu"
+                        id="lgu"
+                      />
+                    </div>
+                  </b-col>
+                  <b-col>
+                    <div class="form-group">
+                      <label
+                        for="lgu"
+                        class="grey-text font-weight-dark ml-3"
+                        >Trip End Time: </label
+                      >
+                      <datetime 
+                      v-model="startTime"
+                      :format="{
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit'
+                      }"
+                      type="datetime"
+                      placeholder="SELECT Time"
+                 ></datetime>
                     </div>
                   </b-col>
                 </b-row>
@@ -229,11 +272,11 @@ export default {
                     <div class="form-group">
                       <label
                         class="grey-text font-weight-dark ml-3"
-                        >From Time: </label
+                        >LGU: </label
                       >
                       <input
                         class="ml-2 form-control"
-                        v-model="fromTime"
+                        v-model="lgu"
                       />
                     </div>
                   </b-col>
@@ -256,39 +299,14 @@ export default {
                     <div class="form-group">
                       <label
                         class="grey-text font-weight-dark ml-3"
-                        >To Time: </label
-                      >
-                      <input
-                        class="ml-2 form-control"
-                        v-model="toTime"
-                      />
-                    </div>
-                  </b-col>
-                </b-row>
-                <b-row>
-                  <b-col>
-                    <div class="form-group">
-                      <label
-                        class="grey-text font-weight-dark ml-3"
                         >Garbage Collectors: </label
                       >
-                      <input
-                        class="ml-2 form-control"
-                        readonly
-                        v-model="collector"
-                      />
-                    </div>
-                  </b-col>
-                  <b-col>
-                    <div class="form-group">
-                      <label
-                        class="grey-text font-weight-dark ml-3"
-                        >Dispatch Time: </label
+                      <multiselect
+                        v-model="route"
+                        :multiple="true"       
+                        :options="servingRoute"
                       >
-                      <input
-                        class="ml-2 form-control"
-                        v-model="dispatchTime"
-                      />
+                      </multiselect>
                     </div>
                   </b-col>
                 </b-row>
@@ -297,11 +315,11 @@ export default {
                     <div class="form-group">
                       <label
                         class="grey-text font-weight-dark ml-3"
-                        >Total Distance: </label
+                        >Helper: </label
                       >
                       <input
                         class="ml-2 form-control"
-                        v-model="totalDistance"
+                        v-model="volume"
                       />
                     </div>
                   </b-col>
@@ -312,11 +330,26 @@ export default {
                     <div class="form-group">
                       <label
                         class="grey-text font-weight-dark ml-3"
-                        >Volume Disposal: </label
+                        >Volume Collected: </label
                       >
                       <input
                         class="ml-2 form-control"
                         v-model="volume"
+                      />
+                    </div>
+                  </b-col>
+                  <b-col></b-col>
+                </b-row>
+                <b-row>
+                  <b-col>
+                    <div class="form-group">
+                      <label
+                        class="grey-text font-weight-dark ml-3"
+                        >Total KM: </label
+                      >
+                      <input
+                        class="ml-2 form-control"
+                        v-model="totalDistance"
                       />
                     </div>
                   </b-col>

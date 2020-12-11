@@ -153,13 +153,28 @@ export default {
       } catch (error) {}
      },
     async create() {
+      var vehicletype = [];
+      this.vehicleTypes.map( e => {
+        if(e.truckType == this.vehicletype)
+          vehicletype.push(e)
+      })
+      console.log(vehicletype)
       try {
         const payload = {
-          "vehicleType": this.vehicletype,
+          "vehicleType": {
+            "id":vehicletype[0].id,
+            "code":vehicletype[0].code,
+            "createdBy":vehicletype[0].createdBy,
+            "modifiedBy":vehicletype[0].modifiedBy,
+            "createdDate":vehicletype[0].createdDate,
+            "modifiedDate":vehicletype[0].modifiedDate,
+            "isDeleted":null,
+            "truckType":vehicletype[0].truckType
+          },
           "vehicleNo": this.vehicleno,
           "plateNo": this.plateno,
           "ownerName": this.ownername,
-          "ownerId": this.ownerid,
+          "ownerId": null,
           "servingArea": null,
           "servingRoute": null,
           "warrantyStatus": "NOT EXPIRED",
@@ -178,7 +193,7 @@ export default {
             duration: 5000,
           })
          
-           this.$router.push({path:'/Vehicle'})
+           this.$router.push({path:'/Hauler/Vehicle'})
             
         }
       } catch (e) {

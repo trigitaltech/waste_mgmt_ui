@@ -171,11 +171,11 @@ export default {
           class="mt-10 ml-10 mr-10 mx-auto"
       >
          <b-col md="12">
-          <!-- <b-button
+          <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/Createemployee' })"
-          >Create Employee</b-button> -->
+          >Create Hauler Employee</b-button>
         </b-col>
         <div class="mt-3">
           <b-table
