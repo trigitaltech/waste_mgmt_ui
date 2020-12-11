@@ -64,12 +64,17 @@ export default {
         },
       ],
       items: [
-        {
+         {
           text: 'Home',
           href: '/',
         },
+        
+         {
+          text: 'Users',
+          href: '#/Users',
+        },
         {
-          text: 'Users / Edit User',
+          text: 'Edit User',
           active: true,
         },
       ],

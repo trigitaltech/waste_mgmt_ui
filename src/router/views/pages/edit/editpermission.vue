@@ -40,12 +40,17 @@ export default {
       modifydate:new Date(),
       modifyby:"",
       items: [
-        {
+       
+         {
           text: 'Setup',
           href: '/',
         },
         {
-          text: 'Permissions / EditPermission',
+          text: 'Permissions',
+          href: '#/Setup/Permissions',
+        },
+        {
+          text: ' EditPermission',
           active: true,
         },
       ],

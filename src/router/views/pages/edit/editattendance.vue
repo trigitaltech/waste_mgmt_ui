@@ -56,12 +56,17 @@ export default {
         
       ],
       items: [
-        {
-          text: 'Setup',
+         {
+          text: 'Home',
           href: '/',
         },
+        
+         {
+          text: 'Attendances',
+          href: ' #/Employee/Attendance',
+        },
         {
-          text: 'Attendance / CHECK OUT',
+          text: 'CHECK OUT',
           active: true,
         },
       ],

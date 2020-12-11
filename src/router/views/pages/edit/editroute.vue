@@ -52,8 +52,12 @@ export default {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Route Master',
+          href: '#/Setup/RouteMaster',
+        },
         {
-          text: 'RouteMaster / Edit RouteMaster',
+          text: 'Edit RouteMaster',
           active: true,
         },
       ],

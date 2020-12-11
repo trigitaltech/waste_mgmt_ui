@@ -53,12 +53,16 @@ export default {
       title: 'Register',
     
       items: [
-        {
+         {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Roles',
+          href: '#/Setup/Roles',
+        },
         {
-          text: 'Roles / Edit Role',
+          text: 'Edit Role',
           active: true,
         },
       ],

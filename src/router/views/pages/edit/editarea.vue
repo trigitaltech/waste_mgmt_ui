@@ -12,7 +12,7 @@ import { editarea, users ,address} from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Create AreaMaster',
+    title: 'Edit Baranggay',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -58,12 +58,16 @@ export default {
       ],
       classtype:this.$route.params.classType,
       items: [
-        {
+         {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Baranggay',
+          href: '#/Setup/AreaMaster',
+        },
         {
-          text: 'Areas / Edit Areas',
+          text: 'Edit Baranggay',
           active: true,
         },
       ],
@@ -180,7 +184,7 @@ this.addres.map(e=>{
     <PageHeader :items="items" />
 
     <div class="animated fadeIn">
-      <b-card header="Edit Areas" class="mt-10 ml-10 mr-10 mx-auto">
+      <b-card header="Edit Baranggay" class="mt-10 ml-10 mr-10 mx-auto">
         <div class="mt-3">
           <!-- Default form subscription -->
           <form @submit.prevent="create">

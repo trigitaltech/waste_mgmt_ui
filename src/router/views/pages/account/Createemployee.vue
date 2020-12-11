@@ -64,12 +64,17 @@ export default {
       serviceoffice:"",
       personalidno:"",
       items: [
-        {
+         {
           text: 'Home',
           href: '/',
         },
+        
+         {
+          text: 'Employees',
+          href: '#/Employee/Employees',
+        },
         {
-          text: 'Employees/ Create Employee',
+          text: 'Create Employee',
           active: true,
         },
       ],

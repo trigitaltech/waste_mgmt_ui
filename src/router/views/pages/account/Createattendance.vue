@@ -53,12 +53,19 @@ export default {
         
       ],
       items: [
-        {
-          text: 'Setup',
+       
+         {
+          text: 'Home',
           href: '/',
         },
+        
+         {
+          text: 'Attendances',
+          href: ' #/Employee/Attendance',
+        },
+       
         {
-          text: 'Attendance / CHECK IN',
+          text: 'CHECK IN',
           active: true,
         },
       ],

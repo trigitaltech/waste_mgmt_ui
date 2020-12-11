@@ -50,12 +50,16 @@ export default {
       item:[ { value: null, text: 'Please select an user' }],
       lgu:"",
       items: [
-        {
+         {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Staging Area',
+          href: '#/Setup/StagingArea',
+        },
         {
-          text: 'Staging Area / Create Staging',
+          text: 'Create Staging',
           active: true,
         },
       ],

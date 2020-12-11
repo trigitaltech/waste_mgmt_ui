@@ -199,7 +199,7 @@ const inviewRoutes = [
      
       {
         path: 'AreaMaster',
-        name: 'Area Master',
+        name: 'Baranggay Master',
         
         icon: 'loader',
         component: () => lazyLoadView(import('@views/pages/inview/Areamaster')),
@@ -334,16 +334,16 @@ const inviewRoutes = [
     meta: { label: 'Users' },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
-  {
-    path: '/Employee',
-    name: 'Employee',
+  // {
+  //   path: '/Employee',
+  //   name: 'Employee',
     
-    icon: 'users',
-    component: () => lazyLoadView(import('@views/pages/inview/employement')),
-    meta: { label: 'Users' },
-    props: (route) => ({ user: store.state.auth.currentUser || {} }),
-  },
-  /*{
+  //   icon: 'users',
+  //   component: () => lazyLoadView(import('@views/pages/inview/employement')),
+  //   meta: { label: 'Users' },
+  //   props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  // },
+  {
 
     path: '/Employee',
     name: 'Employee',
@@ -370,24 +370,24 @@ const inviewRoutes = [
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
-      {
-        path: 'Tripdetails',
-        name: 'Trip Details',
-        icon: 'file-plus',
-        component: () => lazyLoadView(import('@views/pages/employee/Tripdetail')),
-        meta: { authRequired: true },
-        props: (route) => ({ user: store.state.auth.currentUser || {} }),
-      },
-      {
-        path: 'Servicerequest',
-        name: 'Service Request',
-        icon: 'alert-circle',
-        component: () => lazyLoadView(import('@views/pages/employee/servicerequest')),
-        meta: { authRequired: true },
-        props: (route) => ({ user: store.state.auth.currentUser || {} }),
-      },
+      // {
+      //   path: 'Tripdetails',
+      //   name: 'Trip Details',
+      //   icon: 'file-plus',
+      //   component: () => lazyLoadView(import('@views/pages/employee/Tripdetail')),
+      //   meta: { authRequired: true },
+      //   props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      // },
+      // {
+      //   path: 'Servicerequest',
+      //   name: 'Service Request',
+      //   icon: 'alert-circle',
+      //   component: () => lazyLoadView(import('@views/pages/employee/servicerequest')),
+      //   meta: { authRequired: true },
+      //   props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      // },
     ]
-  },*/
+  },
   
   {
 

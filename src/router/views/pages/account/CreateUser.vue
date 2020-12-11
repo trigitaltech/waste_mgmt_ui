@@ -67,8 +67,13 @@ export default {
           text: 'Home',
           href: '/',
         },
+        
+         {
+          text: 'Users',
+          href: '#/Users',
+        },
         {
-          text: 'Users / Create User',
+          text: 'Create User',
           active: true,
         },
       ],

@@ -58,11 +58,16 @@ export default {
       ownername:"",
       items: [
         {
-          text: 'Setup',
+          text: 'Home',
           href: '/',
         },
+        
+         {
+          text: 'Attendances',
+          href: ' #/Employee/Attendance',
+        },
         {
-          text: 'Attendance / CHECK OUT',
+          text: 'View Attendance',
           active: true,
         },
       ],
