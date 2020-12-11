@@ -41,7 +41,7 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-      item: {  },
+      item: [],
 
       StagingAreaColumns: [
         {
