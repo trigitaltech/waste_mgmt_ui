@@ -27,6 +27,8 @@ export default {
   },
   data() {
     return {
+      areaname:this.$route.params.areaName.areaName,
+      code:this.$route.params.code,
       areaid:this.$route.params.areaId,
       supervisor:this.$route.params.supervisor,
      routename:this.$route.params.routeName,
@@ -40,6 +42,8 @@ export default {
       modifydate: new Date(),
       modifyby:"",
       title: 'Register',
+    // roads:this.$route.params.routeRoads,
+       inputs: this.$route.params.routeRoads,
       option: [
         
         { value: 'mainroad', text: 'Mainroad' },
@@ -76,7 +80,8 @@ export default {
     this.modifyby = this.getUserDetails.user.username
     // this.getClientDetails()
     // this.getplans()
-    console.log(this.$route.params)
+    // this.roadsdata = this.$route.params.routeRoads
+    console.log("roads",this.roads)
     this.userdata()
      this.getplans()
   },
@@ -127,20 +132,34 @@ export default {
      
       } catch (error) {}
      },
+      add() {
+      this.inputs.push({
+     
+        
+        code: '',
+        roadName:'',
+        routeName:'',
+      
+      })
+      console.log(this.inputs)
+    },
+
+    remove(index) {
+      this.inputs.splice(index, 1)
+    },
     async create() {
       try {
         const payload = {
            id:this.$route.params.id,
-            routeName:this.routename,
-            routeType:this.routetype,
-            supervisor: this.supervisor,
-            route_distance:this.routedistance,
-            areaId:this.areaid,
-            areaName: this.areaname,
-            "isDeleted": false,
-       
-            description:this.description,
-            city:this.city
+            code: this.code,
+          routeName: this.routename,
+          routeType: this.routetype,
+          supervisor: this.supervisor,
+          areaName: this.areaname,
+          routeDistance: this.routedistance,
+          description: this.description,
+          isDeleted: false,
+          routeRoads: this.inputs,
         }
         let result = await editroute(payload)
         if (result) {
@@ -183,178 +202,169 @@ export default {
         <div class="mt-3">
               <!-- Default form subscription -->
              <form @submit.prevent="create">
-                <b-row>
-                  <b-col>
-                    <!-- Default input name -->
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                    >
-                     Route Name</label
-                    >
-                    <input
-                      id="defaultFormCardNameEx"
-                      v-model="routename"
-                     
-                      type="text"
-                         oninvalid="this.setCustomValidity('Route Name is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Select Routename"
-                                class="form-control"
-                                required
-                  
-                    />
+            <b-row>
+              <b-col>
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Area Name</label
+                >
+                <b-form-select
+                  v-model="areaname"
+                  :options="item2"
+                  oninvalid="this.setCustomValidity('Area Name is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Select Area Name"
+                  class="form-control"
+                  required
+                  @change="getid"
+                ></b-form-select>
+                <!-- Default input name -->
+              </b-col>
+              <b-col>
+                <!-- Default input name -->
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Route Name</label
+                >
+                <input
+                  id="defaultFormCardNameEx"
+                  v-model="routename"
+                  type="text"
+                  oninvalid="this.setCustomValidity('Route Name is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Enter Routename"
+                  class="form-control"
+                  required
+                />
 
-                
+                <!-- Default input text -->
+              </b-col>
 
-                  
-                    <!-- Default input text -->
-                  </b-col>
-                  
-                  <b-col>
-                     <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Route Type</label
-                    >
-                    <b-form-select
-                      v-model="routetype"
-                      :options="option"
-                        oninvalid="this.setCustomValidity('Route Type is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Select Route Type"
-                                class="form-control"
-                                required
-                
-                    ></b-form-select>
+              <br />
+            </b-row>
+            <br />
+            <b-row>
+              <b-col>
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                  >Route Type</label
+                >
+                <b-form-select
+                  v-model="routetype"
+                  :options="option"
+                  oninvalid="this.setCustomValidity('Route Type is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Select Route Type"
+                  class="form-control"
+                  required
+                ></b-form-select>
 
-                    <!-- Default input name -->
-                  
-                  </b-col>
-              
-                  <br />
-                
-                
-                  
-               
-                </b-row>
-                 <br/>
-                  <b-row>
-                 
-                  
-                  <b-col>
-                     <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                    >
-                     Area Name</label
-                    >
-                      <b-form-select
-                      v-model="areaname"
-                      :options="item2"
-                        oninvalid="this.setCustomValidity('Area Name is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Select Area Name"
-                                class="form-control"
-                                required
-              
-                       @change="getid"
-                    ></b-form-select>
-                    <!-- Default input name -->
-                  
-                  </b-col>
-              
-                  <br />
-                
-                
-                  
-               
-                </b-row>
-                <br/>
-                  <b-row>
-                    
-                      <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Supervisor</label
-                    >
-                   <b-form-select
+                <!-- Default input name -->
+              </b-col>
+
+              <b-col>
+                <!-- Default input name -->
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Code</label
+                >
+                <input
+                  id="defaultFormCardNameEx"
+                  v-model="code"
+                  type="text"
+                  oninvalid="this.setCustomValidity('code is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Enter code"
+                  class="form-control"
+                  required
+                />
+              </b-col>
+              <br />
+            </b-row>
+            <br />
+            <b-row>
+              <b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Supervisor</label
+                >
+                <b-form-select
                   v-model.trim="supervisor"
                   placeholder="Select Supervisor"
                   label="value"
                   :options="item"
-                     oninvalid="this.setCustomValidity('Supervisor is required ')"
-                                oninput="setCustomValidity('')"
-                             
-                                class="form-control"
-                                required
-              
+                  oninvalid="this.setCustomValidity('Supervisor is required ')"
+                  oninput="setCustomValidity('')"
+                  class="form-control"
+                  required
                 ></b-form-select>
-                  </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Route Distance</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="routedistance"
-                   
-                      type="text"
-                         oninvalid="this.setCustomValidity('Route distance is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Select Route Distance"
-                                class="form-control"
-                                required
-              
-                    />
-                  </b-col>
-                  </b-row>
-                <br/>
-                <b-row>
-                 <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Description</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="description"
-                      type="text"
-                      class="form-control"
-                    />
-                  </b-col>
-                  <b-col>
-                      <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >City</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="city"
-                      type="text"
-                      class="form-control"
-                    />
-                  </b-col>
-                  
-                </b-row>
-                
-                 <br/>
+              </b-col>
+              <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Route Distance</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="routedistance"
+                  type="text"
+                  oninvalid="this.setCustomValidity('Route distance is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Enter Route Distance"
+                  class="form-control"
+                  required
+                />
+              </b-col>
+            </b-row>
+            <br />
+            <b-row>
+              <b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Description</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="description"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Description"
+                />
+              </b-col>
+              <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >City</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="city"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter city"
+                />
+              </b-col>
+            </b-row>
 
-  
-                
-                <b-row>
-                  
-                  
-                   <!-- <b-col> -->
-                    <!-- Default input text -->
-                    <!-- <label
+            <br />
+
+            <b-row>
+              <!-- <b-col> -->
+              <!-- Default input text -->
+              <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Created Date</label
@@ -381,11 +391,11 @@ export default {
                     />
                   </b-col> -->
 
-                  <!-- <br/>
+              <!-- <br/>
 
                    <b-col> -->
-                    <!-- Default input text -->
-                    <!-- <label
+              <!-- Default input text -->
+              <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Created By</label
@@ -411,16 +421,99 @@ export default {
                       v-model="modifyby"
                     />
                   </b-col> -->
-                </b-row>
-              
-              
-                <br />
-                <button
-                          type="submit"
-                         class="btn btn-custome float-right btn-secondary mb-3"
-                          >Submit</button
-                        >
-              </form>
+            </b-row>
+            <!-- <b-row>
+              <b-col>
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Road Name</label
+                >
+                <multiselect
+                  :multiple="true"
+                  :close-on-select="true"
+                  v-model.trim="roads"
+                  placeholder="Select Roads"
+                  :options="option"
+                  @input="getcity"
+                ></multiselect>
+              </b-col>
+            </b-row> -->
+
+            <br />
+
+            <b-row v-for="(input, k) in inputs" :key="k">
+              <b-col md="4">
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Code</label
+                >
+
+                <input
+                  id="defaultFormCardtextEx"
+                  type="text"
+                  class="form-control"
+                  v-model="input.code"
+                  placeholder="Enter code"
+                />
+              </b-col>
+              <b-col md="4">
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Road Name</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  type="text"
+                  class="form-control"
+                  v-model="input.roadName"
+                  placeholder="Enter roadname"
+                />
+              </b-col>
+              <b-col md="4">
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Route Name</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  type="text"
+                  class="form-control"
+                  v-model="input.routeName"
+                  placeholder="Enter routename"
+                />
+              </b-col>
+              <b-col>
+                <span>
+                  <i
+                    class="fas fa-minus-circle"
+                    @click="remove(k)"
+                    v-show="k || (!k && inputs.length > 1)"
+                    >Remove</i
+                  >
+                  <i
+                    class="fas fa-plus-circle"
+                    @click="add(k)"
+                    v-show="k == inputs.length - 1"
+                    >Add Roads</i
+                  >
+                </span>
+              </b-col>
+            </b-row>
+
+            <button
+              type="submit"
+              class="btn btn-custome float-right btn-secondary mb-3"
+              >Submit</button
+            >
+          </form>
               <!-- Default form subscription -->
         </div>
       </b-card>
