@@ -7,6 +7,7 @@ import NProgress from 'nprogress/nprogress'
 import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
 import { Datetime } from 'vue-datetime';
 import Multiselect from 'vue-multiselect'
+import moment from 'moment';
 Vue.component('multiselect', Multiselect)
 import {
   // eslint-disable-next-line no-unused-vars
@@ -20,10 +21,15 @@ export default {
   },
   data() {
     return{
+      inputs: [
+        {
+          name: ''
+        }
+      ],
       areadata:[],
       areaarray:"",
       routedate:[],
-      routearray:"",
+      routearray:[],
       emp:[],
       controlno:"",
       area:"",
@@ -56,7 +62,15 @@ export default {
     };
   },
   components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime, },
+  computed: {
+    getUserDetails() {
+      return this.$store.getters['auth/loggedInDetails']
+    },
+  },
   mounted() {
+    this.tripDate = moment(new Date()).format("DD-MM-YYYY")
+    this.startTime = moment(new Date()).format("DD-MM-YYYY hh:mm A")
+    console.log(this.tripDate+" "+this.startTime)
     this.areas();
     this.routes();
     this.employeedata()
@@ -75,7 +89,7 @@ export default {
         this.routedata.map(e=>{
           if(this.route === e.routeName){
           
-            this.routearray = e
+            this.routearray.push(e)
           }
         })
     },
@@ -131,35 +145,31 @@ export default {
       })
       } catch (error) {}
     },
+    getRouteObject(name) {
+      this.routedata.map( e => {
+        if(name == e.routeName) {
+          console.log(e)
+          return e
+        }
+      })
+    },
     async create() {
       try{        
-        console.log(this.areaarray)
+        const date = moment(this.startTime).format("YYYY-MM-DDThh:mm:SS+00:00")
+        console.log(date)
+        const areaarray = Object.assign({},areaarray,this.areaarray)
         let payload = {
             controlNo: this.controlno,
             tripDate: this.tripDate,
+            lgu: this.lgu,
             bodyNo: this.body,
             plateNo: this.plate,
             truckType: this.trucktype,
             collectionStartTime: this.startTime,
-            "servingArea": {
-                "id": this.areaarray.id,
-                "areaName": this.areaarray.areaName,
-                "areaType": this.areaarray.areaType,
-                "supervisor": this.areaarray.supervisor,
-                "areaSqKm": this.areaarray.areaSqKm,
-                "isDeleted": true,
-                "createdDate": this.areaarray.createdDate,
-                "createdBy": this.areaarray.createdBy,
-                "modifiedDate": this.areaarray.modifiedDate,
-                "modifiedBy": this.areaarray.modifiedBy,
-                "state": this.areaarray.state,
-                "country": this.areaarray.country,
-                "description": this.areaarray.description,
-                "city": this.areaarray.city,
-                "zip": this.areaarray.zip
-            },
+            "servingArea": areaarray,
             "servingRoute": {
                 "id": this.routearray.id,
+                "code": this.routearray.code,
                 "routeName": this.routearray.routeName,
                 "routeType": this.routearray.routeType,
                 "supervisor": this.routearray.supervisor,
@@ -167,21 +177,32 @@ export default {
                 "areaId": this.routearray.areaId,
                 "areaName": this.areaarray.areaName,
                 "isDeleted": false,
+                "routeRoads":[],
                 "createdDate": this.routearray.createdDate,
                 "createdBy": "",
                 "modifiedDate": this.routearray.modifiedDate,
                 "modifiedBy": "",
-                "description": this.routearray.description,
-                "city": this.routearray.city
+                "description": this.routearray.description
             },
-            driverName: this.driver,
-            driverId: this.driverid,
-            guide: "guide",
-            isDeleted: false,
-            contractor_DISPATCHER_NAME: this.contractor,
-            lgu: this.lgu
+            "helperId":199,
+           "helperName":null,
+           "driverId":this.driverid,
+           "driverName":this.driver,
+           "contractorDispatcherName":null,
+           "contractorDispatcherId":null,
+           "contractorDispatcherVerified":null,
+           "volumeCheckerName":null,
+           "volumeCheckerId":null,
+           "volumeCheckerVerified":null,
+           "volumeCheckerMeasuredVolume":null,
+           "volumeCheckerTotalKmServed":null,
+           "isDeleted":false,
+          "status":"INITIATED",
+          "createdBy":this.getUserDetails.user.username,
+          "createdDate":this.tripDate,
+          "modifiedBy":this.getUserDetails.user.username,
+          "modifiedDate":this.tripDate
         }
-        console.log(payload);
         const result = await CreateIncomingTrip(payload);
         if (result) {
           this.$swal({
@@ -206,23 +227,12 @@ export default {
         }
       })
     },
-    getAreaId() {
-
+    add(index) {
+      if(this.inputs.length <=4)
+       this.inputs.push({ name: '' });
     },
-    getRouteId() {
-
-    },
-    getDriverId() {
-
-    },
-    getContractorId() {
-
-    },
-    getCollectorId() {
-
-    },
-    getLguId() {
-
+    remove(index) {
+      this.inputs.splice(index, 1);
     }
   }
 }
@@ -302,16 +312,12 @@ export default {
                       class="grey-text font-weight-dark"
                       >Trip Date</label
                     >
-                   <datetime 
+                    <input
+                      type="text"
+                      readonly
                       v-model="tripDate"
-                      :format="{
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: 'numeric'
-                      }"
-                      type="date"
-                      placeholder="SELECT Date"
-                 ></datetime>
+                      class="form-control"
+                    />
                   </b-col>
                   <b-col class="ml-3">
                     <label
@@ -319,18 +325,12 @@ export default {
                       class="grey-text font-weight-dark mr-2"
                       >Trip Start Time</label
                     >
-                    <datetime 
+                    <input
                       v-model="startTime"
-                      :format="{
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: 'numeric',
-                        hour: 'numeric',
-                        minute: '2-digit'
-                      }"
-                      type="datetime"
-                      placeholder="SELECT Time"
-                 ></datetime>
+                      class="form-control"
+                      readonly
+                      type="text"
+                    />
                   </b-col>
                 </b-row>
                 <b-row class="mt-3">
@@ -430,6 +430,13 @@ export default {
                       class="grey-text font-weight-dark"
                       >Garbage Collectors</label
                     >
+                    <!--<div class="form-group" v-for="(input,k) in inputs" :key="k">
+                      <input type="text" class="form-control" v-model="input.name">
+                      <span>
+                          <i class="fas fa-minus-circle" @click="remove(k)" v-show="k || ( !k && inputs.length > 1)"></i>
+                          <i class="fas fa-plus-circle" @click="add(k)" v-show="k == inputs.length-1"></i>
+                      </span>
+                  </div>-->
                     <multiselect
                         v-model="route"
                         :multiple="true"       
@@ -439,7 +446,8 @@ export default {
                   </b-col>
                 </b-row>
                 <button
-                   class="btn btn-custome float-right btn-secondary mt-3 mr-2"
+                  type="submit"
+                   class="btn float-right btn-secondary mt-3 mr-2"
                   >Submit</button>
               </form>
             </div>

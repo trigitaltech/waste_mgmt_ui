@@ -174,7 +174,7 @@ export default {
           <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({ path: '/Createemployee' })"
+            @click="$router.push({ path: '/Createhauleremployee' })"
           >Create Hauler Employee</b-button>
         </b-col>
         <div class="mt-3">

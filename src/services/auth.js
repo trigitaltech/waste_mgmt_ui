@@ -99,6 +99,8 @@ export const createrole = (payload) => serviceMaker(`/roles/admin`, methods.POST
 
 export const createemployee = (payload) => serviceMaker(`/employees/admin/create`, methods.POST, api.NGB, payload)
 
+export const createhauler = (payload) => serviceMaker(`/haulermaster/admin`, methods.POST, api.NGB, payload)
+
 export const createLGUemployee = (payload) => serviceMaker(`/LGU/admin/create`, methods.POST, api.NGB, payload)
 
 export const createvehicle = (payload) => serviceMaker(`/vehicles/admin/encoders`, methods.POST, api.NGB, payload)
@@ -138,6 +140,8 @@ export const editvehicle = (payload) => serviceMaker (`/vehicles/admin/encoders/
 export const plandetails = () => serviceMaker(`/chargecode/template`, methods.GET, api.NGB)
 
 export const employees = () => serviceMaker(`/employees/admin/readAll`, methods.GET, api.NGB)
+
+export const haulers = () => serviceMaker(`/haulermaster/all`, methods.GET, api.NGB)
 
 export const lguEmployees = () => serviceMaker(`/LGU/all`, methods.GET, api.NGB)
 

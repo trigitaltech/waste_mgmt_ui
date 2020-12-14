@@ -50,7 +50,7 @@ export default {
           href: '/',
         },
         {
-          text: 'LGU/ Create LGU',
+          text: 'LGU/ Create LGU Employee',
           active: true,
         },
       ],
@@ -94,7 +94,7 @@ export default {
         voucherNo: '',
       },
       item2:[],
-      roles:[],
+      roles:['ENCODER','VOLUME_CHECKER','DISPATCHER'],
       rolename:"",
       titles: ['Mr.', 'Sri.', 'Mrs'],
       vouchernumber: '',
@@ -119,7 +119,6 @@ export default {
   mounted() {
     // this.getClientDetails()
     // this.getplans()
-    this.roles.push("LGU")
      this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     this.roledata()
@@ -233,7 +232,7 @@ export default {
           pin: this.form.postCode,
           isDeleted: false,
           status: 200,
-          type: null,
+          type: this.rolename,
           personal_ID_NO:this.form.personalidno,
           service_OFFICE: this.sid,
           id_PROOF_DOC_URL: null
@@ -244,10 +243,10 @@ export default {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `LGU created Successfully`,
+            text: `LGU Employee created Successfully`,
             duration: 5000,
           })
-          this.$router.push({path:'/LGU/Lgu'})
+          this.$router.push({path:'/LGU/Lguemployee'})
         }
       } catch (e) {
          this.$toasted.error(e.message.error, {
@@ -274,7 +273,7 @@ export default {
       <div class="row">
         <div class="col-xl-12  mx-auto">
           <b-card
-            header="Create LGU"
+            header="Create LGU Employee"
           >
             <div class="card-body">
               <ValidationObserver v-slot="{ handleSubmit }">

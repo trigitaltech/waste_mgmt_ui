@@ -9,12 +9,12 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- createLGUemployee,roles,Areamasters
+ createemployee,Areamasters
 } from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Create User',
+    title: 'Create Employee',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -27,7 +27,24 @@ export default {
   },
   data() {
     return {
-      areas:[],  
+      plandata: '',
+      striped: false,
+      bordered: true,
+      filter: '',
+      perPage: 10,
+      hover: true,
+      currentPage: 1,
+      small: false,
+      dark: false,
+      fixed: false,
+      amount: '',
+      submitted: false,
+      title: 'Register',
+       item: 
+           {key:'resource',value
+           :'Frozen Yogurt', name: '159'},
+        
+        
       permissionColumns: [
         {
           key: 'resource',
@@ -44,35 +61,38 @@ export default {
           sortable: true,
         },
       ],
+      serviceoffice:"",
+      personalidno:"",
       items: [
-        {
+         {
           text: 'Home',
           href: '/',
         },
+        
+         {
+          text: 'Employees',
+          href: '#/Employee/Employees',
+        },
         {
-          text: 'LGU/ Create LGU',
+          text: 'Create Employee',
           active: true,
         },
       ],
       finalModel: {},
+      employeetype:"",
       selected: null,
       clientId: '',
       options: ['DAF'],
-      serviceoffice:"",
+      item:[ { value: 'INTERNAL', text: 'INTERNAL' },
+        { value: 'DRIVER', text: 'DRIVER' },
+          { value: 'CONTRACTOR', text: 'CONTRACTOR' },
+          { value: 'HELPER', text: 'HELPER' },
+          { value: 'OPERATOR', text: 'OPERATOR' },
+          { value: 'PALERO', text: 'PALERO' }],
       file:"",
-     
-      item: {
-        value: '',
-        text: '',
-      },
-      roledata1:[],
-      rolesarray:[],
-      servingAreas:[],
-      baranggayCode:"",
+      item2:[],
+      sid:"",
      form: {
-        lguName:"",
-        lguCode:"",
-        personalidno:"",
         personalTitle: '',
         firstName: '',
         middleName: '',
@@ -93,10 +113,9 @@ export default {
         amount: 0,
         voucherNo: '',
       },
-      item2:[],
-      roles:[],
-      rolename:"",
+      areas:[],
       titles: ['Mr.', 'Sri.', 'Mrs'],
+      item1:[],
       vouchernumber: '',
       genderOpt: ['Male', 'Female', 'Other'],
       cityOpt: [],
@@ -118,29 +137,11 @@ export default {
   },
   mounted() {
     // this.getClientDetails()
-    // this.getplans()
-    this.roles.push("LGU")
-     this.createdby = this.getUserDetails.user.username
-    this.modifyby = this.getUserDetails.user.username
-    this.roledata()
     this.getplans()
-    this.getareas()
+      this.createdby = this.getUserDetails.user.username
+    this.modifyby = this.getUserDetails.user.username
   },
   methods: {
-    async getareas() {
-      try {
-        const result = await Areamasters();
-        this.areas = result.data.response.areaMaster
-        this.areas.map(e=>{
-            if(e.areaName!=null)
-              this.servingAreas.push(e.areaName);
-        })
-        console.log(this.servingAreas)
-      } catch (error) { 
-        console.log(error);
-      }
-      console.log(this.servingAreas);
-    },
     getid(){
         // console.log("haiiiiii",this.item2)
         this.areas.map(e=>{
@@ -150,16 +151,6 @@ export default {
                         //  console.log("haiiiiii",this.sid)
         })
       },
-       readAgreement(e) {
-    const reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = () => {
-      this.file = reader.result;
-    };
-    reader.onerror = err => {
-      console.error("reader : ", err);
-    };
-  },
      async getplans() {
        try {
         const result = await Areamasters()
@@ -178,76 +169,55 @@ export default {
      
       } catch (error) {}
      },
-            getroles(){
-        this.roledata1.map(e=>{
-          if(this.rolename === e.name){
-            this.rolesarray.push(e)
-          }
-        })
-    },
-    async getBaranggayCode() {
-      this.areas.map( e => {
-        if(e.areaName == this.baranggayCode)
-          this.baranggayCode = e.code
-      })
-    },
-     async roledata() {
-       try {
-      
-      const result = await roles()
-      this.roledata1 = result.data.response.RoleMaster
-      // console.log("users",data[0].userName)
-      // JSON.parse(JSON.stringify(result))
-      // for(i=0;i<data.length;i++){
-      //   this.item[i]=data[i].userName
-      // }
-
-      // this.roledata1.map(e=>{
-      // this.roles.push(e.name)
-      // console.log("user",e)
-      // })
-      //  console.log("users",this.item)
-     
-      } catch (error) {}
-     },
+      readAgreement(e) {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      this.file = reader.result;
+    };
+    reader.onerror = err => {
+      console.error("reader : ", err);
+    };
+  },
     async create() {
       try {
-        console.log(this.form.lguCode)
-        const payload = {
-          code: this.form.lguCode,
-          lguName:this.form.userName,
-          userName: this.form.userName,
-          password: this.form.password,
-          passwordStatus: 1,
-          email: this.form.email,
-          phone: this.form.number,     
-          contactSalutation:this.form.personalTitle,
-          contactfirstName: this.form.firstName,
-          contactmiddleName: this.form.middleName,
-          contactlastName: this.form.lastName,
-          addressLane1: this.form.address,
-          addressLane2: this.form.address2,
-          city: this.form.city,
-          state: this.form.state,
-          country: this.form.country,
-          pin: this.form.postCode,
-          isDeleted: false,
-          status: 200,
-          type: null,
-          personal_ID_NO:this.form.personalidno,
-          service_OFFICE: this.sid,
-          id_PROOF_DOC_URL: null
-          //baranggayCode: this.baranggayCode
-        }
-        let result = await createLGUemployee(payload)
+        const payload =              {
+                userName: this.form.userName,
+                password: this.form.password,
+                passwordStatus: 1,
+                email: this.form.email,
+                phone: this.form.number,
+                salutation: this.form.personalTitle,
+                firstName: this.form.firstName,
+                middleName: this.form.middleName,
+                lastName: this.form.lastName,
+                addressLine1: this.address,
+                addressLine2: this.address2,
+                area: this.form.area,
+                city: this.form.city,
+                state: this.form.state,
+                country: this.form.country,
+                pin: this.form.postCode,
+                isDeleted: false,
+                status: 200,
+                createdDate: this.createddate,
+                modifiedDate: this.modifydate,
+                createdBy: this.createdby,
+                modifiedBy: this.modifyby,
+                personal_ID_NO: this.personalidno,
+                id_PROOF_DOC_URL:this.file,
+                service_OFFICE: this.sid,
+                type:this.employeetype
+            }
+        let result = await createemployee(payload)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `LGU created Successfully`,
+            text: `Your Created Employee Successfully`,
             duration: 5000,
           })
-          this.$router.push({path:'/LGU/Lgu'})
+          this.$router.push({path:'/Employee/Employees'})
         }
       } catch (e) {
          this.$toasted.error(e.message.error, {
@@ -274,7 +244,8 @@ export default {
       <div class="row">
         <div class="col-xl-12  mx-auto">
           <b-card
-            header="Create LGU"
+            header="Create Hauler Employee"
+            
           >
             <div class="card-body">
               <ValidationObserver v-slot="{ handleSubmit }">
@@ -287,24 +258,6 @@ export default {
                         </legend>
 
                         <div class="row">
-                          
-                            <div class="col-md-4">
-                            
-                           
-                        
-                              <div class="form-group mt-3 mt-sm-0">
-                                   <label for="default">Code</label>
-                                 
-                              <input
-                                v-model.trim="form.lguCode"
-                                placeholder="Code"
-                                class="form-control"
-                                type="text"
-                              />
-                                    </div>
-                           
-                           
-                            </div>
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Personal Title</label>
@@ -538,7 +491,7 @@ export default {
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Address"
                                 class="form-control"
-                                
+                                required
                               />
                               <!-- <input
                                     v-model.trim="form.address"
@@ -566,7 +519,7 @@ export default {
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Address"
                                 class="form-control"
-                                
+                                required
                               />
                             </div>
                             </div> 
@@ -577,7 +530,7 @@ export default {
                                   v-model.trim="form.area"
                                   class="form-control"
                                   type="text"
-                                  placeholder="Enter Country"
+                                  placeholder="Enter Area"
                                 
                                 />
                               </div>
@@ -597,9 +550,9 @@ export default {
                            <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">City</label>
-                                  <input
+                               <input
                                 v-model.trim="form.city"
-                                placeholder="Enter City"
+                                placeholder="Enter city"
                                 class="form-control"
                                 type="text"
                               />
@@ -629,14 +582,23 @@ export default {
                                 />
                               </div>
                             </div>
-                              
-                            <div class="col-md-4">
-                            
-                           
-                        
+                            <div class="col-md-3">
+                              <div class="form-group mt-3 mt-sm-0">
+                                   <label for="default">Employee Type</label>
+                                 
+                                           <b-form-select
+                                           v-model.trim="employeetype"
+                                            class="form-control"
+                                           :options="item"
+                                              
+                                           ></b-form-select>
+                                    </div>
+                            </div>
+                            <div class="col-md-3">
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Service office</label>
                                  
+                           
                                <b-form-select
                                            v-model.trim="serviceoffice"
                                             :options="item2"
@@ -647,7 +609,7 @@ export default {
                            
                            
                             </div>
-                              <div class="col-md-4">
+                              <div class="col-md-3">
                             
                            
                         
@@ -655,7 +617,7 @@ export default {
                                    <label for="default">Personal ID No</label>
                                  
                               <input
-                                v-model.trim="form.personalidno"
+                                v-model.trim="personalidno"
                                 placeholder="Enter Personal ID"
                                 class="form-control"
                                 type="number"
@@ -664,28 +626,23 @@ export default {
                            
                            
                             </div>
-                             <div class="col-md-4">
-                            
-                           
-                        
+                             <div class="col-md-3">
                               <div class="form-group mt-3 mt-sm-0">
-                                      <label
-                              for="defaultFormCardEmailEx"
-                              class="grey-text font-weight-dark"
-                              >Type</label
-                            >
-                            <b-form-select
-                          v-model.trim="rolename"
-                          placeholder="Select Supervisor"
-                          label="value"
-                          class="form-control"
-                          :options="roles"
-                          @change="getroles"
-                        ></b-form-select>
-                              </div>
-                             </div>
+                                   <label for="default">ID Proof</label>
+                                 
+                                <b-form-file
+                                :state="Boolean(file)"
+                                placeholder="Choose a file..."
+                                drop-placeholder="Drop file here..."
+                                @change="readAgreement"
+                                ></b-form-file>
+                                    </div>
+                            </div>
+                            
                           </div>
+                          
                         </fieldset>
+                        
                       </div>
 
                     <!-- <div class="col-md-12">
@@ -810,6 +767,8 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
+<style lang="scss">
+</style>
 <style lang="sass" scoped>
 .edit
   color: #a7a7a7 !important

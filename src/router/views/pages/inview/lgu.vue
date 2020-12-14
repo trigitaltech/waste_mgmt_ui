@@ -45,11 +45,6 @@ export default {
         
         
       permissionColumns: [
-        {
-          key: 'personal_ID_NO',
-
-          label: 'Personal ID NO',
-        },
          {
           key: 'userName',
           label: 'userName',
@@ -63,11 +58,6 @@ export default {
           key: 'email',
 
           label: 'email',
-        },
-        {
-          key: 'area',
-
-          label: 'Area',
         },
          {
           key: 'city',
@@ -131,7 +121,7 @@ export default {
             text: `You Deleted Lgu Successfully`,
             duration: 5000,
           })
-         this.refresh()
+         this.getemployees()
         }
       } catch  (e) {
          this.$toasted.error(e.message.error, {
