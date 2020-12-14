@@ -166,7 +166,17 @@ export const Tripoutgoing = (id) => serviceMaker(`/tripoutgoing/system/${id}`, m
 export const searchvoucher = (id) => serviceMaker(`/vouchers/verify?pinNumber=${id}`, methods.GET, api.NGB)
 
 
+export const getoutgoingtrip = (id,payload) => serviceMaker(
+    `/getoutgoingtripbydatefilter/${id}`,
+    methods.POST,
+    api.NGB,payload
+  );
 
+  export const getincomingtrip = (id,payload) => serviceMaker(
+    `/getincomingtripbydatefilter/${id}`,
+    methods.POST,
+    api.NGB,payload
+  );
 
 
 

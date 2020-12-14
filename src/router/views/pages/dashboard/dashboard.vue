@@ -226,7 +226,7 @@ export default {
                         class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
                         >TRIPS INCOMING</span
                       >
-                      <h2 class="mb-0 text-dark-blue">2000$</h2>
+                      <h2 class="mb-0 text-dark-blue">0$</h2>
                     </div>
                     <div class="align-self-center" style="position: relative;">
                       <i
@@ -266,7 +266,7 @@ export default {
                           class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
                           >TRIP OUTGOING</span
                         >
-                        <h2 class="mb-0 text-dark-blue">200</h2>
+                        <h2 class="mb-0 text-dark-blue">0</h2>
                       </div>
                       <div
                         class="align-self-center"
@@ -307,7 +307,7 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
                         class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
                         >STAFF ATTENDANCE</span
                       >
-                      <h2 class="mb-0 text-dark-blue">20000</h2>
+                      <h2 class="mb-0 text-dark-blue">0</h2>
                     </div>
                     <div class="align-self-center" style="position: relative;">
                       <i
@@ -344,7 +344,7 @@ background-image: linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%);
                         class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
                         >FUEL CONSUMED</span
                       >
-                      <h2 class="mb-0 text-dark-blue">2000</h2>
+                      <h2 class="mb-0 text-dark-blue">0</h2>
                     </div>
                     <div class="align-self-center" style="position: relative;">
                       <i

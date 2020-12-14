@@ -46,7 +46,7 @@ export default {
         
       permissionColumns: [
         {
-          key: 'personal_ID_NO',
+          key: 'id',
 
           label: 'Personal ID NO',
         },
@@ -144,7 +144,8 @@ export default {
        try {
         NProgress.start()
       const result = await haulers()
-      this.item = result.data.response.result
+      this.item = result.data.response.HaulerMaster
+
        NProgress.done()
       } catch (error) {}
    

@@ -583,6 +583,38 @@ const inviewRoutes = [
 // pageRoute
 const pagesRoutes = [
   {
+    path: '/Encoder',
+    name: 'Encoder',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/encoder/encoder')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Controlchecker',
+    name: 'Controlchecker',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/controlchecker/controlchecker')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Volumechecker',
+    name: 'Volumechecker',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/volumechecker/volumechecker')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Billingperson',
+    name: 'Billingperson',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/billingperson/billingperson')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
     path: '/Treeview',
     name: 'Treeview',
     icon: 'check-square',
