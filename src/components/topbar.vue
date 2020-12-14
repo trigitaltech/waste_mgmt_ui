@@ -76,7 +76,7 @@ export default {
         class="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu float-right mb-0"
       >
         <li class="d-none d-sm-block">
-					<div class="app-search">
+					<!-- <div class="app-search">
 						<form>
 							<div class="input-group">
 								<input
@@ -87,7 +87,7 @@ export default {
 								<feather type="search" class="align-middle"></feather>
 							</div>
 						</form>
-					</div>
+					</div> -->
 				</li>
         <b-nav-item-dropdown
           right
