@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- employees,deleteemployee
+ haulers,deleteemployee
 } from '../../../../services/auth'
 
 export default {
@@ -143,7 +143,7 @@ export default {
     async getemployees() {
        try {
         NProgress.start()
-      const result = await  employees()
+      const result = await haulers()
       this.item = result.data.response.result
        NProgress.done()
       } catch (error) {}
@@ -174,7 +174,7 @@ export default {
           <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({ path: '/Create' })"
+            @click="$router.push({ path: '/Createhauler' })"
           >Create Haulers</b-button>
         </b-col>
         <div class="mt-3">

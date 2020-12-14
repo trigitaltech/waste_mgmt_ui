@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- lguEmployees,deleteemployee
+ lguEmployees,deletelgu
 } from '../../../../services/auth'
 
 export default {
@@ -41,15 +41,10 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-       item: {},
+       item: [],
         
         
       permissionColumns: [
-        {
-          key: 'personal_ID_NO',
-
-          label: 'Personal ID NO',
-        },
          {
           key: 'userName',
           label: 'userName',
@@ -63,11 +58,6 @@ export default {
           key: 'email',
 
           label: 'email',
-        },
-        {
-          key: 'area',
-
-          label: 'Area',
         },
          {
           key: 'city',
@@ -123,7 +113,7 @@ export default {
        var id = data.item.id
      try{
           
-        const result = await deleteemployee(data.item.id)
+        const result = await deletelgu(data.item.id)
         if (result) {
           this.$swal({
             group: 'alert',
@@ -131,7 +121,7 @@ export default {
             text: `You Deleted Employee Successfully`,
             duration: 5000,
           })
-         this.refresh()
+         this.getemployees()
         }
       } catch  (e) {
          this.$toasted.error(e.message.error, {
@@ -144,7 +134,11 @@ export default {
        try {
         NProgress.start()
         const result = await  lguEmployees()
-        this.item = result.data.response.LGUMaster
+        const data = result.data.response.LGUMaster
+        data.map( e => {
+          if(e.type=="ENCODER" || e.type=="VOLUME_CHECKER" || e.type=="DISPATCHER")
+            this.item.push(e)
+        })
           console.log(this.item)
         NProgress.done()
       } catch (error) {}
@@ -174,7 +168,7 @@ export default {
           <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({ path: '/CreateLguEmployee' })"
+            @click="$router.push({ path: '/Createlguemployee' })"
           >Create LGU Employee</b-button> 
         </b-col>
         <div class="mt-3">

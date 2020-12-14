@@ -41,15 +41,10 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-       item: {},
+       item: [],
         
         
       permissionColumns: [
-        {
-          key: 'personal_ID_NO',
-
-          label: 'Personal ID NO',
-        },
          {
           key: 'userName',
           label: 'userName',
@@ -63,11 +58,6 @@ export default {
           key: 'email',
 
           label: 'email',
-        },
-        {
-          key: 'area',
-
-          label: 'Area',
         },
          {
           key: 'city',
@@ -131,7 +121,7 @@ export default {
             text: `You Deleted Lgu Successfully`,
             duration: 5000,
           })
-         this.refresh()
+         this.getemployees()
         }
       } catch  (e) {
          this.$toasted.error(e.message.error, {
@@ -144,8 +134,12 @@ export default {
        try {
         NProgress.start()
         const result = await  lguEmployees()
-        this.item = result.data.response.LGUMaster
-          console.log(this.item)
+        var data = result.data.response.LGUMaster
+        data.map( e => {
+          if(e.type!="ENCODER" && e.type!="VOLUME_CHECKER" && e.type!="DISPATCHER")
+            this.item.push(e)
+        })
+        console.log(this.item)
         NProgress.done()
       } catch (error) {}
     },
