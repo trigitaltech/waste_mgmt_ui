@@ -68,10 +68,7 @@ export default {
           key: 'area',
           label: 'Area',
         },
-         {
-          key: 'city',
-          label: 'City',
-        },
+       
          {
           key: 'state',
           label: 'State',
@@ -180,7 +177,7 @@ export default {
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/CreateStaging' })"
-          >Create StagingArea</b-button>
+          >Create Staging Area</b-button>
         </b-col>
        </b-row>
         <div class="mt-3">

@@ -180,7 +180,7 @@ export default {
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/CreateDumpinglocation' })"
-          >Create DumpingLocation</b-button>
+          >Create Dumping Location</b-button>
         </b-col>
        </b-row>
         <div class="mt-3">

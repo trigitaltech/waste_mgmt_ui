@@ -48,6 +48,7 @@ export default {
         { value: 'Centralstaging', text: 'Central Staging' },
       ],
       item:[ ],
+      warrantystatus:"",
       items: [
         {
           text: 'Haulers',
@@ -63,6 +64,7 @@ export default {
         },
       ],
    owners:[],
+   code:"",
    emp:[],
    routes:[],
    vehicleTypes:[],
@@ -177,11 +179,12 @@ export default {
           },
           "vehicleNo": this.vehicleno,
           "plateNo": this.plateno,
+          code:this.code,
           "ownerName": this.ownername,
           "ownerId": null,
           "servingArea": null,
           "servingRoute": null,
-          "warrantyStatus": "NOT EXPIRED",
+          "warrantyStatus": this.warrantystatus,
           "totalKmServed": this.totalkmsserved,
           "totalHourServed": this.totalhoursserved,
           "description": this.description,
@@ -241,6 +244,7 @@ export default {
                     <input
                       id="defaultFormCardNameEx"
                       v-model="vehicleno"
+                      placeholder="Enter Vehicle No"
                       type="text"
                       class="form-control"
                     />
@@ -265,11 +269,12 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Owner Name</label
+                      >Code</label
                     >
                     <input
                       id="defaultFormCardtextEx"
-                      v-model="ownername"
+                      v-model="code"
+                       placeholder="Enter Code"
                       type="text"
                       class="form-control"
                     />
@@ -293,6 +298,7 @@ export default {
                     <input
                       id="defaultFormCardtextEx"
                       v-model="plateno"
+                       placeholder="Enter Plate No"
                       type="text"
                       class="form-control"
                     />
@@ -341,6 +347,7 @@ export default {
                     <input
                       id="defaultFormCardtextEx"
                       v-model="totalkmsserved"
+                       placeholder="Enter Total Kms Served"
                       type="text"
                       class="form-control"
                     />
@@ -354,6 +361,7 @@ export default {
                     <input
                       id="defaultFormCardtextEx"
                       v-model="totalhoursserved"
+                       placeholder="Enter Total Hours Served"
                       type="text"
                       class="form-control"
                     />
@@ -370,11 +378,26 @@ export default {
                     <input
                       id="defaultFormCardtextEx"
                       v-model="description"
+                       placeholder="Enter Description"
                       type="text"
                       class="form-control"
                     />
                      </b-col>
-                 <b-col></b-col>
+                 <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >WarrantyStatus</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="warrantystatus"
+                      type="text"
+                       placeholder="Enter Warranty Status"
+                      class="form-control"
+                    />
+
+                 </b-col>
                  
                      <!-- </b-col> -->
                 </b-row>

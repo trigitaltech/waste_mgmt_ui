@@ -159,7 +159,7 @@ export default {
             duration: 5000,
           })
          
-           this.$router.push({path:'/Equipment'})
+           this.$router.push({path:'/Hauler/Equipment'})
             
         }
       } catch (e) {
