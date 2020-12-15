@@ -67,16 +67,7 @@ export default {
           label: 'AreaName',
           sortable: true
         },
-         {
-          key: 'areaSqKm',
-          label: 'AreaSqKm',
-          sortable: true
-        },
-         {
-          key: 'classType',
-          label: 'ClassType',
-          sortable: true
-        },
+        
        
 
          {
@@ -84,26 +75,7 @@ export default {
           label: 'DistrictName',
           sortable: true
         },
-         {
-          key: 'state',
-          label: 'State',
-          sortable: true
-        },
-          {
-          key: 'country',
-          label: 'Country',
-          sortable: true
-        },
-         {
-          key: 'createdDate',
-          label: 'CreatedDate',
-          sortable: true
-        },
-         {
-          key: 'createdBy',
-          label: 'CreatedBy',
-          sortable: true
-        },
+       
         {
           key: 'actions',
           sortable: true

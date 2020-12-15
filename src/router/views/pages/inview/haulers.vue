@@ -46,47 +46,29 @@ export default {
         
       permissionColumns: [
         {
-          key: 'id',
-
-          label: 'Personal ID NO',
+          key: 'contactSalutation',
+          label: 'Salutation',
         },
          {
-          key: 'userName',
-          label: 'userName',
+          key: 'contactfirstName',
+
+          label: 'First Name',
         },
          {
-          key: 'phone',
+          key: 'contactLastName',
 
-          label: 'phone',
+          label: 'Last Name',
         },
          {
           key: 'email',
 
-          label: 'email',
-        },
-        {
-          key: 'area',
-
-          label: 'Area',
+          label: 'Email',
         },
          {
-          key: 'city',
+          key: 'type',
 
-          label: 'City',
+          label: 'Type',
         },
-         {
-          key: 'state',
-
-          label: 'State',
-        },
-        
-         {
-          key: 'country',
-
-          label: 'Country',
-        },
-         
-       
 
         {
           key: 'actions',
@@ -171,13 +153,25 @@ export default {
 
           class="mt-10 ml-10 mr-10 mx-auto"
       >
-         <b-col md="12">
+         <b-row>
+        <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+         <b-col md="9">
           <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/Createhauler' })"
           >Create Haulers</b-button>
         </b-col>
+         </b-row>
         <div class="mt-3">
           <b-table
             id="my-table"

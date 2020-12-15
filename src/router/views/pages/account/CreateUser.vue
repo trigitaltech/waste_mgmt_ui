@@ -114,7 +114,7 @@ export default {
       },
       item2:[],
       file:"",
-      roles:['ENCODER', 'PAYROLL', 'INSPECTOR', 'BILLING', 'ADMIN'],
+      roles:[],
       rolename:"",
       titles: ['Mr.', 'Sri.', 'Mrs'],
       vouchernumber: '',
@@ -185,7 +185,7 @@ export default {
             getroles(){
         this.roledata1.map(e=>{
           if(this.rolename === e.name){
-            this.rolesarray.push(e)
+            this.rolesarray = e.code
           }
         })
     },
@@ -194,6 +194,9 @@ export default {
       
       const result = await roles()
       this.roledata1 = result.data.response.RoleMaster
+      this.roledata1.map(e=>{
+        this.roles.push(e.code)
+      })
       // console.log("users",data[0].userName)
       // JSON.parse(JSON.stringify(result))
       // for(i=0;i<data.length;i++){
@@ -211,7 +214,8 @@ export default {
     async create() {
       try {
         const payload = {
-       
+                              
+               
                 userName: this.form.userName,
                 password: this.form.password,
                 passwordStatus: 1,
@@ -231,7 +235,12 @@ export default {
                 personalIdNo: this.form.personalidno,
                 idProofDocURL: this.file,
                 type: this.rolename,
-                roles:this.rolesarray,
+                 Type: "ADMIN",
+                roles:[
+                      {
+                          code: this.rolesarray,
+                      }
+                  ],
                 isDeleted: false,
                 status: 200,
                

@@ -35,7 +35,7 @@ export default {
      routename:this.$route.params.routeName,
      routetype:this.$route.params.routeType,
      areaname:this.$route.params.areaName.areaName,
-     routedistance:this.$route.params.route_distance,
+     routedistance:this.$route.params.routeDistance,
      description:this.$route.params.description,
      city:this.$route.params.city,
       createdby:this.$route.params.createdBy,
@@ -64,7 +64,24 @@ export default {
           active: true,
         },
       ],
-      permissionColumns:[],
+      permissionColumns:[
+        {
+          key:'id'
+
+        },
+        {
+          key:'code'
+
+        },
+         {
+          key:'routeName'
+          
+        },
+         {
+          key:'roadName'
+          
+        }
+      ],
         striped: false,
       bordered: true,
       filter: '',
@@ -313,19 +330,7 @@ export default {
                   <b-row>
                     
                       <b-col>
-                    <!-- Default input email -->
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Supervisor</label
-                    >
-                 <input
-                    id="defaultFormCardNameEx"
-                      v-model="supervisor"
-                      disabled
-                      type="text"
-                      class="form-control"
-                    />
+                   
 
                     <label
                       for="defaultFormCardEmailEx"
@@ -356,18 +361,7 @@ export default {
                       class="form-control"
                     />
 
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >City</label
-                    >
-                    <input
-                    id="defaultFormCardEmailEx"
-                      v-model="city"
-                      disabled
-                      type="email"
-                      class="form-control"
-                    />
+                   
                   </b-col>
                   
                 </b-row>
@@ -460,8 +454,20 @@ export default {
       <b-col md="12">
           <b-card
             class="card-wrap"
-            header="View Roads"
+            header="List Of Roads"
           >
+          <b-row>
+        <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+          </b-row>
            
            <div class="mt-3">
           <b-table
