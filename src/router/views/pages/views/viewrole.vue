@@ -210,8 +210,19 @@ export default {
       <b-col md="12">
           <b-card
             class="card-wrap"
-            header="View Permissions"
-          >
+            header="List Of Permissions"
+          > <b-row>
+        <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+        </b-row>
            
            <div class="mt-3">
           <b-table

@@ -188,6 +188,33 @@ const inviewRoutes = [
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
       {
+        path: 'ClassMaster',
+        name: 'Class Master',
+        
+        icon: 'clipboard',
+        component: () => lazyLoadView(import('@views/pages/inview/class')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+      {
+        path: 'DaysMaster',
+        name: 'Days Master',
+        
+        icon: 'file',
+        component: () => lazyLoadView(import('@views/pages/inview/days')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+      {
+        path: 'TypeMaster',
+        name: 'Type Master',
+        
+        icon: 'arrow-up',
+        component: () => lazyLoadView(import('@views/pages/inview/type')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+      {
         path: 'AddressMaster',
         name: 'Address Master',
         
@@ -215,33 +242,7 @@ const inviewRoutes = [
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
-      {
-        path: 'ClassMaster',
-        name: 'Class Master',
-        
-        icon: 'clipboard',
-        component: () => lazyLoadView(import('@views/pages/inview/class')),
-        meta: { authRequired: true },
-        props: (route) => ({ user: store.state.auth.currentUser || {} }),
-      },
-      {
-        path: 'DaysMaster',
-        name: 'Days Master',
-        
-        icon: 'file',
-        component: () => lazyLoadView(import('@views/pages/inview/days')),
-        meta: { authRequired: true },
-        props: (route) => ({ user: store.state.auth.currentUser || {} }),
-      },
-      {
-        path: 'TypeMaster',
-        name: 'Type Master',
-        
-        icon: 'arrow-up',
-        component: () => lazyLoadView(import('@views/pages/inview/type')),
-        meta: { authRequired: true },
-        props: (route) => ({ user: store.state.auth.currentUser || {} }),
-      },
+     
       // {
       //   path: 'City',
       //   name: 'City',
@@ -288,15 +289,15 @@ const inviewRoutes = [
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
      
-      {
-        path: 'Notification Template',
-        name: 'Notification Template',
+      // {
+      //   path: 'Notification Template',
+      //   name: 'Notification Template',
         
-        icon: 'bell',
-        component: () => lazyLoadView(import('@views/pages/inview/Notificationtemplate')),
-        meta: { authRequired: true },
-        props: (route) => ({ user: store.state.auth.currentUser || {} }),
-      },
+      //   icon: 'bell',
+      //   component: () => lazyLoadView(import('@views/pages/inview/Notificationtemplate')),
+      //   meta: { authRequired: true },
+      //   props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      // },
 
 
 

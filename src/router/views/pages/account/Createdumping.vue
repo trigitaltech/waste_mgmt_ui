@@ -47,7 +47,7 @@ export default {
       modifydate: new Date(),
       modifyby:"",
        option: [
-        
+          { value: 'default', text: 'Default' },
         { value: 'solidwaste', text: 'Solidwaste' },
         { value: 'organicewaste', text: 'Organicwaste' },
       ],

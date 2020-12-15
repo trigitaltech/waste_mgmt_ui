@@ -55,16 +55,7 @@ export default {
           sortable: true,
         },
          
-         {
-          key: 'createdBy',
-          label: 'createdBy',
-          sortable: true,
-        },
-         {
-          key: 'createdDate',
-          label: 'createdDate',
-          sortable: true,
-        },
+        
         {
           key: 'actions',
           sortable: true,
@@ -156,13 +147,25 @@ export default {
         header="Roles"
           class="mt-10 ml-10 mr-10 mx-auto"
       >
-         <b-col md="12">
+       <b-row>
+        <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+         <b-col md="9">
           <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/CreateRole' })"
           >Create Role</b-button>
         </b-col>
+       </b-row>
         <div class="mt-3">
           <b-table
             id="my-table"

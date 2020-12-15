@@ -46,36 +46,29 @@ export default {
         
       permissionColumns: [
          {
-          key: 'userName',
-          label: 'userName',
+          key: 'contactSalutation',
+          label: 'Salutation',
         },
          {
-          key: 'phone',
+          key: 'contactfirstName',
 
-          label: 'phone',
+          label: 'First Name',
+        },
+         {
+          key: 'contactLastName',
+
+          label: 'Last Name',
         },
          {
           key: 'email',
 
-          label: 'email',
+          label: 'Email',
         },
          {
-          key: 'city',
+          key: 'type',
 
-          label: 'City',
+          label: 'Type',
         },
-         {
-          key: 'state',
-
-          label: 'State',
-        },
-        
-         {
-          key: 'country',
-
-          label: 'Country',
-        },
-         
        
 
         {
@@ -164,13 +157,25 @@ export default {
 
           class="mt-10 ml-10 mr-10 mx-auto"
       >
-         <b-col md="12">
+        <b-row>
+        <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+         <b-col md="9">
           <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/Createlguemployee' })"
           >Create LGU Employee</b-button> 
         </b-col>
+        </b-row>
         <div class="mt-3">
           <b-table
             id="my-table"

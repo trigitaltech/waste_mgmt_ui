@@ -82,7 +82,7 @@ export default {
       file:"",
       selected: null,
       clientId: '',
-        role:['ENCODER', 'PAYROLL', 'INSPECTOR', 'BILLING', 'ADMIN'],
+        role:[],
       options: ['DAF'],
       serviceoffice:this.$route.params.service_Office,
       file:"",
@@ -196,6 +196,9 @@ export default {
       
       const result = await roles()
       this.roledata1 = result.data.response.RoleMaster
+      this.roledata1.map(e=>{
+        this.role.push(e.code)
+      })
       // console.log("users",data[0].userName)
       // JSON.parse(JSON.stringify(result))
       // for(i=0;i<data.length;i++){

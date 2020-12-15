@@ -278,24 +278,7 @@ this.addres.map(e=>{
             <br />
 
             <b-row>
-              <b-col>
-                <!-- Default input text -->
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Supervisor</label
-                >
-
-                <b-form-select
-                  v-model.trim="supervisor"
-                  oninvalid="this.setCustomValidity('Supervisor is required ')"
-                  oninput="setCustomValidity('')"
-                  placeholder="Select Supervisor"
-                  class="form-control"
-                  required
-                  :options="item"
-                ></b-form-select>
-              </b-col>
+             
               <b-col>
                 <label
                   for="defaultFormCardtextEx"
@@ -312,10 +295,7 @@ this.addres.map(e=>{
                   required
                 />
               </b-col>
-            </b-row>
-            <br />
-            <b-row>
-              <b-col>
+               <b-col>
                 <!-- Default input text -->
                 <label
                   for="defaultFormCardtextEx"
@@ -332,6 +312,10 @@ this.addres.map(e=>{
                   required
                 />
               </b-col>
+            </b-row>
+            <br />
+            <b-row>
+             
               <b-col>
                 <label
                   for="defaultFormCardtextEx"
@@ -346,11 +330,7 @@ this.addres.map(e=>{
                    @input ="getcity"
                    ></multiselect>
               </b-col>
-            </b-row>
-            <br />
-
-            <b-row>
-              <b-col>
+                <b-col>
                 <!-- Default input text -->
                 <label
                   for="defaultFormCardtextEx"
@@ -367,6 +347,11 @@ this.addres.map(e=>{
                 />
                 <br />
               </b-col>
+            </b-row>
+            <br />
+
+            <b-row>
+            
 
               <br />
 

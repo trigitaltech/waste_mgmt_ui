@@ -147,7 +147,18 @@ export default {
 
         class="mt-10 ml-10 mr-10 mx-auto"
       >
-      <b-col md="12">
+       <b-row>
+        <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+      <b-col md="9">
       
            <b-button
             style="
@@ -178,6 +189,7 @@ export default {
           >
       
       </b-col>
+       </b-row>
         <div>
           <b-table
             id="my-table"
