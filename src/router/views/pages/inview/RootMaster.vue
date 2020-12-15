@@ -77,11 +77,7 @@ export default {
         },
       
       
-         {
-          key: 'createdBy',
-          label: 'CreatedBy',
-        },
-
+        
         {
           key: 'actions',
           sortable: true,

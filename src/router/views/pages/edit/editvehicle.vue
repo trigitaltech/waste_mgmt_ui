@@ -8,7 +8,7 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import {routemaster,Areamasters,employees,editvehicle}from '../../../../services/auth'
+import {routemaster,Areamasters,employees,editvehicle ,vehicleTypes}from '../../../../services/auth'
 
 export default {
   page: {
@@ -26,7 +26,7 @@ export default {
   data() {
     return {
      vehicleno:this.$route.params.vehicleNo,
-     vehicletype:this.$route.params.vehicleType,
+     vehicletype:this.$route.params.vehicleType.code,
      plateno:this.$route.params.plateNo,
      equipmentid:this.$route.params.equipmentId,
      ownername:this.$route.params.ownerName,
@@ -39,6 +39,8 @@ export default {
      totalhoursserved:this.$route.params.totalHourServed,
       createdby:this.$route.params.createdBy,
       createddate: this.$route.params.createdDate,
+      warrantystatus:this.$route.params.warrantyStatus,
+      code:this.$route.params.code,
       modifydate: new Date(),
       modifyby:"",
        option: [
@@ -47,6 +49,8 @@ export default {
         { value: 'Centralstaging', text: 'Central Staging' },
       ],
       item:[ ],
+      vehicletype:[],
+
       items: [
         {
           text: 'Haulers',
@@ -62,6 +66,7 @@ export default {
         },
       ],
    owners:[],
+   vehicleTypesNames:[],
    emp:[],
    routes:[],
     
@@ -81,6 +86,7 @@ export default {
     this.areadata()
     this.employeedata()
     this.routedata()
+    this.getVehicleTypes()
   },
   methods: {
        getid(){
@@ -129,6 +135,13 @@ export default {
      
       } catch (error) {}
      },
+      async getVehicleTypes() {
+      var result = await vehicleTypes()
+      this.vehicleTypes = result.data.response.VehiclesUpdated
+      this.vehicleTypes.map( e => {
+        this.vehicleTypesNames.push(e.truckType)
+      })
+    },
       async employeedata() {
        try {
       
@@ -149,19 +162,35 @@ export default {
       } catch (error) {}
      },
     async create() {
+       var vehicletype = [];
+      this.vehicleTypes.map( e => {
+        if(e.truckType == this.vehicletype)
+          vehicletype.push(e)
+      })
       try {
         const payload = {
+           "vehicleType": {
+            "id":vehicletype[0].id,
+            "code":vehicletype[0].code,
+            "createdBy":vehicletype[0].createdBy,
+            "modifiedBy":vehicletype[0].modifiedBy,
+            "createdDate":vehicletype[0].createdDate,
+            "modifiedDate":vehicletype[0].modifiedDate,
+            "isDeleted":null,
+            "truckType":vehicletype[0].truckType
+          },
             id:this.$route.params.id,
-            vehicleType: this.vehicletype,
+           
             vehicleNo: this.vehicleno,
             plateNo: this.plateno,
+            code:this.code,
             ownerName: this.ownername,
             ownerId: this.ownerid,
             equipmentId: this.equipmentid,
             servingArea: this.servingarea,
             servingRoute: this.servingroute,
             manufactureDate: this.manufacturedate,
-            warrantyStatus: "NOT EXPIRED",
+            warrantyStatus:this.warrantystatus,
             totalKmServed: this.totalkmsserved,
             totalHourServed:this.totalhoursserved,
             description:this.description,
@@ -181,7 +210,7 @@ export default {
             duration: 5000,
           })
          
-           this.$router.push({path:'/Vehicle'})
+           this.$router.push({path:'/Hauler/Vehicle'})
             
         }
       } catch (e) {
@@ -212,7 +241,7 @@ export default {
       >
         <div class="mt-3">
               <!-- Default form subscription -->
-              <form>
+              <form @submit.prevent="create">
                 <b-row class="mb-3">
                   <b-col>
                     <!-- Default input name -->
@@ -235,12 +264,13 @@ export default {
                       class="grey-text font-weight-dark"
                       >Vehicle Type</label
                     >
-                    <input
-                      id="defaultFormCardNameEx"
-                      v-model="vehicletype"
-                      type="text"
+                    <b-form-select
+                      v-model.trim="vehicletype"
+                      placeholder="Select Vehicle Type"
+                      label="value"
                       class="form-control"
-                    />
+                      :options="vehicleTypesNames"
+                    ></b-form-select>
                   </b-col>
                 </b-row>
                 <b-row class="mb-3">
@@ -248,16 +278,22 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Owner Name</label
+                      >Code</label
                     >
-                     <b-form-select
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="code"
+                      type="text"
+                      class="form-control"
+                    />
+                     <!--<b-form-select
                   v-model.trim="ownername"
                   placeholder="Select Supervisor"
                   label="value"
                   class="form-control"
                 :options="owners"
                   @change="getid"
-                ></b-form-select>
+                ></b-form-select>-->
 
                     <!-- Default input name --> 
                   </b-col>
@@ -275,10 +311,10 @@ export default {
                     />
                   </b-col>
                 </b-row>
-                  <b-row class="mb-3">
+                  <!--<b-row class="mb-3">
                     
                       <b-col>
-                    <!-- Default input text -->
+                    <!- Default input text 
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -306,7 +342,7 @@ export default {
                   :options="routes"
                 ></b-form-select>
                </b-col>
-                  </b-row>
+                  </b-row>-->
                <b-row class="mb-3">
                  <b-col>
                     <!-- Default input text -->
@@ -342,35 +378,6 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >ManufactureDate</label
-                    >
-                     <flat-pickr
-                      v-model="manufacturedate"
-                      class="form-control"
-                      placeholder="SELECT DATE"
-                    ></flat-pickr>
-                     </b-col>
-                     <b-col>
-                     <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Equipment Id</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="equipmentid"
-                      type="text"
-                      class="form-control"
-                    />
-
-                     </b-col>
-                </b-row>
-                 <b-row class="mb-3">
-                   <b-col cols="12">
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
                       >Description</label
                     >
                     <input
@@ -380,13 +387,27 @@ export default {
                       class="form-control"
                     />
                      </b-col>
+                 <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >WarrantyStatus</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="warrantystatus"
+                      type="text"
+                      class="form-control"
+                    />
+
+                 </b-col>
+                 
+                     <!-- </b-col> -->
                 </b-row>
-                <b-button
-                  class="btn btn-custome float-right btn-secondary mb-3"
-                  text="Create Tenant"
-                  @click="create"
-                  >Create</b-button
-                >
+                <button
+                          type="submit"
+                         class="btn btn-custome float-right btn-secondary mb-3"
+                          >Create</button>
               </form>
               <!-- Default form subscription -->
         </div>

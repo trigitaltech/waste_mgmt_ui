@@ -8,7 +8,7 @@ export const authAPI = (payload) => serviceMaker(`/auth/login`, methods.POST, ap
 
 export const dumpinglocation = () => serviceMaker(`/dumpinglocation/all`, methods.GET, api.NGB)
 
-export const Attendance = () => serviceMaker(`/attendence/employee/admin/`, methods.GET, api.NGB)
+export const Attendance = () => serviceMaker(`/attendence/employee/admin`, methods.GET, api.NGB)
 
 export const classmaster = () => serviceMaker(`/trips/class/all`, methods.GET, api.NGB)
 

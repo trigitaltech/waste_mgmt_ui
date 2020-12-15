@@ -255,25 +255,7 @@ export default {
                   </b-col>
                 </b-row>
                   <b-row class="mb-3">
-                    <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Supervisor</label
-                    >
-                   <b-form-select
-                  v-model.trim="supervisor"
-                  placeholder="Select Supervisor"
-                  label="value"
-                  :options="item"
-                   oninvalid="this.setCustomValidity('Supervisor is required ')"
-                                oninput="setCustomValidity('')"
-                               
-                                class="form-control"
-                                required
-                ></b-form-select>
-                  </b-col>
+                  
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -291,23 +273,7 @@ export default {
                                 required
                     />
                   </b-col>
-                  </b-row>
-                  <b-row class="mb-3">
-                  <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >City</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="city"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter city"
-                    />
-                  </b-col>
+              
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"

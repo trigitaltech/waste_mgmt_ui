@@ -377,19 +377,18 @@ export default {
               </b-col>
             </b-row>
             <b-row class="mb-3">
-              <b-col>
-                <!-- Default input text -->
+               <b-col>
                 <label
                   for="defaultFormCardtextEx"
                   class="grey-text font-weight-dark"
-                  >City</label
+                  >Area</label
                 >
                 <input
                   id="defaultFormCardtextEx"
-                  v-model="city"
+                  v-model="area"
                   type="text"
                   class="form-control"
-                  placeholder="Enter city"
+                  placeholder="Enter area"
                 />
               </b-col>
               <b-col>
@@ -494,20 +493,7 @@ export default {
                   placeholder="Enter zip"
                 />
               </b-col>
-              <b-col>
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Area</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="area"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter area"
-                />
-              </b-col>
+            
             </b-row>
             <br />
             <button

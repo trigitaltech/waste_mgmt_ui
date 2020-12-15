@@ -26,7 +26,7 @@ export default {
   data() {
     return {
      vehicleno:this.$route.params.vehicleNo,
-     vehicletype:this.$route.params.vehicleType,
+     vehicletype:this.$route.params.vehicleType.truckType,
      plateno:this.$route.params.plateNo,
      equipmentid:this.$route.params.equipmentId,
      ownername:this.$route.params.ownerName,
@@ -248,27 +248,7 @@ export default {
 
                     <!-- Default input text -->
                   </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Owner Name</label
-                    >
-                     <!-- <b-form-select
-                  v-model.trim="ownername"
-                  placeholder="Select Supervisor"
-                  label="value"
-                @change="getid()"
-                  :options="owners"
-                ></b-form-select> -->
-                 <input
-                    id="defaultFormCardtextEx"
-                      v-model="ownername"
-                      disabled
-                      type="text"
-                      class="form-control"
-                    />
-
+                 <b-col>
                     <!-- Default input name -->
                     <label
                       for="defaultFormCardtextEx"
@@ -282,38 +262,26 @@ export default {
                       type="text"
                       class="form-control"
                     />
+                     
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >ManufactureDate</label
+                    >
+                    <input
+                    id="defaultFormCardtextEx"
+                      v-model="manufacturedate"
+                      disabled
+                      type="text"
+                      class="form-control"
+                    />
+                    
                   </b-col>
                   <br />
                 </b-row>
                   <b-row>
                     
-                      <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Serving Area</label
-                    >
-                     <input
-                    id="defaultFormCardtextEx"
-                      v-model="servingarea"
-                      disabled
-                      type="text"
-                      class="form-control"
-                    />
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Serving Route</label
-                    >
-                    <input
-                    id="defaultFormCardtextEx"
-                      v-model="servingroute"
-                      disabled
-                      type="text"
-                      class="form-control"
-                    />
-                  </b-col>
+                   
                
                  <b-col>
                     <!-- Default input text -->
@@ -329,7 +297,8 @@ export default {
                       type="text"
                       class="form-control"
                     />
-
+                 </b-col>
+                 <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -361,39 +330,11 @@ export default {
                       class="form-control"
                     />
                      </b-col>
-                     <b-col>
-                     <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Equipment Id</label
-                    >
-                    <input
-                    id="defaultFormCardtextEx"
-                      v-model="equipmentid"
-                      disabled
-                      type="text"
-                      class="form-control"
-                    />
-
-                     </b-col>
+                   
                 </b-row>
                 <br />
                  <b-row>
-                     <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >ManufactureDate</label
-                    >
-                    <input
-                    id="defaultFormCardtextEx"
-                      v-model="manufacturedate"
-                      disabled
-                      type="text"
-                      class="form-control"
-                    />
-                     </b-col>
+                  
                      <b-col>
                    
                      </b-col>

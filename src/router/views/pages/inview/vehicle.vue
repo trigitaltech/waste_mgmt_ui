@@ -41,7 +41,7 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-      item: {},
+      item: [],
 
       permissionColumns: [
         {
@@ -50,13 +50,22 @@ export default {
           label: 'Id',
         },
          {
-          key: 'ownerId',
-          label: 'ownerId',
+          key: 'code',
+          label: 'code',
         },
          {
-          key: 'ownerName',
+          key: 'vehicleNo',
+          label: 'vehicleNo',
+        },
+         {
+          key: 'totalHourServed',
 
-          label: 'ownerName',
+          label: 'totalHourServed',
+        },
+          {
+          key: 'totalKmServed',
+
+          label: 'totalKmServed',
         },
        
         

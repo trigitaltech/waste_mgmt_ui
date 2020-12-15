@@ -187,7 +187,7 @@ export default {
        getroles(){
         this.roledata1.map(e=>{
           if(this.rolename === e.name){
-            this.rolesarray.push(e)
+            this.rolesarray = e.code
           }
         })
     },
@@ -236,7 +236,12 @@ export default {
                 personalIdNo: this.form.personalidno,
                 idProofDocURL: this.file,
                 type: this.rolename,
-                roles:this.rolesarray,
+                  Type: "ADMIN",
+                roles:[
+                      {
+                          code: this.rolesarray,
+                      }
+                  ],
                 isDeleted: false,
                 status: 200,
                
@@ -657,7 +662,7 @@ export default {
                                    <label for="default">Personal ID No</label>
                                  
                               <input
-                                v-model.trim="personalidno"
+                                v-model.trim="form.personalidno"
                                 placeholder="Enter Personal ID"
                                 class="form-control"
                                 type="number"

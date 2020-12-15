@@ -254,18 +254,7 @@ export default {
                     
                       <b-col>
                     <!-- Default input email -->
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Supervisor</label
-                    >
-                 <input
-                    id="defaultFormCardEmailEx"
-                      v-model="supervisor"
-                      disabled
-                      type="email"
-                      class="form-control"
-                    />
+                  
 
                     <label
                       for="defaultFormCardEmailEx"
@@ -283,18 +272,7 @@ export default {
                
                  <b-col>
                     <!-- Default input email -->
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >City</label
-                    >
-                    <input
-                    id="defaultFormCardEmailEx"
-                      v-model="city"
-                      disabled
-                      type="email"
-                      class="form-control"
-                    />
+                   
 
                     <label
                       for="defaultFormCardEmailEx"
