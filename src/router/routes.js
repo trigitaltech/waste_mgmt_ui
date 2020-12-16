@@ -798,7 +798,22 @@ const pagesRoutes = [
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
-
+  {
+    path: '/Editlguemployee',
+    name: 'Editlguemployee',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/editlguemployee')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Edithauler',
+    name: 'Edithauler',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/edithauler')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
   {
     path: '/Editpermission',
     name: 'Editpermission',
@@ -947,6 +962,14 @@ const pagesRoutes = [
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
+    path: '/Viewhauler',
+    name: 'Viewhauler',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewhauler')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
     path: '/Viewuser',
     name: 'Viewuser',
     icon: 'check-square',
@@ -959,6 +982,14 @@ const pagesRoutes = [
     name: 'Viewlgu',
     icon: 'check-square',
     component: () => lazyLoadView(import('@views/pages/views/viewlgu')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Viewlguemployee',
+    name: 'Viewlguemployee',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewlguemployee')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },

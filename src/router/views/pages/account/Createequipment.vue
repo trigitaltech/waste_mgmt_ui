@@ -9,7 +9,7 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import {createequipment,Areamasters,employees}from '../../../../services/auth'
+import {createequipment,Areamasters,employees,haulers}from '../../../../services/auth'
 
 export default {
   page: {
@@ -27,6 +27,10 @@ export default {
   },
   data() {
     return {
+         haulers:[],
+      haulerdata:[],
+      haulernames:[],
+      haulername:"",
      equipmentno:"",
      equipmenttype:"",
      ownername:"",
@@ -82,8 +86,31 @@ export default {
     // this.getplans()
     this.areadata()
     this.employeedata()
+    this.getemployees()
   },
   methods: {
+    async getemployees() {
+       try {
+       
+      const result = await haulers()
+      this.haulerdata  = result.data.response.HaulerMaster
+      this.haulerdata.map(e=>{
+        this.haulernames.push(e.haulerName)
+      })
+
+      
+      } catch (error) {}
+   
+    },
+    gethauler(){
+this.haulerdata.map(e=>{
+  if(this.haulername === e.haulerName){
+    this.haulers =  e
+  }
+})
+
+
+    },
        getid(){
         console.log("haiiiiii",)
         this.emp.map(e=>{
@@ -135,14 +162,14 @@ export default {
         const payload = {
             equipmentType:this.equipmenttype,
             equipmentNo:parseInt(this.equipmentno),
-            ownerName: String(this.ownername),
-            ownerId:this.ownerid,
+           
             equipmentId:parseInt(this.equipmentid),
             manufactureDate: this.manufacturedate,
             warrantyStatus: "NOT EXPIRED",
             totalKmServed: parseInt(this.totalkmsserved),
             totalHourServed: parseInt(this.totalhoursserved),
             description:this.description,
+              hauler:this.haulers,
             isDeleted: false,
             status:"WORKING",
             createdBy: this.createdby
@@ -222,19 +249,19 @@ export default {
                 </b-row>
                 <b-row >
                   <b-col>
-                    <label
+                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Owner Name</label
+                      >Hauler</label
                     >
-                     <b-form-select
-                  v-model.trim="ownername"
-                  placeholder="Select Supervisor"
-                  label="value"
-                class="form-control"
-                :options="owners"
-                  @change="getid"
-                ></b-form-select>
+                    <multiselect
+                                v-model="haulername"
+                                placeholder="Select Hauler"
+                                :options="haulernames"
+                                @input="gethauler"
+                              ></multiselect>
+                  </b-col>
+                  <b-col>
                
                      <!-- Default input name -->
                     <label
@@ -298,6 +325,8 @@ export default {
                       class="form-control"
                     />
                   </b-col>
+                  </b-row>
+                  <b-row>
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -329,6 +358,15 @@ export default {
                     />
 
                      </b-col>
+                </b-row>
+                    <b-row class="mb-3">
+                  <b-col md="6">
+                    <!-- Default input text -->
+                  
+                     </b-col>
+               
+                 
+                     <!-- </b-col> -->
                 </b-row>
                 <b-button
                   class="btn btn-custome float-right btn-secondary mb-3"

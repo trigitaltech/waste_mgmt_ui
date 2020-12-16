@@ -74,6 +74,8 @@ export default {
       servingAreas:[],
       baranggayCode:"",
      form: {
+       baranggay:"",
+       district:"",
         lguName:this.$route.params.lguName,
         lguCode:this.$route.params.code,
         personalidno:this.$route.params.personalIdNo,
@@ -86,11 +88,11 @@ export default {
         email: this.$route.params.email,
         number: this.$route.params.phone,
         address: this.$route.params.addressLine1,
-        city: this.$route.params.city,
-        area:this.$route.params.area,
-        address2: this.$route.params.addressLine2, 
-        state: this.$route.params.state,
-        country: this.$route.params.country,
+        city: '',
+        area:'',
+        address2:this.$route.params.addressLine2,
+        state: "",
+        country:"",
         postCode: this.$route.params.pin,
         stbNumber: '',
         bouquets: null,
@@ -121,13 +123,13 @@ export default {
     },
   },
   mounted() {
-    this.roles.push("LGU")
-    console.log(this.$route.params)
-     this.createdby = this.getUserDetails.user.username
-    this.modifyby = this.getUserDetails.user.username
-    this.roledata()
-    this.getplans()
-    this.getareas()
+    // this.roles.push("LGU")
+    // console.log(this.$route.params)
+    //  this.createdby = this.getUserDetails.user.username
+    // this.modifyby = this.getUserDetails.user.username
+    // this.roledata()
+    // this.getplans()
+    // this.getareas()
   },
   methods: {
     async getareas() {
@@ -283,6 +285,7 @@ export default {
                                 placeholder="Code"
                                 class="form-control"
                                 type="text"
+                                disabled
                               />
                                     </div>
                            
@@ -291,12 +294,14 @@ export default {
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Personal Title</label>
-                              <multiselect
-                                required
-                                v-model="form.personalTitle"
-                                placeholder="Select Personal Title"
-                                :options="titles"
-                              ></multiselect>
+                                <input required
+                                  v-model="form.personalTitle"
+                             
+                                class="form-control"
+                                type="text"
+                                disabled
+                              />
+                            
                             </div>
                           </div>
                           <!-- <div class="col-md-4">
@@ -326,6 +331,7 @@ export default {
                                 placeholder="Enter UserName"
                                 class="form-control"
                                 required
+                                disabled
                               />
                               <!-- <input
                                     v-model.trim="form.firstName"
@@ -353,6 +359,7 @@ export default {
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Password"
                                 class="form-control"
+                                disabled
                                 required
                               />
                               <!-- <input
@@ -382,6 +389,7 @@ export default {
                                 placeholder="Enter FirstName"
                                 class="form-control"
                                 required
+                                disabled
                               />
                               <!-- <input
                                     v-model.trim="form.firstName"
@@ -421,6 +429,7 @@ export default {
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter LastName"
                                 class="form-control"
+                                disabled
                               />
                               <!-- <input
                                     v-model.trim="form.lastName"
@@ -448,6 +457,7 @@ export default {
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter LastName"
                                 class="form-control"
+                                disabled
                               />
                               <!-- <input
                                     v-model.trim="form.lastName"
@@ -472,6 +482,7 @@ export default {
                                 placeholder="Enter Email"
                                 class="form-control"
                                 required
+                                disabled
                               />
                             </div>
                           </div>
@@ -492,6 +503,7 @@ export default {
                                 placeholder="Enter Phone Number"
                                 class="form-control"
                                 required
+                                disabled
                               />
                               <!-- <input
                                     v-model.trim="form.number"
@@ -520,6 +532,7 @@ export default {
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Address"
                                 class="form-control"
+                                disabled
                               />
                               <!-- <input
                                     v-model.trim="form.address"
@@ -547,6 +560,7 @@ export default {
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Address"
                                 class="form-control"
+                                disabled
                               />
                             </div>
                             </div> 
@@ -558,6 +572,7 @@ export default {
                                   class="form-control"
                                   type="text"
                                   placeholder="Enter Area"
+                                  disabled
                                 />
                               </div>
                             </div>
@@ -569,22 +584,12 @@ export default {
                                 placeholder="Enter Poster Code"
                                 class="form-control"
                                 type="number" required
+                                disabled
                               />
                             </div>
                           </div>
 
-                           <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">City</label>
-                                  <input
-                                v-model.trim="form.city"
-                                placeholder="Enter City"
-                                class="form-control"
-                                type="text"
-                                required
-                              />
-                              </div>
-                            </div>
+                        
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">State</label>
@@ -594,6 +599,7 @@ export default {
                                   type="text"
                                   placeholder="Enter State"
                                   required
+                                  disabled
                                 />
                               </div>
                             </div>
@@ -606,6 +612,7 @@ export default {
                                   type="text"
                                   placeholder="Enter Country"
                                   required
+                                  disabled
                                 />
                               </div>
                             </div>
@@ -616,13 +623,14 @@ export default {
                         
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Service office</label>
-                                 
-                               <b-form-select 
-                                           v-model.trim="serviceoffice"
-                                            :options="item2"
-                                           class="form-control"
-                                              @change="getid"
-                                ></b-form-select>
+                                  <input
+                                v-model.trim="serviceoffice"
+                                placeholder="Enter Personal ID"
+                                class="form-control"
+                                type="number"
+                                disabled
+                              />
+                              
                                     </div>
                            
                            
@@ -639,6 +647,7 @@ export default {
                                 placeholder="Enter Personal ID"
                                 class="form-control"
                                 type="number"
+                                disabled
                               />
                                     </div>
                            

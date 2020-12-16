@@ -8,7 +8,7 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import {Editequipment,Areamasters,employees}from '../../../../services/auth'
+import {Editequipment,Areamasters,employees,haulers}from '../../../../services/auth'
 
 export default {
   page: {
@@ -25,6 +25,10 @@ export default {
   },
   data() {
     return {
+            haulers:[],
+      haulerdata:[],
+      haulernames:[],
+      haulername:"",
      equipmentno:this.$route.params.equipmentNo,
      equipmenttype:this.$route.params.equipmentType,
      ownername:this.$route.params.ownerName,
@@ -80,8 +84,31 @@ export default {
     console.log(this.$route.params)
     this.areadata()
     this.employeedata()
+    this.getemployees()
   },
   methods: {
+    async getemployees() {
+       try {
+       
+      const result = await haulers()
+      this.haulerdata  = result.data.response.HaulerMaster
+      this.haulerdata.map(e=>{
+        this.haulernames.push(e.haulerName)
+      })
+
+      
+      } catch (error) {}
+   
+    },
+    gethauler(){
+this.haulerdata.map(e=>{
+  if(this.haulername === e.haulerName){
+    this.haulers =  e
+  }
+})
+
+
+    },
        getid(){
         console.log("haiiiiii",)
         this.emp.map(e=>{
@@ -134,10 +161,9 @@ export default {
             id:this.$route.params.id,
             equipmentType:this.equipmenttype,
             equipmentNo:this.equipmentno,
-            ownerName: String(this.ownername),
-            ownerId:this.ownerid,
+          
             equipmentId:this.equipmentid,
-            servingArea:this.servingarea,
+           
             manufactureDate: this.manufacturedate,
             warrantyStatus: "EXPIRED",
             totalKmServed: this.totalkmsserved,
@@ -147,6 +173,7 @@ export default {
             status: "WORKING",
             createdDate: this.createddate,
             createdBy: this.createdby,
+              hauler:this.haulers,
             modifiedDate: this.modifydate,
             modifiedBy: this.modifyby
         }
@@ -227,16 +254,14 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Owner Name</label
+                      >Hauler</label
                     >
-                     <b-form-select
-                  v-model.trim="ownername"
-                  placeholder="Select Supervisor"
-                  label="value"
-                class="form-control"
-                :options="owners"
-                  @change="getid"
-                ></b-form-select>
+                    <multiselect
+                                v-model="haulername"
+                                placeholder="Select Hauler"
+                                :options="haulernames"
+                                @input="gethauler"
+                              ></multiselect>
                   </b-col>
                   <b-col>
                      <!-- Default input name -->
@@ -254,21 +279,7 @@ export default {
                   </b-col>
                 </b-row>
                   <b-row class="mb-3">
-                    <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Serving Area</label
-                    >
-                    <b-form-select
-                  v-model.trim="servingarea"
-                  placeholder="Select Supervisor"
-                  label="value"
-                  class="form-control"
-                  :options="item"
-                ></b-form-select>
-                  </b-col>
+                  
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -282,6 +293,21 @@ export default {
                       name="startdate"
                     ></flat-pickr>
                   </b-col>
+                    <b-col>
+                    <!-- Default input text -->
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Description</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="description"
+                      type="text"
+                      class="form-control"
+                    />
+
+                     </b-col>
                   </b-row>
                   <b-row class="mb-3">
                  <b-col>
@@ -314,21 +340,10 @@ export default {
                   
                 </b-row>
                 <b-row class="mb-3">
-                     <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Description</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="description"
-                      type="text"
-                      class="form-control"
-                    />
-
-                     </b-col>
+                   
+                    
+                     
+               
                 </b-row>
                 <b-button
                   class="btn btn-custome float-right btn-secondary mb-3"

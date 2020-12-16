@@ -8,11 +8,11 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import {routemaster,Areamasters,employees,editvehicle ,vehicleTypes}from '../../../../services/auth'
+import {routemaster,Areamasters,employees,editvehicle ,vehicleTypes,haulers}from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Create Equipment',
+    title: 'Edit Vehicle',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -25,6 +25,9 @@ export default {
   },
   data() {
     return {
+        haulers:[],
+      haulerdata:[],
+      haulernames:[],
      vehicleno:this.$route.params.vehicleNo,
      vehicletype:this.$route.params.vehicleType.code,
      plateno:this.$route.params.plateNo,
@@ -65,6 +68,7 @@ export default {
           active: true,
         },
       ],
+      haulername:"",
    owners:[],
    vehicleTypesNames:[],
    emp:[],
@@ -87,8 +91,31 @@ export default {
     this.employeedata()
     this.routedata()
     this.getVehicleTypes()
+      this.getemployees()
   },
   methods: {
+    async getemployees() {
+       try {
+       
+      const result = await haulers()
+      this.haulerdata  = result.data.response.HaulerMaster
+      this.haulerdata.map(e=>{
+        this.haulernames.push(e.haulerName)
+      })
+
+      
+      } catch (error) {}
+   
+    },
+    gethauler(){
+this.haulerdata.map(e=>{
+  if(this.haulername === e.haulerName){
+    this.haulers =  e
+  }
+})
+
+
+    },
        getid(){
         console.log("haiiiiii",)
         this.emp.map(e=>{
@@ -194,6 +221,7 @@ export default {
             totalKmServed: this.totalkmsserved,
             totalHourServed:this.totalhoursserved,
             description:this.description,
+              hauler:this.haulers,
             isDeleted: false,
             status: 22,
             createdDate: this.createddate,
@@ -401,6 +429,25 @@ export default {
                     />
 
                  </b-col>
+                 
+                     <!-- </b-col> -->
+                </b-row>
+                   <b-row class="mb-3">
+                  <b-col md="6">
+                    <!-- Default input text -->
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Hauler</label
+                    >
+                    <multiselect
+                                v-model="haulername"
+                                placeholder="Select Hauler"
+                                :options="haulernames"
+                                @input="gethauler"
+                              ></multiselect>
+                     </b-col>
+               
                  
                      <!-- </b-col> -->
                 </b-row>
