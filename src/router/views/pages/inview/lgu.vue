@@ -55,9 +55,9 @@ export default {
           label: 'First Name',
         },
          {
-          key: 'contactLastName',
+          key: 'phone',
 
-          label: 'Last Name',
+          label: 'Phone',
         },
          {
           key: 'email',
@@ -65,9 +65,9 @@ export default {
           label: 'Email',
         },
          {
-          key: 'type',
+          key: 'code',
 
-          label: 'Type',
+          label: 'Code',
         },
       
        
@@ -196,12 +196,12 @@ export default {
             class="mt-3"
           >
             <template v-slot:cell(actions)="data">
-             <router-link :to="{ name: 'View', params: data.item }">
-                <span class="mr-2" >
+             <router-link :to="{ name: 'Viewlgu', params: data.item }">
+                <span class="mr-2 " >
                  <i class="fa fa-eye edit"></i>
                 </span>
               </router-link>
-             <router-link :to="{ name: 'Edit', params: data.item }">
+             <router-link :to="{ name: 'Editlgu', params: data.item }">
                 <span class="mr-2">
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>

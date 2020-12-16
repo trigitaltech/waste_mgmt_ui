@@ -50,7 +50,11 @@ export default {
           href: '/',
         },
         {
-          text: 'LGU/ Create LGU',
+          text: 'LGU',
+          href: '#/LGU/Lgu',
+        },
+        {
+          text: 'View LGU',
           active: true,
         },
       ],
@@ -70,24 +74,24 @@ export default {
       servingAreas:[],
       baranggayCode:"",
      form: {
-        lguName:"",
-        lguCode:"",
-        personalidno:"",
-        personalTitle: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        userName:'',
-        password:'',
-        email: '',
-        number: '',
-        address: '',
-        city: '',
-        area:'',
-        address2:'',
-        state: '',
-        country: '',
-        postCode: '',
+        lguName:this.$route.params.lguName,
+        lguCode:this.$route.params.code,
+        personalidno:this.$route.params.personalIdNo,
+        personalTitle: this.$route.params.contactSalutation,
+        firstName: this.$route.params.contactfirstName,
+        middleName: this.$route.params.contactMiddleName,
+        lastName: this.$route.params.contactLastName,
+        userName:this.$route.params.userName,
+        password:this.$route.params.password,
+        email: this.$route.params.email,
+        number: this.$route.params.phone,
+        address: this.$route.params.addressLine1,
+        city: this.$route.params.city,
+        area:this.$route.params.area,
+        address2: this.$route.params.addressLine2, 
+        state: this.$route.params.state,
+        country: this.$route.params.country,
+        postCode: this.$route.params.pin,
         stbNumber: '',
         bouquets: null,
         amount: 0,
@@ -118,6 +122,7 @@ export default {
   },
   mounted() {
     this.roles.push("LGU")
+    console.log(this.$route.params)
      this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     this.roledata()
@@ -222,7 +227,7 @@ export default {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `LGU created Successfully`,
+            text: `LGU Edited Successfully`,
             duration: 5000,
           })
           this.$router.push({path:'/LGU/Lgu'})
@@ -252,7 +257,7 @@ export default {
       <div class="row">
         <div class="col-xl-12  mx-auto">
           <b-card
-            header="Create LGU"
+            header="View LGU"
           >
             <div class="card-body">
               <ValidationObserver v-slot="{ handleSubmit }">
@@ -416,7 +421,6 @@ export default {
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter LastName"
                                 class="form-control"
-                                required
                               />
                               <!-- <input
                                     v-model.trim="form.lastName"
@@ -444,7 +448,6 @@ export default {
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter LastName"
                                 class="form-control"
-                                required
                               />
                               <!-- <input
                                     v-model.trim="form.lastName"
@@ -517,7 +520,6 @@ export default {
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Address"
                                 class="form-control"
-                                required
                               />
                               <!-- <input
                                     v-model.trim="form.address"
@@ -545,7 +547,6 @@ export default {
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Address"
                                 class="form-control"
-                                required
                               />
                             </div>
                             </div> 
@@ -556,8 +557,7 @@ export default {
                                   v-model.trim="form.area"
                                   class="form-control"
                                   type="text"
-                                  placeholder="Enter Country"
-                                  required
+                                  placeholder="Enter Area"
                                 />
                               </div>
                             </div>
@@ -617,7 +617,7 @@ export default {
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Service office</label>
                                  
-                               <b-form-select required
+                               <b-form-select 
                                            v-model.trim="serviceoffice"
                                             :options="item2"
                                            class="form-control"
@@ -639,7 +639,6 @@ export default {
                                 placeholder="Enter Personal ID"
                                 class="form-control"
                                 type="number"
-                                required
                               />
                                     </div>
                            
@@ -648,17 +647,6 @@ export default {
                           </div>
                         </fieldset>
                       </div>
-                  </div>
-                  <div class="row mt-2 justify-content-center">
-                    <div class="col-md-12">
-                      <div class="d-flex justify-content-end">
-                        <button
-                          type="submit"
-                          class="btn btn-primary d-inline-flex align-items-center"
-                          >Submit</button
-                        >
-                      </div>
-                    </div>
                   </div>
                 </form>
               </ValidationObserver>
