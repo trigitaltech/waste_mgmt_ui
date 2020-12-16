@@ -14,7 +14,7 @@ import {
 
 export default {
   page: {
-    title: 'Create Employee',
+    title: 'Create Hauler',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -70,11 +70,11 @@ export default {
         },
         
          {
-          text: 'Employees',
-          href: '#/Employee/Employees',
+          text: 'Haulers',
+          href: '#/Hauler/Haulers',
         },
         {
-          text: 'Create Employee',
+          text: 'Create Hauler',
           active: true,
         },
       ],
@@ -178,6 +178,7 @@ export default {
     async create() {
       try {
         const payload = {
+        
                 code: this.form.code,
                 haulerName: this.form.userName,
                 userName: this.form.userName,
@@ -198,10 +199,7 @@ export default {
                 isDeleted: false,
                 status: 200,
                 personal_ID_NO: this.personalidno,
-                id_PROOF_DOC_URL:null,
-                service_OFFICE: this.sid,
-                vehicle:[],
-                equipment:[]
+              
             }
         let result = await createhauler(payload)
         if (result) {
@@ -211,7 +209,7 @@ export default {
             text: `You Created Hauler Successfully`,
             duration: 5000,
           })
-          this.$router.push({path:'/Employee/Employees'})
+          this.$router.push({path:'/Hauler/Haulers'})
         }
       } catch (e) {
          this.$toasted.error(e.message.error, {
@@ -613,7 +611,7 @@ export default {
                                            ></b-form-select>
                                     </div>
                             </div>-->
-                            <div class="col-md-3">
+                            <!-- <div class="col-md-3">
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Service office</label>
                                  
@@ -627,7 +625,7 @@ export default {
                                     </div>
                            
                            
-                            </div>
+                            </div> -->
                               <div class="col-md-3">
                             
                            

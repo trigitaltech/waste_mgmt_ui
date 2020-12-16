@@ -10,12 +10,12 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- employees,deleteemployee
+ hauleremployee,deleteemployee
 } from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Employees',
+    title: 'Hauler Employees',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -143,8 +143,8 @@ export default {
     async getemployees() {
        try {
         NProgress.start()
-      const result = await  employees()
-      this.item = result.data.response.result
+      const result = await  hauleremployee()
+      this.item = result.data.response.HaulerEmployees
        NProgress.done()
       } catch (error) {}
    
@@ -208,12 +208,12 @@ export default {
             class="mt-3"
           >
             <template v-slot:cell(actions)="data">
-             <router-link :to="{ name: 'Viewemployee', params: data.item }">
+             <router-link :to="{ name: 'View', params: data.item }">
                 <span class="mr-2" >
                  <i class="fa fa-eye edit"></i>
                 </span>
               </router-link>
-             <router-link :to="{ name: 'Editemployee', params: data.item }">
+             <router-link :to="{ name: 'Edit', params: data.item }">
                 <span class="mr-2">
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>

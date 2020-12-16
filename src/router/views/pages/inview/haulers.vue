@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- haulers,deleteemployee
+ haulers,deletehauler
 } from '../../../../services/auth'
 
 export default {
@@ -41,7 +41,7 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-       item: {},
+       item: [],
         
         
       permissionColumns: [
@@ -50,25 +50,30 @@ export default {
           label: 'Salutation',
         },
          {
+          key: 'haulerName',
+
+          label: 'haulerName',
+        },
+         {
           key: 'contactfirstName',
 
           label: 'First Name',
         },
          {
-          key: 'contactLastName',
+          key: 'phone',
 
-          label: 'Last Name',
+          label: 'phone',
         },
          {
           key: 'email',
 
           label: 'Email',
         },
-         {
-          key: 'type',
+        //  {
+        //   key: 'type',
 
-          label: 'Type',
-        },
+        //   label: 'Type',
+        // },
 
         {
           key: 'actions',
@@ -105,12 +110,12 @@ export default {
        var id = data.item.id
      try{
           
-        const result = await deleteemployee(data.item.id)
+        const result = await deletehauler(data.item.id)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You Deleted Employee Successfully`,
+            text: `You Deleted Hauler Successfully`,
             duration: 5000,
           })
          this.refresh()
@@ -191,12 +196,12 @@ export default {
             class="mt-3"
           >
             <template v-slot:cell(actions)="data">
-             <router-link :to="{ name: 'Viewemployee', params: data.item }">
+             <router-link :to="{ name: 'Viewhauler', params: data.item }">
                 <span class="mr-2" >
                  <i class="fa fa-eye edit"></i>
                 </span>
               </router-link>
-             <router-link :to="{ name: 'Editemployee', params: data.item }">
+             <router-link :to="{ name: 'Edithauler', params: data.item }">
                 <span class="mr-2">
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>
