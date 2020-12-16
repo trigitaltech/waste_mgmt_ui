@@ -314,7 +314,6 @@ export default {
                     >
                     <input
                       type="text"
-                      readonly
                       v-model="tripDate"
                       class="form-control"
                     />
@@ -328,7 +327,6 @@ export default {
                     <input
                       v-model="startTime"
                       class="form-control"
-                      readonly
                       type="text"
                     />
                   </b-col>
@@ -430,13 +428,6 @@ export default {
                       class="grey-text font-weight-dark"
                       >Garbage Collectors</label
                     >
-                    <!--<div class="form-group" v-for="(input,k) in inputs" :key="k">
-                      <input type="text" class="form-control" v-model="input.name">
-                      <span>
-                          <i class="fas fa-minus-circle" @click="remove(k)" v-show="k || ( !k && inputs.length > 1)"></i>
-                          <i class="fas fa-plus-circle" @click="add(k)" v-show="k == inputs.length-1"></i>
-                      </span>
-                  </div>-->
                     <multiselect
                         v-model="route"
                         :multiple="true"       
@@ -444,6 +435,23 @@ export default {
                       >
                     </multiselect>
                   </b-col>
+                </b-row>
+                <b-row class="mt-3">
+                  <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Volume Checker</label
+                    >
+                     <b-form-select
+                      v-model.trim="checker"
+                      class="form-control"        
+                      :options="checkerList"
+                      @change="getid" 
+                    >
+                    </b-form-select>
+                  </b-col>
+                  <b-col></b-col>
                 </b-row>
                 <button
                   type="submit"

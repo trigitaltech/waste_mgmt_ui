@@ -158,7 +158,18 @@ export default {
                       </multiselect>
                     </div>
                   </b-col>
-                  <b-col></b-col>
+                  <b-col>
+                    <div class="form-group">
+                      <label
+                        class="grey-text font-weight-dark ml-3"
+                        >LGU: </label
+                      >
+                      <input
+                        class="ml-2 form-control"
+                        v-model="lgu"
+                      />
+                    </div>
+                  </b-col>
                 </b-row>
                 <b-row>
                   <b-col>
@@ -269,16 +280,7 @@ export default {
                     </div>
                   </b-col>
                   <b-col>
-                    <div class="form-group">
-                      <label
-                        class="grey-text font-weight-dark ml-3"
-                        >LGU: </label
-                      >
-                      <input
-                        class="ml-2 form-control"
-                        v-model="lgu"
-                      />
-                    </div>
+                    
                   </b-col>
                 </b-row>
                 <b-row>
@@ -323,7 +325,18 @@ export default {
                       />
                     </div>
                   </b-col>
-                  <b-col></b-col>
+                  <b-col>
+                    <div class="form-group">
+                      <label
+                        class="grey-text font-weight-dark ml-3"
+                        >Volume Checker: </label
+                      >
+                      <input
+                        class="ml-2 form-control"
+                        v-model="volume"
+                      />
+                    </div>
+                  </b-col>
                 </b-row>
                 <b-row>
                   <b-col>
