@@ -10,8 +10,8 @@ import Multiselect from 'vue-multiselect'
 import moment from 'moment';
 Vue.component('multiselect', Multiselect)
 import {
-  // eslint-disable-next-line no-unused-vars
- Tripdownload,Areamasters,routemaster, CreateIncomingTrip,employees,vehicle
+ Tripdownload,Areamasters,routemaster, CreateIncomingTrip,employees,vehicle,
+ getRoutesByBaranggayId
 } from '../../../../services/auth'
 
 export default {
@@ -57,6 +57,7 @@ export default {
       hauler:"",
       haulerList:[],
       contractorList:[],
+      paleroList:[],
       garbage:null,
       lgu:null
     };
@@ -73,10 +74,27 @@ export default {
     console.log(this.tripDate+" "+this.startTime)
     this.areas();
     this.routes();
+    this.getUsers();
     this.employeedata()
     this.getvehicles()
   },
   methods:{
+    async getRoutes() {
+      try {
+        this.areadata.map(async (e) => {
+          if(this.area === e.areaName){
+            console.log(e)
+            this.areaarray = e
+            const result = await getRoutesByBaranggayId(e.id);
+            console.log(result);
+          }
+        })
+        const result = await getRoutesByBaranggayId(id);
+        console.log(result);
+      } catch(e) {  
+        console.log(e)
+      }
+    },
     async getvehicles() {
       const result = await vehicle()
       this.vehicles = result.data.response.vehicles
@@ -261,7 +279,7 @@ export default {
                       v-model.trim="area"
                       class="form-control"        
                       :options="servingAreas"
-                      @change="getareas" 
+                      @change="getRoutes" 
                     >
                     </b-form-select>
                   </b-col>

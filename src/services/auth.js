@@ -181,6 +181,7 @@ export const Tripoutgoing = (id) => serviceMaker(`/tripoutgoing/system/${id}`, m
 
 export const searchvoucher = (id) => serviceMaker(`/vouchers/verify?pinNumber=${id}`, methods.GET, api.NGB)
 
+export const getRoutesByBaranggayId = (id) => serviceMaker(`/routemaster/getRoutesByBrg/${id}`,methods.GET,api.NGB);
 
 export const getoutgoingtrip = (id,payload) => serviceMaker(
     `/getoutgoingtripbydatefilter/${id}`,

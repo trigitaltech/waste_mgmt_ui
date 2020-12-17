@@ -107,7 +107,7 @@ export default {
                   <h5
                     class="pro-user-desc text-muted d-block mt-1"
                     style="color: white"
-                    >Administrator</h5
+                    >{{ user.roles[0].code }}</h5
                   >
                 </h6>
               </div>
