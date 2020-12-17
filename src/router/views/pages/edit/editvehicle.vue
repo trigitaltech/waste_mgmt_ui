@@ -53,7 +53,7 @@ export default {
       ],
       item:[ ],
       vehicletype:[],
-
+vehiclecapacity:"",
       items: [
         {
           text: 'Haulers',
@@ -207,7 +207,7 @@ this.haulerdata.map(e=>{
             "truckType":vehicletype[0].truckType
           },
             id:this.$route.params.id,
-           
+             volumeCapacity:this.vehiclecapacity,
             vehicleNo: this.vehicleno,
             plateNo: this.plateno,
             code:this.code,
@@ -447,7 +447,20 @@ this.haulerdata.map(e=>{
                                 @input="gethauler"
                               ></multiselect>
                      </b-col>
-               
+                 <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Vehicle Capacity</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="vehiclecapacity"
+                       placeholder="Enter Vehicle Capacity"
+                      type="text"
+                      class="form-control"
+                    />
+                 </b-col>
                  
                      <!-- </b-col> -->
                 </b-row>
