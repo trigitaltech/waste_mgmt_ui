@@ -280,10 +280,10 @@ export default {
           isDeleted: false,
           status: 200,
           type: this.rolename,
-          personal_ID_NO: this.form.personalidno,
+          personalIdNo: this.form.personalidno,
           service_OFFICE: this.sid,
           id_PROOF_DOC_URL: null,
-          lguid: this.lgusdata,
+          lgu_Id: this.lgusdata,
 
           //baranggayCode: this.baranggayCode
         }

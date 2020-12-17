@@ -218,7 +218,7 @@ export default {
                 isDeleted: false,
                 status: 200,
               
-                personal_ID_NO: this.personalidno,
+                personalIdNo: this.personalidno,
                 id_PROOF_DOC_URL:this.file,
               
                 type:this.rolename,

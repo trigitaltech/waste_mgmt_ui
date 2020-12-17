@@ -231,8 +231,8 @@ export default {
           isDeleted: false,
           status: 200,
           type: null,
-          personal_ID_NO:this.form.personalidno,
-          service_OFFICE: this.sid,
+          personalIdNo:this.form.personalidno,
+       
           id_PROOF_DOC_URL: null,
          
           baranggayCode: this.baranggayCode
@@ -621,23 +621,10 @@ export default {
                               </div>
                             </div>
                               
-                            <div class="col-md-4">
-                            
+                          
                            
                         
-                              <div class="form-group mt-3 mt-sm-0">
-                                   <label for="default">Service office</label>
-                                 
-                               <b-form-select required
-                                           v-model.trim="serviceoffice"
-                                            :options="item2"
-                                           class="form-control"
-                                              @change="getid"
-                                ></b-form-select>
-                                    </div>
-                           
-                           
-                            </div>
+                            
                               <div class="col-md-4">
                             
                            
