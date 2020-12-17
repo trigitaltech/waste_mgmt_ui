@@ -284,7 +284,7 @@ export default {
           personal_ID_NO: this.form.personalidno,
           service_OFFICE: this.sid,
           id_PROOF_DOC_URL: null,
-          lguid: this.lgusdata,
+          lgu_Id: this.lgusdata,
 
           //baranggayCode: this.baranggayCode
         }
@@ -296,7 +296,7 @@ export default {
             text: `LGU Employee created Successfully`,
             duration: 5000,
           })
-          this.$router.push({ path: '/LGU/Lguemployee' })
+          this.$router.push({ path: '/LGU/LguEmployee' })
         }
       } catch (e) {
         this.$toasted.error(e.message.error, {
