@@ -42,14 +42,14 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-       item: {},
+       item: [],
         
       
       permissionColumns: [
         {
-          key: 'equipmentId',
+          key: 'id',
 
-          label: 'EquipmentId',
+          label: 'Id',
         },
          {
           key: 'equipmentNo',
@@ -61,20 +61,11 @@ export default {
           label: 'EquipmentType',
         },
          {
-          key: 'ownerId',
+          key: 'hauler.haulerName',
 
-          label: 'OwnerId',
+          label: 'Hauler Name',
         },
-        {
-          key: 'ownerName',
-
-          label: 'OwnerName',
-        },
-         {
-          key: 'servingArea',
-
-          label: 'ServingArea',
-        },
+       
          {
           key: 'status',
 

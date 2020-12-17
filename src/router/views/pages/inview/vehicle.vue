@@ -58,6 +58,11 @@ export default {
           label: 'vehicleNo',
         },
          {
+          key: 'hauler.haulerName',
+
+          label: 'Hauler Name',
+        },
+         {
           key: 'totalHourServed',
 
           label: 'totalHourServed',

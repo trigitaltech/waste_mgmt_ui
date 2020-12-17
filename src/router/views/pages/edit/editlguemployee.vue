@@ -18,7 +18,7 @@ import {
 
 export default {
   page: {
-    title: 'Create Lgu Employee',
+    title: 'Edit Lgu Employee',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -54,7 +54,7 @@ export default {
           href: '/',
         },
         {
-          text: 'LGU/ Create LGU Employee',
+          text: 'LGU/ Edit LGU Employee',
           active: true,
         },
       ],
@@ -73,28 +73,27 @@ export default {
       rolesarray: [],
       servingAreas: [],
       baranggayCode: '',
+
       form: {
-        district: '',
-        lguName: '',
-        lguCode: '',
-        personalidno: '',
-        personalTitle: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        userName: '',
-        password: '',
-        email: '',
-        number: '',
-        address: '',
-        city: '',
-        area: '',
-        address2: '',
-        state: '',
-        country: '',
-        postCode: '',
-        stbNumber: '',
-        bouquets: null,
+            lguName: this.$route.params.lguName,
+        lguCode: this.$route.params.code,
+        personalidno: this.$route.params.personalIdno,
+        personalTitle:this.$route.params.salutation,
+        firstName:this.$route.params.firstName,
+        middleName: this.$route.params.middleName,
+        lastName:this.$route.params.lastName,
+        userName:this.$route.params.userName,
+        password:this.$route.params.password,
+        email:this.$route.params.email,
+        number:this.$route.params.phone,
+        address: this.$route.params.addressLine1,
+        city: this.$route.params.city,
+        area:this.$route.params.area,
+        distict:this.$route.params.district,
+        address2:this.$route.params.addressLine2,
+        state: this.$route.params.state,
+        country: this.$route.params.country,
+        postCode: this.$route.params.pin,
         amount: 0,
         voucherNo: '',
       },
@@ -288,7 +287,7 @@ export default {
 
           //baranggayCode: this.baranggayCode
         }
-        let result = await createlguemployee(payload)
+        let result = await editlguemployee(payload)
         if (result) {
           this.$swal({
             group: 'alert',
@@ -322,7 +321,7 @@ export default {
       <div class="col-lg-12">
         <div class="row">
           <div class="col-xl-12 mx-auto">
-            <b-card header="Create LGU Employee">
+            <b-card header="Edit LGU Employee">
               <div class="card-body">
                 <ValidationObserver v-slot="{ handleSubmit }">
                   <form @submit.prevent="handleSubmit(create)">

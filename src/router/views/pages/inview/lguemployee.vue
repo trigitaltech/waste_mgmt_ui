@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- lguEmployees,deletelgu
+ deletelgu, lguemployee
 } from '../../../../services/auth'
 
 export default {
@@ -45,20 +45,21 @@ export default {
         
         
       permissionColumns: [
+          {
+          key: 'code',
+
+          label: 'code',
+        },
          {
-          key: 'contactSalutation',
+          key: 'salutation',
           label: 'Salutation',
         },
          {
-          key: 'contactfirstName',
+          key: 'firstName',
 
           label: 'First Name',
         },
-         {
-          key: 'contactLastName',
-
-          label: 'Last Name',
-        },
+       
          {
           key: 'email',
 
@@ -106,7 +107,7 @@ export default {
        var id = data.item.id
      try{
           
-        const result = await deletelgu(data.item.id)
+        const result = await deletelguemployee(data.item.id)
         if (result) {
           this.$swal({
             group: 'alert',
@@ -126,12 +127,12 @@ export default {
     async getemployees() {
        try {
         NProgress.start()
-        const result = await  lguEmployees()
-        const data = result.data.response.LGUMaster
-        data.map( e => {
-          if(e.type=="ENCODER" || e.type=="VOLUME_CHECKER" || e.type=="DISPATCHER")
-            this.item.push(e)
-        })
+        const result = await  lguemployee()
+        this.item = result.data.response.result
+        // data.map( e => {
+        //   if(e.type=="ENCODER" || e.type=="VOLUME_CHECKER" || e.type=="DISPATCHER")
+        //     this.item.push(e)
+        // })
           console.log(this.item)
         NProgress.done()
       } catch (error) {}
@@ -195,12 +196,12 @@ export default {
             class="mt-3"
           >
             <template v-slot:cell(actions)="data">
-             <router-link :to="{ name: 'Viewemployee', params: data.item }">
+             <router-link :to="{ name: 'Viewlguemployee', params: data.item }">
                 <span class="mr-2" >
                  <i class="fa fa-eye edit"></i>
                 </span>
               </router-link>
-             <router-link :to="{ name: 'Editemployee', params: data.item }">
+             <router-link :to="{ name: 'Editlguemployee', params: data.item }">
                 <span class="mr-2">
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>

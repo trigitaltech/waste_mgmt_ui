@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- createLGUemployee,roles,Areamasters
+ createLGU,roles,Areamasters
 } from '../../../../services/auth'
 
 export default {
@@ -50,7 +50,13 @@ export default {
           href: '/',
         },
         {
-          text: 'LGU/ Create LGU',
+          text: 'Lgus',
+         href: '#/LGU/Lgu',
+          active: true,
+        },
+        {
+          text: 'Create Lgu',
+        
           active: true,
         },
       ],
@@ -70,6 +76,8 @@ export default {
       servingAreas:[],
       baranggayCode:"",
      form: {
+       baranggay:"",
+       district:"",
         lguName:"",
         lguCode:"",
         personalidno:"",
@@ -175,6 +183,17 @@ export default {
           }
         })
     },
+    getdistricts(){
+      this.areas.map( e => {
+        if(e.areaName == this.form.baranggay){
+          this.baranggayCode = e.code
+          console.log("haii",e.districtId)
+          this.form.district = e.districtId[0].districtName
+          this.form.state = e.districtId[0].stateCode.stateName
+          this.form.country = e.districtId[0].stateCode.countryCode.countryName
+        }
+      })
+    },
     async getBaranggayCode() {
       this.areas.map( e => {
         if(e.areaName == this.baranggayCode)
@@ -205,7 +224,7 @@ export default {
           contactlastName: this.form.lastName,
           addressLane1: this.form.address,
           addressLane2: this.form.address2,
-          city: this.form.city,
+          district:this.form.district,
           state: this.form.state,
           country: this.form.country,
           pin: this.form.postCode,
@@ -214,10 +233,11 @@ export default {
           type: null,
           personal_ID_NO:this.form.personalidno,
           service_OFFICE: this.sid,
-          id_PROOF_DOC_URL: null
-          //baranggayCode: this.baranggayCode
+          id_PROOF_DOC_URL: null,
+         
+          baranggayCode: this.baranggayCode
         }
-        let result = await createLGUemployee(payload)
+        let result = await createLGU(payload)
         if (result) {
           this.$swal({
             group: 'alert',
@@ -551,14 +571,14 @@ export default {
                             </div> 
                           <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Area</label>
-                                <input
-                                  v-model.trim="form.area"
-                                  class="form-control"
-                                  type="text"
-                                  placeholder="Enter Country"
-                                  required
-                                />
+                                <label for="default">Baranggay</label>
+                                <multiselect
+                                required
+                                v-model="form.baranggay"
+                                placeholder="Select Baranggay"
+                                :options="servingAreas"
+                                @input="getdistricts"
+                              ></multiselect>
                               </div>
                             </div>
                           <div class="col-md-4">
@@ -573,18 +593,7 @@ export default {
                             </div>
                           </div>
 
-                           <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">City</label>
-                                  <input
-                                v-model.trim="form.city"
-                                placeholder="Enter City"
-                                class="form-control"
-                                type="text"
-                                required
-                              />
-                              </div>
-                            </div>
+                         
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">State</label>
@@ -594,6 +603,7 @@ export default {
                                   type="text"
                                   placeholder="Enter State"
                                   required
+                                  disabled
                                 />
                               </div>
                             </div>
@@ -606,6 +616,7 @@ export default {
                                   type="text"
                                   placeholder="Enter Country"
                                   required
+                                  disabled
                                 />
                               </div>
                             </div>

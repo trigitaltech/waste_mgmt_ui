@@ -46,8 +46,8 @@ export default {
         
       permissionColumns: [
          {
-          key: 'contactSalutation',
-          label: 'Salutation',
+          key: 'code',
+          label: 'Code',
         },
          {
           key: 'contactfirstName',
@@ -128,11 +128,11 @@ export default {
        try {
         NProgress.start()
         const result = await  lguEmployees()
-        var data = result.data.response.LGUMaster
-        data.map( e => {
-          if(e.type!="ENCODER" && e.type!="VOLUME_CHECKER" && e.type!="DISPATCHER")
-            this.item.push(e)
-        })
+        this.item = result.data.response.result
+        // data.map( e => {
+        //   if(e.type!="ENCODER" && e.type!="VOLUME_CHECKER" && e.type!="DISPATCHER")
+        //     this.item.push(e)
+        // })
         console.log(this.item)
         NProgress.done()
       } catch (error) {}

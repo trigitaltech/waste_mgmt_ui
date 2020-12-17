@@ -9,12 +9,12 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- Editlgu,roles,Areamasters
+ edithauler,Areamasters
 } from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Edit Lgu',
+    title: 'Edit Hauler',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -27,7 +27,24 @@ export default {
   },
   data() {
     return {
-      areas:[],  
+      plandata: '',
+      striped: false,
+      bordered: true,
+      filter: '',
+      perPage: 10,
+      hover: true,
+      currentPage: 1,
+      small: false,
+      dark: false,
+      fixed: false,
+      amount: '',
+      submitted: false,
+      title: 'Register',
+       item: 
+           {key:'resource',value
+           :'Frozen Yogurt', name: '159'},
+        
+        
       permissionColumns: [
         {
           key: 'resource',
@@ -44,67 +61,57 @@ export default {
           sortable: true,
         },
       ],
+      serviceoffice:"",
+      personalidno:this.$route.params.personalIdNo,
       items: [
-        {
+         {
           text: 'Home',
           href: '/',
         },
-        {
-          text: 'Lgus',
-         href: '#/LGU/Lgu',
-         
+        
+         {
+          text: 'Haulers',
+          href: '#/Hauler/Haulers',
         },
         {
-          text: 'Edit Lgu',
-        
+          text: 'Edit Hauler',
           active: true,
         },
       ],
       finalModel: {},
+      employeetype:"",
       selected: null,
       clientId: '',
       options: ['DAF'],
-      serviceoffice:"",
+      item:[ { value: 'HAULER', text: 'HAULER' }],
       file:"",
-     
-      item: {
-        value: '',
-        text: '',
-      },
-      roledata1:[],
-      rolesarray:[],
-      servingAreas:[],
-      baranggayCode:[],
+      item2:[],
+      sid:"",
      form: {
-       baranggay:"",
-       district:"",
-        lguName:this.$route.params.lguName,
-        lguCode:this.$route.params.code,
-        personalidno:this.$route.params.personalIdNo,
+        code:this.$route.params.code,
         personalTitle: this.$route.params.contactSalutation,
-        firstName: this.$route.params.contactfirstName,
-        middleName: this.$route.params.contactMiddleName,
-        lastName: this.$route.params.contactLastName,
-        userName:this.$route.params.userName,
-        password:this.$route.params.password,
-        email: this.$route.params.email,
-        number: this.$route.params.phone,
-        address: this.$route.params.addressLine1,
-        city: '',
-        area:'',
-        address2:this.$route.params.addressLine2,
-        state: "",
-        country:"",
-        postCode: this.$route.params.pin,
+        firstName:  this.$route.params.contactfirstName,
+        middleName:  this.$route.params.contactMiddleName,
+        lastName:  this.$route.params.contactLastName,
+        userName: this.$route.params.userName,
+        password: this.$route.params.password,
+        email:  this.$route.params.email,
+        number:  this.$route.params.phone,
+        address:  this.$route.params.addressLine1,
+        city: this.$route.params.city,
+        area: this.$route.params.area,
+        address2: this.$route.params.addressLine2,
+        state:  this.$route.params.state,
+        country:  this.$route.params.country,
+        postCode:  this.$route.params.pin,
         stbNumber: '',
         bouquets: null,
         amount: 0,
         voucherNo: '',
       },
-      item2:[],
-      roles:[],
-      rolename:"",
+      areas:[],
       titles: ['Mr.', 'Sri.', 'Mrs'],
+      item1:[],
       vouchernumber: '',
       genderOpt: ['Male', 'Female', 'Other'],
       cityOpt: [],
@@ -125,50 +132,32 @@ export default {
     },
   },
   mounted() {
-    console.log(this.$route.params)
-    // this.roles.push("LGU")
-     this.createdby = this.getUserDetails.user.username
-    this.modifyby = this.getUserDetails.user.username
-    this.roledata()
+    // this.getClientDetails()
+  console.log(  this.$route.params)
     this.getplans()
-    this.getareas()
+      this.createdby = this.getUserDetails.user.username
+    this.modifyby = this.getUserDetails.user.username
   },
   methods: {
-    async getareas() {
-      try {
-        const result = await Areamasters();
-        this.areas = result.data.response.areaMaster
-        this.areas.map(e=>{
-            if(e.areaName!=null)
-              this.servingAreas.push(e.areaName);
-        })
-        console.log(this.servingAreas)
-      } catch (error) { 
-        console.log(error);
-      }
-      console.log(this.servingAreas);
-    },
     getid(){
+        // console.log("haiiiiii",this.item2)
         this.areas.map(e=>{
-          if(this.serviceoffice === e.areaName){
-            this.sid = e.id    
-          }
+            if(this.serviceoffice === e.areaName){
+                this.sid = e.id    
+                       }
+                        //  console.log("haiiiiii",this.sid)
         })
       },
-    readAgreement(e) {
-      const reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = () => {
-        this.file = reader.result;
-      };
-      reader.onerror = err => {
-        console.error("reader : ", err);
-      };
-    },
-    async getplans() {
+     async getplans() {
        try {
         const result = await Areamasters()
       this.areas = result.data.response.areaMaster
+    //   console.log("users",data[0].userName)
+      // JSON.parse(JSON.stringify(result))
+      // for(i=0;i<data.length;i++){
+      //   this.item[i]=data[i].userName
+      // }
+
       this.areas.map(e=>{
       this.item2.push(e.areaName)
       console.log("user",e)
@@ -176,78 +165,52 @@ export default {
        console.log("users",this.item)
      
       } catch (error) {}
-    },
-    getroles(){
-        this.roledata1.map(e=>{
-          if(this.rolename === e.name){
-            this.rolesarray.push(e)
-          }
-        })
-    },
-    getdistricts(){
-      this.areas.map( e => {
-        if(e.areaName == this.form.baranggay){
-          this.baranggayCode = e
-          console.log("haii",e.districtId)
-          this.form.district = e.districtId[0].districtName
-          this.form.state = e.districtId[0].stateCode.stateName
-          this.form.country = e.districtId[0].stateCode.countryCode.countryName
-        }
-      })
-    },
-    async getBaranggayCode() {
-      this.areas.map( e => {
-        if(e.areaName == this.baranggayCode)
-          this.baranggayCode = e.code
-      })
-    },
-    async roledata() {
-       try {
-      
-      const result = await roles()
-      this.roledata1 = result.data.response.RoleMaster
-      } catch (error) {}
      },
+      readAgreement(e) {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      this.file = reader.result;
+    };
+    reader.onerror = err => {
+      console.error("reader : ", err);
+    };
+  },
     async create() {
       try {
-        console.log(this.form.lguCode)
         const payload = {
-          id: this.$route.params.id,
-          code: this.form.lguCode,
-          lguName:this.form.userName,
-          userName: this.form.userName,
-          password: this.form.password,
-          passwordStatus: 1,
-          email: this.form.email,
-          phone: this.form.number,     
-          contactSalutation:this.form.personalTitle,
-          contactfirstName: this.form.firstName,
-          contactmiddleName: this.form.middleName,
-          contactlastName: this.form.lastName,
-          addressLane1: this.form.address,
-          addressLane2: this.form.address2,
-          district:this.form.district,
-          state: this.form.state,
-          country: this.form.country,
-          pin: this.form.postCode,
-          isDeleted: false,
-          status: 200,
-          type: null,
-          personal_ID_NO:this.form.personalidno,
-          service_OFFICE: this.sid,
-          id_PROOF_DOC_URL: null,
-         
-          baranggay: this.baranggayCode
-        }
-        let result = await Editlgu(payload)
+                 id:this.$route.params.id,
+                code: this.form.code,
+                haulerName: this.form.userName,
+                userName: this.form.userName,
+                password: this.form.password,
+                passwordStatus: 1,
+                email: this.form.email,
+                phone: this.form.number,
+                contactSalutation: this.form.personalTitle,
+                contactfirstName: this.form.firstName,
+                contactmiddleName: this.form.middleName,
+                contactlastName: this.form.lastName,
+                addressLine1: this.address,
+                addressLine2: this.address2,
+                city: this.form.city,
+                state: this.form.state,
+                country: this.form.country,
+                pin: this.form.postCode,
+                isDeleted: false,
+                status: 200,
+                personal_ID_NO: this.personalidno,
+              
+            }
+        let result = await edithauler(payload)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `LGU Editted Successfully`,
+            text: `You Edited Hauler Successfully`,
             duration: 5000,
           })
-          this.$router.push({path:'/LGU/Lgu'})
+          this.$router.push({path:'/Hauler/Haulers'})
         }
       } catch (e) {
          this.$toasted.error(e.message.error, {
@@ -255,7 +218,6 @@ export default {
         })
       }
     },
- 
     async refresh() {
       setTimeout(function () {
         location.reload()
@@ -274,7 +236,8 @@ export default {
       <div class="row">
         <div class="col-xl-12  mx-auto">
           <b-card
-            header="Edit LGU"
+            header="Edit Hauler"
+            
           >
             <div class="card-body">
               <ValidationObserver v-slot="{ handleSubmit }">
@@ -287,29 +250,36 @@ export default {
                         </legend>
 
                         <div class="row">
-                          
-                            <div class="col-md-4">
-                            
-                           
-                        
-                              <div class="form-group mt-3 mt-sm-0">
-                                   <label for="default">Code</label>
-                                 
-                              <input required
-                                v-model.trim="form.lguCode"
-                                placeholder="Code"
-                                class="form-control"
+                          <div class="col-md-4">
+                            <div class="form-group mt-3 mt-sm-0">
+                              <label for="default">Code</label>
+                              <!-- <ValidationProvider
+                                  v-slot="{ errors }"
+                                  name="Last Name"
+                                  rules="required"
+                                >-->
+                              <input
+                                v-model.trim="form.code"
+                                for="lastname"
                                 type="text"
+                                placeholder="Enter Code"
+                                class="form-control"
+                                required
                               />
-                                    </div>
-                           
-                           
+                              <!-- <input
+                                    v-model.trim="form.lastName"
+                                    class="form-control"
+                                    placeholder="Enter Last Name"
+                                    type="text"
+                                  />
+                                  <span class="text-danger">{{ errors[0] }}</span>
+                                </ValidationProvider>-->
                             </div>
+                          </div>
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Personal Title</label>
                               <multiselect
-                                required
                                 v-model="form.personalTitle"
                                 placeholder="Select Personal Title"
                                 :options="titles"
@@ -573,14 +543,14 @@ export default {
                             </div> 
                           <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Baranggay</label>
-                                <multiselect
-                                required
-                                v-model="form.baranggay"
-                                placeholder="Select Baranggay"
-                                :options="servingAreas"
-                                @input="getdistricts"
-                              ></multiselect>
+                                <label for="default">Area</label>
+                                <input
+                                  v-model.trim="form.area"
+                                  class="form-control"
+                                  type="text"
+                                  placeholder="Enter Area"
+                                
+                                />
                               </div>
                             </div>
                           <div class="col-md-4">
@@ -590,12 +560,22 @@ export default {
                                 v-model.trim="form.postCode"
                                 placeholder="Enter Poster Code"
                                 class="form-control"
-                                type="number" required
+                                type="number"
                               />
                             </div>
                           </div>
 
-                         
+                           <div class="col-md-4">
+                              <div class="form-group mt-3 mt-sm-0">
+                                <label for="default">City</label>
+                               <input
+                                v-model.trim="form.city"
+                                placeholder="Enter city"
+                                class="form-control"
+                                type="text"
+                              />
+                              </div>
+                            </div>
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">State</label>
@@ -604,8 +584,7 @@ export default {
                                   class="form-control"
                                   type="text"
                                   placeholder="Enter State"
-                                  required
-                                  disabled
+                               
                                 />
                               </div>
                             </div>
@@ -617,20 +596,28 @@ export default {
                                   class="form-control"
                                   type="text"
                                   placeholder="Enter Country"
-                                  required
-                                  disabled
+                                
                                 />
                               </div>
                             </div>
-                              
-                            <div class="col-md-4">
-                            
-                           
-                        
+                            <!--<div class="col-md-3">
+                              <div class="form-group mt-3 mt-sm-0">
+                                   <label for="default">Employee Type</label>
+                                 
+                                           <b-form-select
+                                           v-model.trim="employeetype"
+                                            class="form-control"
+                                           :options="item"
+                                              
+                                           ></b-form-select>
+                                    </div>
+                            </div>-->
+                            <!-- <div class="col-md-3">
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Service office</label>
                                  
-                               <b-form-select required
+                           
+                               <b-form-select
                                            v-model.trim="serviceoffice"
                                             :options="item2"
                                            class="form-control"
@@ -639,8 +626,8 @@ export default {
                                     </div>
                            
                            
-                            </div>
-                              <div class="col-md-4">
+                            </div> -->
+                              <div class="col-md-3">
                             
                            
                         
@@ -648,23 +635,125 @@ export default {
                                    <label for="default">Personal ID No</label>
                                  
                               <input
-                                v-model.trim="form.personalidno"
+                                v-model.trim="personalidno"
                                 placeholder="Enter Personal ID"
                                 class="form-control"
                                 type="number"
-                                required
                               />
                                     </div>
                            
                            
                             </div>
+                            
+                          </div>
+                          
+                        </fieldset>
+                        
+                      </div>
+
+                    <!-- <div class="col-md-12">
+                        <fieldset class="border p-2">
+                          <legend class="w-auto">
+                            <h4 class="header-title mt-0 mb-1">Service Info</h4>
+                          </legend>
+                          <div class="row">
+                            <div class="col-md-3">
+                              <div class="form-group mt-3 mt-sm-0">
+                                <label for="default">Box ID</label>
+                                <input
+                                  v-model.trim="form.stbNumber"
+                                  placeholder="Enter Box ID"
+                                  class="form-control"
+                                  type="text"
+                                />
+                              </div>
+                            </div>  -->
+
+                          <!-- <div class="col-md-3">
+                              <div class="form-group mt-3 mt-sm-0">
+                                <label for="default">Voucher No</label>
+                                <input
+                                  v-model.trim="form.voucherNo"
+                                  class="form-control"
+                                  placeholder="Enter Voucher No"
+                                  type="number"
+                                />
+                              </div>
+                            </div>-->
+
+                          <!-- <div class="col-md-6">
+                              <div class="form-group mt-3 mt-sm-0">
+                                <label for="default">Plan</label> -->
+                          <!-- <b-form-select v-model="selected" :options="options"  v-on:change="getplanprice()"></b-form-select> -->
+                          <!-- <model-select :options="options"
+                                v-model="item"
+                                placeholder="select item">
+                                </model-select>-->
+                          <!-- <b-form-select
+                                    oninvalid="this.setCustomValidity('Plan is required ')"
+                                  oninput="setCustomValidity('')"
+                                  required
+                                  v-model.trim="form.bouquets"
+                                  placeholder="Select Bouquets"
+                                  :options="bouquetsOpt"
+                                  @change="getplanprices()"
+                                ></b-form-select>
+                              </div>
+                            </div>
+
+                            <div class="col-md-3">
+                              <div class="form-group mt-3 mt-sm-0">
+                                <label for="default">Amount</label>
+                                <input
+                                  v-model.trim="amount"
+                                  class="form-control"
+                                  type="number"
+                                  disabled
+                                  placeholder="Amount"
+                                />
+                              </div>
+                            </div>
                           </div>
                         </fieldset>
                       </div>
+                      <div class="col-md-12">
+                        <fieldset class="border p-2">
+                          <legend class="w-auto">
+                            <h4 class="header-title mt-0 mb-1">Voucher Info</h4>
+                          </legend>
+                          <div class="row">
+                            <div class="col-md-3">
+                              <div class="form-group mt-3 mt-sm-0">
+                                <label for="default">Voucher ID</label>
+                                <input
+                                  oninvalid="this.setCustomValidity('Voucher Id is required ')"
+                                  oninput="setCustomValidity('')"
+                                  required
+                                  v-model.trim="vouchernumber"
+                                  placeholder="Enter Voucher ID"
+                                  class="form-control"
+                                  type="text"
+                                  @input="myFunction"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
+                      </div>
+                    </div> -->
+                        <!-- </div>
+                      </fieldset> -->
+                    <!-- </div> -->
                   </div>
                   <div class="row mt-2 justify-content-center">
                     <div class="col-md-12">
                       <div class="d-flex justify-content-end">
+                        <!-- <button
+                            class="btn btn-outline-primary mr-3"
+                            style="color: #26a69a"
+                            type="reset"
+                            >Reset</button
+                          > -->
                         <button
                           type="submit"
                           class="btn btn-primary d-inline-flex align-items-center"
@@ -684,6 +773,8 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
+<style lang="scss">
+</style>
 <style lang="sass" scoped>
 .edit
   color: #a7a7a7 !important
