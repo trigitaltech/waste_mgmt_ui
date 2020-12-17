@@ -235,7 +235,7 @@ export default {
                 personalIdNo: this.form.personalidno,
                 idProofDocURL: this.file,
                 type: this.rolename,
-                 Type: "ADMIN",
+               
                 roles:[
                       {
                           code: this.rolesarray,

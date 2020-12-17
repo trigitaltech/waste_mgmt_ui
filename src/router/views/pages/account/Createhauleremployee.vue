@@ -232,7 +232,7 @@ export default {
             text: `Your Created Hauler Employee Successfully`,
             duration: 5000,
           })
-          this.$router.push({path:'/Employee/Employees'})
+          this.$router.push({path:'/Hauler/HaulerEmployees'})
         }
       } catch (e) {
          this.$toasted.error(e.message.error, {
