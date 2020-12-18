@@ -235,7 +235,6 @@ export default {
                 personalIdNo: this.form.personalidno,
                 idProofDocURL: this.file,
                 type: this.rolename,
-               
                 roles:[
                       {
                           code: this.rolesarray,
@@ -683,7 +682,6 @@ export default {
                             >
                             <b-form-select
                           v-model.trim="rolename"
-                          placeholder="Select Supervisor"
                           label="value"
                           class="form-control"
                           :options="roles"
