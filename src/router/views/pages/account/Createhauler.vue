@@ -198,7 +198,7 @@ export default {
                 pin: this.form.postCode,
                 isDeleted: false,
                 status: 200,
-                personal_ID_NO: this.personalidno,
+                personalIdNo: this.personalidno,
               
             }
         let result = await createhauler(payload)

@@ -208,12 +208,12 @@ export default {
             class="mt-3"
           >
             <template v-slot:cell(actions)="data">
-             <router-link :to="{ name: 'View', params: data.item }">
+             <router-link :to="{ name: 'Viewhauleremployee', params: data.item }">
                 <span class="mr-2" >
                  <i class="fa fa-eye edit"></i>
                 </span>
               </router-link>
-             <router-link :to="{ name: 'Edit', params: data.item }">
+             <router-link :to="{ name: 'Edithauleremployee', params: data.item }">
                 <span class="mr-2">
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>

@@ -9,16 +9,12 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  createlguemployee,
-  roles,
-  Areamasters,
-  lguEmployees,
-  address,
+ createhauleremployee,Areamasters,haulers,address
 } from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Create Lgu Employee',
+    title: 'Edit Hauler Employee',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -31,65 +27,54 @@ export default {
   },
   data() {
     return {
-      areas: [],
-      permissionColumns: [
-        {
-          key: 'resource',
-
-          label: 'Resource',
-        },
-        {
-          key: 'name',
-          label: 'Permission',
-        },
-
-        {
-          key: 'actions',
-          sortable: true,
-        },
-      ],
+    
+      serviceoffice:"",
+      personalidno:"",
       items: [
-        {
+         {
           text: 'Home',
           href: '/',
         },
+        
+         {
+          text: 'Hauler Employees',
+          href: '#/Hauler/HaulerEmployees',
+        },
         {
-          text: 'LGU/ Create LGU Employee',
+          text: 'Edit Hauler Employee',
           active: true,
         },
       ],
       finalModel: {},
+      employeetype:"",
       selected: null,
       clientId: '',
       options: ['DAF'],
-      serviceoffice: '',
-      file: '',
-
-      item: {
-        value: '',
-        text: '',
-      },
-      roledata1: [],
-      rolesarray: [],
-      servingAreas: [],
-      baranggayCode: '',
-      form: {
-        district: '',
-        lguName: '',
-        lguCode: '',
-        personalidno: '',
+      roles:[ { value: 'INTERNAL', text: 'INTERNAL' },
+        { value: 'DRIVER', text: 'DRIVER' },
+          { value: 'CONTRACTOR', text: 'CONTRACTOR' },
+          { value: 'HELPER', text: 'HELPER' },
+          { value: 'OPERATOR', text: 'OPERATOR' },
+          { value: 'PALERO', text: 'PALERO' }],
+      file:"",
+      item2:[],
+      sid:"",
+      
+     form: {
+       code:"",
+       district:"",
         personalTitle: '',
         firstName: '',
         middleName: '',
         lastName: '',
-        userName: '',
-        password: '',
+        userName:'',
+        password:'',
         email: '',
         number: '',
         address: '',
         city: '',
-        area: '',
-        address2: '',
+        area:'',
+        address2:'',
         state: '',
         country: '',
         postCode: '',
@@ -98,27 +83,27 @@ export default {
         amount: 0,
         voucherNo: '',
       },
-      item2: [],
-      roles: ['ENCODER', 'VOLUME_CHECKER', 'DISPATCHER'],
-      rolename: '',
+      areas:[],
       titles: ['Mr.', 'Sri.', 'Mrs'],
+      item1:[],
       vouchernumber: '',
       genderOpt: ['Male', 'Female', 'Other'],
       cityOpt: [],
-      createdby: '',
+       createdby: "",
       createddate: new Date(),
       modifydate: new Date(),
-      modifyby: '',
-      lgus: [],
-      lgusnames: [],
-      distopt:[],
-      lgusdata: [],
-      lguname: '',
+      modifyby:"",
       bouquetsOpt: [
         { value: null, text: 'Please select an option' },
         'FTA  AND STARTER',
       ],
       clientTemplete: {},
+      distopt:[],
+      hauler:[],
+      haulername:"",
+      haulerdata:[],
+      haulerarray:[],
+      rolename:"",
     }
   },
   computed: {
@@ -128,17 +113,14 @@ export default {
   },
   mounted() {
     // this.getClientDetails()
-    // this.getplans()
-    this.createdby = this.getUserDetails.user.username
-    this.modifyby = this.getUserDetails.user.username
-    this.roledata()
-    this.getplans()
-    this.getareas()
-    this.getemployees()
     this.getaddresss()
+    this.getemployees()
+    this.getplans()
+      this.createdby = this.getUserDetails.user.username
+    this.modifyby = this.getUserDetails.user.username
   },
   methods: {
-    async getcity() {
+     async getcity() {
       // console.log('ahahahahha')
       this.addres.map((e) => {
         if (this.form.district === e.districtName) {
@@ -158,153 +140,107 @@ export default {
         })
       } catch (error) {}
     },
-    async getareas() {
-      try {
+    gethauler(){
+        this.haulerdata.map(e=>{
+          if(this.haulername === e.haulerName){
+             this.haulerarray = e
+          }
+        })
+    },
+     async getemployees() {
+       try {
+      
+      const result = await haulers()
+      this.haulerdata = result.data.response.HaulerMaster
+       this.haulerdata.map(e=>{
+         this.hauler.push(e.haulerName)
+       })
+     
+      } catch (error) {}
+   
+    },
+    getid(){
+        // console.log("haiiiiii",this.item2)
+        this.areas.map(e=>{
+            if(this.serviceoffice === e.areaName){
+                this.sid = e.id    
+                       }
+                        //  console.log("haiiiiii",this.sid)
+        })
+      },
+     async getplans() {
+       try {
         const result = await Areamasters()
-        this.areas = result.data.response.areaMaster
-        this.areas.map((e) => {
-          if (e.areaName != null) this.servingAreas.push(e.areaName)
-        })
-        console.log(this.servingAreas)
-      } catch (error) {
-        console.log(error)
-      }
-      console.log(this.servingAreas)
-    },
-    getid() {
-      // console.log("haiiiiii",this.item2)
-      this.areas.map((e) => {
-        if (this.serviceoffice === e.areaName) {
-          this.sid = e.id
-        }
-        //  console.log("haiiiiii",this.sid)
-      })
-    },
-    readAgreement(e) {
-      const reader = new FileReader()
-      reader.readAsDataURL(e.target.files[0])
-      reader.onload = () => {
-        this.file = reader.result
-      }
-      reader.onerror = (err) => {
-        console.error('reader : ', err)
-      }
-    },
-    async getplans() {
-      try {
-        const result = await Areamasters()
-        this.areas = result.data.response.areaMaster
-        //   console.log("users",data[0].userName)
-        // JSON.parse(JSON.stringify(result))
-        // for(i=0;i<data.length;i++){
-        //   this.item[i]=data[i].userName
-        // }
+      this.areas = result.data.response.areaMaster
+    //   console.log("users",data[0].userName)
+      // JSON.parse(JSON.stringify(result))
+      // for(i=0;i<data.length;i++){
+      //   this.item[i]=data[i].userName
+      // }
 
-        this.areas.map((e) => {
-          this.item2.push(e.areaName)
-          console.log('user', e)
-        })
-        console.log('users', this.item)
-      } catch (error) {}
-    },
-    getroles() {
-      this.roledata1.map((e) => {
-        if (this.rolename === e.name) {
-          this.rolesarray.push(e)
-        }
+      this.areas.map(e=>{
+      this.item2.push(e.areaName)
+      console.log("user",e)
       })
-    },
-    async getBaranggayCode() {
-      this.areas.map((e) => {
-        if (e.areaName == this.baranggayCode) this.baranggayCode = e.code
-      })
-    },
-    getlgu() {
-      this.lgusnames.map((e) => {
-        if (this.lguname === e.lguName) {
-          this.lgusdata = e
-        }
-      })
-    },
-    async getemployees() {
-      try {
-        const result = await lguEmployees()
-        this.lgusnames = result.data.response.result
-        this.lgusnames.map((e) => {
-          this.lgus.push(e.lguName)
-        })
-        // data.map( e => {
-        //   if(e.type!="ENCODER" && e.type!="VOLUME_CHECKER" && e.type!="DISPATCHER")
-        //     this.item.push(e)
-        // })
-        console.log(this.item)
+       console.log("users",this.item)
+     
       } catch (error) {}
-    },
-    async roledata() {
-      try {
-        const result = await roles()
-        this.roledata1 = result.data.response.RoleMaster
-        // console.log("users",data[0].userName)
-        // JSON.parse(JSON.stringify(result))
-        // for(i=0;i<data.length;i++){
-        //   this.item[i]=data[i].userName
-        // }
-
-        // this.roledata1.map(e=>{
-        // this.roles.push(e.name)
-        // console.log("user",e)
-        // })
-        //  console.log("users",this.item)
-      } catch (error) {}
-    },
+     },
+      readAgreement(e) {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      this.file = reader.result;
+    };
+    reader.onerror = err => {
+      console.error("reader : ", err);
+    };
+  },
     async create() {
       try {
-        console.log(this.form.lguCode)
-        const payload = {
-          code: this.form.lguCode,
-          lguName: this.form.userName,
-          userName: this.form.userName,
-          password: this.form.password,
-          passwordStatus: 1,
-          email: this.form.email,
-          phone: this.form.number,
-          salutation: this.form.personalTitle,
-          firstName: this.form.firstName,
-          middleName: this.form.middleName,
-          lastName: this.form.lastName,
-          addressLane1: this.form.address,
-          addressLane2: this.form.address2,
-          district: this.form.district,
-          state: this.form.state,
-          country: this.form.country,
-          pin: this.form.postCode,
-          isDeleted: false,
-          status: 200,
-          type: this.rolename,
-          personalIdNo: this.form.personalidno,
-          service_OFFICE: this.sid,
-          id_PROOF_DOC_URL: null,
-          lgu_Id: this.lgusdata,
-
-          //baranggayCode: this.baranggayCode
-        }
-        let result = await createlguemployee(payload)
+        const payload =              {
+          code:this.form.code,
+                userName: this.form.userName,
+                password: this.form.password,
+                passwordStatus: 1,
+                email: this.form.email,
+                phone: this.form.number,
+                salutation: this.form.personalTitle,
+                firstName: this.form.firstName,
+                middleName: this.form.middleName,
+                lastName: this.form.lastName,
+                addressLine1: this.address,
+                addressLine2: this.address2,
+               distict:this.form.district,
+                state: this.form.state,
+                country: this.form.country,
+                pin: this.form.postCode,
+                isDeleted: false,
+                status: 200,
+              
+                personalIdNo: this.personalidno,
+                id_PROOF_DOC_URL:this.file,
+              
+                type:this.rolename,
+                haulerId:this.haulerarray
+            }
+        let result = await createhauleremployee(payload)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `LGU Employee created Successfully`,
+            text: `Your Created Hauler Employee Successfully`,
             duration: 5000,
           })
-          this.$router.push({ path: '/LGU/LguEmployee' })
+          this.$router.push({path:'/Hauler/HaulerEmployees'})
         }
       } catch (e) {
-        this.$toasted.error(e.message.error, {
+         this.$toasted.error(e.message.error, {
           duration: 7000,
         })
       }
     },
-
+ 
     async refresh() {
       setTimeout(function () {
         location.reload()
@@ -319,13 +255,16 @@ export default {
     <PageHeader :items="items" />
 
     <div class="row justify-content-center">
-      <div class="col-lg-12">
-        <div class="row">
-          <div class="col-xl-12 mx-auto">
-            <b-card header="Create LGU Employee">
-              <div class="card-body">
-                <ValidationObserver v-slot="{ handleSubmit }">
-                  <form @submit.prevent="handleSubmit(create)">
+    <div class="col-lg-12">
+      <div class="row">
+        <div class="col-xl-12  mx-auto">
+          <b-card
+            header="Edit Hauler Employee"
+            
+          >
+            <div class="card-body">
+              <ValidationObserver v-slot="{ handleSubmit }">
+              <form @submit.prevent="handleSubmit(create)">
                     <div class="row">
                       <div class="col-md-12 mb-2">
                         <fieldset class="border p-2">
@@ -341,7 +280,7 @@ export default {
                                 <label for="default">Code</label>
 
                                 <input
-                                  v-model.trim="form.lguCode"
+                                  v-model.trim="form.code"
                                   placeholder="Code"
                                   class="form-control"
                                   type="text"
@@ -664,16 +603,16 @@ export default {
                               </div>
                             </div>
 
-                            <div class="col-md-4">
+                           <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Service office</label>
-
-                                <b-form-select
-                                  v-model.trim="serviceoffice"
-                                  :options="item2"
-                                  class="form-control"
-                                  @change="getid"
-                                ></b-form-select>
+                                <label for="default">Hauler</label>
+                                <multiselect
+                                  required
+                                  v-model="haulername"
+                                  placeholder="Select Hauler"
+                                  :options="hauler"
+                                  @input="gethauler"
+                                ></multiselect>
                               </div>
                             </div>
                             <div class="col-md-4">
@@ -681,7 +620,7 @@ export default {
                                 <label for="default">Personal ID No</label>
 
                                 <input
-                                  v-model.trim="form.personalidno"
+                                  v-model.trim="personalidno"
                                   placeholder="Enter Personal ID"
                                   class="form-control"
                                   type="number"
@@ -701,22 +640,11 @@ export default {
                                   label="value"
                                   class="form-control"
                                   :options="roles"
-                                  @change="getroles"
+                                  
                                 ></b-form-select>
                               </div>
                             </div>
-                            <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">LGU</label>
-                                <multiselect
-                                  required
-                                  v-model="lguname"
-                                  placeholder="Select LGU"
-                                  :options="lgus"
-                                  @input="getlgu"
-                                ></multiselect>
-                              </div>
-                            </div>
+                           
                           </div>
                         </fieldset>
                       </div>
@@ -739,16 +667,18 @@ export default {
                       </div>
                     </div>
                   </form>
-                </ValidationObserver>
-              </div>
-            </b-card>
-          </div>
+              </ValidationObserver>
+            </div>
+          </b-card>
         </div>
       </div>
     </div>
+  </div>
     <!-- end row -->
   </Layout>
 </template>
+<style lang="scss">
+</style>
 <style lang="sass" scoped>
 .edit
   color: #a7a7a7 !important
