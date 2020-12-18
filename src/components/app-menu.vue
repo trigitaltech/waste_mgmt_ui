@@ -18,13 +18,16 @@ export default {
   data() {
     return {
       menuItems: authProtectedRoutes,
-      ticket:false
+      ticket:false,
+      user:{}
     }
   },
   computed: {
     ...authComputed,
   },
   mounted: function() {
+    this.user = JSON.parse(localStorage.getItem('auth.currentUser'))
+    console.log(this.user)
     // eslint-disable-next-line no-unused-vars
     var menuRef = null
     if (this.mode === 'horizontal') {

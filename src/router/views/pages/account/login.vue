@@ -50,9 +50,17 @@ mobile:this.username
             this.tryingToLogIn = false
             this.isAuthError = false
             // Redirect to the originally requested page, or to the home page
-            this.$router.push(
-              this.$route.query.redirectFrom || { name: 'Dashboard' }
-            )
+            if(token.roles[0].code == "ENCODER")
+            { 
+              this.$router.push(
+                this.$route.query.redirectFrom || { name: 'Encoder' }
+              )
+            }
+            else {
+              this.$router.push(
+                this.$route.query.redirectFrom || { name: 'Dashboard' }
+              )
+            }
           })
           .catch((error) => {
             console.log(error)
