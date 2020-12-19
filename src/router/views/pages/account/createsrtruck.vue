@@ -10,6 +10,10 @@ import Multiselect from 'vue-multiselect'
 import moment from 'moment'
 Vue.component('multiselect', Multiselect)
 import {
+  getVehiclesByhauler,
+  Createsrtruck,
+  dumpinglocation,
+  haulers,
   Tripdownload,
   Areamasters,
   routemaster,
@@ -48,19 +52,31 @@ export default {
       areadata: [],
       areaarray: '',
       routedate: [],
+      haulerarray:[],
       routearray: [],
       emp: [],
+      dumpinglocation:"",
       controlno: '',
+       tripDate: '',
+        plateno: '',
+        hauler:"",
+        fromdumpingpoint:"",
+        todumpingpoint:"",
+        driver:"",
+        helper:"",
+        volumecapacity:"",
+        trucktype:"",
+        body:"",
       area: '',
       route: '',
       driver: '',
       contractor: '',
       collector: null,
       lgu: '',
-      plate: '',
+     
       plates: [],
       body: '',
-      tripDate: '',
+     
       trucktype: '',
       driverid: '',
       startTime: '',
@@ -72,12 +88,18 @@ export default {
       driver: '',
       helper: null,
       servingRoutes: [],
+      haulerid:"",
       driverList: [],
-      hauler: '',
+      hauler:"",
       haulerList: [],
       contractorList: [],
+      vehicledata:[],
       paleroList: [],
       garbage: null,
+      dumpings:[],
+      haulers:[],
+      dumpingdata:[],
+      haulerdata:[],
       lgu: null,
     }
   },
@@ -97,28 +119,74 @@ export default {
     this.tripDate = moment(new Date()).format('DD-MM-YYYY')
     this.startTime = moment(new Date()).format('DD-MM-YYYY hh:mm A')
     console.log(this.tripDate + ' ' + this.startTime)
-    this.areas()
-    this.routes()
-    this.getUsers()
+     this.getdumping()
+    this.gethaulers()
+    // this.areas()
+    // this.routes()
+    // this.getUsers()
     this.employeedata()
     this.getvehicles()
+   
   },
   methods: {
-    async getRoutes() {
-      try {
-        this.areadata.map(async (e) => {
-          if (this.area === e.areaName) {
-            console.log(e)
-            this.areaarray = e
-            const result = await getRoutesByBaranggayId(e.id)
-            console.log(result)
-          }
-        })
-        const result = await getRoutesByBaranggayId(id)
-        console.log(result)
-      } catch (e) {
-        console.log(e)
-      }
+     async gethaulers() {
+       try {
+      
+      const result = await haulers()
+      this.haulerdata = result.data.response.HaulerMaster
+this.haulerdata.map(e=>{
+  this.haulers.push(e.haulerName)
+})
+      
+      } catch (error) {}
+   
+    },
+      async getvehiclehauler() {
+       try {
+    
+      const result = await  getVehiclesByhauler(id)
+      this.dumpingdata = result.data.response.dumpingLocation
+      this.dumpingdata.map(e=>{
+        this.dumpings.push(e.dumpingAreaName)
+      })
+    
+      } catch (error) {}
+   
+    },
+     async getdumping() {
+       try {
+    
+      const result = await  dumpinglocation()
+      this.dumpingdata = result.data.response.dumpingLocation
+      this.dumpingdata.map(e=>{
+        this.dumpings.push(e.dumpingAreaName)
+      })
+    
+      } catch (error) {}
+   
+    },
+  async  vehiclehauler() {
+       
+     for(var i = 0 ; i<this.haulerdata.length ;i++){
+       if(this.hauler[0] === this.haulerdata[i].haulerName){
+          this.haulerid = this.haulerdata[i].id
+          const result = await getVehiclesByhauler(this.haulerid)
+          this.vehicledata = result.data.response.result
+       }
+     }
+      //     debugger
+      //  this.haulerdata.map(e => {
+      //   if (this.hauler === e.haulerName) {
+      //     this.haulerid = e.id
+      //     debugger
+      //   }
+      //    console.log("haiiiiii",this.haulerid)
+      // })
+      //  if(this.haulerid !== ""){
+      //   
+      //    console.log(result)
+      //  }
+       
     },
     async getvehicles() {
       const result = await vehicle()
@@ -196,60 +264,71 @@ export default {
         const date = moment(this.startTime).format('YYYY-MM-DDThh:mm:SS+00:00')
         console.log(date)
         const areaarray = Object.assign({}, areaarray, this.areaarray)
-        let payload = {
-          controlNo: this.controlno,
-          tripDate: this.tripDate,
-          lgu: this.lgu,
-          bodyNo: this.body,
-          plateNo: this.plate,
-          truckType: this.trucktype,
-          collectionStartTime: this.startTime,
-          servingArea: areaarray,
-          servingRoute: {
-            id: this.routearray.id,
-            code: this.routearray.code,
-            routeName: this.routearray.routeName,
-            routeType: this.routearray.routeType,
-            supervisor: this.routearray.supervisor,
-            route_distance: this.routearray.route_distance,
-            areaId: this.routearray.areaId,
-            areaName: this.areaarray.areaName,
-            isDeleted: false,
-            routeRoads: [],
-            createdDate: this.routearray.createdDate,
-            createdBy: '',
-            modifiedDate: this.routearray.modifiedDate,
-            modifiedBy: '',
-            description: this.routearray.description,
-          },
-          helperId: 199,
-          helperName: null,
-          driverId: this.driverid,
-          driverName: this.driver,
-          contractorDispatcherName: null,
-          contractorDispatcherId: null,
-          contractorDispatcherVerified: null,
-          volumeCheckerName: null,
-          volumeCheckerId: null,
-          volumeCheckerVerified: null,
-          volumeCheckerMeasuredVolume: null,
-          volumeCheckerTotalKmServed: null,
-          isDeleted: false,
-          status: 'INITIATED',
-          createdBy: this.getUserDetails.user.username,
-          createdDate: this.tripDate,
-          modifiedBy: this.getUserDetails.user.username,
-          modifiedDate: this.tripDate,
+                              let payload = {
+          
+                                  controlNo: this.controlno,
+                                          
+                                trip:this.tripDate,
+
+
+                                dumpingArea:this.dumpinglocation,
+
+                                PlateNo:this.plateno,
+
+                                BodyNo:this.body,
+
+                                truckType:this.trucktype,
+
+                                VolumeCapacity:this.volumecapacity,
+
+                                driverId: this.driverid,
+                                driverName: this.driver,
+
+                                HelperId:"",
+                                HelperName:"",
+
+                                fromPoint:this.fromdumpingpoint,
+                                toPoint:this.todumpingpoint,
+
+                                hauler:this.hauler,
+
+                                timeInAM:"",
+
+                                timeOutAM:"",
+
+                                timeInPM:"",
+
+                                timeOutPM:"",
+
+                                AMTrip:"",
+
+                                PMTrip:"",
+
+                                totalTrips:"",
+
+                                driverTimeIn:"",
+
+                                total_distance:"",
+
+                                verifiedBy:"",
+
+                                dispatchedBy:"",
+
+                                isDeleted: false,
+
+                                ServiceStatusStatus:"",
+
+        
         }
-        const result = await CreateIncomingTrip(payload)
+        const result = await Createsrtruck(payload)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `Incoming Trip Created`,
+            text: `Service Request Truck Created`,
             duration: 5000,
           })
-          this.$router.push({ path: '/Trips/IncomingTrips' })
+          this.$router.push({ path: '/Servicerequest/Truck' })
         }
       } catch (e) {}
     },
@@ -293,8 +372,7 @@ export default {
                     <input
                       v-model="controlno"
                       class="form-control"
-                       placeholder="Enter Contol No"
-
+                      placeholder="Enter Contol No"
                       name="body"
                     />
                   </b-col>
@@ -319,9 +397,9 @@ export default {
                       >Dumping Location</label
                     >
                     <multiselect
-                      v-model="route"
+                      v-model="dumpinglocation"
                       :multiple="true"
-                      :options="servingRoutes"
+                      :options="dumpings"
                     >
                     </multiselect>
                   </b-col>
@@ -332,9 +410,10 @@ export default {
                       >Hauler</label
                     >
                     <multiselect
-                      v-model="route"
+                      v-model="hauler"
                       :multiple="true"
-                      :options="servingRoutes"
+                      :options="haulers"
+                      @input="vehiclehauler"
                     >
                     </multiselect>
                   </b-col>
@@ -347,13 +426,12 @@ export default {
                       class="grey-text font-weight-dark"
                       >Plate No</label
                     >
-                    <input
-                      v-model="trucktype"
-                      class="form-control"
-                      name="trucktype"
-                      readonly
-                       placeholder="Enter Plateno"
-                    />
+                    <multiselect
+                      v-model="plateno"
+                      :multiple="true"
+                      :options="servingRoutes"
+                    >
+                    </multiselect>
                   </b-col>
                   <b-col>
                     <label
@@ -365,7 +443,7 @@ export default {
                       v-model="trucktype"
                       class="form-control"
                       name="trucktype"
-                       placeholder="Enter Trucktype"
+                      placeholder="Enter Trucktype"
                       readonly
                     />
                   </b-col>
@@ -382,7 +460,7 @@ export default {
                       class="form-control"
                       name="body"
                       readonly
-                       placeholder="Enter body"
+                      placeholder="Enter body"
                     />
                   </b-col>
                   <b-col>
@@ -392,11 +470,11 @@ export default {
                       >Volume Capacity</label
                     >
                     <input
-                      v-model="trucktype"
+                      v-model="volumecapacity"
                       class="form-control"
                       name="trucktype"
                       readonly
-                       placeholder="Enter Volume Capacity"
+                      placeholder="Enter Volume Capacity"
                     />
                   </b-col>
                 </b-row>
@@ -408,9 +486,9 @@ export default {
                       >Driver</label
                     >
                     <multiselect
-                      v-model="route"
+                      v-model="driver"
                       :multiple="true"
-                      :options="servingRoutes"
+                      :options="drivers"
                     >
                     </multiselect>
                   </b-col>
@@ -421,9 +499,9 @@ export default {
                       >Helper</label
                     >
                     <multiselect
-                      v-model="route"
+                      v-model="helper"
                       :multiple="true"
-                      :options="servingRoutes"
+                      :options="helpers"
                     >
                     </multiselect>
                   </b-col>
@@ -436,7 +514,7 @@ export default {
                       >From Dumping Point</label
                     >
                     <multiselect
-                      v-model="route"
+                      v-model="fromdumpingpoint"
                       :multiple="true"
                       :options="servingRoutes"
                     >
@@ -449,20 +527,19 @@ export default {
                       >To Dumping Point</label
                     >
                     <multiselect
-                      v-model="route"
+                      v-model="todumpingpoint"
                       :multiple="true"
                       :options="servingRoutes"
                     >
                     </multiselect>
                   </b-col>
                 </b-row>
-              <br/>
-              <button
-              type="submit"
-              class="btn btn-custome float-right btn-secondary mb-3"
-              >Submit</button
-            >
-               
+                <br />
+                <button
+                  type="submit"
+                  class="btn btn-custome float-right btn-secondary mb-3"
+                  >Submit</button
+                >
               </form>
             </div>
           </div>
