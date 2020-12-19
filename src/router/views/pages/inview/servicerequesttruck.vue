@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  servicerequests,
+  servicetruck,
   deleteservicerequest,
 } from '../../../../services/auth'
 
@@ -139,7 +139,7 @@ export default {
     },
   },
   mounted() {
-    //   this.servicerequest()
+      this.servicerequest()
   },
   methods: {
     getDate(timeStamp) {
@@ -173,7 +173,7 @@ export default {
     },
     async servicerequest() {
       try {
-        const result = await servicerequests()
+        const result = await servicetruck()
         this.item = result.data.response.ServiceTicket
       } catch (error) {}
     },

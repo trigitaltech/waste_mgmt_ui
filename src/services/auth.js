@@ -165,6 +165,10 @@ export const lguEmployees = () => serviceMaker(`/LGU/all`, methods.GET, api.NGB)
 
 export const Areamasters = () => serviceMaker(`/areamaster/all`, methods.GET, api.NGB)
 
+
+
+export const servicetruck = () => serviceMaker(`/serviceticket/system/all`, methods.GET, api.NGB)
+
 export const planprice = (id) => serviceMaker(`/prices/${id}?template=true`, methods.GET, api.NGB)
 
 export const  redeem = (payload) =>
@@ -201,6 +205,9 @@ export const getoutgoingtrip = (id,payload) => serviceMaker(
     methods.POST,
     api.NGB,payload
   );
+
+  
+  export const getdumpdata = (id) => serviceMaker(`dumping/${id}`,methods.GET,api.NGB);
 
 export const getVehiclesByHaulerId = (id) => serviceMaker(`vehicles/vehiclebyhauler/${id}`,methods.GET,api.NGB);
 

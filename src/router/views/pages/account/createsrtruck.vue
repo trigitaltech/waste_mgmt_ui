@@ -12,13 +12,14 @@ Vue.component('multiselect', Multiselect)
 import {
   getVehiclesByhauler,
   Createsrtruck,
+  getdumpdata,
   dumpinglocation,
   haulers,
   Tripdownload,
   Areamasters,
   routemaster,
   CreateIncomingTrip,
-  employees,
+  haulerEmployees,
   vehicle,
   getRoutesByBaranggayId,
 } from '../../../../services/auth'
@@ -55,11 +56,13 @@ export default {
       haulerarray:[],
       routearray: [],
       emp: [],
+      dumpid:"",
       dumpinglocation:"",
       controlno: '',
        tripDate: '',
         plateno: '',
         hauler:"",
+        vehicleno:"",
         fromdumpingpoint:"",
         todumpingpoint:"",
         driver:"",
@@ -73,11 +76,12 @@ export default {
       contractor: '',
       collector: null,
       lgu: '',
-     
+    
+     vehicleno:"",
       plates: [],
       body: '',
-     
-      trucktype: '',
+     vehicledata:[],
+    
       driverid: '',
       startTime: '',
       drivers: [],
@@ -99,7 +103,10 @@ export default {
       dumpings:[],
       haulers:[],
       dumpingdata:[],
+      plates:[],
       haulerdata:[],
+      fromdumpings:[],
+      todumpings:[],
       lgu: null,
     }
   },
@@ -129,6 +136,30 @@ export default {
    
   },
   methods: {
+    async  getdump(){
+ for(var i = 0 ; i<this.dumpingdata.length ;i++){
+       if(this.dumpinglocation[0] === this.haulerdata[i].dumpingAreaName){
+          this.dumpid = this.dumpingdata[i].id
+          const result = await getdumpdata(this.dumpid)
+          var dumpdata = result.data.response.result
+          dumpdata.map(e=>{
+            this.plates.push(e.plateNo)
+          })
+       }
+     }
+    },
+    platedetails(){
+    
+      for(var i = 0 ; i<this.vehicledata.length ;i++){
+       if(this.plateno[0] === this.vehicledata[i].plateNo){
+       
+          this.vehicleno = this.vehicledata[i].vehicleNo
+          this.trucktype = this.vehicledata[i].vehicleType.truckType
+          this.volumecapacity = this.vehicledata[i].volumeCapacity
+       }
+     }
+     
+    },
      async gethaulers() {
        try {
       
@@ -172,6 +203,9 @@ this.haulerdata.map(e=>{
           this.haulerid = this.haulerdata[i].id
           const result = await getVehiclesByhauler(this.haulerid)
           this.vehicledata = result.data.response.result
+          this.vehicledata.map(e=>{
+            this.plates.push(e.plateNo)
+          })
        }
      }
       //     debugger
@@ -188,14 +222,14 @@ this.haulerdata.map(e=>{
       //  }
        
     },
-    async getvehicles() {
-      const result = await vehicle()
-      this.vehicles = result.data.response.vehicles
-      this.vehicles.map((e) => {
-        this.plates.push(e.plateNo)
-      })
-      console.log(this.plates)
-    },
+    // async getvehicles() {
+    //   const result = await vehicle()
+    //   this.vehicles = result.data.response.vehicles
+    //   this.vehicles.map((e) => {
+    //     this.plates.push(e.plateNo)
+    //   })
+    //   console.log(this.plates)
+    // },
     getroutes() {
       this.routedata.map((e) => {
         if (this.route === e.routeName) {
@@ -220,8 +254,8 @@ this.haulerdata.map(e=>{
     },
     async employeedata() {
       try {
-        const result = await employees()
-        this.emp = result.data.response.result
+        const result = await haulerEmployees()
+        this.emp = result.data.response.HaulerEmployees
         console.log(this.emp)
         this.emp.map((e) => {
           if (e.type == 'DRIVER') this.drivers.push(e.userName)
@@ -400,6 +434,7 @@ this.haulerdata.map(e=>{
                       v-model="dumpinglocation"
                       :multiple="true"
                       :options="dumpings"
+                      @input="getdump"
                     >
                     </multiselect>
                   </b-col>
@@ -429,7 +464,8 @@ this.haulerdata.map(e=>{
                     <multiselect
                       v-model="plateno"
                       :multiple="true"
-                      :options="servingRoutes"
+                      :options="plates"
+                      @input="platedetails"
                     >
                     </multiselect>
                   </b-col>
@@ -453,14 +489,14 @@ this.haulerdata.map(e=>{
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Body</label
+                      >Vehicle No</label
                     >
                     <input
-                      v-model="body"
+                      v-model="vehicleno"
                       class="form-control"
                       name="body"
                       readonly
-                      placeholder="Enter body"
+                      placeholder="Enter Vehicle No"
                     />
                   </b-col>
                   <b-col>
@@ -516,7 +552,7 @@ this.haulerdata.map(e=>{
                     <multiselect
                       v-model="fromdumpingpoint"
                       :multiple="true"
-                      :options="servingRoutes"
+                      :options="fromdumpings"
                     >
                     </multiselect>
                   </b-col>
@@ -529,7 +565,7 @@ this.haulerdata.map(e=>{
                     <multiselect
                       v-model="todumpingpoint"
                       :multiple="true"
-                      :options="servingRoutes"
+                      :options="todumpings"
                     >
                     </multiselect>
                   </b-col>
