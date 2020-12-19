@@ -159,6 +159,8 @@ export const employees = () => serviceMaker(`/employees/admin/readAll`, methods.
 
 export const haulers = () => serviceMaker(`/haulermaster/all`, methods.GET, api.NGB)
 
+export const haulerEmployees = () => serviceMaker(`/haulermaster/employees/all`, methods.GET, api.NGB)
+
 export const lguEmployees = () => serviceMaker(`/LGU/all`, methods.GET, api.NGB)
 
 export const Areamasters = () => serviceMaker(`/areamaster/all`, methods.GET, api.NGB)
@@ -174,7 +176,7 @@ export const addplan = (id,payload) => serviceMaker(`/multipleorders/${id}`, met
 
 export const Tripdownload = (id) => serviceMaker(`/tripincoming/system/${id}`, methods.GET, api.NGB)
 
-export const CreateIncomingTrip = (payload) => serviceMaker(`/tripincoming/admin`,methods.POST,api.NGB,payload)
+export const CreateIncomingTrip = (payload) => serviceMaker(`/tripincoming/admin/create`,methods.POST,api.NGB,payload)
 
 
 export const Createsrtruck = (payload) => serviceMaker(`/serviceticket/encoder/admin`,methods.POST,api.NGB,payload)
@@ -200,6 +202,10 @@ export const getoutgoingtrip = (id,payload) => serviceMaker(
     api.NGB,payload
   );
 
+export const getVehiclesByHaulerId = (id) => serviceMaker(`vehicles/vehiclebyhauler/${id}`,methods.GET,api.NGB);
 
+export const getBaraggayByLguId = (id) => serviceMaker(`LGU/employee/lgu/${id}`,methods.GET,api.NGB)
+
+export const getHaulerByBaranggayId = (id) => serviceMaker(`hauler/brgy/${id}`,methods.GET,api.NGB)
 
 export const addpermissiontorole = (id,payload) => serviceMaker(`/roles/assigningpermissions/${id}`, methods.PUT, api.NGB,payload)

@@ -34,8 +34,8 @@ export default {
       title: 'Encoder Details',
       items: [
         {
-          text: 'Home',
-          href: '/',
+          text: 'Encoder',
+          href: '/Encoder',
         },
         {
           text: 'Encoder Details',
@@ -171,7 +171,6 @@ export default {
 
 <template>
   <Layout>
-    <PageHeader  :items="items" />
     <div class="row">
       <div class="col">
          <b-card
@@ -206,8 +205,7 @@ export default {
                   </div>
                 </div>
               </div>
-              <div class="col-xl-4 col-sm-6">
-                <!-- stat 1 -->
+              <!--<div class="col-xl-4 col-sm-6">
                 <div class="media p-3">
                   <feather type="check-square" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
@@ -215,7 +213,7 @@ export default {
                     <span class="text-muted">{{ vouchers.status }}</span>
                   </div>
                 </div>
-              </div>
+              </div>-->
             </div>
           </div>
  </b-card>
@@ -230,6 +228,19 @@ export default {
             <b-tabs v-model="tabIndex" pills justified class="navtab-bg w-100">
                   <b-tab title="Incoming Trips">
                 <p class="text-muted font-13 mb-3"></p>
+                <div class="row">
+                    <b-col md="9"></b-col>
+                    <b-col md="3">
+                      <div class="float-right">
+                    <b-button
+                      class="btn btn-custome btn-secondary mb-4 mr-2"
+                      text="Create Incoming Trip"
+                      @click="$router.push({path:'/CreateIncomingTrip'})"
+                      >Create Incoming Trip</b-button
+                    >
+                  </div>
+                    </b-col>
+                </div>
               <div class="row">
               <!-- Search -->
               <div class="col-sm-12 col-md-6">
@@ -417,6 +428,19 @@ export default {
               </b-tab>
               <b-tab title="Out Going Trips">
                 <p class="text-muted font-13 mb-3"></p>
+                <div class="row">
+                    <b-col md="9"></b-col>
+                    <b-col md="3">
+                      <div class="float-right">
+                    <b-button
+                      class="btn btn-custome btn-secondary mb-4 mr-2"
+                      text="Create Outgoing Trip"
+                      @click="$router.push({path:'/CreateOutgoingTrip'})"
+                      >Create Outgoing Trip</b-button
+                    >
+                  </div>
+                    </b-col>
+                </div>
                <div class="row">
               <!-- Search -->
               <div class="col-sm-12 col-md-6">
