@@ -186,12 +186,12 @@ export default {
                 passwordStatus: 1,
                 email: this.form.email,
                 phone: this.form.number,
-                contactSalutation: this.form.personalTitle,
-                contactfirstName: this.form.firstName,
-                contactmiddleName: this.form.middleName,
-                contactlastName: this.form.lastName,
-                addressLine1: this.address,
-                addressLine2: this.address2,
+                contactSalutation:this.form.personalTitle,
+          contactFirstName: this.form.firstName,
+          contactMiddleName: this.form.middleName,
+          contactLastName: this.form.lastName,
+          addressLine1: this.form.address,
+          addressLine2: this.form.address2,
                 city: this.form.city,
                 state: this.form.state,
                 country: this.form.country,
@@ -540,18 +540,7 @@ export default {
                               />
                             </div>
                             </div> 
-                          <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Area</label>
-                                <input
-                                  v-model.trim="form.area"
-                                  class="form-control"
-                                  type="text"
-                                  placeholder="Enter Area"
-                                
-                                />
-                              </div>
-                            </div>
+                         
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Post Code</label>

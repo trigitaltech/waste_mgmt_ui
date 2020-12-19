@@ -55,7 +55,7 @@ export default {
           label: 'haulerName',
         },
          {
-          key: 'contactfirstName',
+          key: 'contactFirstName',
 
           label: 'First Name',
         },

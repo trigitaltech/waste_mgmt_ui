@@ -332,7 +332,7 @@ export default {
                 />
               </b-col>
               <b-col>
-                <label
+                <!-- <label
                   for="defaultFormCardtextEx"
                   class="grey-text font-weight-dark"
                   >City</label
@@ -343,7 +343,7 @@ export default {
                   type="text"
                   class="form-control"
                   placeholder="Enter city"
-                />
+                /> -->
               </b-col>
             </b-row>
 
