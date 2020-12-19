@@ -178,8 +178,13 @@ export const Tripdownload = (id) => serviceMaker(`/tripincoming/system/${id}`, m
 
 export const CreateIncomingTrip = (payload) => serviceMaker(`/tripincoming/admin/create`,methods.POST,api.NGB,payload)
 
+
+export const Createsrtruck = (payload) => serviceMaker(`/serviceticket/encoder/admin`,methods.POST,api.NGB,payload)
+
 export const Tripoutgoing = (id) => serviceMaker(`/tripoutgoing/system/${id}`, methods.GET, api.NGB)
  
+
+export const getVehiclesByhauler = (id) => serviceMaker(`/vehicles/vehiclebyhauler/${id}`, methods.GET, api.NGB)
 
 export const searchvoucher = (id) => serviceMaker(`/vouchers/verify?pinNumber=${id}`, methods.GET, api.NGB)
 
