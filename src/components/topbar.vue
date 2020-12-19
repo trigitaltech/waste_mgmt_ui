@@ -117,7 +117,7 @@ export default {
               ></feather>
             </div>
           </template>
-          <b-dropdown-item v-if="user.roles[0].code!='ENCODER'" href="#/profile" class="notify-item p-0">
+          <b-dropdown-item href="#/profile" class="notify-item p-0">
             <feather type="user" class="icon-dual icon-xs mr-2"></feather>
             <span>My Account</span>
           </b-dropdown-item>

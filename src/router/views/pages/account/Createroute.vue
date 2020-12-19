@@ -196,7 +196,7 @@ export default {
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
                 >
-                  Area Name</label
+                  Baranggay Name</label
                 >
                 <b-form-select
                   v-model="areaname"
