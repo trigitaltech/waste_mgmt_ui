@@ -39,7 +39,7 @@ export default {
      totalkmsserved:"",
      totalhoursserved:"",
       createdby: "",
-      vehiclecapacity:"",
+      volumecapacity:"",
       createddate: new Date(),
       modifydate: new Date(),
       modifyby:"",
@@ -209,7 +209,7 @@ this.haulerdata.map(e=>{
           "plateNo": this.plateno,
           code:this.code,
           hauler:this.haulers,
-          volumeCapacity:this.vehiclecapacity,
+          volumeCapacity:this.volumecapacity,
           "ownerName": this.ownername,
           "ownerId": null,
           "servingArea": null,
@@ -446,16 +446,16 @@ this.haulerdata.map(e=>{
                                 @input="gethauler"
                               ></multiselect>
                      </b-col>
-                 <b-col>
+                <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Vehicle Capacity</label
+                      >Volume Capacity</label
                     >
                     <input
                       id="defaultFormCardtextEx"
-                      v-model="vehiclecapacity"
-                       placeholder="Enter Vehicle Capacity"
+                      v-model="volumecapacity"
+                       placeholder="Enter Volume Capacity"
                       type="text"
                       class="form-control"
                     />

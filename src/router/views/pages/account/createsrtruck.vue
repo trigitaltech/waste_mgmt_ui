@@ -138,7 +138,7 @@ export default {
   methods: {
     async  getdump(){
  for(var i = 0 ; i<this.dumpingdata.length ;i++){
-       if(this.dumpinglocation[0] === this.haulerdata[i].dumpingAreaName){
+       if(this.dumpinglocation[0] === this.dumpingdata[i].dumpingAreaName){
           this.dumpid = this.dumpingdata[i].id
           const result = await getdumpdata(this.dumpid)
           var dumpdata = result.data.response.result
