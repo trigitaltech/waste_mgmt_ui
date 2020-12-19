@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- createLGU,roles,Areamasters,address
+ createLGU,roles,Areamasters
 } from '../../../../services/auth'
 
 export default {
@@ -103,7 +103,6 @@ export default {
       },
       item2:[],
       roles:[],
-      distopt:[],
       rolename:"",
       titles: ['Mr.', 'Sri.', 'Mrs'],
       vouchernumber: '',
@@ -132,29 +131,8 @@ export default {
     this.roledata()
     this.getplans()
     this.getareas()
-    this.getaddresss()
   },
   methods: {
-    async getcity() {
-      // console.log('ahahahahha')
-      this.addres.map((e) => {
-        if (this.form.district === e.districtName) {
-          this.form.state = e.stateCode.stateName
-          this.form.country = e.stateCode.countryCode.countryName
-        }
-      })
-    },
-    async getaddresss() {
-      try {
-        const result = await address()
-        this.addres = result.data.response.result
-        console.log('address', this.addres)
-        this.addres.map((e) => {
-          // debugger
-          this.distopt.push(e.districtName)
-        })
-      } catch (error) {}
-    },
     async getareas() {
       try {
         const result = await Areamasters();
@@ -210,9 +188,9 @@ export default {
         if(e.areaName == this.form.baranggay){
           this.baranggayCode = e.code
           console.log("haii",e.districtId)
-          this.form.district = e.districtId[0].districtName
-          this.form.state = e.districtId[0].stateCode.stateName
-          this.form.country = e.districtId[0].stateCode.countryCode.countryName
+          this.form.district = e.district[0].districtName
+          this.form.state = e.district[0].stateCode.stateName
+          this.form.country = e.district[0].stateCode.countryCode.countryName
         }
       })
     },
@@ -231,7 +209,7 @@ export default {
      },
     async create() {
       try {
-        console.log(this.form.lguCode)
+        // console.log(this.form.lguCode)
         const payload = {
           code: this.form.lguCode,
           lguName:this.form.userName,
@@ -241,17 +219,22 @@ export default {
           email: this.form.email,
           phone: this.form.number,     
           contactSalutation:this.form.personalTitle,
-          contactFirstName: this.form.firstName,
-          contactMiddleName: this.form.middleName,
-          contactLastName: this.form.lastName,
-          addressLine1: this.form.address,
-          addressLine2: this.form.address2,
+          contactfirstName: this.form.firstName,
+          contactmiddleName: this.form.middleName,
+          contactlastName: this.form.lastName,
+          addressLane1: this.form.address,
+          addressLane2: this.form.address2,
           district:this.form.district,
           state: this.form.state,
           country: this.form.country,
           pin: this.form.postCode,
+          isDeleted: false,
+          status: 200,
+          type: null,
           personalIdNo:this.form.personalidno,
+       
           id_PROOF_DOC_URL: null,
+         
           baranggayCode: this.baranggayCode
         }
         let result = await createLGU(payload)
@@ -586,18 +569,7 @@ export default {
                               />
                             </div>
                             </div> 
-                          <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Baranggay</label>
-                                <multiselect
-                                required
-                                v-model="form.baranggay"
-                                placeholder="Select Baranggay"
-                                :options="servingAreas"
-                                @input="getdistricts"
-                              ></multiselect>
-                              </div>
-                            </div>
+                         
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Post Code</label>
@@ -609,19 +581,16 @@ export default {
                               />
                             </div>
                           </div>
-                          <div class="col-md-4">
+                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
-                                <label
-                                  for="defaultFormCardtextEx"
-                                  class="grey-text font-weight-dark"
-                                  >District</label
-                                >
+                                <label for="default">Baranggay</label>
                                 <multiselect
-                                  v-model.trim="form.district"
-                                  placeholder="Select distict"
-                                  :options="distopt"
-                                  @input="getcity"
-                                ></multiselect>
+                                required
+                                v-model="form.baranggay"
+                                placeholder="Select Baranggay"
+                                :options="servingAreas"
+                                @input="getdistricts"
+                              ></multiselect>
                               </div>
                             </div>
                          

@@ -50,9 +50,9 @@ export default {
           label: 'Code',
         },
          {
-          key: 'contactfirstName',
+          key: 'lguName',
 
-          label: 'First Name',
+          label: 'LGU Name',
         },
          {
           key: 'phone',

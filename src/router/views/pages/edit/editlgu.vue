@@ -134,6 +134,7 @@ export default {
     this.getareas()
   },
   methods: {
+  
     async getareas() {
       try {
         const result = await Areamasters();
@@ -189,9 +190,9 @@ export default {
         if(e.areaName == this.form.baranggay){
           this.baranggayCode = e
           console.log("haii",e.districtId)
-          this.form.district = e.districtId[0].districtName
-          this.form.state = e.districtId[0].stateCode.stateName
-          this.form.country = e.districtId[0].stateCode.countryCode.countryName
+          this.form.district = e.district[0].districtName
+          this.form.state = e.district[0].stateCode.stateName
+          this.form.country = e.district[0].stateCode.countryCode.countryName
         }
       })
     },
