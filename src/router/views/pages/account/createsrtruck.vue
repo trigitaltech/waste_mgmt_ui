@@ -305,7 +305,7 @@ this.haulerdata.map(e=>{
                                 trip:this.tripDate,
 
 
-                                dumpingArea:this.dumpinglocation,
+                                dumpingArea:this.dumpinglocation[0],
 
                                 PlateNo:this.plateno,
 
@@ -316,7 +316,7 @@ this.haulerdata.map(e=>{
                                 VolumeCapacity:this.volumecapacity,
 
                                 driverId: this.driverid,
-                                driverName: this.driver,
+                                driverName: this.driver[0],
 
                                 HelperId:"",
                                 HelperName:"",
@@ -324,7 +324,7 @@ this.haulerdata.map(e=>{
                                 fromPoint:this.fromdumpingpoint,
                                 toPoint:this.todumpingpoint,
 
-                                hauler:this.hauler,
+                                hauler:this.hauler[0],
 
                                 timeInAM:"",
 

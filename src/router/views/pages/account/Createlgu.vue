@@ -211,6 +211,7 @@ export default {
       try {
         // console.log(this.form.lguCode)
         const payload = {
+       
           code: this.form.lguCode,
           lguName:this.form.userName,
           userName: this.form.userName,
@@ -219,11 +220,11 @@ export default {
           email: this.form.email,
           phone: this.form.number,     
           contactSalutation:this.form.personalTitle,
-          contactfirstName: this.form.firstName,
-          contactmiddleName: this.form.middleName,
-          contactlastName: this.form.lastName,
-          addressLane1: this.form.address,
-          addressLane2: this.form.address2,
+          contactFirstName: this.form.firstName,
+          contactMiddleName: this.form.middleName,
+          contactLastName: this.form.lastName,
+          addressLine1: this.form.address,
+          addressLine2: this.form.address2,
           district:this.form.district,
           state: this.form.state,
           country: this.form.country,

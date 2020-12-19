@@ -87,7 +87,7 @@ export default {
     async create() {
       try {
         const payload =   {
-            name: this.country,
+            countryName: this.country,
             countryCode: this.countrycode
        }
         let result = await createcountry(payload)
