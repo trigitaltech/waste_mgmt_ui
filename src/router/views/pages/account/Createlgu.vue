@@ -188,9 +188,9 @@ export default {
         if(e.areaName == this.form.baranggay){
           this.baranggayCode = e.code
           console.log("haii",e.districtId)
-          this.form.district = e.districtId[0].districtName
-          this.form.state = e.districtId[0].stateCode.stateName
-          this.form.country = e.districtId[0].stateCode.countryCode.countryName
+          this.form.district = e.district[0].districtName
+          this.form.state = e.district[0].stateCode.stateName
+          this.form.country = e.district[0].stateCode.countryCode.countryName
         }
       })
     },
@@ -209,7 +209,7 @@ export default {
      },
     async create() {
       try {
-        console.log(this.form.lguCode)
+        // console.log(this.form.lguCode)
         const payload = {
           code: this.form.lguCode,
           lguName:this.form.userName,
@@ -569,18 +569,7 @@ export default {
                               />
                             </div>
                             </div> 
-                          <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Baranggay</label>
-                                <multiselect
-                                required
-                                v-model="form.baranggay"
-                                placeholder="Select Baranggay"
-                                :options="servingAreas"
-                                @input="getdistricts"
-                              ></multiselect>
-                              </div>
-                            </div>
+                         
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Post Code</label>
@@ -592,7 +581,18 @@ export default {
                               />
                             </div>
                           </div>
-
+                             <div class="col-md-4">
+                              <div class="form-group mt-3 mt-sm-0">
+                                <label for="default">Baranggay</label>
+                                <multiselect
+                                required
+                                v-model="form.baranggay"
+                                placeholder="Select Baranggay"
+                                :options="servingAreas"
+                                @input="getdistricts"
+                              ></multiselect>
+                              </div>
+                            </div>
                          
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">

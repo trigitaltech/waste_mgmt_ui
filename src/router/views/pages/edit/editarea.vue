@@ -91,6 +91,7 @@ export default {
       async getcity(){
 // console.log('ahahahahha')
 this.addres.map(e=>{
+
   if(this.district === e.districtName){
     this.dist = [e]
     this.districtcode = e.districtCode
@@ -128,7 +129,7 @@ this.addres.map(e=>{
           country: this.countrys,
           state: this.state,
           zip: this.zip,
-          districtId: this.dist,
+          district: this.dist,
           description:this.description,
           isDeleted: false,
           createdDate: this.createddate,
