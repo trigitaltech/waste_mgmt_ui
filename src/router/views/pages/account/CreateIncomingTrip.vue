@@ -38,7 +38,7 @@ export default {
       driver:"",
       contractor:"",
       collector:"",
-      lgu:"LGU01",
+      lgu:"lgu6",
       plate:"",
       plates:[],
       body:"",
@@ -93,11 +93,13 @@ export default {
   methods:{
     async getBaraggay() {
       try {
-        const result = await getBaraggayByLguId(6)
-        this.areadata = result.data.response.result.baranggay
-        this.areadata.map( e => {
+        const result = await getBaraggayByLguId(2)
+        this.areadata = result.data.response.result
+        console.log(this.areadata)
+        this.servingAreas.push(this.areadata.areaName)
+        /*this.areadata.map( e => {
           this.servingAreas.push(e.areaName)
-        })
+        })*/
       } catch(e) {
         console.log(e)
       }
@@ -367,6 +369,18 @@ export default {
               <form @submit.prevent="create">
                 <b-row>
                   <b-col>
+                      <label
+                        for="defaultFormCardtextEx"
+                        class="grey-text font-weight-dark"
+                        >LGU</label
+                      >
+                      <input
+                       class="form-control"
+                       v-model="lgu"
+                       readonly
+                      />
+                  </b-col>
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -379,18 +393,6 @@ export default {
                       @change="getRoutes" 
                     >
                     </b-form-select>
-                  </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >CONTROL NO</label
-                    >
-                    <input
-                      v-model="controlno"
-                      class="form-control"
-                      name="body"
-                    />
                   </b-col>
                 </b-row>
                 <b-row class="mt-3">
@@ -407,17 +409,17 @@ export default {
                       >
                       </multiselect>
                     </b-col>
-                  <b-col>
-                      <label
-                        for="defaultFormCardtextEx"
-                        class="grey-text font-weight-dark"
-                        >LGU</label
-                      >
-                      <input
-                       class="form-control"
-                       v-model="lgu"
-                       readonly
-                      />
+                    <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >CONTROL NO</label
+                    >
+                    <input
+                      v-model="controlno"
+                      class="form-control"
+                      name="body"
+                    />
                   </b-col>
                 </b-row>
                 <b-row class="mt-3">

@@ -26,8 +26,7 @@ export default {
 			type: Object,
 			required: false,
 			default: () => ({}),
-		},
-		userData:{}
+		}
 	},
 	data() {
 		return {
@@ -35,10 +34,6 @@ export default {
 				minScrollbarLength: 60,
 			},
 		}
-	},
-	mounted(){
-		this.userData = JSON.parse(localStorage.getItem('auth.currentUser'))
-    	console.log(this.userData)
 	},
 	computed: {
 		...authComputed,
@@ -165,7 +160,7 @@ export default {
 			</b-dropdown>
 		</div> -->
 
-		<div class="sidebar-content" v-if="userData.roles[0].code != 'ENCODER'">
+		<div class="sidebar-content">
 			<VuePerfectScrollbar
 				v-if="!isCondensed"
 				v-once
