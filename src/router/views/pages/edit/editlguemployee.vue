@@ -75,9 +75,9 @@ export default {
       baranggayCode: '',
 
       form: {
-            lguName: this.$route.params.lguName,
+            lguName: this.$route.params.lgu_Id.lguName,
         lguCode: this.$route.params.code,
-        personalidno: this.$route.params.personalIdno,
+        personalidno: this.$route.params.personalIdNo,
         personalTitle:this.$route.params.salutation,
         firstName:this.$route.params.firstName,
         middleName: this.$route.params.middleName,
@@ -89,7 +89,7 @@ export default {
         address: this.$route.params.addressLine1,
         city: this.$route.params.city,
         area:this.$route.params.area,
-        distict:this.$route.params.district,
+        district:this.$route.params.district,
         address2:this.$route.params.addressLine2,
         state: this.$route.params.state,
         country: this.$route.params.country,
@@ -99,7 +99,7 @@ export default {
       },
       item2: [],
       roles: ['ENCODER', 'VOLUME_CHECKER', 'DISPATCHER'],
-      rolename: '',
+      rolename: this.$route.params.type,
       titles: ['Mr.', 'Sri.', 'Mrs'],
       vouchernumber: '',
       genderOpt: ['Male', 'Female', 'Other'],
@@ -112,7 +112,7 @@ export default {
       lgusnames: [],
       distopt:[],
       lgusdata: [],
-      lguname: '',
+      lguname: this.$route.params.lgu_Id.lguName,
       bouquetsOpt: [
         { value: null, text: 'Please select an option' },
         'FTA  AND STARTER',
@@ -128,6 +128,7 @@ export default {
   mounted() {
     // this.getClientDetails()
     // this.getplans()
+    console.log(this.$route.params)
     this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     this.roledata()
@@ -271,8 +272,8 @@ export default {
           firstName: this.form.firstName,
           middleName: this.form.middleName,
           lastName: this.form.lastName,
-          addressLane1: this.form.address,
-          addressLane2: this.form.address2,
+          addressLine1: this.form.address,
+          addressLine2: this.form.address2,
           district: this.form.district,
           state: this.form.state,
           country: this.form.country,
@@ -663,7 +664,7 @@ export default {
                               </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">Service office</label>
 
@@ -674,7 +675,7 @@ export default {
                                   @change="getid"
                                 ></b-form-select>
                               </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">Personal ID No</label>

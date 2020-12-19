@@ -545,19 +545,7 @@ export default {
                               />
                             </div>
                             </div> 
-                          <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Area</label>
-                                <input
-                                v-model.trim="form.area"
-                                  disabled
-                                  class="form-control"
-                                  type="text"
-                                  placeholder="Enter Area"
-                                
-                                />
-                              </div>
-                            </div>
+                         
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Post Code</label>
@@ -571,18 +559,7 @@ export default {
                             </div>
                           </div>
 
-                           <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">City</label>
-                               <input
-                               v-model.trim="form.city"
-                                disabled
-                                placeholder="Enter city"
-                                class="form-control"
-                                type="text"
-                              />
-                              </div>
-                            </div>
+                          
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">State</label>

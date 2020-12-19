@@ -74,13 +74,13 @@ export default {
       servingAreas:[],
       baranggayCode:"",
      form: {
-       baranggay:"",
+       baranggay:this.$route.params.baranggay.areaName,
        district:"",
-        lguName:this.$route.params.lguName,
+       lguName:this.$route.params.lguName,
         lguCode:this.$route.params.code,
         personalidno:this.$route.params.personalIdNo,
         personalTitle: this.$route.params.contactSalutation,
-        firstName: this.$route.params.contactfirstName,
+        firstName: this.$route.params.contactFirstName,
         middleName: this.$route.params.contactMiddleName,
         lastName: this.$route.params.contactLastName,
         userName:this.$route.params.userName,
@@ -88,11 +88,10 @@ export default {
         email: this.$route.params.email,
         number: this.$route.params.phone,
         address: this.$route.params.addressLine1,
-        city: '',
-        area:'',
+     
         address2:this.$route.params.addressLine2,
-        state: "",
-        country:"",
+        state: this.$route.params.state,
+        country:this.$route.params.country,
         postCode: this.$route.params.pin,
         stbNumber: '',
         bouquets: null,
@@ -564,19 +563,7 @@ export default {
                               />
                             </div>
                             </div> 
-                          <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Area</label>
-                                <input
-                                  v-model.trim="form.area"
-                                  class="form-control"
-                                  type="text"
-                                  placeholder="Enter Area"
-                                  disabled
-                                />
-                              </div>
-                            </div>
-                          <div class="col-md-4">
+                             <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Post Code</label>
                               <input
@@ -588,6 +575,19 @@ export default {
                               />
                             </div>
                           </div>
+                          <div class="col-md-4">
+                              <div class="form-group mt-3 mt-sm-0">
+                                <label for="default">Baranggay</label>
+                                <input
+                                  v-model.trim="form.baranggay"
+                                  class="form-control"
+                                  type="text"
+                                  placeholder="Enter Baranggay"
+                                  disabled
+                                />
+                              </div>
+                            </div>
+                         
 
                         
                             <div class="col-md-4">
@@ -617,11 +617,11 @@ export default {
                               </div>
                             </div>
                               
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4"> -->
                             
                            
                         
-                              <div class="form-group mt-3 mt-sm-0">
+                              <!-- <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Service office</label>
                                   <input
                                 v-model.trim="serviceoffice"
@@ -634,7 +634,7 @@ export default {
                                     </div>
                            
                            
-                            </div>
+                            </div> -->
                               <div class="col-md-4">
                             
                            
