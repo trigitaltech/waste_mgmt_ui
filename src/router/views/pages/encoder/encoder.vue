@@ -171,23 +171,18 @@ export default {
 
 <template>
   <Layout>
-    <div class="row">
-      <div class="col">
-         <b-card
-        header="Encoder Details"
+   
+    <div class="row justify-content-center">
 
-        class="mt-10 ml-10 mr-10 mx-auto"
-      >
-          <div class="card-body p-0">
-            <!-- <h6 class="card-title border-bottom p-3 mb-0 header-title"
-              >Project Overview</h6
-            >-->
-            <div class="row py-1">
+      <div class="col-lg-12">
+         <div class="card">
+          <div class="card-body">
+             <div class="row">
               <!-- Widget -->
 
               <div class="col-xl-4 col-sm-6">
                 <!-- stat 1 -->
-                <div class="media p-3">
+                <div class="media">
                   <feather type="grid" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of IN Trips</h5>
@@ -197,7 +192,7 @@ export default {
               </div>
               <div class="col-xl-4 col-sm-6">
                 <!-- stat 1 -->
-                <div class="media p-3">
+                <div class="media">
                   <feather type="calendar" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Out Trips</h5>
@@ -216,34 +211,12 @@ export default {
               </div>-->
             </div>
           </div>
- </b-card>
-        </div>
-        
-      </div>
-   
-    <div class="row justify-content-center">
-      <div class="col-lg-12">
-         <div class="card">
-          <div class="card-body">
             <b-tabs v-model="tabIndex" pills justified class="navtab-bg w-100">
                   <b-tab title="Incoming Trips">
                 <p class="text-muted font-13 mb-3"></p>
-                <div class="row">
-                    <b-col md="9"></b-col>
-                    <b-col md="3">
-                      <div class="float-right">
-                    <b-button
-                      class="btn btn-custome btn-secondary mb-4 mr-2"
-                      text="Create Incoming Trip"
-                      @click="$router.push({path:'/CreateIncomingTrip'})"
-                      >Create Incoming Trip</b-button
-                    >
-                  </div>
-                    </b-col>
-                </div>
               <div class="row">
               <!-- Search -->
-              <div class="col-sm-12 col-md-6">
+              <div class="col-sm-12 col-md-3">
                 <div id="tickets-table_filter" class="dataTables_filter">
                   <label class="d-inline-flex align-items-center">
                     <b-form-input
@@ -281,8 +254,14 @@ export default {
                   </div>
                 </div>
               </div>
+                    <b-button
+                      class="btn btn-custome btn-secondary ml-5 mb-2 mr-2"
+                      text="Create Incoming Trip"
+                      @click="$router.push({path:'/CreateIncomingTrip'})"
+                      >Create Incoming Trip</b-button
+                    >
             </div>
-                <div class="table-responsive mb-0">
+                <div class="table-responsive mt-2">
                   <b-table
                     show-empty
                     :dark="dark"
@@ -429,21 +408,8 @@ export default {
               <b-tab title="Out Going Trips">
                 <p class="text-muted font-13 mb-3"></p>
                 <div class="row">
-                    <b-col md="9"></b-col>
-                    <b-col md="3">
-                      <div class="float-right">
-                    <b-button
-                      class="btn btn-custome btn-secondary mb-4 mr-2"
-                      text="Create Outgoing Trip"
-                      @click="$router.push({path:'/CreateOutgoingTrip'})"
-                      >Create Outgoing Trip</b-button
-                    >
-                  </div>
-                    </b-col>
-                </div>
-               <div class="row">
               <!-- Search -->
-              <div class="col-sm-12 col-md-6">
+              <div class="col-sm-12 col-md-3">
                 <div id="tickets-table_filter" class="dataTables_filter">
                   <label class="d-inline-flex align-items-center">
                     <b-form-input
@@ -477,11 +443,17 @@ export default {
                     ></flat-pickr>
                   </div>
                   <div class="col-md-2 col-sm-12">
-                    <button type="submit" class="btn d-block w-100 btn-primary" @click="getOUTgoing">Go</button>
+                    <button type="submit" class="btn d-block w-100 btn-primary" @click="getTripincoming">Go</button>
                   </div>
                 </div>
               </div>
-                </div>
+                    <b-button
+                      class="btn btn-custome btn-secondary ml-5 mb-2 mr-2"
+                      text="Create Incoming Trip"
+                      @click="$router.push({path:'/CreateOutgoingTrip'})"
+                      >Create Outgoing Trip</b-button
+                    >
+            </div>
                 <!-- Table -->
                 <div class="table-responsive mb-0">
                   <b-table
