@@ -11,7 +11,7 @@ import moment from 'moment';
 Vue.component('multiselect', Multiselect)
 import {
  getBaraggayByLguId,getHaulerByBaraggayId, CreateIncomingTrip,haulerEmployees,vehicle,
- getRoutesByBaranggayId, haulers, getVehiclesByHaulerId, users,employees
+ getRoutesByBaranggayId, haulers, getVehiclesByHaulerId, users,employees,lguemployee
 } from '../../../../services/auth'
 
 export default {
@@ -38,7 +38,7 @@ export default {
       driver:"",
       contractor:"",
       collector:"",
-      lgu:"lgu6",
+      lgu:"lgu2",
       plate:"",
       plates:[],
       body:"",
@@ -93,7 +93,7 @@ export default {
   methods:{
     async getBaraggay() {
       try {
-        const result = await getBaraggayByLguId(2)
+        const result = await getBaraggayByLguId(1)
         this.areadata = result.data.response.result
         console.log(this.areadata)
         this.servingAreas.push(this.areadata.areaName)
@@ -150,23 +150,28 @@ export default {
     },
     async getRoutes() {
       try {
-        this.areadata.map(async (e) => {
-          if(this.area === e.areaName){
-            const result = await getRoutesByBaranggayId(e.id)
+        //this.areadata.map(async (e) => {
+          if(this.area === this.areadata.areaName){
+            const result = await getRoutesByBaranggayId(this.areadata.id)
             this.routedata = result.data.response.result
-            this.routedata.map(f=>{
-              if(f.routeName != null) 
-                this.servingRoutes.push(f.routeName);
+            if(this.routedata.length > 0) {
+              this.routedata.map(f=>{
+                if(f.routeName != null) 
+                  this.servingRoutes.push(f.routeName);
 
-            })
-            const result1 = await users()
-            this.checkerList = result1.data.response.Users
+              })
+            }
+            const result1 = await lguemployee()
+            this.checkerList = result1.data.response.result
             console.log(this.checkerList)
-            this.checkerList.map(g => {
-              if(g.roles[0].code == "VOLUME_CHECKER") {
-                this.checkerListNames.push(g.userName)
-              }
-            });
+            if(this.checkerList.length > 0)
+            {
+              this.checkerList.map(g => {
+                if(g.type == "VOLUME_CHECKER") {
+                  this.checkerListNames.push(g.userName)
+                }
+              })
+            }
             this.gethaulers()
             /*const result2 = await getHaulerByBaraggayId(e.id)
             this.haulerList = result2.data.response.HaulerMaster
@@ -174,7 +179,7 @@ export default {
               this.haulerListNames.push(h.haulerName)
             })*/
           }
-        })
+        //})
       } catch(e) {  
         console.log(e)
       }
