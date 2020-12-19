@@ -90,6 +90,7 @@ export default {
       servingAreas: [],
       route: '',
       driver: '',
+      helperid:"",
       helper: null,
       servingRoutes: [],
       haulerid:"",
@@ -132,7 +133,7 @@ export default {
     // this.routes()
     // this.getUsers()
     this.employeedata()
-    this.getvehicles()
+    // this.getvehicles()
    
   },
   methods: {
@@ -141,9 +142,10 @@ export default {
        if(this.dumpinglocation[0] === this.dumpingdata[i].dumpingAreaName){
           this.dumpid = this.dumpingdata[i].id
           const result = await getdumpdata(this.dumpid)
-          var dumpdata = result.data.response.result
+          var dumpdata = result.data.response.result.dumpingPoint
           dumpdata.map(e=>{
-            this.plates.push(e.plateNo)
+            this.fromdumpings.push(e.dumpingPointName)
+            this.todumpings.push(e.dumpingPointName)
           })
        }
      }
@@ -172,18 +174,18 @@ this.haulerdata.map(e=>{
       } catch (error) {}
    
     },
-      async getvehiclehauler() {
-       try {
+    //   async getvehiclehauler() {
+    //    try {
     
-      const result = await  getVehiclesByhauler(id)
-      this.dumpingdata = result.data.response.dumpingLocation
-      this.dumpingdata.map(e=>{
-        this.dumpings.push(e.dumpingAreaName)
-      })
+    //   const result = await  getVehiclesByhauler(id)
+    //   this.dumpingdata = result.data.response.dumpingLocation
+    //   this.dumpingdata.map(e=>{
+    //     this.dumpings.push(e.dumpingAreaName)
+    //   })
     
-      } catch (error) {}
+    //   } catch (error) {}
    
-    },
+    // },
      async getdumping() {
        try {
     
@@ -244,14 +246,14 @@ this.haulerdata.map(e=>{
         }
       })
     },
-    getid() {
-      console.log('haiiiiii')
-      this.emp.map((e) => {
-        if (this.driver === e.userName) {
-          this.driverid = e.id
-        }
-      })
-    },
+    // getid() {
+    //   console.log('haiiiiii')
+    //   this.emp.map((e) => {
+    //     if (this.driver === e.userName) {
+    //       this.driverid = e.id
+    //     }
+    //   })
+    // },
     async employeedata() {
       try {
         const result = await haulerEmployees()
@@ -293,6 +295,23 @@ this.haulerdata.map(e=>{
         }
       })
     },
+    getdriverid(){
+    // debugger
+  this.emp.map((e)=>{
+    if(this.driver[0] === e.userName){
+      this.driverid = e.id
+    }
+  })
+    },
+      gethelperid(){
+        // debugger
+  this.emp.map((e)=>{
+    if(this.helper[0] === e.userName){
+      this.helperid = e.id
+    }
+  })
+    },
+
     async create() {
       try {
         const date = moment(this.startTime).format('YYYY-MM-DDThh:mm:SS+00:00')
@@ -307,9 +326,9 @@ this.haulerdata.map(e=>{
 
                                 dumpingArea:this.dumpinglocation[0],
 
-                                PlateNo:this.plateno,
+                                PlateNo:this.plateno[0],
 
-                                BodyNo:this.body,
+                                BodyNo:this.vehicleno[0],
 
                                 truckType:this.trucktype,
 
@@ -318,11 +337,11 @@ this.haulerdata.map(e=>{
                                 driverId: this.driverid,
                                 driverName: this.driver[0],
 
-                                HelperId:"",
-                                HelperName:"",
+                                HelperId:this.helperid,
+                                HelperName:this.helper[0],
 
-                                fromPoint:this.fromdumpingpoint,
-                                toPoint:this.todumpingpoint,
+                                fromPoint:this.fromdumpingpoint[0],
+                                toPoint:this.todumpingpoint[0],
 
                                 hauler:this.hauler[0],
 
@@ -370,7 +389,7 @@ this.haulerdata.map(e=>{
       this.vehicles.map((e) => {
         if (e.plateNo == this.plate) {
           this.trucktype = e.vehicleType.code
-          this.body = e.vehicleNo
+          this.vehicleno = e.vehicleNo
         }
       })
     },
@@ -525,6 +544,7 @@ this.haulerdata.map(e=>{
                       v-model="driver"
                       :multiple="true"
                       :options="drivers"
+                      @input="getdriverid"
                     >
                     </multiselect>
                   </b-col>
@@ -538,6 +558,7 @@ this.haulerdata.map(e=>{
                       v-model="helper"
                       :multiple="true"
                       :options="helpers"
+                      @input="gethelperid"
                     >
                     </multiselect>
                   </b-col>

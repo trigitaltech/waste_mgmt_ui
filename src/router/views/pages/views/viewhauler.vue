@@ -90,7 +90,7 @@ export default {
      form: {
         code:this.$route.params.code,
         personalTitle: this.$route.params.contactSalutation,
-        firstName:  this.$route.params.contactfirstName,
+        firstName:  this.$route.params.contactFirstName,
         middleName:  this.$route.params.contactMiddleName,
         lastName:  this.$route.params.contactLastName,
         userName: this.$route.params.userName,
@@ -559,7 +559,7 @@ export default {
                               />
                             </div>
                             </div> 
-                          <div class="col-md-4">
+                          <!-- <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">Area</label>
                                 <input
@@ -570,7 +570,7 @@ export default {
                                 disabled
                                 />
                               </div>
-                            </div>
+                            </div> -->
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Post Code</label>
@@ -584,7 +584,7 @@ export default {
                             </div>
                           </div>
 
-                           <div class="col-md-4">
+                           <!-- <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">City</label>
                                <input
@@ -595,7 +595,7 @@ export default {
                                 disabled
                               />
                               </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">State</label>

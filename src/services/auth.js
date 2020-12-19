@@ -206,8 +206,8 @@ export const getoutgoingtrip = (id,payload) => serviceMaker(
     api.NGB,payload
   );
 
-  
-  export const getdumpdata = (id) => serviceMaker(`dumping/${id}`,methods.GET,api.NGB);
+ 
+  export const getdumpdata = (id) => serviceMaker(`/dumpinglocation/dumping/${id}`,methods.GET,api.NGB);
   
 
 export const getVehiclesByHaulerId = (id) => serviceMaker(`vehicles/vehiclebyhauler/${id}`,methods.GET,api.NGB);

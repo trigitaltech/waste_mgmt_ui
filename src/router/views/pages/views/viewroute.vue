@@ -28,13 +28,13 @@ export default {
   data() {
     return {
       code:this.$route.params.code,
-      classtype:this.$route.params.areaName.classType,
+      classtype:this.$route.params.baranggay.classType,
       roads:this.$route.params.routeRoads,
-      areaid:this.$route.params.areaName.id,
+      areaid:this.$route.params.baranggay.id,
       supervisor:this.$route.params.supervisor,
      routename:this.$route.params.routeName,
      routetype:this.$route.params.routeType,
-     areaname:this.$route.params.areaName.areaName,
+     areaname:this.$route.params.baranggay.areaName,
      routedistance:this.$route.params.routeDistance,
      description:this.$route.params.description,
      city:this.$route.params.city,
@@ -97,7 +97,7 @@ export default {
   },
   computed: {
      rows(){
-     return this.item.length
+     return this.roads.length
     },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
