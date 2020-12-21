@@ -89,6 +89,7 @@ export default {
       sid:"",
      form: {
         code:'',
+        baranggay:'',
         personalTitle: '',
         firstName: '',
         middleName: '',
@@ -109,6 +110,8 @@ export default {
         amount: 0,
         voucherNo: '',
       },
+      servingAreas:[],
+      baranggay:{},
       areas:[],
       titles: ['Mr.', 'Sri.', 'Mrs'],
       item1:[],
@@ -134,10 +137,37 @@ export default {
   mounted() {
     // this.getClientDetails()
     this.getplans()
+    this.getareas()
       this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
   },
   methods: {
+    async getareas() {
+      try {
+        const result = await Areamasters();
+        this.areas = result.data.response.areaMaster
+        this.areas.map(e=>{
+            if(e.areaName!=null)
+              this.servingAreas.push(e.areaName);
+        })
+        console.log(this.servingAreas)
+      } catch (error) { 
+        console.log(error);
+      }
+      console.log(this.servingAreas);
+    },
+    getdistricts(){
+      this.areas.map( e => {
+        if(e.areaName == this.form.baranggay){
+          this.baranggay = e
+          this.baranggayCode = e.code
+          console.log("haii",e.districtId)
+          this.form.district = e.district[0].districtName
+          this.form.state = e.district[0].stateCode.stateName
+          this.form.country = e.district[0].stateCode.countryCode.countryName
+        }
+      })
+    },
     getid(){
         // console.log("haiiiiii",this.item2)
         this.areas.map(e=>{
@@ -199,7 +229,7 @@ export default {
                 isDeleted: false,
                 status: 200,
                 personalIdNo: this.personalidno,
-              
+                baranggay: this.baranggay
             }
         let result = await createhauler(payload)
         if (result) {
@@ -555,13 +585,14 @@ export default {
 
                            <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">City</label>
-                               <input
-                                v-model.trim="form.city"
-                                placeholder="Enter city"
-                                class="form-control"
-                                type="text"
-                              />
+                                <label for="default">Hauler</label>
+                               <multiselect
+                                required
+                                v-model="form.baranggay"
+                                placeholder="Select Baranggay"
+                                :options="servingAreas"
+                                @input="getdistricts"
+                              ></multiselect>
                               </div>
                             </div>
                             <div class="col-md-4">

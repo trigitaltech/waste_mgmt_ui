@@ -38,7 +38,7 @@ export default {
       driver:"",
       contractor:"",
       collector:"",
-      lgu:"lgu2",
+      lgu:"lgu1",
       plate:"",
       plates:[],
       body:"",
@@ -62,6 +62,7 @@ export default {
       checkerListNames:[],
       checker:"",
       hauler:"",
+      haulerCode:"",
       haulerList:[],
       haulerListNames:[],
       collectorList:[],
@@ -71,7 +72,9 @@ export default {
       areaId:null,
       routeId:null,
       garbageCollectors:[],
-      brgy:{}
+      brgy:{},
+      routeCodes:[],
+      loginDetails:{}
     };
   },
   components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime, },
@@ -84,16 +87,26 @@ export default {
     this.tripDate = moment(new Date()).format("DD-MM-YYYY")
     this.startTime = moment(new Date()).format("DD-MM-YYYY hh:mm A")
     console.log(this.tripDate+" "+this.startTime)
+    this.getLgu()
     this.getBaraggay();
     //this.areas();
     //this.routes();
     this.getUsers();
-    this.employeedata()
+    //this.employeedata()
   },
   methods:{
+    async getLgu() {
+      const result = JSON.parse(localStorage.getItem('auth.currentUser'))
+      this.loginDetails = {
+        lguEmployeeCode: result.lguemployee.code,
+        id: result.lguemployee.lgu_Id.id,
+        name: result.lguemployee.lgu_Id.userName
+      }
+      console.log(this.loginDetails)
+    },
     async getBaraggay() {
       try {
-        const result = await getBaraggayByLguId(1)
+        const result = await getBaraggayByLguId(this.loginDetails.id)
         this.areadata = result.data.response.result
         console.log(this.areadata)
         this.servingAreas.push(this.areadata.areaName)
@@ -119,30 +132,41 @@ export default {
     },
     async getVehiclesDriversHelpers() {
       try {
-        this.haulerList.map(async (e) => {
-          if(this.hauler == e.haulerName) {
-            const result1 = await getVehiclesByHaulerId(e.id)
-            this.vehicles = result1.data.response.result;
-            this.vehicles.map(e => {
-              this.plates.push(e.plateNo)
-            })
-          }
-        })
         this.haulerList.map(e => {
           if(this.hauler == e.haulerName){
             this.haulerId = e.id
+            this.haulerCode = e.code
           }
         })
+        this.haulerList.map(async (e) => {
+          if(this.hauler == e.haulerName) {
+            const result1 = await vehicle()
+            this.vehicles = result1.data.response.vehicles
+            this.vehicles.map(e => {
+              if(e.hauler != null) {
+                console.log(e.hauler)
+                if(e.hauler.haulerName == this.hauler)
+                  this.plates.push(e.plateNo)
+              }
+            })
+          }
+        })
+        this.employeedata()
       } catch(e) {
         console.log(e)
       }
     },
     async gethaulers() {
       try {
-        const result = await haulers();
+        const result = await haulers()
+        console.log(result)
         this.haulerList = result.data.response.HaulerMaster;
         this.haulerList.map( e => {
-          this.haulerListNames.push(e.haulerName)
+          if(e.baranggay != null) {
+            if(e.baranggay.id == this.areadata.id) {
+              this.haulerListNames.push(e.haulerName)
+            }
+          }
         })
       } catch(e) {
         console.log(e);
@@ -152,6 +176,7 @@ export default {
       try {
         //this.areadata.map(async (e) => {
           if(this.area === this.areadata.areaName){
+            //alert(this.areadata.id)
             const result = await getRoutesByBaranggayId(this.areadata.id)
             this.routedata = result.data.response.result
             if(this.routedata.length > 0) {
@@ -167,8 +192,12 @@ export default {
             if(this.checkerList.length > 0)
             {
               this.checkerList.map(g => {
-                if(g.type == "VOLUME_CHECKER") {
-                  this.checkerListNames.push(g.userName)
+                if(g.lgu_Id != null){
+                  if(g.lgu_Id.baranggay != null) {
+                    if(g.type == "VOLUME_CHECKER" && g.lgu_Id.baranggay.id == this.areadata.id) {
+                      this.checkerListNames.push(g.userName)
+                    }
+                  }
                 }
               })
             }
@@ -217,27 +246,18 @@ export default {
         console.log(this.helperid)
       },
       getGarbageCollectors() {
-        this.gar
-        this.areadata.map(e=> {
-          if(e.areaName == this.area) {
-            this.brgy = e
-          }
+        this.collector.map(e => {
+          this.collectorList.map(f => {
+            if(e == f.userName) {
+              this.garbageCollectors.push(f)
+            }
+          })
         })
-        this.collector.map( (e,index) => {
-          const object = {
-            controlNo: this.controlno,
-            tripDate: this.tripDate,
-            garbageCollectorName: e,
-            brgy: this.brgy
-          }
-          this.garbageCollectors.push(object)
-        })
-        console.log(this.garbageCollectors)
       },
       gethaulerid() {
         this.haulerList.map(e => {
           if(this.hauler == e.userName){
-            this.haulerId = e.code
+            this.haulerId = e.id
           }
         })
       },
@@ -252,12 +272,14 @@ export default {
         try {
           const result = await haulerEmployees()
           this.emp = result.data.response.HaulerEmployees
-          console.log(result)
+          console.log(this.emp)
           this.emp.map(e=>{
-            if(e.type == "DRIVER")
-              this.drivers.push(e.userName)
-            if(e.type == "HELPER")
-              this.helpers.push(e.userName)
+            if(e.haulerId != null) {
+              if(e.type == "DRIVER" && e.haulerId.id == this.haulerId)
+                this.drivers.push(e.userName)
+              if(e.type == "HELPER" && e.haulerId.id == this.haulerId)
+                this.helpers.push(e.userName)
+            }
           })
       } catch (error) {}
      },
@@ -273,6 +295,9 @@ export default {
         console.log(error);
       }
       console.log(this.servingAreas);
+    },
+    getRouteCode() {
+      console.log(this.route)
     },
     async routes() {
       try {
@@ -294,18 +319,21 @@ export default {
       })
     },
     async create() {
-      try{        
+      try{       
+        this.route.map( e => {
+          this.routedata.map(f => {
+            if(e == f.routeName) {
+              const a = {
+                code: f.code
+              }
+              this.routeCodes.push(a)
+            }
+          })
+        })
         this.getGarbageCollectors()
-        this.areadata.map(e=> {
-          if(e.areaName == this.area) {
-            this.areaId = e.code
+          if(this.areadata.areaName == this.area) {
+            this.areaId = this.areadata.code
           }
-        })
-        this.routedata.map(e=> {
-          if(e.routeName == this.route)
-            this.routeId = e.code
-        })
-        console.log('1')
         const payload = {
             controlNo: this.controlno,
             tripDate: this.tripDate,
@@ -314,13 +342,13 @@ export default {
             truckType: this.trucktype,
             collectionStartTime: this.startTime,
             baranggayCode: this.areaId,
-            routeCode: this.routeId,
+            routes: this.routeCodes,
             helperId:this.helperid,
             helperName:this.helper,
             driverId: this.driverid,
             driverName: this.driver,
-            lguEmployeeCode: "",
-            haulerCode: this.haulerId,
+            lguEmployeeCode: this.loginDetails.lguEmployeeCode,
+            haulerCode: this.haulerCode,
             volumeCheckerName: this.checker,
             volumeCheckerId: this.checkerId,
             garbageCollector: this.garbageCollectors
@@ -362,7 +390,7 @@ export default {
 
 <template>
   <Layout>
-    <PageHeader :items="items"/>
+    <PageHeader/>
     <div class="animated">
       <b-card
         header="Create Incoming Trip"
@@ -381,7 +409,7 @@ export default {
                       >
                       <input
                        class="form-control"
-                       v-model="lgu"
+                       v-model="loginDetails.name"
                        readonly
                       />
                   </b-col>
@@ -411,6 +439,7 @@ export default {
                         v-model="route"
                         :multiple="true"       
                         :options="servingRoutes"
+                        @change="getRouteCode"
                       >
                       </multiselect>
                     </b-col>
@@ -562,7 +591,7 @@ export default {
                     >
                     <multiselect
                         v-model="collector"
-                        :multiple="true"       
+                        :multiple="true"   
                         :options="collectorListNames"
                       >
                     </multiselect>

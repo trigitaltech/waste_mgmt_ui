@@ -19,12 +19,25 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      userData:{}
+    }
   },
   computed: {
     ...authComputed,
   },
   methods: {
+    goToHomePage() {
+      this.userData = JSON.parse(localStorage.getItem('auth.currentUser'))
+      console.log(this.userData)
+      const role = this.userData.roles[0].code
+      if(role == 'ENCODER') {
+        this.$router.push('/Encoder')
+      }
+      else {
+        this.$router.push('/')
+      }
+    },
     toggleMenu() {
       this.$parent.toggleMenu()
     },
@@ -43,19 +56,18 @@ export default {
   <!-- Topbar Start -->
   <div class="navbar navbar-expand flex-column flex-md-row navbar-custom">
     <div class="container-fluid">
-      <!-- LOGO -->
-      <a href="/" class="navbar-brand mr-0 mr-md-2 logo">
+      <!--<a @click="goToHomePage" class="navbar-brand mr-0 mr-md-2 logo">
         <span class="logo-lg">
-          <!-- <img src="@assets/images/tstvlogo.png" alt height="90"/> -->
           <span class="d-inline h5 text-logo" style="color: #4b4b5a;"
             >Waste Management</span
           >
         </span>
-        <!-- <span class="logo-sm">
-					<img src="@assets/images/logo.png" alt height="24" />
-				</span> -->
-      </a>
-
+      </a>-->
+      <button class="navbar-brand logo ml-0 mr-md-2 h3 w-25 btn btn-primary-outline" 
+          @click="goToHomePage"
+          style="color:#4b4b5a;font-size:20px">
+        WASTE MANAGEMENT
+      </button>
       <ul
         class="navbar-nav bd-navbar-nav flex-row list-unstyled menu-left mb-0"
         style="background-color: #26a69a; color: white"
@@ -103,7 +115,7 @@ export default {
 							/>
               <div class="media-body text-left">
                 <h6 class="pro-user-name ml-2 my-0">
-                  <span>{{ user.user.username }}</span>
+                  <span>{{ user.user.userName }}</span>
                   <h5
                     class="pro-user-desc text-muted d-block mt-1"
                     style="color: white"
