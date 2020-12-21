@@ -74,6 +74,7 @@ export default {
         address: '',
         city: '',
         area:'',
+        baranggay:'',
         address2:'',
         state: '',
         country: '',
@@ -123,20 +124,21 @@ export default {
      async getcity() {
       // console.log('ahahahahha')
       this.addres.map((e) => {
-        if (this.form.district === e.districtName) {
-          this.form.state = e.stateCode.stateName
-          this.form.country = e.stateCode.countryCode.countryName
+        if(e.areaName == this.form.baranggay){
+          this.form.district = e.district[0].districtName
+          this.form.state = e.district[0].stateCode.stateName
+          this.form.country = e.district[0].stateCode.countryCode.countryName
         }
       })
     },
     async getaddresss() {
       try {
-        const result = await address()
-        this.addres = result.data.response.result
+        const result = await Areamasters()
+        this.addres = result.data.response.areaMaster
         console.log('address', this.addres)
         this.addres.map((e) => {
           // debugger
-          this.distopt.push(e.districtName)
+          this.distopt.push(e.areaName)
         })
       } catch (error) {}
     },
@@ -211,7 +213,7 @@ export default {
                 lastName: this.form.lastName,
                 addressLine1: this.address,
                 addressLine2: this.address2,
-               distict:this.form.district,
+               district:this.form.district,
                 state: this.form.state,
                 country: this.form.country,
                 pin: this.form.postCode,
@@ -562,7 +564,21 @@ export default {
                                 />
                               </div>
                             </div>
-
+                            <div class="col-md-4">
+                              <div class="form-group mt-3 mt-sm-0">
+                                <label
+                                  for="defaultFormCardtextEx"
+                                  class="grey-text font-weight-dark"
+                                  >Baranggay</label
+                                >
+                                <multiselect
+                                  v-model.trim="form.baranggay"
+                                  placeholder="Select distict"
+                                  :options="distopt"
+                                  @input="getcity"
+                                ></multiselect>
+                              </div>
+                            </div>
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label
@@ -570,11 +586,10 @@ export default {
                                   class="grey-text font-weight-dark"
                                   >District</label
                                 >
-                                <multiselect
-                                  v-model.trim="form.district"
-                                  placeholder="Select distict"
-                                  :options="distopt"
-                                  @input="getcity"
+                                <input
+                                  v-model="form.district"
+                                  placeholder="Enter distict"
+                                  class="form-control"
                                 ></multiselect>
                               </div>
                             </div>

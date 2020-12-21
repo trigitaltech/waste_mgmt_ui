@@ -80,7 +80,7 @@ export default {
           label: 'Truck Type',
         },
         {
-          key: 'bodyNO',
+          key: 'bodyNo',
           label: 'Body No',
         },
         {

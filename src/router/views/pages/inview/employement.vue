@@ -48,7 +48,7 @@ export default {
         
       permissionColumns: [
         {
-          key: 'personal_ID_NO',
+          key: 'personalIdNo',
 
           label: 'Personal ID NO',
         },
@@ -67,7 +67,7 @@ export default {
           label: 'email',
         },
         {
-          key: 'area',
+          key: 'Baranggay',
 
           label: 'Area',
         },
