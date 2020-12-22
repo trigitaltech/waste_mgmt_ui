@@ -74,7 +74,7 @@ export default {
       servingAreas:[],
       baranggayCode:"",
      form: {
-       baranggay:this.$route.params.baranggay.areaName,
+       baranggay:this.$route.params.areaName,
        district:"",
        lguName:this.$route.params.lguName,
         lguCode:this.$route.params.code,

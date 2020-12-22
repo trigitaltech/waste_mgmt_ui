@@ -9,12 +9,12 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- createLGU,roles,Areamasters
+ createLGU,roles,Areamasters,address
 } from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Create User',
+    title: 'Create LGU',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -74,6 +74,8 @@ export default {
       roledata1:[],
       rolesarray:[],
       servingAreas:[],
+      addres:[],
+      distopt:[],
       baranggayCode:"",
      form: {
        baranggay:"",
@@ -131,6 +133,7 @@ export default {
     this.roledata()
     this.getplans()
     this.getareas()
+    this.getaddresss()
   },
   methods: {
     async getareas() {
@@ -183,23 +186,30 @@ export default {
           }
         })
     },
+    async getaddresss() {
+       try {
+      
+      const result = await  address()
+      this.addres = result.data.response.result
+      console.log("address",this.addres)
+    this.addres.map(e=>{
+      // debugger
+      this.distopt.push(e.districtName)
+    })
+      
+      } catch (error) {}
+   
+    },
     getdistricts(){
-      this.areas.map( e => {
-        if(e.areaName == this.form.baranggay){
-          this.baranggayCode = e.code
-          console.log("haii",e.districtId)
-          this.form.district = e.district[0].districtName
-          this.form.state = e.district[0].stateCode.stateName
-          this.form.country = e.district[0].stateCode.countryCode.countryName
-        }
-      })
+     this.addres.map(e=>{
+        if(this.form.district === e.districtName){
+   
+    this.form.state = e.stateCode.stateName
+    this.form.country = e.stateCode.countryCode.countryName
+   }
+     })
     },
-    async getBaranggayCode() {
-      this.areas.map( e => {
-        if(e.areaName == this.baranggayCode)
-          this.baranggayCode = e.code
-      })
-    },
+  
     async roledata() {
        try {
       
@@ -236,7 +246,7 @@ export default {
        
           id_PROOF_DOC_URL: null,
          
-          baranggayCode: this.baranggayCode
+          
         }
         let result = await createLGU(payload)
         if (result) {
@@ -584,12 +594,12 @@ export default {
                           </div>
                              <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Baranggay</label>
+                                <label for="default">District</label>
                                 <multiselect
                                 required
-                                v-model="form.baranggay"
-                                placeholder="Select Baranggay"
-                                :options="servingAreas"
+                                v-model="form.district"
+                                placeholder="Select District"
+                                :options="distopt"
                                 @input="getdistricts"
                               ></multiselect>
                               </div>
