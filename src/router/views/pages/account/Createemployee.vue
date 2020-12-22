@@ -94,6 +94,7 @@ export default {
       sid:"",
      form: {
         personalTitle: '',
+        code:'',
         firstName: '',
         middleName: '',
         lastName: '',
@@ -201,6 +202,7 @@ export default {
                 userName: this.form.userName,
                 password: this.form.password,
                 passwordStatus: 1,
+                code: this.form.code,
                 email: this.form.email,
                 phone: this.form.number,
                 salutation: this.form.personalTitle,
@@ -288,6 +290,17 @@ export default {
                                 placeholder="Select Personal Title"
                                 :options="titles"
                               ></multiselect>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <div class="form-group mt-3 mt-sm-0">
+                              <label for="default">Code</label>
+                              <input
+                                class="form-control"
+                                v-model="form.code"
+                                placeholder="Enter Code"
+                                required
+                              ></input>
                             </div>
                           </div>
                              <div class="col-md-4">

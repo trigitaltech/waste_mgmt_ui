@@ -32,9 +32,15 @@ export default {
       console.log(this.userData)
       const role = this.userData.roles[0].code
       if(role == 'ENCODER') {
+        console.log('1')
         this.$router.push('/Encoder')
       }
-      else {
+      if(role == 'VOLUME_CHECKER') {
+        console.log('2')
+        this.$router.push('/Volumechecker')
+      }
+      if(role == 'ADMIN') {
+        console.log('3')
         this.$router.push('/')
       }
     },
