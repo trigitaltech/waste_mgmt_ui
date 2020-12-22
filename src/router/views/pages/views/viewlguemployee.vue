@@ -57,7 +57,7 @@ export default {
         },
       ],
       serviceoffice: this.$route.params.service_OFFICE,
-      lguname: this.$route.params.lgu_Id.lguName,
+      lguname: this.$route.params.lguName,
       personalidno: this.$route.params.personal_ID_NO,
       items: [
         {
@@ -66,11 +66,11 @@ export default {
         },
 
         {
-          text: 'Employees',
-          href: '#/Employee/Employees',
+          text: 'Lgu Employees',
+          href: '#/Viewlguemployee',
         },
         {
-          text: 'View Employee',
+          text: 'View Lgu Employee',
           active: true,
         },
       ],
