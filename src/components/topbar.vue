@@ -30,7 +30,7 @@ export default {
     goToHomePage() {
       this.userData = JSON.parse(localStorage.getItem('auth.currentUser'))
       console.log(this.userData)
-      const role = this.userData.roles[0].code
+      const role = this.userData.user.roles[0].code
       if(role == 'ENCODER') {
         console.log('1')
         this.$router.push('/Encoder')
@@ -125,7 +125,7 @@ export default {
                   <h5
                     class="pro-user-desc text-muted d-block mt-1"
                     style="color: white"
-                    >{{ user.roles[0].code }}</h5
+                    >{{ user.user.roles[0].code }}</h5
                   >
                 </h6>
               </div>
