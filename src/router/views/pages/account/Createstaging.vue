@@ -8,7 +8,7 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import { createstaging, users ,lguEmployees ,dumpinglocation} from '../../../../services/auth'
+import { createstaging, users ,lgus ,dumpinglocation,Areamasters,getlgubyId} from '../../../../services/auth'
 import csc from 'country-state-city'
 export default {
   page: {
@@ -26,16 +26,21 @@ export default {
   data() {
     return {
       dumparea:"",
+       areas:[],
+      servingAreas:[],
       lgumaster:[],
       dumpmaster:[],
       code:"",
       lgu:"",
       dumps:[],
       lgus:[],
+      lguss:[],
+      lgudata:[],
       areaname: '',
       description: '',
       supervisor: null,
       lguemployee:[],
+      baranggay:"",
       dumpingarea:[],
       city: '',
       state: '',
@@ -51,6 +56,9 @@ export default {
       createddate: new Date(),
       modifydate: new Date(),
       modifyby: '',
+     master:[],
+     
+      lguid:"",
       option: [
         { value: null, text: 'Please select an option' },
         { value: 'Areastaging', text: 'Area Staging' },
@@ -85,10 +93,25 @@ export default {
     // this.getClientDetails()
     // this.getplans()
     this.userdata()
-    this.getlgus()
+    // this.getlgus()
     this.getdumping()
+    this.getareas()
   },
   methods: {
+    async getareas() {
+      try {
+        const result = await Areamasters();
+        this.areas = result.data.response.areaMaster
+        this.areas.map(e=>{
+            if(e.areaName!=null)
+              this.servingAreas.push(e.areaName);
+        })
+        console.log(this.servingAreas)
+      } catch (error) { 
+        console.log(error);
+      }
+      console.log(this.servingAreas);
+    },
     getdumpdata(){
        this.dumpmaster.map(e=>{
          if(this.dumparea === e.dumpingAreaName ){
@@ -99,14 +122,42 @@ export default {
         })
     
     },
+    async getdistricts(){
+        for(var i = 0 ; i<this.areas.length ;i++){
+       if(this.baranggay === this.areas[i].areaName){
+          this.lguid = this.areas[i].lguId
+         
+          const result = await getlgubyId(this.lguid)
+          this.master = result.data.response.result
+         
+        
+            this.lgus.push(this.master.lguName)
+        
+         
+            this.district = this.areas[i].district[0].districtName
+          this.state = this.areas[i].district[0].stateCode.stateName
+          this.country = this.areas[i].district[0].stateCode.countryCode.countryName
+       }
+     }
+     },
+      // this.areas.map( e => {
+      //   if(e.areaName == this.baranggay){
+      //     this.baranggayCode = e.code
+      //     console.log("haii",e.districtId)
+      //     this.district = e.district[0].districtName
+      //     this.state = e.district[0].stateCode.stateName
+      //     this.country = e.district[0].stateCode.countryCode.countryName
+      //   }
+      // })
+    // },
      getlgudata(){
-       this.lgumaster.map(e=>{
-         if(this.lgu === e.lguName ){
+     
+         if(this.lgu === this.master.lguName ){
           // debugger
-          this.lguemployee = e
+          this.lguemployee = this.master
           // console.log(this.lgus)
          }
-        })
+     
     
     },
      async getdumping() {
@@ -177,7 +228,7 @@ export default {
           holiday_message: this.message,
           zip: this.zip,
           city: this.city,
-          area: this.area,
+          area: this.baranggay,
         }
         let result = await createstaging(payload)
         if (result) {
@@ -196,20 +247,20 @@ export default {
         })
       }
     },
-     async getlgus() {
-       try {
+    //  async getlgus() {
+    //    try {
         
-        const result = await  lguEmployees()
-        this.lgumaster  = result.data.response.LGUMaster
-        console.log(this.lgumaster)
-        this.lgumaster.map(e=>{
-          // debugger
-          this.lgus.push(e.lguName)
-          console.log(this.lgus)
-        })
+    //     const result = await  lgus()
+    //     this.lgumaster  = result.data.response.result
+    //     console.log(this.lgumaster)
+    //     this.lgumaster.map(e=>{
+    //       // debugger
+    //       this.lgus.push(e.lguName)
+    //       console.log(this.lgus)
+    //     })
        
-      } catch (error) {}
-    },
+    //   } catch (error) {}
+    // },
 
     async refresh() {
       setTimeout(function () {
@@ -307,7 +358,60 @@ export default {
               </b-col>
             </b-row>
             <b-row class="mb-3">
+             <b-col>
+                    <!-- Default input text -->
+                     <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Baranggay</label
+                    >
+                   <multiselect
+                                required
+                                v-model="baranggay"
+                                placeholder="Select Baranggay"
+                                :options="servingAreas"
+                                @input="getdistricts"
+                              ></multiselect>
+                  </b-col>         
+                
+             
               <b-col>
+                <!-- Default input name -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >State</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="state"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter state"
+                  disabled
+                />
+              </b-col>
+              <br />
+            </b-row>
+           
+            <b-row class="mb-3">
+              
+              <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Country</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="country"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter country"
+                  disabled
+                />
+              </b-col>
+               <b-col>
                 <label
                   for="defaultFormCardtextEx"
                   class="grey-text font-weight-dark"
@@ -324,25 +428,67 @@ export default {
                   required
                 />
               </b-col>
-              <b-col>
-                <!-- Default input name -->
+            </b-row>
+              <b-row class="mb-3">
+              <!-- <b-col>
                 <label
                   for="defaultFormCardtextEx"
                   class="grey-text font-weight-dark"
-                  >State</label
+                  >Location</label
+                >
+                <GmapAutocomplete
+                  :placeholder="'Select Target Location'"
+                  class="form-control"
+                  @place_changed="setPlace"
+                ></GmapAutocomplete>
+              </b-col> -->
+              <b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Zip</label
                 >
                 <input
                   id="defaultFormCardtextEx"
-                  v-model="state"
+                  v-model="zip"
                   type="text"
                   class="form-control"
-                  placeholder="Enter state"
+                  placeholder="Enter zip"
                 />
               </b-col>
-              <br />
+             <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Working Hours</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="workinghours"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter working hours"
+                />
+              </b-col>
             </b-row>
             <b-row class="mb-3">
+             
               <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Holiday Message</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="message"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter holiday message"
+                />
+              </b-col>
+               <b-col>
                 <!-- Default input text -->
                 <label
                   for="defaultFormCardtextEx"
@@ -361,52 +507,10 @@ export default {
                   required
                 ></b-form-select>
               </b-col>
-              <b-col>
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Working Hours</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="workinghours"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter working hours"
-                />
-              </b-col>
+             
             </b-row>
-            <b-row class="mb-3">
-               <b-col>
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Area</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="area"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter area"
-                />
-              </b-col>
-              <b-col>
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Country</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="country"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter country"
-                />
-              </b-col>
-            </b-row>
-            <b-row class="mb-3">
+             <b-row class="mb-3">
+             
               <b-col>
                 <!-- Default input text -->
                 <label
@@ -422,79 +526,8 @@ export default {
                   placeholder="Enter description"
                 />
               </b-col>
-              <b-col>
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Holiday Message</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="message"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter holiday message"
-                />
-              </b-col>
-              <!-- <b-col> -->
-              <!-- Default input text -->
-              <!-- <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Created Date</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="createddate"
-                    />
-
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Modify Date</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="modifydate"
-                    />
-                  </b-col> -->
             </b-row>
-            <b-row class="mb-3">
-              <b-col>
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Location</label
-                >
-                <GmapAutocomplete
-                  :placeholder="'Select Target Location'"
-                  class="form-control"
-                  @place_changed="setPlace"
-                ></GmapAutocomplete>
-              </b-col>
-              <b-col>
-                <!-- Default input text -->
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Zip</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="zip"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter zip"
-                />
-              </b-col>
-            
-            </b-row>
+          
             <br />
             <button
               type="submit"

@@ -8,7 +8,7 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import { createarea, users ,address} from '../../../../services/auth'
+import { createarea, users ,address,lgus} from '../../../../services/auth'
 
 export default {
   page: {
@@ -83,6 +83,10 @@ export default {
         },
       ],
       addres:[],
+      lgus:[],
+      lgumaster:[],
+      lguid:"",
+      lgu:"",
     }
   },
   computed: {
@@ -98,8 +102,24 @@ export default {
     console.log("hiiiii",this.distopt)
     this.userdata()
     this.getaddresss()
+    this.getlgus()
   },
   methods: {
+      async getlgus() {
+       try {
+        
+        const result = await  lgus()
+        this.lgumaster  = result.data.response.result
+        console.log(this.lgumaster)
+        this.lgumaster.map(e=>{
+          // debugger
+          this.lgus.push(e.lguName)
+          console.log(this.lgus)
+        })
+       
+      } catch (error) {}
+    },
+
    async getcity(){
 // console.log('ahahahahha')
 this.addres.map(e=>{
@@ -141,6 +161,7 @@ this.addres.map(e=>{
           city: "",
           zip:this.zip,
           districtCode: this.districtcode,
+          lguId: this.lguid
         }
         let result = await createarea(payload)
         if (result) {
@@ -158,6 +179,16 @@ this.addres.map(e=>{
           duration: 7000,
         })
       }
+    },
+     getlgudata(){
+       this.lgumaster.map(e=>{
+         if(this.lgu === e.lguName ){
+          // debugger
+          this.lguid = e.id
+          // console.log(this.lgus)
+         }
+        })
+    
     },
     async userdata() {
       try {
@@ -392,66 +423,29 @@ this.addres.map(e=>{
             <br />
 
             <b-row>
-              <!-- <b-col> -->
-              <!-- Default input text -->
-              <!-- <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Created Date</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="createddate"
-                    />
- <br/>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Modify Date</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="modifydate"
-                    />
-                  </b-col> -->
-
-              <!-- <br/>
-
-                   <b-col> -->
-              <!-- Default input text -->
-              <!-- <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Created By</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="createdby"
-                    />
- <br/>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Modify By</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="modifyby"
-                    />
-                  </b-col> -->
+                <b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >LGU</label
+                >
+                <b-form-select
+                  v-model.trim="lgu"
+                  placeholder="Select LGU"
+                  @change="getlgudata"
+                  label="value"
+                  :options="lgus"
+                  oninvalid="this.setCustomValidity('lgu is required ')"
+                  oninput="setCustomValidity('')"
+                  class="form-control"
+                  required
+                ></b-form-select>
+              </b-col>
+              <b-col>
+             </b-col>
             </b-row>
+            
 
             <br />
             <button
