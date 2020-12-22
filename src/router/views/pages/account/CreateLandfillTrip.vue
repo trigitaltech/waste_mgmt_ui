@@ -396,7 +396,7 @@ export default {
     <PageHeader/>
     <div class="animated">
       <b-card
-        header="Create Incoming Trip"
+        header="Create Landfill Trip"
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-1">
@@ -615,7 +615,50 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
-                  <b-col></b-col>
+                  <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Control Checker</label
+                    >
+                     <b-form-select
+                      v-model.trim="checker"
+                      class="form-control"        
+                      :options="checkerListNames"
+                      @change="getCheckerId" 
+                    >
+                    </b-form-select>
+                  </b-col>
+                </b-row>
+                <b-row class="mt-3">
+                  <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Staging Area</label
+                    >
+                     <b-form-select
+                      v-model.trim="checker"
+                      class="form-control"        
+                      :options="checkerListNames"
+                      @change="getCheckerId" 
+                    >
+                    </b-form-select>
+                  </b-col>
+                  <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Dumping Location</label
+                    >
+                     <b-form-select
+                      v-model.trim="checker"
+                      class="form-control"        
+                      :options="checkerListNames"
+                      @change="getCheckerId" 
+                    >
+                    </b-form-select>
+                  </b-col>
                 </b-row>
                 <button
                   type="submit"
