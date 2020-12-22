@@ -11,7 +11,7 @@ import moment from 'moment';
 Vue.component('multiselect', Multiselect)
 import {
  getBaraggayByLguId,getHaulerByBaraggayId, CreateIncomingTrip,haulerEmployees,vehicle,
- getRoutesByBaranggayId, haulers, getVehiclesByHaulerId, users,employees,lguemployee
+ getRoutesByBaranggayId, haulers, getVehiclesByHaulerId, users,employees,lguemployee,getnameByLguId,getHaulerByBaranggayId,getEMPByLguId,getEMPhelpByLguId
 } from '../../../../services/auth'
 
 export default {
@@ -26,7 +26,9 @@ export default {
           name: ''
         }
       ],
+      username:"",
       areadata:[],
+      helperdata:[],
       areaarray:"",
       routedate:[],
       routearray:[],
@@ -34,6 +36,7 @@ export default {
       code:null,
       controlno:"",
       area:"",
+        loginlguid:"",
       route:"",
       driver:"",
       contractor:"",
@@ -63,6 +66,7 @@ export default {
       checker:"",
       hauler:"",
       haulerCode:"",
+      userdata:[],
       haulerList:[],
       haulerListNames:[],
       collectorList:[],
@@ -72,9 +76,11 @@ export default {
       areaId:null,
       routeId:null,
       garbageCollectors:[],
+      driverdata:[],
       brgy:{},
       routeCodes:[],
       loginDetails:{}
+    
     };
   },
   components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime, },
@@ -91,26 +97,44 @@ export default {
     this.getBaraggay();
     //this.areas();
     //this.routes();
+    this.getname()
     this.getUsers();
     //this.employeedata()
+    console.log(JSON.parse(localStorage.getItem('auth.currentUser')))
   },
   methods:{
     async getLgu() {
       const result = JSON.parse(localStorage.getItem('auth.currentUser'))
+      this.loginlguid = result.lguemployee.lguid
+     
       this.loginDetails = {
+        
         lguEmployeeCode: result.lguemployee.code,
-        id: result.lguemployee.lgu_Id.id,
+        id: result.lguemployee.lguid,
         name: result.lguemployee.lgu_Id.userName
       }
       console.log(this.loginDetails)
     },
     async getBaraggay() {
       try {
-        const result = await getBaraggayByLguId(this.loginDetails.id)
+        const result = await getBaraggayByLguId(this.loginlguid)
         this.areadata = result.data.response.result
-        console.log(this.areadata)
-        this.servingAreas.push(this.areadata.areaName)
-        /*this.areadata.map( e => 
+        // console.log(this.areadata)
+        // this.servingAreas.push(this.areadata.areaName)
+        this.areadata.map( e => {
+          this.servingAreas.push(e.areaName)
+        })
+      } catch(e) {
+        console.log(e)
+      }
+    },
+     async getname() {
+      try {
+        const result = await getnameByLguId(this.loginlguid)
+        this.username = result.data.response.result.contactFirstName
+        // console.log(this.userdata)
+        // this.servingAreas.push(this.areadata.areaName)
+        /*this.areadata.map( e => {
           this.servingAreas.push(e.areaName)
         })*/
       } catch(e) {
@@ -132,53 +156,71 @@ export default {
     },
     async getVehiclesDriversHelpers() {
       try {
-        this.haulerList.map(e => {
-          if(this.hauler == e.haulerName){
-            this.haulerId = e.id
-            this.haulerCode = e.code
-          }
-        })
-        this.haulerList.map(async (e) => {
-          if(this.hauler == e.haulerName) {
-            const result1 = await vehicle()
-            this.vehicles = result1.data.response.vehicles
+          for(var i = 0 ; i<this.haulerList.length ;i++){
+       if(this.hauler === this.haulerList[i].haulerName){
+
+            const result1 = await getVehiclesByHaulerId(this.haulerList[i].id)
+            this.vehicles = result1.data.response.result
             this.vehicles.map(e => {
-              if(e.hauler != null) {
-                console.log(e.hauler)
-                if(e.hauler.haulerName == this.hauler)
+              
                   this.plates.push(e.plateNo)
-              }
-            })
+              })
+              
+              const result2 = await getEMPByLguId(this.haulerList[i].id)
+            this.driverdata = result2.data.response.result
+            this.driverdata.map(e => {
+              
+                   this.drivers.push(e.firstName)
+              })
+
+                const result3 = await getEMPhelpByLguId(this.haulerList[i].id)
+            this.helperdata = result3.data.response.result
+            this.helperdata.map(e => {
+              
+                    this.helpers.push(e.firstName)
+              })
+            
           }
-        })
+        }
+        // this.haulerList.map(async (e) => {
+        //   if(this.hauler == e.haulerName) {
+           
+        //   }
+        // })
         this.employeedata()
       } catch(e) {
         console.log(e)
       }
     },
-    async gethaulers() {
-      try {
-        const result = await haulers()
-        console.log(result)
-        this.haulerList = result.data.response.HaulerMaster;
-        this.haulerList.map( e => {
-          if(e.baranggay != null) {
-            if(e.baranggay.id == this.areadata.id) {
-              this.haulerListNames.push(e.haulerName)
-            }
-          }
-        })
-      } catch(e) {
-        console.log(e);
-      }
-    },
+    // async gethaulers() {
+    //   try {
+    //      for(var i = 0 ; i<this.areadata.length ;i++){
+    //    if(this.area === this.areadata[i].areaName){
+       
+    //    }}
+    //   } catch(e) {
+    //     console.log(e);
+    //   }
+    // },
     async getRoutes() {
-      try {
-        //this.areadata.map(async (e) => {
-          if(this.area === this.areadata.areaName){
-            //alert(this.areadata.id)
-            const result = await getRoutesByBaranggayId(this.areadata.id)
-            this.routedata = result.data.response.result
+      try{
+      for(var i = 0 ; i<this.areadata.length ;i++){
+       if(this.area === this.areadata[i].areaName){
+
+          const result2 = await getHaulerByBaranggayId(this.areadata[i].id)
+        
+        this.haulerList = result2.data.response.result
+
+        this.haulerList.map(e=>{
+ this.haulerListNames.push( e.haulerName)
+        })
+      
+
+
+         const result = await getRoutesByBaranggayId(this.areadata[i].id)
+          this.routedata = result.data.response.result
+         
+           
             if(this.routedata.length > 0) {
               this.routedata.map(f=>{
                 if(f.routeName != null) 
@@ -194,7 +236,7 @@ export default {
               this.checkerList.map(g => {
                 if(g.lgu_Id != null){
                   if(g.lgu_Id.baranggay != null) {
-                    if(g.type == "VOLUME_CHECKER" && g.lgu_Id.baranggay.id == this.areadata.id) {
+                    if(g.type == "VOLUME_CHECKER" && g.lgu_Id.baranggay.id == this.areadata[i].id) {
                       this.checkerListNames.push(g.userName)
                     }
                   }
@@ -209,6 +251,8 @@ export default {
             })*/
           }
         //})
+      }
+      
       } catch(e) {  
         console.log(e)
       }
@@ -338,24 +382,50 @@ export default {
             this.areaId = this.areadata.code
           }
         const payload = {
-            controlNo: this.controlno,
+          controlNo: this.controlno,
             tripDate: this.tripDate,
-            bodyNo: this.body,
-            plateNo: this.plate,
-            truckType: this.trucktype,
-            collectionStartTime: this.startTime,
-            baranggayCode: this.areaId,
-            routes: this.routeCodes,
+            "lguId": this.loginDetails.lguEmployeeCode,
+            "haulerid": this.haulerCode, 
+            "truckBodyNo": this.body,
+            "truckplateNo": this.plate,
+            "truckType":this.trucktype,
+            "tripStartTime":  this.startTime,
+            "tripEndTime": "2020-11-16T10:30:00.000+05:30",
+            "baranggayId": this.areaId,
+            "routeId": 1,
             helperId:this.helperid,
             helperName:this.helper,
             driverId: this.driverid,
             driverName: this.driver,
-            lguEmployeeCode: this.loginDetails.lguEmployeeCode,
-            haulerCode: this.haulerCode,
-            volumeCheckerName: this.checker,
-            volumeCheckerId: this.checkerId,
-            employees: this.garbageCollectors
-        }
+            "contractorDispatcherId": 1,
+            "contractorDispatcherName": "encoder",
+            "contractorDispatcherVerified": 1,
+            "volumeCheckerName": this.checker,
+            "volumeCheckerId": this.checkerId,
+            "volumeCheckerVerified": "1",
+            "volumeCheckerMeasuredVolume": "12",
+            "volumeCheckerTotalKmServed": "12",
+            "status": "INITIATED",
+            "tripIncomingAreaRoute": [
+            {
+            "trip_id": 1,
+            "servingArea": "TestArea",
+            "servingRoute": "TestRoute"
+            }
+            ],
+            "garbageCollector": [
+            {
+            "tripId": 1,
+            "garbageCollectorId": 1,
+            "garbageCollectorName": "Palero01"
+            }
+            ]
+            }
+           
+         
+          
+           
+     
         const result = await CreateIncomingTrip(payload);
         if (result) {
           this.$swal({
@@ -412,7 +482,7 @@ export default {
                       >
                       <input
                        class="form-control"
-                       v-model="loginDetails.name"
+                       v-model="username"
                        readonly
                       />
                   </b-col>

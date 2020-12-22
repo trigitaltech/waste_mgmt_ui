@@ -284,7 +284,7 @@ export default {
           personalIdNo: this.form.personalidno,
          
           id_PROOF_DOC_URL: null,
-          lguid: this.lgusdata,
+          lguId: this.lgusdata,
 
           //baranggayCode: this.baranggayCode
         }
