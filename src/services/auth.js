@@ -52,6 +52,9 @@ export const simpleactivation = (payload) => serviceMaker(`/auth/signup`, method
 
 export const reviewAttendance = (payload) => serviceMaker('/attendence/checker/admin/review',methods.POST,api.NGB,payload)
 
+
+export const deletedays = (id) => serviceMaker(`/trips/days/admin/${id}`, methods.DELETE, api.NGB)
+
 export const deletetripincoming = (id) => serviceMaker(`/tripincoming/admin/${id}`, methods.DELETE, api.NGB)
 
 export const deletevehicle = (id) => serviceMaker(`/vehicles/admin/encoders/${id}`, methods.DELETE, api.NGB) 
@@ -161,7 +164,7 @@ export const haulers = () => serviceMaker(`/haulermaster/all`, methods.GET, api.
 
 export const haulerEmployees = () => serviceMaker(`/haulermaster/employees/all`, methods.GET, api.NGB)
 
-export const lguEmployees = () => serviceMaker(`/LGU/all`, methods.GET, api.NGB)
+export const lgus = () => serviceMaker(`/LGU/all`, methods.GET, api.NGB)
 
 export const Areamasters = () => serviceMaker(`/areamaster/all`, methods.GET, api.NGB)
 
@@ -182,6 +185,9 @@ export const Tripdownload = (id) => serviceMaker(`/tripincoming/system/${id}`, m
 
 export const CreateIncomingTrip = (payload) => serviceMaker(`/tripincoming/admin/create`,methods.POST,api.NGB,payload)
 
+export const Createdays = (payload) => serviceMaker(`/trips/days/admin`,methods.POST,api.NGB,payload)
+
+export const editdays = (payload) => serviceMaker(`/trips/days/admin`,methods.POST,api.NGB,payload)
 
 export const Createsrtruck = (payload) => serviceMaker(`/serviceticket/encoder/admin`,methods.POST,api.NGB,payload)
 
@@ -217,3 +223,7 @@ export const getBaraggayByLguId = (id) => serviceMaker(`LGU/employee/lgu/${id}`,
 export const getHaulerByBaranggayId = (id) => serviceMaker(`hauler/brgy/${id}`,methods.GET,api.NGB)
 
 export const addpermissiontorole = (id,payload) => serviceMaker(`/roles/assigningpermissions/${id}`, methods.PUT, api.NGB,payload)
+
+
+
+export const getlgubyId = (id) => serviceMaker(`/LGU/admin/${id}`,methods.GET,api.NGB)

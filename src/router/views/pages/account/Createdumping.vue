@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- createdumping,users
+ createdumping,users,Areamasters
 } from '../../../../services/auth'
 
 export default {
@@ -42,9 +42,14 @@ export default {
       workinghours:"",
       message:"",
       stagingtype:null,
+      code:"",
+      areas:[],
+      servingAreas:[],
       createdby: "",
       createddate: new Date(),
       modifydate: new Date(),
+      baranggay:"",
+      district:"",
       modifyby:"",
        option: [
           { value: 'default', text: 'Default' },
@@ -82,8 +87,23 @@ export default {
        this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     this.userdata()
+    this.getareas()
   },
   methods: {
+     async getareas() {
+      try {
+        const result = await Areamasters();
+        this.areas = result.data.response.areaMaster
+        this.areas.map(e=>{
+            if(e.areaName!=null)
+              this.servingAreas.push(e.areaName);
+        })
+        console.log(this.servingAreas)
+      } catch (error) { 
+        console.log(error);
+      }
+      console.log(this.servingAreas);
+    },
      async userdata() {
        try {
       
@@ -103,9 +123,21 @@ export default {
      
       } catch (error) {}
      },
+      getdistricts(){
+      this.areas.map( e => {
+        if(e.areaName == this.baranggay){
+          this.baranggayCode = e.code
+          console.log("haii",e.districtId)
+          this.district = e.district[0].districtName
+          this.state = e.district[0].stateCode.stateName
+          this.country = e.district[0].stateCode.countryCode.countryName
+        }
+      })
+    },
     async create() {
       try {
         const payload = {
+          code:this.code,
          
         dumpingAreaName: this.dumpname,
   
@@ -127,7 +159,7 @@ export default {
                 holiday_message: this.message,
                 zip: this.zip,
                 city: this.city,
-                area: this.area
+                area: this.baranggay
         }
         let result = await createdumping(payload)
         if (result) {
@@ -183,6 +215,26 @@ export default {
               <form @submit.prevent="create">
                 <b-row class="mb-3">
                   <b-col>
+                <!-- Default input name -->
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Code</label
+                >
+                <input
+                  id="defaultFormCardNameEx"
+                  v-model="code"
+                  type="text"
+                  oninvalid="this.setCustomValidity('Code is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Enter Code"
+                  class="form-control"
+                  required
+                />
+                <!-- Default input text -->
+              </b-col>
+                  <b-col>
                     <!-- Default input name -->
                     <label
                       for="defaultFormCardNameEx"
@@ -218,9 +270,38 @@ export default {
                     ></b-form-select>
                     </b-col>
                 </b-row>
-                <b-row class="mb-3">
+               <b-row class="mb-3">
+                   <b-col>
+                    <!-- Default input text -->
+                     <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Baranggay</label
+                    >
+                   <multiselect
+                                required
+                                v-model="baranggay"
+                                placeholder="Select Baranggay"
+                                :options="servingAreas"
+                                @input="getdistricts"
+                              ></multiselect>
+                  </b-col>         
                 
-                 
+                  <b-col>
+                    <!-- Default input text -->
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Description</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="description"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter description"
+                    />
+                  </b-col>
                 </b-row>
                   <b-row class="mb-3">
                      <b-col>
@@ -241,7 +322,81 @@ export default {
                                 required
                     />
                   </b-col>
+                    <b-col>
+                    <!-- Default input text -->
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Zip</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="zip"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter zip"
+                    />
+                  </b-col>
+                  
+                  
+                  </b-row>
+                  <b-row class="mb-3">
                   <b-col>
+                    <!-- Default input text -->
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >District</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="district"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter district"
+                      disabled
+                    />
+                  </b-col>
+                
+                   <b-col>
+                    <!-- Default input name -->
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >State</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="state"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter state"
+                      disabled
+                    />
+                  </b-col>
+                    <b-col> 
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Country</label
+                    >
+                     <input
+                      id="defaultFormCardtextEx"
+                      v-model="country"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter country"
+                      disabled
+                    />
+                  </b-col>
+                </b-row>
+               
+                <b-row class="mb-3">
+                    
+                    
+                </b-row>
+                <b-row>
+                <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -258,54 +413,6 @@ export default {
                                 required
                     />
                   </b-col>
-                  </b-row>
-                  <b-row class="mb-3">
-                  <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >District</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="district"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter district"
-                    />
-                  </b-col>
-                  <b-col> 
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Country</label
-                    >
-                     <input
-                      id="defaultFormCardtextEx"
-                      v-model="country"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter country"
-                    />
-                  </b-col>
-                   <b-col>
-                    <!-- Default input name -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >State</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="state"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter state"
-                    />
-                  </b-col>
-                </b-row>
-                <b-row class="mb-3">
                   <b-col>
                      <label
                       for="defaultFormCardtextEx"
@@ -320,66 +427,7 @@ export default {
                       placeholder="Enter holidaymessage"
                     />
                   </b-col>
-                  <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Description</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="description"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter description"
-                    />
-                  </b-col>
-                </b-row>
-                <b-row class="mb-3">
-                     <b-col>
-                     <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Location</label
-                    >
-                        <GmapAutocomplete
-                          :placeholder="'Select Target Location'"
-                          class="form-control"
-                          @place_changed="setPlace"
-                        ></GmapAutocomplete>
-                      </b-col>   
-                      <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Zip</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="zip"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter zip"
-                    />
-                  </b-col>
-                   <b-col>
-                    <!-- Default input text -->
-                     <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Area</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="area"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter area"
-                    />
-                  </b-col>         
-                </b-row>
+                  </b-row>
                 <br />
                <button
                           type="submit"

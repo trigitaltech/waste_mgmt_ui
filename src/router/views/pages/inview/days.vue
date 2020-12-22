@@ -55,15 +55,20 @@ export default {
           label:'CODE',
         },
          {
-          key: 'name',
+          key: 'tripClass',
 
-          label: 'NAME',
+          label: 'TripClass',
+        },
+         {
+          key: 'tripType',
+
+          label: 'TripType',
         },
        
-        // {
-        //   key: 'actions',
-        //   sortable: true,
-        // },
+        {
+          key: 'actions',
+          sortable: true,
+        },
       ],
       items: [
         {
@@ -95,12 +100,12 @@ export default {
        var id = data.item.id
      try{
           
-        const result = await day(data.item.id)
+        const result = await deletedays(data.item.id)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You Deleted Employee Successfully`,
+            text: `You Deleted Days Successfully`,
             duration: 5000,
           })
          this.refresh()
@@ -154,11 +159,11 @@ export default {
            
         </b-col>
          <b-col md="9">
-          <!-- <b-button
+          <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({ path: '/Createemployee' })"
-          >Create Employee</b-button> -->
+            @click="$router.push({ path: '/CreateDays' })"
+          >Create Days</b-button>
         </b-col>
        </b-row>
         <div class="mt-3">
@@ -180,12 +185,12 @@ export default {
             class="mt-3"
           >
             <template v-slot:cell(actions)="data">
-             <router-link :to="{ name: 'Viewemployee', params: data.item }">
+             <router-link :to="{ name: 'Viewdays', params: data.item }">
                 <span class="mr-2" >
                  <i class="fa fa-eye edit"></i>
                 </span>
               </router-link>
-             <router-link :to="{ name: 'Editemployee', params: data.item }">
+             <router-link :to="{ name: 'EditDays', params: data.item }">
                 <span class="mr-2">
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>
