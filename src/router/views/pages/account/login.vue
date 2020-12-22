@@ -50,7 +50,7 @@ mobile:this.username
             this.tryingToLogIn = false
             this.isAuthError = false
             // Redirect to the originally requested page, or to the home page
-            if(token.roles[0].code == "ENCODER")
+            if(token.user.roles[0].code === "ENCODER")
             { 
               this.$router.push(
                 this.$route.query.redirectFrom || { name: 'Encoder' }
