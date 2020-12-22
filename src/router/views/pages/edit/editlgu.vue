@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- Editlgu,roles,Areamasters
+ Editlgu,roles,Areamasters,address
 } from '../../../../services/auth'
 
 export default {
@@ -60,6 +60,9 @@ export default {
           active: true,
         },
       ],
+         servingAreas:[],
+      addres:[],
+      distopt:[],
       finalModel: {},
       selected: null,
       clientId: '',
@@ -76,7 +79,7 @@ export default {
       servingAreas:[],
       baranggayCode:[],
      form: {
-     baranggay:this.$route.params.baranggay.areaName,
+    //  baranggay:this.$route.params.baranggay.areaName,
        district:"",
        lguName:this.$route.params.lguName,
         lguCode:this.$route.params.code,
@@ -131,6 +134,7 @@ export default {
     this.roledata()
     this.getplans()
     this.getareas()
+    this.getaddresss()
   },
   methods: {
   
@@ -184,16 +188,28 @@ export default {
           }
         })
     },
+     async getaddresss() {
+       try {
+      
+      const result = await  address()
+      this.addres = result.data.response.result
+      console.log("address",this.addres)
+    this.addres.map(e=>{
+      // debugger
+      this.distopt.push(e.districtName)
+    })
+      
+      } catch (error) {}
+   
+    },
     getdistricts(){
-      this.areas.map( e => {
-        if(e.areaName == this.form.baranggay){
-          this.baranggayCode = e
-          console.log("haii",e.districtId)
-          this.form.district = e.district[0].districtName
-          this.form.state = e.district[0].stateCode.stateName
-          this.form.country = e.district[0].stateCode.countryCode.countryName
-        }
-      })
+     this.addres.map(e=>{
+        if(this.form.district === e.districtName){
+   
+    this.form.state = e.stateCode.stateName
+    this.form.country = e.stateCode.countryCode.countryName
+   }
+     })
     },
     async getBaranggayCode() {
       this.areas.map( e => {
@@ -237,7 +253,7 @@ export default {
         
           id_PROOF_DOC_URL: null,
          
-          baranggay: this.baranggayCode
+         
         }
         let result = await Editlgu(payload)
         if (result) {
@@ -573,12 +589,12 @@ export default {
                             </div> 
                           <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Baranggay</label>
+                                <label for="default">District</label>
                                 <multiselect
                                 required
-                                v-model="form.baranggay"
-                                placeholder="Select Baranggay"
-                                :options="servingAreas"
+                                v-model="form.district"
+                                placeholder="Select District"
+                                :options="distopt"
                                 @input="getdistricts"
                               ></multiselect>
                               </div>

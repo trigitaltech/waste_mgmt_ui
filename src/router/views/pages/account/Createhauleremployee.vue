@@ -103,7 +103,7 @@ export default {
       hauler:[],
       haulername:"",
       haulerdata:[],
-      haulerarray:[],
+      haulerarray:"",
       rolename:"",
     }
   },
@@ -145,7 +145,7 @@ export default {
     gethauler(){
         this.haulerdata.map(e=>{
           if(this.haulername === e.haulerName){
-             this.haulerarray = e
+             this.haulerarray = e.id
           }
         })
     },
@@ -579,20 +579,7 @@ export default {
                                 ></multiselect>
                               </div>
                             </div>
-                            <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label
-                                  for="defaultFormCardtextEx"
-                                  class="grey-text font-weight-dark"
-                                  >District</label
-                                >
-                                <input
-                                  v-model="form.district"
-                                  placeholder="Enter distict"
-                                  class="form-control"
-                                ></multiselect>
-                              </div>
-                            </div>
+                          
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">State</label>

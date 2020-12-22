@@ -111,7 +111,7 @@ export default {
         voucherNo: '',
       },
       servingAreas:[],
-      baranggay:{},
+      baranggay:"",
       areas:[],
       titles: ['Mr.', 'Sri.', 'Mrs'],
       item1:[],
@@ -159,9 +159,9 @@ export default {
     getdistricts(){
       this.areas.map( e => {
         if(e.areaName == this.form.baranggay){
-          this.baranggay = e
-          this.baranggayCode = e.code
-          console.log("haii",e.districtId)
+          this.baranggay = e.id
+          // this.baranggayCode = e.code
+          // console.log("haii",e.districtId)
           this.form.district = e.district[0].districtName
           this.form.state = e.district[0].stateCode.stateName
           this.form.country = e.district[0].stateCode.countryCode.countryName
@@ -229,7 +229,7 @@ export default {
                 isDeleted: false,
                 status: 200,
                 personalIdNo: this.personalidno,
-                baranggay: this.baranggay
+                baranggayId: this.baranggay
             }
         let result = await createhauler(payload)
         if (result) {
@@ -585,7 +585,7 @@ export default {
 
                            <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Hauler</label>
+                                <label for="default">Baranggay</label>
                                <multiselect
                                 required
                                 v-model="form.baranggay"
@@ -670,99 +670,7 @@ export default {
                         
                       </div>
 
-                    <!-- <div class="col-md-12">
-                        <fieldset class="border p-2">
-                          <legend class="w-auto">
-                            <h4 class="header-title mt-0 mb-1">Service Info</h4>
-                          </legend>
-                          <div class="row">
-                            <div class="col-md-3">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Box ID</label>
-                                <input
-                                  v-model.trim="form.stbNumber"
-                                  placeholder="Enter Box ID"
-                                  class="form-control"
-                                  type="text"
-                                />
-                              </div>
-                            </div>  -->
-
-                          <!-- <div class="col-md-3">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Voucher No</label>
-                                <input
-                                  v-model.trim="form.voucherNo"
-                                  class="form-control"
-                                  placeholder="Enter Voucher No"
-                                  type="number"
-                                />
-                              </div>
-                            </div>-->
-
-                          <!-- <div class="col-md-6">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Plan</label> -->
-                          <!-- <b-form-select v-model="selected" :options="options"  v-on:change="getplanprice()"></b-form-select> -->
-                          <!-- <model-select :options="options"
-                                v-model="item"
-                                placeholder="select item">
-                                </model-select>-->
-                          <!-- <b-form-select
-                                    oninvalid="this.setCustomValidity('Plan is required ')"
-                                  oninput="setCustomValidity('')"
-                                  required
-                                  v-model.trim="form.bouquets"
-                                  placeholder="Select Bouquets"
-                                  :options="bouquetsOpt"
-                                  @change="getplanprices()"
-                                ></b-form-select>
-                              </div>
-                            </div>
-
-                            <div class="col-md-3">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Amount</label>
-                                <input
-                                  v-model.trim="amount"
-                                  class="form-control"
-                                  type="number"
-                                  disabled
-                                  placeholder="Amount"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </fieldset>
-                      </div>
-                      <div class="col-md-12">
-                        <fieldset class="border p-2">
-                          <legend class="w-auto">
-                            <h4 class="header-title mt-0 mb-1">Voucher Info</h4>
-                          </legend>
-                          <div class="row">
-                            <div class="col-md-3">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Voucher ID</label>
-                                <input
-                                  oninvalid="this.setCustomValidity('Voucher Id is required ')"
-                                  oninput="setCustomValidity('')"
-                                  required
-                                  v-model.trim="vouchernumber"
-                                  placeholder="Enter Voucher ID"
-                                  class="form-control"
-                                  type="text"
-                                  @input="myFunction"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </fieldset>
-                      </div>
-                    </div> -->
-                        <!-- </div>
-                      </fieldset> -->
-                    <!-- </div> -->
+               
                   </div>
                   <div class="row mt-2 justify-content-center">
                     <div class="col-md-12">

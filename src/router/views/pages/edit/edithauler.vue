@@ -87,7 +87,9 @@ export default {
       file:"",
       item2:[],
       sid:"",
+      servingAreas:[],
      form: {
+       baranggay:"",
         code:this.$route.params.code,
         personalTitle: this.$route.params.contactSalutation,
         firstName:  this.$route.params.contactFirstName,
@@ -109,6 +111,7 @@ export default {
         amount: 0,
         voucherNo: '',
       },
+      baranggay:"",
       areas:[],
       titles: ['Mr.', 'Sri.', 'Mrs'],
       item1:[],
@@ -134,7 +137,7 @@ export default {
   mounted() {
     // this.getClientDetails()
   console.log(  this.$route.params)
-    this.getplans()
+    this.getareas()
       this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
   },
@@ -148,24 +151,8 @@ export default {
                         //  console.log("haiiiiii",this.sid)
         })
       },
-     async getplans() {
-       try {
-        const result = await Areamasters()
-      this.areas = result.data.response.areaMaster
-    //   console.log("users",data[0].userName)
-      // JSON.parse(JSON.stringify(result))
-      // for(i=0;i<data.length;i++){
-      //   this.item[i]=data[i].userName
-      // }
-
-      this.areas.map(e=>{
-      this.item2.push(e.areaName)
-      console.log("user",e)
-      })
-       console.log("users",this.item)
-     
-      } catch (error) {}
-     },
+    
+   
       readAgreement(e) {
     const reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
@@ -176,6 +163,32 @@ export default {
       console.error("reader : ", err);
     };
   },
+    async getareas() {
+      try {
+        const result = await Areamasters();
+        this.areas = result.data.response.areaMaster
+        this.areas.map(e=>{
+            if(e.areaName!=null)
+              this.servingAreas.push(e.areaName);
+        })
+        console.log(this.servingAreas)
+      } catch (error) { 
+        console.log(error);
+      }
+      console.log(this.servingAreas);
+    },
+  getdistricts(){
+      this.areas.map( e => {
+        if(e.areaName == this.form.baranggay){
+          this.baranggay = e.id
+          // this.baranggayCode = e.code
+          // console.log("haii",e.districtId)
+          this.form.district = e.district[0].districtName
+          this.form.state = e.district[0].stateCode.stateName
+          this.form.country = e.district[0].stateCode.countryCode.countryName
+        }
+      })
+    },
     async create() {
       try {
         const payload = {
@@ -200,6 +213,7 @@ export default {
                 isDeleted: false,
                 status: 200,
                 personalIdNo: this.personalidno,
+                baranggayId:this.baranggay
               
             }
         let result = await edithauler(payload)
@@ -554,15 +568,16 @@ export default {
                             </div>
                           </div>
 
-                           <div class="col-md-4">
+                         <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">City</label>
-                               <input
-                                v-model.trim="form.city"
-                                placeholder="Enter city"
-                                class="form-control"
-                                type="text"
-                              />
+                                <label for="default">Baranggay</label>
+                               <multiselect
+                                required
+                                v-model="form.baranggay"
+                                placeholder="Select Baranggay"
+                                :options="servingAreas"
+                                @input="getdistricts"
+                              ></multiselect>
                               </div>
                             </div>
                             <div class="col-md-4">
@@ -573,7 +588,7 @@ export default {
                                   class="form-control"
                                   type="text"
                                   placeholder="Enter State"
-                               
+                               disabled
                                 />
                               </div>
                             </div>
@@ -585,37 +600,11 @@ export default {
                                   class="form-control"
                                   type="text"
                                   placeholder="Enter Country"
-                                
+                                disabled
                                 />
                               </div>
                             </div>
-                            <!--<div class="col-md-3">
-                              <div class="form-group mt-3 mt-sm-0">
-                                   <label for="default">Employee Type</label>
-                                 
-                                           <b-form-select
-                                           v-model.trim="employeetype"
-                                            class="form-control"
-                                           :options="item"
-                                              
-                                           ></b-form-select>
-                                    </div>
-                            </div>-->
-                            <!-- <div class="col-md-3">
-                              <div class="form-group mt-3 mt-sm-0">
-                                   <label for="default">Service office</label>
-                                 
-                           
-                               <b-form-select
-                                           v-model.trim="serviceoffice"
-                                            :options="item2"
-                                           class="form-control"
-                                              @change="getid"
-                                ></b-form-select>
-                                    </div>
-                           
-                           
-                            </div> -->
+                        
                               <div class="col-md-3">
                             
                            
@@ -640,99 +629,7 @@ export default {
                         
                       </div>
 
-                    <!-- <div class="col-md-12">
-                        <fieldset class="border p-2">
-                          <legend class="w-auto">
-                            <h4 class="header-title mt-0 mb-1">Service Info</h4>
-                          </legend>
-                          <div class="row">
-                            <div class="col-md-3">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Box ID</label>
-                                <input
-                                  v-model.trim="form.stbNumber"
-                                  placeholder="Enter Box ID"
-                                  class="form-control"
-                                  type="text"
-                                />
-                              </div>
-                            </div>  -->
-
-                          <!-- <div class="col-md-3">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Voucher No</label>
-                                <input
-                                  v-model.trim="form.voucherNo"
-                                  class="form-control"
-                                  placeholder="Enter Voucher No"
-                                  type="number"
-                                />
-                              </div>
-                            </div>-->
-
-                          <!-- <div class="col-md-6">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Plan</label> -->
-                          <!-- <b-form-select v-model="selected" :options="options"  v-on:change="getplanprice()"></b-form-select> -->
-                          <!-- <model-select :options="options"
-                                v-model="item"
-                                placeholder="select item">
-                                </model-select>-->
-                          <!-- <b-form-select
-                                    oninvalid="this.setCustomValidity('Plan is required ')"
-                                  oninput="setCustomValidity('')"
-                                  required
-                                  v-model.trim="form.bouquets"
-                                  placeholder="Select Bouquets"
-                                  :options="bouquetsOpt"
-                                  @change="getplanprices()"
-                                ></b-form-select>
-                              </div>
-                            </div>
-
-                            <div class="col-md-3">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Amount</label>
-                                <input
-                                  v-model.trim="amount"
-                                  class="form-control"
-                                  type="number"
-                                  disabled
-                                  placeholder="Amount"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </fieldset>
-                      </div>
-                      <div class="col-md-12">
-                        <fieldset class="border p-2">
-                          <legend class="w-auto">
-                            <h4 class="header-title mt-0 mb-1">Voucher Info</h4>
-                          </legend>
-                          <div class="row">
-                            <div class="col-md-3">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Voucher ID</label>
-                                <input
-                                  oninvalid="this.setCustomValidity('Voucher Id is required ')"
-                                  oninput="setCustomValidity('')"
-                                  required
-                                  v-model.trim="vouchernumber"
-                                  placeholder="Enter Voucher ID"
-                                  class="form-control"
-                                  type="text"
-                                  @input="myFunction"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </fieldset>
-                      </div>
-                    </div> -->
-                        <!-- </div>
-                      </fieldset> -->
-                    <!-- </div> -->
+                   
                   </div>
                   <div class="row mt-2 justify-content-center">
                     <div class="col-md-12">

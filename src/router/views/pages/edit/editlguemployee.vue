@@ -12,7 +12,7 @@ import {
   createlguemployee,
   roles,
   Areamasters,
-  lguEmployees,
+  lgus,
   address,
 } from '../../../../services/auth'
 
@@ -75,7 +75,7 @@ export default {
       baranggayCode: '',
 
       form: {
-            lguName: this.$route.params.lgu_Id.lguName,
+            lguName: this.$route.params.lguName,
         lguCode: this.$route.params.code,
         personalidno: this.$route.params.personalIdNo,
         personalTitle:this.$route.params.salutation,
@@ -111,8 +111,8 @@ export default {
       lgus: [],
       lgusnames: [],
       distopt:[],
-      lgusdata: [],
-      lguname: this.$route.params.lgu_Id.lguName,
+      lgusdata: "",
+      lguname: this.$route.params.lguName,
       bouquetsOpt: [
         { value: null, text: 'Please select an option' },
         'FTA  AND STARTER',
@@ -222,13 +222,13 @@ export default {
     getlgu() {
       this.lgusnames.map((e) => {
         if (this.lguname === e.lguName) {
-          this.lgusdata = e
+          this.lgusdata = e.id
         }
       })
     },
     async getemployees() {
       try {
-        const result = await lguEmployees()
+        const result = await lgus()
         this.lgusnames = result.data.response.result
         this.lgusnames.map((e) => {
           this.lgus.push(e.lguName)

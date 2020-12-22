@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- lguEmployees,deletelgu
+ lgus,deletelgu
 } from '../../../../services/auth'
 
 export default {
@@ -127,7 +127,7 @@ export default {
     async getemployees() {
        try {
         NProgress.start()
-        const result = await  lguEmployees()
+        const result = await  lgus()
         this.item = result.data.response.result
         // data.map( e => {
         //   if(e.type!="ENCODER" && e.type!="VOLUME_CHECKER" && e.type!="DISPATCHER")

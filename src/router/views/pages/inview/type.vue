@@ -156,11 +156,11 @@ export default {
            
         </b-col>
          <b-col md="9">
-          <!-- <b-button
+          <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({ path: '/Createemployee' })"
-          >Create Employee</b-button> -->
+            @click="$router.push({ path: '/CreateType' })"
+          >Create Type</b-button>
         </b-col>
        </b-row>
         <div class="mt-3">

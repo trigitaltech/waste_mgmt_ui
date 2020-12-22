@@ -12,7 +12,7 @@ import {
   createlguemployee,
   roles,
   Areamasters,
-  lguEmployees,
+  lgus,
   address,
 } from '../../../../services/auth'
 
@@ -112,7 +112,7 @@ export default {
       lgus: [],
       lgusnames: [],
       distopt:[],
-      lgusdata: [],
+      lgusdata:"",
       lguname: '',
       bouquetsOpt: [
         { value: null, text: 'Please select an option' },
@@ -222,13 +222,13 @@ export default {
     getlgu() {
       this.lgusnames.map((e) => {
         if (this.lguname === e.lguName) {
-          this.lgusdata = e
+          this.lgusdata = e.id
         }
       })
     },
     async getemployees() {
       try {
-        const result = await lguEmployees()
+        const result = await lgus()
         this.lgusnames = result.data.response.result
         this.lgusnames.map((e) => {
           this.lgus.push(e.lguName)
@@ -282,9 +282,9 @@ export default {
           status: 200,
           type: this.rolename,
           personalIdNo: this.form.personalidno,
-          service_OFFICE: this.sid,
+         
           id_PROOF_DOC_URL: null,
-          lgu_Id: this.lgusdata,
+          lguid: this.lgusdata,
 
           //baranggayCode: this.baranggayCode
         }
@@ -664,18 +664,7 @@ export default {
                               </div>
                             </div>
 
-                            <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Service office</label>
-
-                                <b-form-select
-                                  v-model.trim="serviceoffice"
-                                  :options="item2"
-                                  class="form-control"
-                                  @change="getid"
-                                ></b-form-select>
-                              </div>
-                            </div>
+                            
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">Personal ID No</label>
