@@ -8,12 +8,12 @@ import moment from 'moment'
 
 // Vue.component('downloadExcel', JsonExcel)
 import {
-getincomingtrip,getoutgoingtrip
+getincomingtrip,getoutgoingtrip,getTripsvolumebyId
 } from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Encoder Details',
+    title: 'Volume Checker',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: { Layout, PageHeader,moment },
@@ -66,17 +66,37 @@ export default {
         // { key: 'status', sortable: true },
         { key: 'action' },
       ],
+       incoming: [
+        { key: 'baranggayId', label:'BaranggayId',sortable: true },
+        { key: 'contractorDispatcherName', label:'Dispatcher',sortable: true },
+        { key: 'controlNo', label:'ControlNo',  sortable: true },
+        { key: 'driverName', label:'DriverName',  sortable: true },
+          { key: 'helperName', label:'HelperName',  sortable: true },
+            { key: 'tripStartTime',label:'StartTime',  sortable: true },
+              { key: 'truckBodyNo',label:'BodyNo',  sortable: true },
+                { key: 'truckType', label:'TruckType', sortable: true },
+       { key: 'truckplateNo',label:'PlateNO',  sortable: true },
+        
+
+        { key: 'status', sortable: true },
+        // { key: 'requestBy', sortable: true },
+
+        // { key: 'status', sortable: true },
+        { key: 'action' },
+      ],
       voucherId: null,
       vouchers: {},
       exportVouchers: false,
       Qty: null,
       exportVoucherData: [],
       tabIndex: 0,
+      loginlguid:"",
+      incomingtripdata:[],
     }
   },
   computed: {
     rows() {
-      return this.exportVoucherData.length
+      return this.incomingtripdata.length
     },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
@@ -98,11 +118,23 @@ export default {
     // Set the initial number of items
     this.totalRows = this.items.length
     this.getTripincoming
+    this.gettrips()
   },
   methods: {
-    //    goFilter() {
-    //   this.getTripincoming(this.startDate, this.endDate)
-    // },
+    
+   async gettrips() {
+      try {
+         const result = JSON.parse(localStorage.getItem('auth.currentUser'))
+      this.loginlguid = result.lguemployee.id
+        const result1 = await getTripsvolumebyId(this.loginlguid)
+        this.incomingtripdata = result1.data.response.result
+        // console.log(this.areadata)
+        // this.servingAreas.push(this.areadata.areaName)
+        
+      } catch(e) {
+        console.log(e)
+      }
+    },
     async getTripincoming() {
     //   console.log(startTime)
   
@@ -175,7 +207,10 @@ export default {
     <div class="row justify-content-center">
 
       <div class="col-lg-12">
-         <div class="card">
+         <b-card
+        header="Volume Checker"
+        class="mt-10 ml-10 mr-10 mx-auto"
+      >
           <div class="card-body">
              <div class="row">
               <!-- Widget -->
@@ -186,7 +221,7 @@ export default {
                   <feather type="grid" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Incoming Trips</h5>
-                    <span class="text-muted">{{ vouchers.itemId }}</span>
+                    <span class="text-muted">{{ incomingtripdata.length }}</span>
                   </div>
                 </div>
               </div>
@@ -264,8 +299,8 @@ export default {
                     :bordered="bordered"
                     :small="small"
                     :fixed="fixed"
-                    :items="exportVoucherData"
-                    :fields="exportFields"
+                    :items="incomingtripdata"
+                    :fields="incoming"
                     responsive="sm"
                     thead-class="header"
                     :per-page="perPage"
@@ -279,29 +314,25 @@ export default {
                     <template v-slot:cell(requestDate)="data"
                       >{{ getFormattedDate(data.item.requestDate) }}</template>
                     <template v-slot:cell(action)="data">
-                      <button
-                        class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
-                        @click="print(data.item)"
-                      >
-                        <feather type="printer" class="icon-xs mr-2"></feather>Print
-                      </button>
-                      <button  @click="download(data.item)" style="border:1px;margin:5px;background-color:white">
-                        
-                      <download-excel
-                        class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
-                        :data="json_data"
-                        :fields="json_fields"
-                        worksheet="My Worksheet"
-                        name="vouchers.xls"
-                      >
-                        <feather type="download" class="icon-xs mr-2"  ></feather>Download
-                      </download-excel>
-                      </button>
+              <!-- <router-link :to="{ name: 'Viewtripincoming', params: data.item }">
+              <b-button size="sm" class="mr-2" variant="primary" >
+              <i class="fa fa-eye"></i>
+            </b-button>
+              </router-link> -->
+            <router-link :to="{ name: 'EditVolumechecker', params: data.item }">
+                <b-button size="sm" class="mr-2" variant="primary" :hidden="data.item.status !== 'INITIATED'">
+                  <i class="fas fa-pencil-alt edit"></i>
+                </b-button>
+              </router-link>
+               <!-- <span @click="deleteReq(data)">
+              <i class="fa fa-times edit"></i>
+            </span> -->
+           </template>
                       <!-- <download-excel :data="json_data">
                   
                         <feather type="download" class="icon-xs mr-2"></feather>Download
                       </download-excel>-->
-                    </template>
+                  
                   </b-table>
                 </div>
                 <div class="row">
@@ -767,10 +798,11 @@ export default {
               </b-tab>
               
             </b-tabs>
+         </b-card>
           </div>
         </div>
-      </div>
-  </div>
+    
+  
 
     <!-- end row -->
   </Layout>

@@ -183,7 +183,7 @@ export const addplan = (id,payload) => serviceMaker(`/multipleorders/${id}`, met
 
 export const Tripdownload = (id) => serviceMaker(`/tripincoming/system/${id}`, methods.GET, api.NGB)
 
-export const CreateIncomingTrip = (payload) => serviceMaker(`/tripincoming/admin/create`,methods.POST,api.NGB,payload)
+export const CreateIncomingTrip = (payload) => serviceMaker(`/tripincoming/createtrip`,methods.POST,api.NGB,payload)
 
 export const Createdays = (payload) => serviceMaker(`/trips/days/admin`,methods.POST,api.NGB,payload)
 
@@ -227,8 +227,26 @@ export const addpermissiontorole = (id,payload) => serviceMaker(`/roles/assignin
 
 export const getnameByLguId = (id) => serviceMaker(`/LGU/admin/${id}`,methods.GET,api.NGB)
 
-export const getEMPByLguId = (id) => serviceMaker(`haulermaster/employees/getbytype/${id}/DRIVER`,methods.GET,api.NGB)
+export const getEMPByLguId = (id,id2) => serviceMaker(`haulermaster/employees/getbytype/${id}/${id2}`,methods.GET,api.NGB)
 
- export const getEMPhelpByLguId = (id) => serviceMaker(`haulermaster/employees/getbytype/${id}/HELPER`,methods.GET,api.NGB)
+ export const getEMPhelpByLguId = (id,id3) => serviceMaker(`haulermaster/employees/getbytype/${id}/${id3}`,methods.GET,api.NGB)
 
 export const getlgubyId = (id) => serviceMaker(`/LGU/admin/${id}`,methods.GET,api.NGB)
+
+
+export const getgarbagebyId = (id,id2) => serviceMaker(`/employees/details/${id}/${id2}`,methods.GET,api.NGB)
+
+
+export const getvolumebyId = (id,id3) => serviceMaker(`/LGU/employee/lgu/${id}/${id3}`,methods.GET,api.NGB)
+
+export const getTripsdetailsbyId = (id) => serviceMaker(`/LGU/trips/${id}`,methods.GET,api.NGB)
+
+export const getTripsvolumebyId = (id) => serviceMaker(`/tripincoming/getincomingtripforvolumechecker/${id}`,methods.GET,api.NGB)
+
+
+export const editvolumechecker = (payload) => serviceMaker (`tripincoming/updatetripvolume`, methods.PUT, api.NGB, payload)
+
+export const BILLINGTRIPS = (payload) => serviceMaker (`tripincoming/all`, methods.GET, api.NGB, payload)
+
+
+export const approveincomingtrip = (payload) => serviceMaker (`tripincoming/approveincomingtrip`, methods.PUT, api.NGB,payload)

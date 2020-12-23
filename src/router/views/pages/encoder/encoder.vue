@@ -8,7 +8,7 @@ import moment from 'moment'
 
 // Vue.component('downloadExcel', JsonExcel)
 import {
-getincomingtrip,getoutgoingtrip
+getincomingtrip,getoutgoingtrip,getTripsdetailsbyId
 } from '../../../../services/auth'
 
 export default {
@@ -47,24 +47,60 @@ export default {
 
       totalRows: 1,
       currentPage: 1,
-      perPage: 10,
+      perPage: 5,
       pageOptions: [10, 25, 50, 100],
       filter: null,
       filterOn: [],
       sortBy: 'age',
       sortDesc: false,
+      landfill:[
+        { key: 'baranggayId', label:'BaranggayId',sortable: true },
+        { key: 'contractorDispatcherName', label:'Dispatcher',sortable: true },
+        { key: 'controlNo', label:'ControlNo',  sortable: true },
+        { key: 'driverName', label:'DriverName',  sortable: true },
+          { key: 'helperName', label:'HelperName',  sortable: true },
+            { key: 'tripStartTime',label:'StartTime',  sortable: true },
+              { key: 'truckBodyNo',label:'BodyNo',  sortable: true },
+                { key: 'truckType', label:'TruckType', sortable: true },
+       { key: 'truckplateNo',label:'PlateNO',  sortable: true },
+        { key: 'volumeCheckerName', label:'CheckerName', sortable: true },
+      
+
+        { key: 'status', sortable: true },
+      ],
       exportFields: [
-        { key: 'Tripdate', sortable: true },
-        { key: 'Trip No', sortable: true },
-        { key: 'Barrangay',  sortable: true },
-        { key: 'Route Name',  sortable: true },
+        { key: 'baranggayId', label:'BaranggayId',sortable: true },
+        { key: 'contractorDispatcherName', label:'Dispatcher',sortable: true },
+        { key: 'controlNo', label:'ControlNo',  sortable: true },
+        { key: 'driverName', label:'DriverName',  sortable: true },
+          { key: 'helperName', label:'HelperName',  sortable: true },
+            { key: 'tripStartTime',label:'StartTime',  sortable: true },
+              { key: 'truckBodyNo',label:'BodyNo',  sortable: true },
+                { key: 'truckType', label:'TruckType', sortable: true },
+       { key: 'truckplateNo',label:'PlateNO',  sortable: true },
+        { key: 'volumeCheckerName', label:'CheckerName', sortable: true },
+      
+
+        { key: 'status', sortable: true },
+      ],
+       incoming: [
+        { key: 'baranggayId', label:'BaranggayId',sortable: true },
+        { key: 'contractorDispatcherName', label:'Dispatcher',sortable: true },
+        { key: 'controlNo', label:'ControlNo',  sortable: true },
+        { key: 'driverName', label:'DriverName',  sortable: true },
+          { key: 'helperName', label:'HelperName',  sortable: true },
+            { key: 'tripStartTime',label:'StartTime',  sortable: true },
+              { key: 'truckBodyNo',label:'BodyNo',  sortable: true },
+                { key: 'truckType', label:'TruckType', sortable: true },
+       { key: 'truckplateNo',label:'PlateNO',  sortable: true },
+        { key: 'volumeCheckerName', label:'CheckerName', sortable: true },
       
 
         { key: 'status', sortable: true },
         // { key: 'requestBy', sortable: true },
 
         // { key: 'status', sortable: true },
-        { key: 'action' },
+        // { key: 'action' },
       ],
       voucherId: null,
       vouchers: {},
@@ -72,11 +108,13 @@ export default {
       Qty: null,
       exportVoucherData: [],
       tabIndex: 0,
+      tripdata:[],
+      loginlguid:""
     }
   },
   computed: {
     rows() {
-      return this.exportVoucherData.length
+      return this.tripdata.incomingTrips.length
     },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
@@ -98,8 +136,23 @@ export default {
     // Set the initial number of items
     this.totalRows = this.items.length
     this.getTripincoming
+    this.gettrips()
   },
   methods: {
+     async gettrips() {
+      try {
+         const result = JSON.parse(localStorage.getItem('auth.currentUser'))
+      this.loginlguid = result.lguemployee.id
+        const result1 = await getTripsdetailsbyId(this.loginlguid)
+        this.tripdata = result1.data.response
+        // console.log(this.areadata)
+        // this.servingAreas.push(this.areadata.areaName)
+        
+      } catch(e) {
+        console.log(e)
+      }
+    },
+    
     //    goFilter() {
     //   this.getTripincoming(this.startDate, this.endDate)
     // },
@@ -175,7 +228,7 @@ export default {
     <div class="row justify-content-center">
 
       <div class="col-lg-12">
-         <div class="card">
+         <b-card header="Encoder" class="mt-10 ml-10 mr-10 mx-auto">
           <div class="card-body">
              <div class="row">
               <!-- Widget -->
@@ -186,7 +239,7 @@ export default {
                   <feather type="grid" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Incoming Trips</h5>
-                    <span class="text-muted">{{ vouchers.itemId }}</span>
+                    <span class="text-muted">{{ tripdata.incomingTrips.length }}</span>
                   </div>
                 </div>
               </div>
@@ -196,7 +249,7 @@ export default {
                   <feather type="calendar" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Outgoing Trips</h5>
-                    <span class="text-muted">{{ vouchers.purchaseDate }}</span>
+                    <span class="text-muted">{{ tripdata.outgoingTrips.length }}</span>
                   </div>
                 </div>
               </div>
@@ -205,7 +258,7 @@ export default {
                   <feather type="check-square" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Landfill Trips</h5>
-                    <span class="text-muted">{{ vouchers.status }}</span>
+                    <span class="text-muted">{{ tripdata.directTrips.length  }}</span>
                   </div>
                 </div>
               </div>
@@ -269,8 +322,8 @@ export default {
                     :bordered="bordered"
                     :small="small"
                     :fixed="fixed"
-                    :items="exportVoucherData"
-                    :fields="exportFields"
+                    :items="tripdata.incomingTrips"
+                    :fields="incoming"
                     responsive="sm"
                     thead-class="header"
                     :per-page="perPage"
@@ -283,7 +336,7 @@ export default {
                   >
                     <template v-slot:cell(requestDate)="data"
                       >{{ getFormattedDate(data.item.requestDate) }}</template>
-                    <template v-slot:cell(action)="data">
+                    <!-- <template v-slot:cell(action)="data">
                       <button
                         class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
                         @click="print(data.item)"
@@ -301,12 +354,12 @@ export default {
                       >
                         <feather type="download" class="icon-xs mr-2"  ></feather>Download
                       </download-excel>
-                      </button>
+                      </button> -->
                       <!-- <download-excel :data="json_data">
                   
                         <feather type="download" class="icon-xs mr-2"></feather>Download
                       </download-excel>-->
-                    </template>
+                    <!-- </template> -->
                   </b-table>
                 </div>
                 <div class="row">
@@ -463,7 +516,7 @@ export default {
                     :bordered="bordered"
                     :small="small"
                     :fixed="fixed"
-                    :items="exportVoucherData"
+                    :items="tripdata.outgoingTrips"
                     :fields="exportFields"
                     responsive="sm"
                     thead-class="header"
@@ -657,8 +710,8 @@ export default {
                     :bordered="bordered"
                     :small="small"
                     :fixed="fixed"
-                    :items="exportVoucherData"
-                    :fields="exportFields"
+                    :items="tripdata.directTrips"
+                    :fields="landfill"
                     responsive="sm"
                     thead-class="header"
                     :per-page="perPage"
@@ -784,10 +837,12 @@ export default {
               </b-tab>
               
             </b-tabs>
+            </b-card>
           </div>
+          
         </div>
-      </div>
-  </div>
+      
+  
 
     <!-- end row -->
   </Layout>
