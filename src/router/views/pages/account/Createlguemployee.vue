@@ -99,7 +99,7 @@ export default {
         voucherNo: '',
       },
       item2: [],
-      roles: ['ENCODER', 'VOLUME_CHECKER', 'DISPATCHER'],
+      roles: ['ENCODER', 'VOLUME_CHECKER', 'DISPATCHER','CONTROL_CHECKER'],
       rolename: '',
       titles: ['Mr.', 'Sri.', 'Mrs'],
       vouchernumber: '',
@@ -284,7 +284,7 @@ export default {
           personalIdNo: this.form.personalidno,
          
           id_PROOF_DOC_URL: null,
-          lguId: this.lgusdata,
+          lguid: this.lgusdata,
 
           //baranggayCode: this.baranggayCode
         }

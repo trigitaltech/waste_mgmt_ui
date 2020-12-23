@@ -185,6 +185,8 @@ export const Tripdownload = (id) => serviceMaker(`/tripincoming/system/${id}`, m
 
 export const CreateIncomingTrip = (payload) => serviceMaker(`/tripincoming/admin/create`,methods.POST,api.NGB,payload)
 
+export const CreateOutgoingTrip = (payload) => serviceMaker(`/tripoutgoing/admin`,methods.POST,api.NGB,payload)
+
 export const Createdays = (payload) => serviceMaker(`/trips/days/admin`,methods.POST,api.NGB,payload)
 
 export const editdays = (payload) => serviceMaker(`/trips/days/admin`,methods.POST,api.NGB,payload)
