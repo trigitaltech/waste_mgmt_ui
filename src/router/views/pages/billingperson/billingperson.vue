@@ -8,7 +8,7 @@ import moment from 'moment'
 
 // Vue.component('downloadExcel', JsonExcel)
 import {
-getincomingtrip,getoutgoingtrip
+getincomingtrip,getoutgoingtrip,BILLINGTRIPS
 } from '../../../../services/auth'
 
 export default {
@@ -70,17 +70,36 @@ export default {
         // { key: 'status', sortable: true },
         { key: 'action' },
       ],
+       incoming: [
+        { key: 'baranggayId', label:'BaranggayId',sortable: true },
+        { key: 'contractorDispatcherName', label:'Dispatcher',sortable: true },
+        { key: 'controlNo', label:'ControlNo',  sortable: true },
+        { key: 'driverName', label:'DriverName',  sortable: true },
+          { key: 'helperName', label:'HelperName',  sortable: true },
+            { key: 'tripStartTime',label:'StartTime',  sortable: true },
+              { key: 'truckBodyNo',label:'BodyNo',  sortable: true },
+                { key: 'truckType', label:'TruckType', sortable: true },
+       { key: 'truckplateNo',label:'PlateNO',  sortable: true },
+        
+
+        { key: 'status', sortable: true },
+        // { key: 'requestBy', sortable: true },
+
+        // { key: 'status', sortable: true },
+        { key: 'action' },
+      ],
       voucherId: null,
       vouchers: {},
       exportVouchers: false,
       Qty: null,
       exportVoucherData: [],
       tabIndex: 0,
+      incomingtripdata:[],
     }
   },
   computed: {
     rows() {
-      return this.exportVoucherData.length
+      return this.incomingtripdata.length
     },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
@@ -102,8 +121,21 @@ export default {
     // Set the initial number of items
     this.totalRows = this.items.length
     this.getTripincoming
+    this.gettrips()
   },
   methods: {
+    async gettrips() {
+      try {
+      
+        const result1 = await BILLINGTRIPS()
+        this.incomingtripdata = result1.data.response.Incomingtrip
+        // console.log(this.areadata)
+        // this.servingAreas.push(this.areadata.areaName)
+        
+      } catch(e) {
+        console.log(e)
+      }
+    },
     //    goFilter() {
     //   this.getTripincoming(this.startDate, this.endDate)
     // },
@@ -196,7 +228,7 @@ export default {
                   <feather type="grid" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of IN Trips</h5>
-                    <span class="text-muted">{{ vouchers.itemId }}</span>
+                    <span class="text-muted">{{ incomingtripdata.length }}</span>
                   </div>
                 </div>
               </div>
@@ -274,14 +306,14 @@ export default {
                   </div>
                   <div class="col-md-2 col-sm-12">
               
-                <b-form-select
+                <!-- <b-form-select
                   v-model="status"
                   :options="statuses"
                  
                   placeholder="Select Status"
                   class="form-control"
                 
-                ></b-form-select>
+                ></b-form-select> -->
                   </div>
                   
                 </div>
@@ -295,8 +327,8 @@ export default {
                     :bordered="bordered"
                     :small="small"
                     :fixed="fixed"
-                    :items="exportVoucherData"
-                    :fields="exportFields"
+                    :items="incomingtripdata"
+                    :fields="incoming"
                     responsive="sm"
                     thead-class="header"
                     :per-page="perPage"
@@ -310,24 +342,11 @@ export default {
                     <template v-slot:cell(requestDate)="data"
                       >{{ getFormattedDate(data.item.requestDate) }}</template>
                     <template v-slot:cell(action)="data">
-                      <button
-                        class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
-                        @click="print(data.item)"
-                      >
-                        <feather type="printer" class="icon-xs mr-2"></feather>Print
-                      </button>
-                      <button  @click="download(data.item)" style="border:1px;margin:5px;background-color:white">
-                        
-                      <download-excel
-                        class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
-                        :data="json_data"
-                        :fields="json_fields"
-                        worksheet="My Worksheet"
-                        name="vouchers.xls"
-                      >
-                        <feather type="download" class="icon-xs mr-2"  ></feather>Download
-                      </download-excel>
-                      </button>
+                      <router-link :to="{ name: 'UpdateBillingperson', params: data.item }">
+                <b-button size="sm" class="mr-2" variant="primary" :hidden="data.item.status !== 'INITIATED'">
+                 <i class="fa fa-eye"></i>
+                </b-button>
+              </router-link>
                       <!-- <download-excel :data="json_data">
                   
                         <feather type="download" class="icon-xs mr-2"></feather>Download

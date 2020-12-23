@@ -46,7 +46,7 @@ export default {
       totalRows: 1,
       currentPage: 1,
       perPage: 10,
-      item: {  },
+      item: [],
       pageOptions: [10, 25, 50, 100],
       filter: null,
       filterOn: [],
@@ -72,16 +72,16 @@ export default {
           label: 'Trip Date',
         },
         {
-          key: 'plateNo',
-          label: 'Plate No',
+          key: 'truckBodyNo',
+          label: 'Truck BodyNo',
         },
         {
           key: 'truckType',
           label: 'Truck Type',
         },
         {
-          key: 'bodyNo',
-          label: 'Body No',
+          key: 'truckplateNo',
+          label: 'Truck plateNo',
         },
         {
           key: 'status',
@@ -202,7 +202,7 @@ export default {
             responsive="sm"
             :current-page="currentPage"
             :per-page="perPage"
-          
+          :items="item"
             :small="small"
             :fixed="fixed"
             :fields="TripColumns"
@@ -213,7 +213,7 @@ export default {
               <div>{{ data.item.tripDate | formatdatetime }}</div>
             </template>
             <template v-slot:cell(actions)="data">
-              <router-link :to="{ name: 'Viewincomingtrip', params: data.item }">
+              <router-link :to="{ name: 'Viewtripincoming', params: data.item }">
               <b-button size="sm" class="mr-2" variant="primary" >
               <i class="fa fa-eye"></i>
             </b-button>
