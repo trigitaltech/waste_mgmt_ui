@@ -88,11 +88,13 @@ export default {
           { value: 'CONTRACTOR', text: 'CONTRACTOR' },
           { value: 'HELPER', text: 'HELPER' },
           { value: 'OPERATOR', text: 'OPERATOR' },
-          { value: 'PALERO', text: 'PALERO' }],
+          { value: 'PALERO', text: 'PALERO' },
+           { value: 'BILLING', text: 'BILLING' }],
       file:"",
       item2:[],
       sid:"",
      form: {
+        baranggayCode:"",
         personalTitle: '',
         code:'',
         firstName: '',
@@ -125,6 +127,7 @@ export default {
       createddate: new Date(),
       modifydate: new Date(),
       modifyby:"",
+     
       bouquetsOpt: [
         { value: null, text: 'Please select an option' },
         'FTA  AND STARTER',
@@ -211,7 +214,7 @@ export default {
                 lastName: this.form.lastName,
                 addressLine1: this.address,
                 addressLine2: this.address2,
-                baranggay: this.form.baranggay,
+                baranggayId: this.form.baranggayCode,
                 district: this.form.district,
                 state: this.form.state,
                 country: this.form.country,
@@ -242,11 +245,11 @@ export default {
     getdistricts(){
       this.areas.map( e => {
         if(e.areaName == this.form.baranggay){
-          this.baranggayCode = e.code
+          this.form.baranggayCode = e.id
           console.log("haii",e.districtId)
-          this.form.district = e.district[0].districtName
-          this.form.state = e.district[0].stateCode.stateName
-          this.form.country = e.district[0].stateCode.countryCode.countryName
+          this.form.district = e.districtName
+          this.form.state = e.state
+          this.form.country = e.country
         }
       })
     },
@@ -300,7 +303,7 @@ export default {
                                 v-model="form.code"
                                 placeholder="Enter Code"
                                 required
-                              ></input>
+                              />
                             </div>
                           </div>
                              <div class="col-md-4">
@@ -580,6 +583,7 @@ export default {
                                 class="form-control"
                                 type="text"
                                 readonly
+                                disabled
                               />
                               </div>
                             </div>
@@ -592,6 +596,7 @@ export default {
                                   type="text"
                                   placeholder="Enter State"
                                   readonly
+                                  disabled
                                 />
                               </div>
                             </div>
@@ -604,6 +609,7 @@ export default {
                                   type="text"
                                   placeholder="Enter Country"
                                   readonly
+                                  disabled
                                 />
                               </div>
                             </div>

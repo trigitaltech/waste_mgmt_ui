@@ -56,6 +56,18 @@ mobile:this.username
                 this.$route.query.redirectFrom || { name: 'Encoder' }
               )
             }
+              else if(token.user.roles[0].code === "VOLUME_CHECKER")
+            { 
+              this.$router.push(
+                this.$route.query.redirectFrom || { name: 'Volumechecker' }
+              )
+            }
+            else if(token.user.roles[0].code === "BILLING")
+            { 
+              this.$router.push(
+                this.$route.query.redirectFrom || { name: 'Billingperson' }
+              )
+            }
             else {
               this.$router.push(
                 this.$route.query.redirectFrom || { name: 'Dashboard' }
