@@ -8,7 +8,7 @@ import moment from 'moment'
 
 // Vue.component('downloadExcel', JsonExcel)
 import {
-getincomingtrip,getoutgoingtrip,BILLINGTRIPS
+getincomingtrip,getoutgoingtrip,BILLINGTRIPS,incomingbytstatus
 } from '../../../../services/auth'
 
 export default {
@@ -126,9 +126,9 @@ export default {
   methods: {
     async gettrips() {
       try {
-      
-        const result1 = await BILLINGTRIPS()
-        this.incomingtripdata = result1.data.response.Incomingtrip
+      var status = "COMPLETED"
+        const result1 = await incomingbytstatus(status)
+        this.incomingtripdata = result1.data.response.result
         // console.log(this.areadata)
         // this.servingAreas.push(this.areadata.areaName)
         
@@ -163,6 +163,15 @@ export default {
           duration: 7000
         });
       }
+    },
+     getDate(timeStamp) {
+    // debugger
+      //  console.log(timeStamp)
+      let date
+      // if (timeStamp !== undefined){
+        // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
+   return moment(timeStamp).format('HH:mm:ss')
+      // }
     },
       async getOUTgoing() {
     //   console.log(startTime)
@@ -339,11 +348,11 @@ export default {
                     :filter-included-fields="filterOn"
                     @filtered="onFiltered"
                   >
-                    <template v-slot:cell(requestDate)="data"
-                      >{{ getFormattedDate(data.item.requestDate) }}</template>
+                    <template v-slot:cell(tripStartTime)="data"
+                      >{{ getDate(data.item.tripStartTime) }}</template>
                     <template v-slot:cell(action)="data">
                       <router-link :to="{ name: 'UpdateBillingperson', params: data.item }">
-                <b-button size="sm" class="mr-2" variant="primary" :hidden="data.item.status !== 'INITIATED'">
+                <b-button size="sm" class="mr-2" variant="primary" :hidden="data.item.status !== 'COMPLETED'">
                  <i class="fa fa-eye"></i>
                 </b-button>
               </router-link>

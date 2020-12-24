@@ -17,7 +17,7 @@ import {
 
 export default {
   page: {
-    title: 'Create Type',
+    title: 'View Type',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -42,12 +42,12 @@ export default {
           href: '#/Setup/ClassMaster',
         },
         {
-          text: 'Create Type',
+          text: 'View Type',
           active: true,
         },
       ],
-      code:"",
-      triptype:"",
+      code:this.$route.params.code,
+      triptype:this.$route.params.tripType,
       tripclass:"",
       mainroad:"",
       day:""
@@ -107,7 +107,7 @@ export default {
     <PageHeader :items="items" />
 
     <div class="animated fadeIn">
-      <b-card header="Create Type" class="mt-10 ml-10 mr-10 mx-auto">
+      <b-card header="View Type" class="mt-10 ml-10 mr-10 mx-auto">
         <div class="mt-3">
           <!-- Default form subscription -->
           <form @submit.prevent="create">
@@ -128,6 +128,7 @@ export default {
                   placeholder="Enter Code"
                   class="form-control"
                   required
+                  disabled
                 />
 
                 <!-- Default input text -->
@@ -148,6 +149,7 @@ export default {
                   placeholder="Enter Triptype"
                   class="form-control"
                   required
+                  disabled
                 />
 
                 <!-- Default input name -->
@@ -160,11 +162,11 @@ export default {
             
 
             <br />
-            <button
+            <!-- <button
               type="submit"
               class="btn btn-custome float-right btn-secondary mb-3"
-              >Submit</button
-            >
+              >Submit</button -->
+            
           </form>
           <!-- Default form subscription -->
         </div>

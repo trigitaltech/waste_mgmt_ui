@@ -4,6 +4,7 @@ import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
+import moment from 'moment';
 import {
   ValidationProvider,
   ValidationObserver,
@@ -13,6 +14,8 @@ import {
   users,
   editvolumechecker,
   approveincomingtrip,
+  getnameByLguId,
+  getnameByBRGY
 } from '../../../../services/auth'
 
 export default {
@@ -21,6 +24,7 @@ export default {
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
+    moment,
     Layout,
     PageHeader,
     Multiselect,
@@ -32,7 +36,7 @@ export default {
     return {
       printPdf: [],
       data: this.$route.params,
-      baranggayid: this.$route.params.baranggayId,
+      baranggayid: "",
       contractorDispatcherId: this.$route.params.contractorDispatcherId,
       contractorDispatcherName: this.$route.params.contractorDispatcherName,
       contractorDispatcherVerified: this.$route.params
@@ -49,14 +53,14 @@ export default {
       helperName: this.$route.params.helperName,
       id: this.$route.params.id,
       isDeleted: this.$route.params,
-      lguId: this.$route.params.lguId,
+      lguId: "",
       modifiedBy: this.$route.params.modifiedBy,
       modifiedDate: this.$route.params.modifiedDate,
       status: this.$route.params.status,
-      tripDate: this.$route.params.tripDate,
+      tripDate: moment(this.$route.params.tripDate).format('DD/MM/YYYY'),
       tripEndTime: this.$route.params.tripEndTime,
       tripIncomingAreaRoute: this.$route.params.tripIncomingAreaRoute,
-      tripStartTime: this.$route.params.tripStartTime,
+      tripStartTime:  moment(this.$route.params.tripStartTime).format('HH:mm:ss'),
       truckBodyNo: this.$route.params.truckBodyNo,
       truckType: this.$route.params.truckType,
       truckplateNo: this.$route.params.truckplateNo,
@@ -66,6 +70,7 @@ export default {
       volumeCheckerName: this.$route.params.volumeCheckerName,
       volumeCheckerTotalKmServed: this.$route.params.volumeCheckerTotalKmServed,
       volumeCheckerVerified: this.$route.params.volumeCheckerVerified,
+      loginlguid:"",
       items: [
         {
           text: 'home',
@@ -76,7 +81,7 @@ export default {
         //   href: '#/Trips/IncomingTrips',
         // },
         {
-          text: 'Update Volume Checker',
+          text: 'Update BILLING',
           active: true,
         },
       ],
@@ -90,14 +95,42 @@ export default {
     },
   },
   mounted() {
+    //  this.getLgu()
     console.log(this.$route.params)
     // this.$route.params.data.response.result = this.$route.params.data.response.result
     // this.modifyby = this.getUserDetails.user.username
     // this.getClientDetails()
     // this.getplans()
     // this.userdata()
+    this.getname()
+    THIS.getBRGYname()
+   
   },
   methods: {
+     gettime(timeStamp) {
+    // debugger
+      //  console.log(timeStamp)
+      let date
+      // if (timeStamp !== undefined){
+        // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
+   return moment(timeStamp).format('HH:mm:ss')
+      // }
+    },
+     getDate(timeStamp) {
+    // debugger
+      //  console.log(timeStamp)
+      let date
+      // if (timeStamp !== undefined){
+        // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
+   return moment(timeStamp).format('DD/MM/YYYY')
+      // }
+    },
+    //  async getLgu() {
+    //   const result = JSON.parse(localStorage.getItem('auth.currentUser'))
+    //   this.loginlguid = result.lguemployee.lguId
+    
+    //   console.log(this.loginDetails)
+    // },
     demoFun() {
       console.log('heee')
       var divContents = document.getElementById('pdf-voucher').innerHTML
@@ -110,6 +143,32 @@ export default {
       a.document.write('</div></body></html>')
       a.document.close()
       a.print()
+    },
+ async getname() {
+      try {
+        const result = await getnameByLguId(this.$route.params.lguId)
+        this.lguId = result.data.response.result.contactFirstName
+        // console.log(this.userdata)
+        // this.servingAreas.push(this.areadata.areaName)
+        /*this.areadata.map( e => {
+          this.servingAreas.push(e.areaName)
+        })*/
+      } catch(e) {
+        console.log(e)
+      }
+    },
+     async getBRGYname() {
+      try {
+        const result = await getnameByBRGY(this.$route.params.baranggayId)
+        this.baranggayid = result.data.response.result.contactFirstName
+        // console.log(this.userdata)
+        // this.servingAreas.push(this.areadata.areaName)
+        /*this.areadata.map( e => {
+          this.servingAreas.push(e.areaName)
+        })*/
+      } catch(e) {
+        console.log(e)
+      }
     },
 
     async approve() {

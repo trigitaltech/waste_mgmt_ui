@@ -86,7 +86,9 @@ export default {
       brgy:{},
       routeCodes:[],
       loginDetails:{},
-    routearray:[]
+    routearray:[],
+    date:"",
+    time:"",
     };
   },
   components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime, },
@@ -96,6 +98,8 @@ export default {
     },
   },
   mounted() {
+    this.date = moment(new Date()).format('DD/MM/YYYY')
+    this.time = moment(new Date()).format('HH:mm:ss')
     this.tripDate = new Date()
     this.startTime = new Date()
     console.log(this.tripDate+" "+this.startTime)
@@ -576,7 +580,7 @@ export default {
                     >
                     <input
                       type="text"
-                      v-model="tripDate"
+                      v-model="date"
                       class="form-control"
                     />
                   </b-col>
@@ -587,7 +591,7 @@ export default {
                       >Trip Start Time</label
                     >
                     <input
-                      v-model="startTime"
+                      v-model="time"
                       class="form-control"
                       type="text"
                     />
@@ -733,8 +737,8 @@ export default {
                 </b-row>
                 <button
                   type="submit"
-                   class="btn float-right btn-secondary mt-3 mr-2"
-                  >Submit</button>
+                   class="btn btn-custome ml-4 btn-secondary mb-3 float-right mr-2 mt-5"
+                  >Create</button>
               </form>
             </div>
           </div>

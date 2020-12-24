@@ -17,6 +17,10 @@ import {
   employees,
   vehicle,
   getRoutesByBaranggayId,
+  equipmentby,
+  updatesrtruck,
+  assignequipsrtruck,
+  getvolumebyId
 } from '../../../../services/auth'
 
 export default {
@@ -73,12 +77,35 @@ export default {
       helper: null,
       servingRoutes: [],
       driverList: [],
+       checkerListNames:[],
       hauler: '',
       haulerList: [],
       contractorList: [],
       paleroList: [],
       garbage: null,
       lgu: null,
+      equip: [],
+      equipments: [],
+      equipmentused: '',
+      drivertimein: '',
+      distancekms: '',
+      equipmentarray: [],
+      verifiedby:"",
+      dispatchedby:"",
+      inputs: [
+        {
+          timeIn: '',
+          timeOut: '',
+          duration: '',
+          bucketLoaded: '',
+        },
+      ],
+      loginlguid:"",
+      checkerList:[],
+      dispatcherListNames:[],
+      dispatcherlist:[],
+      dispatchId:"",
+      checkerId:"",
     }
   },
   components: {
@@ -95,161 +122,142 @@ export default {
   },
   mounted() {
     this.tripDate = moment(new Date()).format('DD-MM-YYYY')
-    this.startTime = moment(new Date()).format('DD-MM-YYYY hh:mm A')
+     this.drivertimein = new Date()
     console.log(this.tripDate + ' ' + this.startTime)
-    this.areas()
-    this.routes()
-    this.getUsers()
-    this.employeedata()
-    this.getvehicles()
+    this.getLgu()
+    this.getequipments()
+    this.getvolume()
+  
+  this.getvolume1()
   },
   methods: {
-    async getRoutes() {
+     async getLgu() {
+      const result = JSON.parse(localStorage.getItem('auth.currentUser'))
+      this.loginlguid = result.lguemployee.lguId
+     this.dispatcherid = result.lguemployee.id
+     this.dispatchername = result.lguemployee.firstName
+    },
+     async getvolume() {
       try {
-        this.areadata.map(async (e) => {
-          if (this.area === e.areaName) {
-            console.log(e)
-            this.areaarray = e
-            const result = await getRoutesByBaranggayId(e.id)
-            console.log(result)
-          }
-        })
-        const result = await getRoutesByBaranggayId(id)
-        console.log(result)
-      } catch (e) {
+        var id3 = "VOLUME_CHECKER"
+        const result = await getvolumebyId(this.loginlguid,id3)
+       this.checkerList = result.data.response.result
+        
+              this.checkerList.map(g => {
+             
+                      this.checkerListNames.push(g.userName)
+      })
+      } catch(e) {
         console.log(e)
       }
     },
-    async getvehicles() {
-      const result = await vehicle()
-      this.vehicles = result.data.response.vehicles
-      this.vehicles.map((e) => {
-        this.plates.push(e.plateNo)
-      })
-      console.log(this.plates)
-    },
-    getroutes() {
-      this.routedata.map((e) => {
-        if (this.route === e.routeName) {
-          this.routearray.push(e)
-        }
-      })
-    },
-    getareas() {
-      this.areadata.map((e) => {
-        if (this.area === e.areaName) {
-          this.areaarray = e
-        }
-      })
-    },
-    getid() {
-      console.log('haiiiiii')
-      this.emp.map((e) => {
-        if (this.driver === e.userName) {
-          this.driverid = e.id
-        }
-      })
-    },
-    async employeedata() {
+     async getvolume1() {
       try {
-        const result = await employees()
-        this.emp = result.data.response.result
-        console.log(this.emp)
-        this.emp.map((e) => {
-          if (e.type == 'DRIVER') this.drivers.push(e.userName)
-          if (e.type == 'HELPER') this.helpers.push(e.userName)
-        })
-      } catch (error) {}
-    },
-    async areas() {
-      try {
-        const result = await Areamasters()
-        this.areadata = result.data.response.areaMaster
-        this.areadata.map((e) => {
-          if (e.areaName != null) this.servingAreas.push(e.areaName)
-        })
-      } catch (error) {
-        console.log(error)
+        var id1 = "ENCODER"
+        const result = await getvolumebyId(this.loginlguid,id1)
+       this.dispatcherlist = result.data.response.result
+        
+              this.dispatcherlist.map(g => {
+             
+                      this.dispatcherListNames.push(g.userName)
+      })
+      } catch(e) {
+        console.log(e)
       }
-      console.log(this.servingAreas)
     },
-    async routes() {
-      try {
-        const result = await routemaster()
-        console.log(result)
-        this.routedata = result.data.response.RouteMaster
-        this.routedata.map((e) => {
-          if (e.routeName != null) this.servingRoutes.push(e.routeName)
-        })
-      } catch (error) {}
-    },
-    getRouteObject(name) {
-      this.routedata.map((e) => {
-        if (name == e.routeName) {
-          console.log(e)
-          return e
-        }
+    add() {
+      this.inputs.push({
+        timeIn: '',
+        timeOut: '',
+        duration: '',
+        bucketLoaded: '',
       })
+      console.log(this.inputs)
     },
-    async create() {
-      try {
-        const date = moment(this.startTime).format('YYYY-MM-DDThh:mm:SS+00:00')
-        console.log(date)
-        const areaarray = Object.assign({}, areaarray, this.areaarray)
-        let payload = {
-          controlNo: this.controlno,
-          tripDate: this.tripDate,
-          lgu: this.lgu,
-          bodyNo: this.body,
-          plateNo: this.plate,
-          truckType: this.trucktype,
-          collectionStartTime: this.startTime,
-          servingArea: areaarray,
-          servingRoute: {
-            id: this.routearray.id,
-            code: this.routearray.code,
-            routeName: this.routearray.routeName,
-            routeType: this.routearray.routeType,
-            supervisor: this.routearray.supervisor,
-            route_distance: this.routearray.route_distance,
-            areaId: this.routearray.areaId,
-            areaName: this.areaarray.areaName,
-            isDeleted: false,
-            routeRoads: [],
-            createdDate: this.routearray.createdDate,
-            createdBy: '',
-            modifiedDate: this.routearray.modifiedDate,
-            modifiedBy: '',
-            description: this.routearray.description,
-          },
-          helperId: 199,
-          helperName: null,
-          driverId: this.driverid,
-          driverName: this.driver,
-          contractorDispatcherName: null,
-          contractorDispatcherId: null,
-          contractorDispatcherVerified: null,
-          volumeCheckerName: null,
-          volumeCheckerId: null,
-          volumeCheckerVerified: null,
-          volumeCheckerMeasuredVolume: null,
-          volumeCheckerTotalKmServed: null,
-          isDeleted: false,
-          status: 'INITIATED',
-          createdBy: this.getUserDetails.user.username,
-          createdDate: this.tripDate,
-          modifiedBy: this.getUserDetails.user.username,
-          modifiedDate: this.tripDate,
+
+    remove(index) {
+      this.inputs.splice(index, 1)
+    },
+    
+    async getequipments() {
+      const result = await equipmentby()
+      this.equipments = result.data.response.equipment
+      this.equipments.map((e) => {
+        this.equip.push(e.equipmentNo)
+      })
+      // console.log(this.plates)
+    },
+ getequipCode() {
+      console.log("hai",this.equipmentused)
+      this.equipmentarray=[]
+       for(var i = 0 ; i<this.equipmentused.length ;i++){
+        //  debugger
+         this.equipments.map(e=>{
+        if(this.equipmentused[i] === e.equipmentNo){
+             
+          this.equipmentarray.push({equipment:e.id})
+          console.log("routedata",this.equipmentarray)
+       
         }
-        const result = await CreateIncomingTrip(payload)
+         })
+      
+       }
+    },
+   getCheckerId() {
+        this.checkerList.map(e => {
+          if(this.verifiedby == e.userName){
+            this.checkerId = e.id
+          }
+        })
+      },
+       getdispatchid() {
+        this.dispatcherlist.map(e => {
+          if(this.dispatchedby == e.userName){
+            this.dispatchId = e.id
+          }
+        })
+      },
+  
+    // async firstFunction() {
+    //   console.log('firsyt')
+    //   try {
+    //     let payload = {
+       
+    //     }
+    //     const result = await updatesrtruck(payload)
+    //     if (result) {
+    //       this.$swal({
+    //         group: 'alert',
+    //         type: 'success',
+    //         text: `Updated Service request Truck`,
+    //         duration: 5000,
+    //       })
+    //       this.$router.push({ path: '/Servicerequest/Truck' })
+    //     }
+    //   } catch (e) {}
+    // },
+    async update() {
+      console.log('second')
+      try {
+        let payload = {
+         
+                  "serviceRequstEqTruck":this.equipmentarray,
+                  "serviceTicketTruckReport":this.inputs,
+                  "totaldistance":this.distancekms,
+                  "driverTimeIn":this.drivertimein,
+                  "dispatcherBy":this.dispatchId,
+                  "verifiedBY":this.checkerId
+                  }
+
+        const result = await assignequipsrtruck(this.$route.params.id,payload)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `Incoming Trip Created`,
+            text: `Updated Service request Truck`,
             duration: 5000,
           })
-          this.$router.push({ path: '/Trips/IncomingTrips' })
+          this.$router.push({ path: '/Servicerequest/Truck' })
         }
       } catch (e) {}
     },
@@ -282,30 +290,32 @@ export default {
         <div class="mt-1">
           <div class="mx-xl-5">
             <div class="card-body">
-              <form @submit.prevent="create">
+              <form @submit.prevent="update()">
                 <b-row>
                   <b-col>
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >CONTROL NO</label
+                      >Driver Time IN</label
                     >
                     <input
-                      v-model="controlno"
+                      v-model="drivertimein"
                       class="form-control"
                       name="body"
+                      placeholder="Enter Driver Time In"
                     />
                   </b-col>
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Trip Date</label
+                      >DISTANCE (KMS)</label
                     >
                     <input
                       type="text"
-                      v-model="tripDate"
+                      v-model="distancekms"
                       class="form-control"
+                      placeholder="Enter distancekms"
                     />
                   </b-col>
                 </b-row>
@@ -314,149 +324,142 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Dumping Location</label
+                      >Equipment Used</label
                     >
                     <multiselect
-                      v-model="route"
+                      v-model="equipmentused"
                       :multiple="true"
-                      :options="servingRoutes"
+                      :options="equip"
+                      @input="getequipCode"
                     >
                     </multiselect>
                   </b-col>
+                  <b-col> </b-col>
+                </b-row>
+
+                <br />
+                <b-row v-for="(input, k) in inputs" :key="k">
+                 
                   <b-col>
                     <label
-                      for="defaultFormCardtextEx"
+                      for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Hauler</label
                     >
-                    <multiselect
-                      v-model="route"
-                      :multiple="true"
-                      :options="servingRoutes"
+                      Time In</label
                     >
-                    </multiselect>
+                    <input
+                      id="defaultFormCardtextEx"
+                      type="text"
+                      class="form-control"
+                      v-model="input.timeIn"
+                      placeholder="Enter timein"
+                    />
+                  </b-col>
+                  <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                    >
+                      Time Out</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      type="text"
+                      class="form-control"
+                      v-model="input.timeOut"
+                      placeholder="Enter timeout"
+                    />
+                  </b-col>
+                  <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                    >
+                      Duration</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      type="text"
+                      class="form-control"
+                      v-model="input.duration"
+                      placeholder="Enter duration"
+                    />
+                  </b-col>
+                  <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                    >
+                      Buckets Loaded</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      type="text"
+                      class="form-control"
+                      v-model="input.bucketLoaded"
+                      placeholder="Enter bucketsloaded"
+                    />
+                  </b-col>
+                  <b-col>
+                    <span>
+                      <i
+                        class="fas fa-minus-circle"
+                        @click="remove(k)"
+                        v-show="k || (!k && inputs.length > 1)"
+                      ></i>
+                      <br />
+                      <i
+                        style="width: 50px"
+                        class="fas fa-plus-circle"
+                        @click="add(k)"
+                        v-show="k == inputs.length - 1"
+                      ></i>
+                    </span>
                   </b-col>
                 </b-row>
 
-                <b-row>
-                  <b-col>
+                <br/>
+                 <b-row>
+                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Plate No</label
+                      >Verified BY</label
                     >
-                    <input
-                      v-model="trucktype"
-                      class="form-control"
-                      name="trucktype"
-                      readonly
-                    />
-                  </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Truck Type</label
+                     <b-form-select
+                      v-model.trim="verifiedby"
+                      class="form-control"        
+                      :options="checkerListNames"
+                      @change="getCheckerId" 
                     >
-                    <input
-                      v-model="trucktype"
-                      class="form-control"
-                      name="trucktype"
-                      readonly
-                    />
+                    </b-form-select>
                   </b-col>
+                  <b-col> </b-col>
                 </b-row>
-                <b-row>
-                  <b-col>
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Body</label
-                    >
-                    <input
-                      v-model="body"
-                      class="form-control"
-                      name="body"
-                      readonly
-                    />
-                  </b-col>
+                 <b-row>
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Volume Capacity</label
-                    >
-                    <input
-                      v-model="trucktype"
-                      class="form-control"
-                      name="trucktype"
-                      readonly
-                    />
-                  </b-col>
-                </b-row>
-                <b-row>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Driver</label
+                      >Dispatched BY</label
                     >
                     <multiselect
-                      v-model="route"
+                      v-model="dispatchedby"
                       :multiple="true"
-                      :options="servingRoutes"
+                      :options="dispatcherListNames"
+                      @input="getdispatchid"
                     >
                     </multiselect>
                   </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Helper</label
-                    >
-                    <multiselect
-                      v-model="route"
-                      :multiple="true"
-                      :options="servingRoutes"
-                    >
-                    </multiselect>
-                  </b-col>
+                  <b-col> </b-col>
                 </b-row>
-                <b-row class="mt-3">
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >From Dumping Point</label
-                    >
-                    <multiselect
-                      v-model="route"
-                      :multiple="true"
-                      :options="servingRoutes"
-                    >
-                    </multiselect>
-                  </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >To Dumping Point</label
-                    >
-                    <multiselect
-                      v-model="route"
-                      :multiple="true"
-                      :options="servingRoutes"
-                    >
-                    </multiselect>
-                  </b-col>
-                </b-row>
-              <br/>
-              <button
-              type="submit"
-              class="btn btn-custome float-right btn-secondary mb-3"
-              >Submit</button
-            >
-               
+                <br />
+                <button
+                  type="submit"
+                  class="btn btn-custome float-right btn-secondary mb-3"
+                 
+                  >Submit</button
+                >
               </form>
             </div>
           </div>
