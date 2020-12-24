@@ -51,20 +51,21 @@ export default {
 
           label: 'ID',
         },
+         {
+          key: 'dumpingareaId',
+          label: 'DumpingArea',
+        },
         {
-          key: 'serviceNo',
-          label: 'serviceNo',
+          key: 'controlNo',
+          label: 'ControlNo',
         },
 
         {
-          key: 'requestType',
-          label: 'requestType',
+          key: 'truckType',
+          label: 'TruckType',
         },
 
-        {
-          key: 'dumpingArea',
-          label: 'dumpingArea',
-        },
+       
         {
           key: 'driverName',
           label: 'driverName',
@@ -244,7 +245,7 @@ export default {
                 </span>
               </router-link>
               <router-link
-                :to="{ name: 'Editservicerequest', params: data.item }"
+                :to="{ name: 'EditSRTruck', params: data.item }"
               >
                 <span class="mr-2">
                   <i class="fas fa-pencil-alt edit"></i>

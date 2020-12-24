@@ -4,11 +4,12 @@ import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
+import moment from 'moment';
 import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import { Edituser, users ,editvolumechecker} from '../../../../services/auth'
+import { Edituser, users ,editvolumechecker,getnameByLguId,getnameByBRGY} from '../../../../services/auth'
 
 export default {
   page: {
@@ -16,6 +17,7 @@ export default {
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
+    moment,
     Layout,
     PageHeader,
     Multiselect,
@@ -27,7 +29,7 @@ export default {
     return {
          printPdf: [],
     data:this.$route.params,
-      baranggayid: this.$route.params.baranggayId,
+      baranggayid: "",
       contractorDispatcherId:this.$route.params.contractorDispatcherId,
       contractorDispatcherName: this.$route.params.contractorDispatcherName,
       contractorDispatcherVerified: this.$route.params.contractorDispatcherVerified,
@@ -42,14 +44,14 @@ export default {
       helperName: this.$route.params.helperName,
       id: this.$route.params.id,
       isDeleted: this.$route.params,
-      lguId: this.$route.params.lguId,
+      lguId: "",
       modifiedBy: this.$route.params.modifiedBy,
       modifiedDate: this.$route.params.modifiedDate,
       status: this.$route.params.status,
-      tripDate: this.$route.params.tripDate,
+      tripDate:  moment(this.$route.params.tripDate).format('DD/MM/YYYY'),
       tripEndTime: this.$route.params.tripEndTime,
       tripIncomingAreaRoute: this.$route.params.tripIncomingAreaRoute,
-      tripStartTime: this.$route.params.tripStartTime,
+      tripStartTime:  moment(this.$route.params.tripStartTime).format('HH:mm:ss'),
       truckBodyNo: this.$route.params.truckBodyNo,
       truckType: this.$route.params.truckType,
       truckplateNo: this.$route.params.truckplateNo,
@@ -88,8 +90,38 @@ export default {
     // this.getClientDetails()
     // this.getplans()
     // this.userdata()
+       this.getname()
+     this.getBRGYname()
+      
   },
+
   methods: {
+    async getBRGYname() {
+      try {
+        const result = await getnameByBRGY(this.$route.params.baranggayId)
+        this.baranggayid = result.data.response.result.contactFirstName
+        // console.log(this.userdata)
+        // this.servingAreas.push(this.areadata.areaName)
+        /*this.areadata.map( e => {
+          this.servingAreas.push(e.areaName)
+        })*/
+      } catch(e) {
+        console.log(e)
+      }
+    },
+    async getname() {
+      try {
+        const result = await getnameByLguId(this.$route.params.lguId)
+        this.lguId = result.data.response.result.contactFirstName
+        // console.log(this.userdata)
+        // this.servingAreas.push(this.areadata.areaName)
+        /*this.areadata.map( e => {
+          this.servingAreas.push(e.areaName)
+        })*/
+      } catch(e) {
+        console.log(e)
+      }
+    },
        demoFun() {
       console.log('heee')
       var divContents = document.getElementById('pdf-voucher').innerHTML
@@ -382,7 +414,7 @@ export default {
             <b-row>
               <b-col>
                      <b-button
-                  class="btn btn-custome ml-4 btn-secondary mb-3 float-right mr-2"
+                  class="btn btn-custome ml-4 btn-secondary mb-3 float-right mr-2 mt-5"
                   text="Create Tenant"
                   @click="create"
                   >Update</b-button

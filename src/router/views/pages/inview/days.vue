@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- employees,deleteemployee,days
+ employees,deletedays,days
 } from '../../../../services/auth'
 
 export default {

@@ -53,35 +53,35 @@ export default {
       areadata: [],
       areaarray: '',
       routedate: [],
-      haulerarray:[],
+      haulerarray: [],
       routearray: [],
       emp: [],
-      dumpid:"",
-      dumpinglocation:"",
+      dumpid: '',
+      dumpinglocation: '',
       controlno: '',
-       tripDate: '',
-        plateno: '',
-        hauler:"",
-        vehicleno:"",
-        fromdumpingpoint:"",
-        todumpingpoint:"",
-        driver:"",
-        helper:"",
-        volumecapacity:"",
-        trucktype:"",
-        body:"",
+      tripDate: '',
+      plateno: '',
+      hauler: '',
+      vehicleno: '',
+      fromdumpingpoint: '',
+      todumpingpoint: '',
+      driver: '',
+      helper: '',
+      volumecapacity: '',
+      trucktype: '',
+      body: '',
       area: '',
       route: '',
       driver: '',
       contractor: '',
       collector: null,
       lgu: '',
-    
-     vehicleno:"",
+
+      vehicleno: '',
       plates: [],
       body: '',
-     vehicledata:[],
-    
+      vehicledata: [],
+
       driverid: '',
       startTime: '',
       drivers: [],
@@ -90,25 +90,28 @@ export default {
       servingAreas: [],
       route: '',
       driver: '',
-      helperid:"",
+      helperid: '',
       helper: null,
       servingRoutes: [],
-      haulerid:"",
+      haulerid: '',
       driverList: [],
-      hauler:"",
+      hauler: '',
       haulerList: [],
       contractorList: [],
-      vehicledata:[],
+      vehicledata: [],
       paleroList: [],
       garbage: null,
-      dumpings:[],
-      haulers:[],
-      dumpingdata:[],
-      plates:[],
-      haulerdata:[],
-      fromdumpings:[],
-      todumpings:[],
+      dumpings: [],
+      haulers: [],
+      dumpingdata: [],
+      plates: [],
+      haulerdata: [],
+      fromdumpings: [],
+      todumpings: [],
       lgu: null,
+      dumpingid: '',
+      haulerid: '',
+      dispatcherid: '',
     }
   },
   components: {
@@ -127,89 +130,86 @@ export default {
     this.tripDate = moment(new Date()).format('DD-MM-YYYY')
     this.startTime = moment(new Date()).format('DD-MM-YYYY hh:mm A')
     console.log(this.tripDate + ' ' + this.startTime)
-     this.getdumping()
+    this.getdumping()
     this.gethaulers()
     // this.areas()
     // this.routes()
     // this.getUsers()
     this.employeedata()
+    this.getLgu()
     // this.getvehicles()
-   
   },
   methods: {
-    async  getdump(){
- for(var i = 0 ; i<this.dumpingdata.length ;i++){
-       if(this.dumpinglocation[0] === this.dumpingdata[i].dumpingAreaName){
+    async getLgu() {
+      const result = JSON.parse(localStorage.getItem('auth.currentUser'))
+
+      this.dispatcherid = result.lguemployee.id
+
+      console.log(this.loginDetails)
+    },
+    async getdump() {
+      for (var i = 0; i < this.dumpingdata.length; i++) {
+        if (this.dumpinglocation[0] === this.dumpingdata[i].dumpingAreaName) {
           this.dumpid = this.dumpingdata[i].id
           const result = await getdumpdata(this.dumpid)
           var dumpdata = result.data.response.result.dumpingPoint
-          dumpdata.map(e=>{
+          dumpdata.map((e) => {
             this.fromdumpings.push(e.dumpingPointName)
             this.todumpings.push(e.dumpingPointName)
           })
-       }
-     }
+        }
+      }
     },
-    platedetails(){
-    
-      for(var i = 0 ; i<this.vehicledata.length ;i++){
-       if(this.plateno[0] === this.vehicledata[i].plateNo){
-       
+    platedetails() {
+      for (var i = 0; i < this.vehicledata.length; i++) {
+        if (this.plateno[0] === this.vehicledata[i].plateNo) {
           this.vehicleno = this.vehicledata[i].vehicleNo
           this.trucktype = this.vehicledata[i].vehicleType.truckType
           this.volumecapacity = this.vehicledata[i].volumeCapacity
-       }
-     }
-     
+        }
+      }
     },
-     async gethaulers() {
-       try {
-      
-      const result = await haulers()
-      this.haulerdata = result.data.response.HaulerMaster
-this.haulerdata.map(e=>{
-  this.haulers.push(e.haulerName)
-})
-      
+    async gethaulers() {
+      try {
+        const result = await haulers()
+        this.haulerdata = result.data.response.HaulerMaster
+        this.haulerdata.map((e) => {
+          this.haulers.push(e.haulerName)
+        })
       } catch (error) {}
-   
     },
     //   async getvehiclehauler() {
     //    try {
-    
+
     //   const result = await  getVehiclesByhauler(id)
     //   this.dumpingdata = result.data.response.dumpingLocation
     //   this.dumpingdata.map(e=>{
     //     this.dumpings.push(e.dumpingAreaName)
     //   })
-    
+
     //   } catch (error) {}
-   
+
     // },
-     async getdumping() {
-       try {
-    
-      const result = await  dumpinglocation()
-      this.dumpingdata = result.data.response.dumpingLocation
-      this.dumpingdata.map(e=>{
-        this.dumpings.push(e.dumpingAreaName)
-      })
-    
+    async getdumping() {
+      try {
+        const result = await dumpinglocation()
+        this.dumpingdata = result.data.response.dumpingLocation
+        this.dumpingdata.map((e) => {
+          this.dumpings.push(e.dumpingAreaName)
+        })
       } catch (error) {}
-   
     },
-  async  vehiclehauler() {
-       
-     for(var i = 0 ; i<this.haulerdata.length ;i++){
-       if(this.hauler[0] === this.haulerdata[i].haulerName){
+    async vehiclehauler() {
+      for (var i = 0; i < this.haulerdata.length; i++) {
+        if (this.hauler[0] === this.haulerdata[i].haulerName) {
           this.haulerid = this.haulerdata[i].id
           const result = await getVehiclesByhauler(this.haulerid)
           this.vehicledata = result.data.response.result
-          this.vehicledata.map(e=>{
+          this.vehicledata.map((e) => {
             this.plates.push(e.plateNo)
           })
-       }
-     }
+        }
+      }
       //     debugger
       //  this.haulerdata.map(e => {
       //   if (this.hauler === e.haulerName) {
@@ -219,10 +219,9 @@ this.haulerdata.map(e=>{
       //    console.log("haiiiiii",this.haulerid)
       // })
       //  if(this.haulerid !== ""){
-      //   
+      //
       //    console.log(result)
       //  }
-       
     },
     // async getvehicles() {
     //   const result = await vehicle()
@@ -295,21 +294,21 @@ this.haulerdata.map(e=>{
         }
       })
     },
-    getdriverid(){
-    // debugger
-  this.emp.map((e)=>{
-    if(this.driver[0] === e.userName){
-      this.driverid = e.id
-    }
-  })
+    getdriverid() {
+      // debugger
+      this.emp.map((e) => {
+        if (this.driver[0] === e.userName) {
+          this.driverid = e.id
+        }
+      })
     },
-      gethelperid(){
-        // debugger
-  this.emp.map((e)=>{
-    if(this.helper[0] === e.userName){
-      this.helperid = e.id
-    }
-  })
+    gethelperid() {
+      // debugger
+      this.emp.map((e) => {
+        if (this.helper[0] === e.userName) {
+          this.helperid = e.id
+        }
+      })
     },
 
     async create() {
@@ -317,61 +316,51 @@ this.haulerdata.map(e=>{
         const date = moment(this.startTime).format('YYYY-MM-DDThh:mm:SS+00:00')
         console.log(date)
         const areaarray = Object.assign({}, areaarray, this.areaarray)
-                              let payload = {
-          
-                                  controlNo: this.controlno,
-                                          
-                                trip:this.tripDate,
+        let payload = {
+          controlNo: this.controlno,
 
+          trip: this.tripDate,
 
-                                dumpingArea:this.dumpinglocation[0],
+          dumpingareaId: this.dumpid,
 
-                                PlateNo:this.plateno[0],
+          PlateNo: this.plateno[0],
 
-                                BodyNo:this.vehicleno[0],
+          BodyNo: this.vehicleno[0],
 
-                                truckType:this.trucktype,
+          truckType: this.trucktype,
 
-                                VolumeCapacity:this.volumecapacity,
+          driverId: this.driverid,
+          driverName: this.driver[0],
 
-                                driverId: this.driverid,
-                                driverName: this.driver[0],
+          HelperId: this.helperid,
+          HelperName: this.helper[0],
 
-                                HelperId:this.helperid,
-                                HelperName:this.helper[0],
+          fromPoint: this.fromdumpingpoint[0],
+          toPoint: this.todumpingpoint[0],
 
-                                fromPoint:this.fromdumpingpoint[0],
-                                toPoint:this.todumpingpoint[0],
+          volumeCapacity: this.volumecapacit,
 
-                                hauler:this.hauler[0],
+          haulerId: this.haulerid,
 
-                                timeInAM:"",
+          timeInAM: '',
 
-                                timeOutAM:"",
+          timeOutAM: '',
 
-                                timeInPM:"",
+          timeInPM: '',
 
-                                timeOutPM:"",
+          timeOutPM: '',
 
-                                AMTrip:"",
+          aMTrip: '',
 
-                                PMTrip:"",
+          pMTrip: '',
 
-                                totalTrips:"",
+          totalTrips: '',
 
-                                driverTimeIn:"",
+          driverTimeIn: '',
 
-                                total_distance:"",
+          totalDistance: '',
 
-                                verifiedBy:"",
-
-                                dispatchedBy:"",
-
-                                isDeleted: false,
-
-                                ServiceStatusStatus:"",
-
-        
+          dispatchedBy: this.dispatcherid,
         }
         const result = await Createsrtruck(payload)
         if (result) {

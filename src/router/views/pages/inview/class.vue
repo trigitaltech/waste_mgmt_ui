@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- employees,deleteemployee, classmaster
+ employees,deleteclass, classmaster
 } from '../../../../services/auth'
 
 export default {
@@ -60,10 +60,10 @@ export default {
           label: 'NAME',
         },
        
-        // {
-        //   key: 'actions',
-        //   sortable: true,
-        // },
+        {
+          key: 'actions',
+          sortable: true,
+        },
       ],
       items: [
         {
@@ -95,12 +95,12 @@ export default {
        var id = data.item.id
      try{
           
-        const result = await classes(data.item.id)
+        const result = await deleteclass(data.item.id)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You Deleted Employee Successfully`,
+            text: `You Deleted Class Successfully`,
             duration: 5000,
           })
          this.refresh()
@@ -180,12 +180,12 @@ export default {
             class="mt-3"
           >
             <template v-slot:cell(actions)="data">
-             <router-link :to="{ name: 'Viewemployee', params: data.item }">
+             <router-link :to="{ name: 'Viewclass', params: data.item }">
                 <span class="mr-2" >
                  <i class="fa fa-eye edit"></i>
                 </span>
               </router-link>
-             <router-link :to="{ name: 'Editemployee', params: data.item }">
+             <router-link :to="{ name: 'Editclass', params: data.item }">
                 <span class="mr-2">
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>

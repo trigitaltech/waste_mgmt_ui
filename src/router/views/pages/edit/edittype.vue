@@ -12,12 +12,12 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- Createtype
+ edittype
 } from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Create Type',
+    title: 'Edit Type',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -42,12 +42,12 @@ export default {
           href: '#/Setup/ClassMaster',
         },
         {
-          text: 'Create Type',
+          text: 'Edit Type',
           active: true,
         },
       ],
-      code:"",
-      triptype:"",
+      code:this.$route.params.code,
+      triptype:this.$route.params.tripType,
       tripclass:"",
       mainroad:"",
       day:""
@@ -72,7 +72,7 @@ export default {
          "code": this.code,
     "tripType": this.triptype
         }
-        const result = await Createtype(payload)
+        const result = await edittype(payload)
 
         // this.rid = result.data.response.Roles.id
         // console.log(this.rid)
@@ -81,7 +81,7 @@ export default {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `Your Created Type Successfully`,
+            text: `Your Edited Type Successfully`,
             duration: 5000,
           })
            this.$router.push({path:'/Setup/TypeMaster'})
@@ -107,7 +107,7 @@ export default {
     <PageHeader :items="items" />
 
     <div class="animated fadeIn">
-      <b-card header="Create Type" class="mt-10 ml-10 mr-10 mx-auto">
+      <b-card header="Edit Type" class="mt-10 ml-10 mr-10 mx-auto">
         <div class="mt-3">
           <!-- Default form subscription -->
           <form @submit.prevent="create">
