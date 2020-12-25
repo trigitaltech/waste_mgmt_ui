@@ -55,6 +55,10 @@ export const reviewAttendance = (payload) => serviceMaker('/attendence/checker/a
 
 export const deletedays = (id) => serviceMaker(`/trips/days/admin/${id}`, methods.DELETE, api.NGB)
 
+export const deletetype = (id) => serviceMaker(`/trips/type/admin/${id}`, methods.DELETE, api.NGB)
+
+export const deleteclass = (id) => serviceMaker(`/trips/class/admin/${id}`, methods.DELETE, api.NGB)
+
 export const deletetripincoming = (id) => serviceMaker(`/tripincoming/admin/${id}`, methods.DELETE, api.NGB)
 
 export const deletevehicle = (id) => serviceMaker(`/vehicles/admin/encoders/${id}`, methods.DELETE, api.NGB) 
@@ -132,6 +136,8 @@ export const editservicerequest = (payload) => serviceMaker(`/serviceticket/syst
 
 export const edithauler = (payload) => serviceMaker(`/haulermaster/admin`, methods.PUT, api.NGB, payload)
 
+export const Editclass = (payload) => serviceMaker(`/trips/class/admin`, methods.PUT, api.NGB, payload)
+
 export const editrole = (payload) => serviceMaker(`/roles/admin`, methods.PUT, api.NGB, payload)
 
 export const editarea = (payload) => serviceMaker(`/areamaster/admin`, methods.PUT, api.NGB, payload)
@@ -170,7 +176,7 @@ export const Areamasters = () => serviceMaker(`/areamaster/all`, methods.GET, ap
 
 
 
-export const servicetruck = () => serviceMaker(`/serviceticket/system/all`, methods.GET, api.NGB)
+export const servicetruck = () => serviceMaker(`serviceticket/all`, methods.GET, api.NGB)
 
 export const planprice = (id) => serviceMaker(`/prices/${id}?template=true`, methods.GET, api.NGB)
 
@@ -189,9 +195,16 @@ export const CreateOutgoingTrip = (payload) => serviceMaker(`/tripoutgoing/admin
 
 export const Createdays = (payload) => serviceMaker(`/trips/days/admin`,methods.POST,api.NGB,payload)
 
+
+export const Createclass = (payload) => serviceMaker(`/trips/class/admin`,methods.POST,api.NGB,payload)
+
+export const Createtype = (payload) => serviceMaker(`/trips/type/admin`,methods.POST,api.NGB,payload)
+
 export const editdays = (payload) => serviceMaker(`/trips/days/admin`,methods.POST,api.NGB,payload)
 
-export const Createsrtruck = (payload) => serviceMaker(`/serviceticket/encoder/admin`,methods.POST,api.NGB,payload)
+export const edittype = (payload) => serviceMaker(`/trips/type/admin`,methods.POST,api.NGB,payload)
+
+export const Createsrtruck = (payload) => serviceMaker(`/serviceticket/details`,methods.POST,api.NGB,payload)
 
 export const Tripoutgoing = (id) => serviceMaker(`/tripoutgoing/system/${id}`, methods.GET, api.NGB)
  
@@ -214,8 +227,14 @@ export const getoutgoingtrip = (id,payload) => serviceMaker(
     methods.POST,
     api.NGB,payload
   );
-
  
+  export const   equipmentby = () => serviceMaker(`equipment/admin/encoders/owner`,methods.GET,api.NGB);
+
+  
+  // export const updatesrtruck = (id) => serviceMaker(`assigntruckreport/${id}`,methods.GET,api.NGB);
+
+  export const assignequipsrtruck = (id,payload) => serviceMaker(`serviceticket/assiningDetails/${id}`,methods.POST,api.NGB,payload);
+
   export const getdumpdata = (id) => serviceMaker(`/dumpinglocation/dumping/${id}`,methods.GET,api.NGB);
 
 
@@ -240,6 +259,8 @@ export const getlgubyId = (id) => serviceMaker(`/LGU/admin/${id}`,methods.GET,ap
 export const getgarbagebyId = (id,id2) => serviceMaker(`/employees/details/${id}/${id2}`,methods.GET,api.NGB)
 
 
+export const getnameByBRGY = (id) => serviceMaker(`/areamaster/baranggay/${id}`,methods.GET,api.NGB)
+
 export const getvolumebyId = (id,id3) => serviceMaker(`/LGU/employee/lgu/${id}/${id3}`,methods.GET,api.NGB)
 
 export const getTripsdetailsbyId = (id) => serviceMaker(`/LGU/trips/${id}`,methods.GET,api.NGB)
@@ -261,3 +282,8 @@ export const editOutgoingTripByControlChecker1 = (payload) => serviceMaker(`trip
 export const editOutgoingTripByControlChecker2 = (payload) => serviceMaker(`tripoutgoing/controlChecker/verified`,methods.PUT,api.NGB,payload)
 
 export const outgoingTripApprove = (payload) => serviceMaker(`tripoutgoing/billing/approve`,methods.PUT,api.NGB,payload)
+
+export const incomingbytstatus = (status) => serviceMaker (`/tripincoming/billing/${status}`, methods.GET, api.NGB)
+
+
+export const checkerupdatebystatus = (payload) => serviceMaker (`/tripincoming/completetrip`, methods.PUT, api.NGB,payload)

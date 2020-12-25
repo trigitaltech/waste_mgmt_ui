@@ -9,6 +9,7 @@ import moment from 'moment'
 // Vue.component('downloadExcel', JsonExcel)
 import {
 getincomingtrip,getoutgoingtrip,getTripsdetailsbyId,getAllOutgoingTrip
+,getnameByLguId
 } from '../../../../services/auth'
 
 export default {
@@ -54,7 +55,7 @@ export default {
       sortBy: 'age',
       sortDesc: false,
       landfill:[
-        { key: 'baranggayId', label:'BaranggayId',sortable: true },
+        { key: 'baranggayId', label:'Baranggay',sortable: true },
         { key: 'contractorDispatcherName', label:'Dispatcher',sortable: true },
         { key: 'controlNo', label:'ControlNo',  sortable: true },
         { key: 'driverName', label:'DriverName',  sortable: true },
@@ -82,7 +83,7 @@ export default {
         { key:'action',label:'Action'}
       ],
        incoming: [
-        { key: 'baranggayId', label:'BaranggayId',sortable: true },
+        { key: 'baranggayId', label:'Baranggay',sortable: true },
         { key: 'contractorDispatcherName', label:'Dispatcher',sortable: true },
         { key: 'controlNo', label:'ControlNo',  sortable: true },
         { key: 'driverName', label:'DriverName',  sortable: true },
@@ -115,6 +116,12 @@ export default {
   computed: {
     rows() {
       //return this.tripdata.incomingTrips.length
+    },
+     rows1() {
+      return this.tripdata.outgoingTrips.length
+    },
+     rows2() {
+      return this.tripdata.directTrips.length
     },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
@@ -161,7 +168,7 @@ export default {
      async gettrips() {
       try {
          const result = JSON.parse(localStorage.getItem('auth.currentUser'))
-      this.loginlguid = result.lguemployee.id
+      this.loginlguid = result.lguemployee.lguId
         const result1 = await getTripsdetailsbyId(this.loginlguid)
         this.tripdata = result1.data.response
         // console.log(this.areadata)
@@ -224,6 +231,15 @@ export default {
           duration: 7000
         });
       }
+    },
+     getDate(timeStamp) {
+    // debugger
+      //  console.log(timeStamp)
+      let date
+      // if (timeStamp !== undefined){
+        // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
+   return moment(timeStamp).format('HH:mm:ss')
+      // }
     },
      getFormattedDate(timeStamp) {
       //  console.log(timeStamp)
@@ -355,8 +371,8 @@ export default {
                     :filter-included-fields="filterOn"
                     @filtered="onFiltered"
                   >
-                    <template v-slot:cell(requestDate)="data"
-                      >{{ getFormattedDate(data.item.requestDate) }}</template>
+                    <template v-slot:cell(tripStartTime)="data"
+                      >{{ getDate(data.item.tripStartTime) }}</template>
                     <!-- <template v-slot:cell(action)="data">
                       <button
                         class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
@@ -551,7 +567,7 @@ export default {
                   >
                     <template v-slot:cell(requestDate)="data"
                       >{{ getFormattedDate(data.item.requestDate) }}</template>
-                    <template v-slot:cell(action)="data">
+                    <!-- <template v-slot:cell(action)="data">
                       <button
                         class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
                         @click="print(data.item)"
@@ -569,12 +585,12 @@ export default {
                       >
                         <feather type="download" class="icon-xs mr-2"  ></feather>Download
                       </download-excel>
-                      </button>
+                      </button> -->
                       <!-- <download-excel :data="json_data">
                   
                         <feather type="download" class="icon-xs mr-2"></feather>Download
                       </download-excel>-->
-                    </template>
+                    <!-- </template> -->
                   </b-table>
                 </div>
                 <div class="row">
@@ -582,7 +598,7 @@ export default {
                     <div class="dataTables_paginate paging_simple_numbers float-right">
                       <ul class="pagination pagination-rounded mb-0">
                         <!-- pagination -->
-                        <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage"></b-pagination>
+                        <b-pagination v-model="currentPage" :total-rows="rows1" :per-page="perPage"></b-pagination>
                       </ul>
                     </div>
                   </div>
@@ -745,30 +761,12 @@ export default {
                   >
                     <template v-slot:cell(requestDate)="data"
                       >{{ getFormattedDate(data.item.requestDate) }}</template>
-                    <template v-slot:cell(action)="data">
-                      <button
-                        class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
-                        @click="print(data.item)"
-                      >
-                        <feather type="printer" class="icon-xs mr-2"></feather>Print
-                      </button>
-                      <button  @click="download(data.item)" style="border:1px;margin:5px;background-color:white">
-                        
-                      <download-excel
-                        class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
-                        :data="json_data"
-                        :fields="json_fields"
-                        worksheet="My Worksheet"
-                        name="vouchers.xls"
-                      >
-                        <feather type="download" class="icon-xs mr-2"  ></feather>Download
-                      </download-excel>
-                      </button>
+                   
                       <!-- <download-excel :data="json_data">
                   
                         <feather type="download" class="icon-xs mr-2"></feather>Download
                       </download-excel>-->
-                    </template>
+                   
                   </b-table>
                 </div>
                 <div class="row">
@@ -776,7 +774,7 @@ export default {
                     <div class="dataTables_paginate paging_simple_numbers float-right">
                       <ul class="pagination pagination-rounded mb-0">
                         <!-- pagination -->
-                        <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage"></b-pagination>
+                        <b-pagination v-model="currentPage" :total-rows="rows2" :per-page="perPage"></b-pagination>
                       </ul>
                     </div>
                   </div>

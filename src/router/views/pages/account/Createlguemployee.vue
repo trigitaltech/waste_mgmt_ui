@@ -99,7 +99,7 @@ export default {
         voucherNo: '',
       },
       item2: [],
-      roles: ['ENCODER', 'VOLUME_CHECKER', 'DISPATCHER','CONTROL_CHECKER'],
+      roles: ['ENCODER', 'VOLUME_CHECKER', 'CONTROL_CHECKER'],
       rolename: '',
       titles: ['Mr.', 'Sri.', 'Mrs'],
       vouchernumber: '',

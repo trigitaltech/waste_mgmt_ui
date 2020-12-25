@@ -242,7 +242,7 @@ this.addres.map(e=>{
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
                 >
-                  Area Name</label
+                  Baranggay Name</label
                 >
                 <input
                   v-model="areaname"
@@ -308,7 +308,7 @@ this.addres.map(e=>{
                 <label
                   for="defaultFormCardtextEx"
                   class="grey-text font-weight-dark"
-                  >Area SqKm</label
+                  >Baranggay SqKm</label
                 >
                 <input
                   v-model="areasqkm"

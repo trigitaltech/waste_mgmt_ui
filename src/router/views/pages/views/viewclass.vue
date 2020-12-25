@@ -12,12 +12,12 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- Createtype
+ Editclass
 } from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Create Type',
+    title: 'View Class',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -38,18 +38,18 @@ export default {
           href: '/',
         },
         {
-          text: 'Type',
+          text: 'Class',
           href: '#/Setup/ClassMaster',
         },
         {
-          text: 'Create Type',
+          text: 'View Class',
           active: true,
         },
       ],
-      code:"",
+      code:this.$route.params.code,
       triptype:"",
       tripclass:"",
-      mainroad:"",
+      mainroad:this.$route.params.name,
       day:""
     }
   },
@@ -69,10 +69,11 @@ export default {
     async create() {
       try {
         const payload = {
-         "code": this.code,
-    "tripType": this.triptype
+            id:this.$route.params.id,
+          "code":this.code,
+          "name":this.mainroad
         }
-        const result = await Createtype(payload)
+        const result = await Editclass(payload)
 
         // this.rid = result.data.response.Roles.id
         // console.log(this.rid)
@@ -81,10 +82,10 @@ export default {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `Your Created Type Successfully`,
+            text: `Your Edited Class Successfully`,
             duration: 5000,
           })
-           this.$router.push({path:'/Setup/TypeMaster'})
+           this.$router.push({path:'/Setup/ClassMaster'})
         }
       } catch (e) {
         this.$toasted.error(e.message.error, {
@@ -107,7 +108,7 @@ export default {
     <PageHeader :items="items" />
 
     <div class="animated fadeIn">
-      <b-card header="Create Type" class="mt-10 ml-10 mr-10 mx-auto">
+      <b-card header="View Class" class="mt-10 ml-10 mr-10 mx-auto">
         <div class="mt-3">
           <!-- Default form subscription -->
           <form @submit.prevent="create">
@@ -128,6 +129,7 @@ export default {
                   placeholder="Enter Code"
                   class="form-control"
                   required
+                  disabled
                 />
 
                 <!-- Default input text -->
@@ -138,16 +140,17 @@ export default {
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
                 >
-                  Trip Type</label
+                  Main Road</label
                 >
                 <input
-                  v-model="triptype"
+                  v-model="mainroad"
                   type="text"
-                  oninvalid="this.setCustomValidity('TripType is required ')"
+                  oninvalid="this.setCustomValidity('mainroad is required ')"
                   oninput="setCustomValidity('')"
-                  placeholder="Enter Triptype"
+                  placeholder="Enter mainroad"
                   class="form-control"
                   required
+                  disabled
                 />
 
                 <!-- Default input name -->
@@ -160,11 +163,11 @@ export default {
             
 
             <br />
-            <button
+            <!-- <button
               type="submit"
               class="btn btn-custome float-right btn-secondary mb-3"
               >Submit</button
-            >
+            > -->
           </form>
           <!-- Default form subscription -->
         </div>

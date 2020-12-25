@@ -8,7 +8,7 @@ import moment from 'moment'
 
 // Vue.component('downloadExcel', JsonExcel)
 import {
-getincomingtrip,getoutgoingtrip,getTripsvolumebyId, getAllOutgoingTrip
+getincomingtrip,getoutgoingtrip,getTripsvolumebyId, getAllOutgoingTrip,checkerupdatebystatus
 } from '../../../../services/auth'
 
 export default {
@@ -66,7 +66,7 @@ export default {
         { key:'action',label:'Action'}
       ],
        incoming: [
-        { key: 'baranggayId', label:'BaranggayId',sortable: true },
+        { key: 'baranggayId', label:'Baranggay',sortable: true },
         { key: 'contractorDispatcherName', label:'Dispatcher',sortable: true },
         { key: 'controlNo', label:'ControlNo',  sortable: true },
         { key: 'driverName', label:'DriverName',  sortable: true },
@@ -150,6 +150,46 @@ export default {
       } catch(e) {
         console.log(e)
       }
+    },
+    async updateReq(data) {
+       console.log("data",data.item.id)
+  try{
+      const  payload = {
+               
+               tripId: data.item.id
+      }
+   
+          
+        const result = await checkerupdatebystatus(payload)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `Trip Completed `,
+            duration: 5000,
+          })
+         this.refresh()
+        }
+      } catch (e) {
+         this.$toasted.error(e.message.error, {
+          duration: 7000,
+        })
+      }
+     
+    },
+     async refresh() {
+      setTimeout(function () {
+        location.reload()
+      }, 200)
+    },
+     getDate(timeStamp) {
+    // debugger
+      //  console.log(timeStamp)
+      let date
+      // if (timeStamp !== undefined){
+        // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
+   return moment(timeStamp).format('HH:mm:ss')
+      // }
     },
     async getTripincoming() {
     //   console.log(startTime)
@@ -327,22 +367,23 @@ export default {
                     :filter-included-fields="filterOn"
                     @filtered="onFiltered"
                   >
-                    <template v-slot:cell(requestDate)="data"
-                      >{{ getFormattedDate(data.item.requestDate) }}</template>
+                    <template v-slot:cell(tripStartTime)="data"
+                      >{{ getDate(data.item.tripStartTime) }}</template>
                     <template v-slot:cell(action)="data">
               <!-- <router-link :to="{ name: 'Viewtripincoming', params: data.item }">
               <b-button size="sm" class="mr-2" variant="primary" >
               <i class="fa fa-eye"></i>
-            </b-button>
+            </b-button>:hidden="data.item.status !== 'COMPLETED'"
               </router-link> -->
-            <router-link :to="{ name: 'EditVolumechecker', params: data.item }">
-                <b-button size="sm" class="mr-2" variant="primary" :hidden="data.item.status !== 'INITIATED'">
+            <router-link :to="{ name: 'EditVolumechecker', params: data.item }" :hidden="data.item.status === 'COMPLETED'">
+                <b-button size="sm" class="mr-2" variant="primary" >
                   <i class="fas fa-pencil-alt edit"></i>
                 </b-button>
               </router-link>
-               <!-- <span @click="deleteReq(data)">
-              <i class="fa fa-times edit"></i>
-            </span> -->
+              
+             <b-button size="sm" class="mr-2" variant="primary"  @click="updateReq(data)" :hidden="data.item.status === 'COMPLETED'">
+              <i class="fa fa-check-square-o"></i>
+             </b-button>
            </template>
                       <!-- <download-excel :data="json_data">
                   

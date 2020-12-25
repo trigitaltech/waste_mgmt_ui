@@ -197,15 +197,6 @@ const inviewRoutes = [
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
       {
-        path: 'DaysMaster',
-        name: 'Days Master',
-        
-        icon: 'file',
-        component: () => lazyLoadView(import('@views/pages/inview/days')),
-        meta: { authRequired: true },
-        props: (route) => ({ user: store.state.auth.currentUser || {} }),
-      },
-      {
         path: 'TypeMaster',
         name: 'Type Master',
         
@@ -214,6 +205,16 @@ const inviewRoutes = [
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
+      {
+        path: 'DaysMaster',
+        name: 'Days Master',
+        
+        icon: 'file',
+        component: () => lazyLoadView(import('@views/pages/inview/days')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+     
       {
         path: 'AddressMaster',
         name: 'Address Master',
@@ -889,6 +890,30 @@ const pagesRoutes = [
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
+    path: '/EditClass',
+    name: 'Editclass',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/editclass')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/EditType',
+    name: 'EditType',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/edittype')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/EditSRTruck',
+    name: 'EditSRTruck',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/editsrtruck')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
     path: '/EditDays',
     name: 'EditDays',
     icon: 'check-square',
@@ -1120,6 +1145,22 @@ const pagesRoutes = [
     name: 'Viewattendance',
     icon: 'check-square',
     component: () => lazyLoadView(import('@views/pages/views/viewattendance')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Viewclass',
+    name: 'Viewclass',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewclass')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Viewtype',
+    name: 'Viewtype',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewtype')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
