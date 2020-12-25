@@ -8,7 +8,8 @@ import moment from 'moment'
 
 // Vue.component('downloadExcel', JsonExcel)
 import {
-getincomingtrip,getoutgoingtrip,getTripsdetailsbyId,getnameByLguId
+getincomingtrip,getoutgoingtrip,getTripsdetailsbyId,getAllOutgoingTrip
+,getnameByLguId
 } from '../../../../services/auth'
 
 export default {
@@ -69,19 +70,17 @@ export default {
         { key: 'status', sortable: true },
       ],
       exportFields: [
-        { key: 'baranggayId', label:'Baranggay',sortable: true },
         { key: 'contractorDispatcherName', label:'Dispatcher',sortable: true },
         { key: 'controlNo', label:'ControlNo',  sortable: true },
         { key: 'driverName', label:'DriverName',  sortable: true },
           { key: 'helperName', label:'HelperName',  sortable: true },
-            { key: 'tripStartTime',label:'StartTime',  sortable: true },
-              { key: 'truckBodyNo',label:'BodyNo',  sortable: true },
-                { key: 'truckType', label:'TruckType', sortable: true },
-       { key: 'truckplateNo',label:'PlateNO',  sortable: true },
+            { key: 'loadingStartTime',label:'StartTime',  sortable: true },
+              { key: 'bodyNo',label:'BodyNo',  sortable: true },
+                { key: 'typeOfUnit', label:'TruckType', sortable: true },
+       { key: 'plateNo',label:'PlateNO',  sortable: true },
         { key: 'volumeCheckerName', label:'CheckerName', sortable: true },
-      
-
         { key: 'status', sortable: true },
+        { key:'action',label:'Action'}
       ],
        incoming: [
         { key: 'baranggayId', label:'Baranggay',sortable: true },
@@ -109,12 +108,14 @@ export default {
       exportVoucherData: [],
       tabIndex: 0,
       tripdata:[],
-      loginlguid:""
+      outgoingTrips:[],
+      loginlguid:"",
+      loginencoderid:''
     }
   },
   computed: {
     rows() {
-      return this.tripdata.incomingTrips.length
+      //return this.tripdata.incomingTrips.length
     },
      rows1() {
       return this.tripdata.outgoingTrips.length
@@ -140,23 +141,28 @@ export default {
     // this.getVoucherDetails()
     // this.getExportVoucherDetails()
     // Set the initial number of items
+    const result = JSON.parse(localStorage.getItem('auth.currentUser'))
+    console.log(result)
+    this.loginlguid = result.user.id
+    this.loginencoderid = result.lguemployee.id
     this.totalRows = this.items.length
-    this.getTripincoming
-    this.gettrips()
-    this.getname()
+    //this.getTripincoming
+    //this.gettrips()
+    this.getOutgoingTrip()
   },
   methods: {
-    async getname() {
+    async getOutgoingTrip() {
       try {
-        const result = await getnameByLguId(this.loginlguid)
-        this.lguId = result.data.response.result.contactFirstName
-        // console.log(this.userdata)
-        // this.servingAreas.push(this.areadata.areaName)
-        /*this.areadata.map( e => {
-          this.servingAreas.push(e.areaName)
-        })*/
-      } catch(e) {
-        console.log(e)
+        const result = await getAllOutgoingTrip()
+        const data = result.data.response["OutgoingTrips:"]
+        data.map(e => {
+          if(e.contractorDispatcherId == this.loginencoderid) {
+            this.outgoingTrips.push(e) 
+          }
+        })
+        console.log(this.outgoingTrips)
+      } catch(error) {
+        console.log(error)
       }
     },
      async gettrips() {
@@ -242,7 +248,9 @@ export default {
         date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
       return moment(date).format('MMM Do YYYY') +"  "+ timeStamp[3] + ":" + timeStamp[4] + ":" + timeStamp[5]
     },
-  
+    onFiltered() {
+
+    }
     
    
     
@@ -268,7 +276,7 @@ export default {
                   <feather type="grid" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Incoming Trips</h5>
-                    <span class="text-muted">{{ tripdata.incomingTrips.length }}</span>
+                    <!--<span class="text-muted">{{ tripdata.incomingTrips.length }}</span>-->
                   </div>
                 </div>
               </div>
@@ -278,7 +286,7 @@ export default {
                   <feather type="calendar" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Outgoing Trips</h5>
-                    <span class="text-muted">{{ tripdata.outgoingTrips.length }}</span>
+                    <!--<span class="text-muted">{{ tripdata.outgoingTrips.length }}</span>-->
                   </div>
                 </div>
               </div>
@@ -287,7 +295,7 @@ export default {
                   <feather type="check-square" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Landfill Trips</h5>
-                    <span class="text-muted">{{ tripdata.directTrips.length  }}</span>
+                    <!--<span class="text-muted">{{ tripdata.directTrips.length  }}</span>-->
                   </div>
                 </div>
               </div>
@@ -545,7 +553,7 @@ export default {
                     :bordered="bordered"
                     :small="small"
                     :fixed="fixed"
-                    :items="tripdata.outgoingTrips"
+                    :items="outgoingTrips"
                     :fields="exportFields"
                     responsive="sm"
                     thead-class="header"

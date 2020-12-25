@@ -8,7 +8,7 @@ import moment from 'moment'
 
 // Vue.component('downloadExcel', JsonExcel)
 import {
-getincomingtrip,getoutgoingtrip,BILLINGTRIPS,incomingbytstatus
+getincomingtrip,getoutgoingtrip,BILLINGTRIPS,getAllOutgoingTrip,incomingbytstatus
 } from '../../../../services/auth'
 
 export default {
@@ -58,17 +58,16 @@ export default {
       sortBy: 'age',
       sortDesc: false,
       exportFields: [
-        { key: 'Tripdate', sortable: true },
-        { key: 'Trip No', sortable: true },
-        { key: 'Barrangay',  sortable: true },
-        { key: 'Route Name',  sortable: true },
-      
-
+        { key: 'contractorDispatcherName', label:'Dispatcher',sortable: true },
+        { key: 'controlNo', label:'ControlNo',  sortable: true },
+        { key: 'driverName', label:'DriverName',  sortable: true },
+          { key: 'helperName', label:'HelperName',  sortable: true },
+              { key: 'bodyNo',label:'BodyNo',  sortable: true },
+                { key: 'typeOfUnit', label:'TruckType', sortable: true },
+       { key: 'plateNo',label:'PlateNO',  sortable: true },
+        { key: 'controlCheckerName', label:'Control Checker', sortable: true },
         { key: 'status', sortable: true },
-        // { key: 'requestBy', sortable: true },
-
-        // { key: 'status', sortable: true },
-        { key: 'action' },
+        { key:'action',label:'Action'}
       ],
        incoming: [
         { key: 'baranggayId', label:'BaranggayId',sortable: true },
@@ -95,6 +94,7 @@ export default {
       exportVoucherData: [],
       tabIndex: 0,
       incomingtripdata:[],
+      allOutgoingTrips:[]
     }
   },
   computed: {
@@ -122,8 +122,23 @@ export default {
     this.totalRows = this.items.length
     this.getTripincoming
     this.gettrips()
+    this.getOutgoingTrip()
   },
   methods: {
+    async getOutgoingTrip() {
+      try {
+        const result = await getAllOutgoingTrip()
+        const data = result.data.response["OutgoingTrips:"]
+        data.map(e => {
+          if(e.status == "VERIFIED" || e.status == "APPROVED") {
+            this.allOutgoingTrips.push(e)
+          }
+        })
+        console.log(this.allOutgoingTrips)
+      } catch(error) {
+        console.log(error)
+      }
+    },
     async gettrips() {
       try {
       var status = "COMPLETED"
@@ -216,18 +231,11 @@ export default {
 
 <template>
   <Layout>
-    <PageHeader  :items="items" />
-    <div class="row">
-      <div class="col">
-         <b-card
-        header="Billing Person"
-
-        class="mt-10 ml-10 mr-10 mx-auto"
-      >
-          <div class="card-body p-0">
-            <!-- <h6 class="card-title border-bottom p-3 mb-0 header-title"
-              >Project Overview</h6
-            >-->
+   
+    <div class="row justify-content-center">
+      <div class="col-lg-12">
+         <div class="card">
+          <div class="card-body">
             <div class="row py-1">
               <!-- Widget -->
 
@@ -262,16 +270,6 @@ export default {
                 </div>
               </div>
             </div>
-          </div>
- </b-card>
-        </div>
-        
-      </div>
-   
-    <div class="row justify-content-center">
-      <div class="col-lg-12">
-         <div class="card">
-          <div class="card-body">
             <b-tabs v-model="tabIndex" pills justified class="navtab-bg w-100">
                   <b-tab title="Incoming Trips">
                 <p class="text-muted font-13 mb-3"></p>
@@ -523,7 +521,7 @@ export default {
                     :bordered="bordered"
                     :small="small"
                     :fixed="fixed"
-                    :items="exportVoucherData"
+                    :items="allOutgoingTrips"
                     :fields="exportFields"
                     responsive="sm"
                     thead-class="header"
@@ -535,7 +533,14 @@ export default {
                     :filter-included-fields="filterOn"
                     @filtered="onFiltered"
                   >
-                    <template v-slot:cell(requestDate)="data"
+                    <template v-slot:cell(action)="data">
+                      <router-link v-if="data.item.status == 'VERIFIED'" :to="{ name: 'EditoutgoingtripByBilling', params: data.item }">
+                        <b-button size="sm" class="mr-2" variant="primary">
+                          <i class="fas fa-pencil-alt edit"></i>
+                        </b-button>
+                      </router-link>
+                    </template>
+                    <!--<template v-slot:cell(requestDate)="data"
                       >{{ getFormattedDate(data.item.requestDate) }}</template>
                     <template v-slot:cell(action)="data">
                       <button
@@ -556,11 +561,7 @@ export default {
                         <feather type="download" class="icon-xs mr-2"  ></feather>Download
                       </download-excel>
                       </button>
-                      <!-- <download-excel :data="json_data">
-                  
-                        <feather type="download" class="icon-xs mr-2"></feather>Download
-                      </download-excel>-->
-                    </template>
+                    </template>-->
                   </b-table>
                 </div>
                 <div class="row">
