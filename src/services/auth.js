@@ -195,6 +195,7 @@ export const Createsrtruck = (payload) => serviceMaker(`/serviceticket/encoder/a
 
 export const Tripoutgoing = (id) => serviceMaker(`/tripoutgoing/system/${id}`, methods.GET, api.NGB)
  
+export const getAllOutgoingTrip = () =>  serviceMaker(`/tripoutgoing/all`,methods.GET,api.NGB)
 
 export const getVehiclesByhauler = (id) => serviceMaker(`/vehicles/vehiclebyhauler/${id}`, methods.GET, api.NGB)
 
@@ -252,3 +253,11 @@ export const BILLINGTRIPS = (payload) => serviceMaker (`tripincoming/all`, metho
 
 
 export const approveincomingtrip = (payload) => serviceMaker (`tripincoming/approveincomingtrip`, methods.PUT, api.NGB,payload)
+
+export const editOutgoingTripByVolumeChecker = (payload) => serviceMaker(`tripoutgoing/volumeChecker`,methods.PUT,api.NGB,payload) 
+
+export const editOutgoingTripByControlChecker1 = (payload) => serviceMaker(`tripoutgoing/controlChecker/complete`,methods.PUT,api.NGB,payload)
+
+export const editOutgoingTripByControlChecker2 = (payload) => serviceMaker(`tripoutgoing/controlChecker/verified`,methods.PUT,api.NGB,payload)
+
+export const outgoingTripApprove = (payload) => serviceMaker(`tripoutgoing/billing/approve`,methods.PUT,api.NGB,payload)

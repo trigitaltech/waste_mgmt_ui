@@ -62,6 +62,12 @@ mobile:this.username
                 this.$route.query.redirectFrom || { name: 'Volumechecker' }
               )
             }
+             else if(token.user.roles[0].code === "CONTROL_CHECKER")
+            { 
+              this.$router.push(
+                this.$route.query.redirectFrom || { name: 'Controlchecker' }
+              )
+            }
             else if(token.user.roles[0].code === "BILLING")
             { 
               this.$router.push(

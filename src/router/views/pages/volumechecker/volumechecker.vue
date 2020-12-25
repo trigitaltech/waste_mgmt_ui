@@ -8,7 +8,7 @@ import moment from 'moment'
 
 // Vue.component('downloadExcel', JsonExcel)
 import {
-getincomingtrip,getoutgoingtrip,getTripsvolumebyId
+getincomingtrip,getoutgoingtrip,getTripsvolumebyId, getAllOutgoingTrip
 } from '../../../../services/auth'
 
 export default {
@@ -54,17 +54,16 @@ export default {
       sortBy: 'age',
       sortDesc: false,
       exportFields: [
-        { key: 'Tripdate', sortable: true },
-        { key: 'Trip No', sortable: true },
-        { key: 'Barrangay',  sortable: true },
-        { key: 'Route Name',  sortable: true },
-      
-
+        { key: 'contractorDispatcherName', label:'Dispatcher',sortable: true },
+        { key: 'controlNo', label:'ControlNo',  sortable: true },
+        { key: 'driverName', label:'DriverName',  sortable: true },
+          { key: 'helperName', label:'HelperName',  sortable: true },
+              { key: 'bodyNo',label:'BodyNo',  sortable: true },
+                { key: 'typeOfUnit', label:'TruckType', sortable: true },
+       { key: 'plateNo',label:'PlateNO',  sortable: true },
+        { key: 'controlCheckerName', label:'Control Checker', sortable: true },
         { key: 'status', sortable: true },
-        // { key: 'requestBy', sortable: true },
-
-        // { key: 'status', sortable: true },
-        { key: 'action' },
+        { key:'action',label:'Action'}
       ],
        incoming: [
         { key: 'baranggayId', label:'BaranggayId',sortable: true },
@@ -92,6 +91,8 @@ export default {
       tabIndex: 0,
       loginlguid:"",
       incomingtripdata:[],
+      allOutgoingTrips:[],
+      volumeCheckerId:''
     }
   },
   computed: {
@@ -116,13 +117,28 @@ export default {
     // this.getVoucherDetails()
     // this.getExportVoucherDetails()
     // Set the initial number of items
+    const result = JSON.parse(localStorage.getItem('auth.currentUser'))
+    this.volumeCheckerId = result.lguemployee.id
     this.totalRows = this.items.length
-    this.getTripincoming
+    this.getTripincoming()
+    this.getOutgoingTrip()
     this.gettrips()
   },
   methods: {
-    
-   async gettrips() {
+    async getOutgoingTrip() {
+      try {
+        const result = await getAllOutgoingTrip()
+        const data = result.data.response["OutgoingTrips:"]
+        data.map(e => {
+          if(e.volumeCheckerId == this.volumeCheckerId && e.status=='ASSIGNED') {
+            this.allOutgoingTrips.push(e)
+          }
+        })
+      } catch(error) {
+        console.log(error)
+      }
+    },
+    async gettrips() {
       try {
          const result = JSON.parse(localStorage.getItem('auth.currentUser'))
       this.loginlguid = result.lguemployee.id
@@ -483,7 +499,7 @@ export default {
                     :bordered="bordered"
                     :small="small"
                     :fixed="fixed"
-                    :items="exportVoucherData"
+                    :items="allOutgoingTrips"
                     :fields="exportFields"
                     responsive="sm"
                     thead-class="header"
@@ -495,7 +511,14 @@ export default {
                     :filter-included-fields="filterOn"
                     @filtered="onFiltered"
                   >
-                    <template v-slot:cell(requestDate)="data"
+                    <template v-slot:cell(action)="data">
+                      <router-link v-if="data.item.status == 'ASSIGNED'" :to="{ name: 'EditoutgoingtripByVolumeChecker', params: data.item }">
+                        <span class="mr-2" >
+                         <i class="fa fa-pencil-alt edit"></i>
+                        </span>
+                      </router-link>
+                    </template>
+                    <!--<template v-slot:cell(loadingStartTime)="data"
                       >{{ getFormattedDate(data.item.requestDate) }}</template>
                     <template v-slot:cell(action)="data">
                       <button
@@ -516,11 +539,7 @@ export default {
                         <feather type="download" class="icon-xs mr-2"  ></feather>Download
                       </download-excel>
                       </button>
-                      <!-- <download-excel :data="json_data">
-                  
-                        <feather type="download" class="icon-xs mr-2"></feather>Download
-                      </download-excel>-->
-                    </template>
+                    </template>-->
                   </b-table>
                 </div>
                 <div class="row">

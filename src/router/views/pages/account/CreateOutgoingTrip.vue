@@ -89,9 +89,9 @@ export default {
   methods:{
     async getLgu() {
       const result = JSON.parse(localStorage.getItem('auth.currentUser'))
-      this.loginlguid = result.lguemployee.lguid
-      this.contractorDispatcherId = result.user.id
-      this.contractorDispatcherName = result.user.userName
+      this.loginlguid = result.lguemployee.lguId
+      this.contractorDispatcherId = result.lguemployee.id
+      this.contractorDispatcherName = result.lguemployee.userName
     },
     async getStagingArea() {
       try {
@@ -99,11 +99,13 @@ export default {
         this.stagingAreas = result.data.response.stagingArea
         console.log(this.stagingAreas)
         this.stagingAreas.map(e => {
+          console.log(this.loginlguid+' '+e.lguName.id)
           if(this.loginlguid == e.lguName.id){
             this.loginDetails.name = e.lguName.userName
             this.stagingAreaNames.push(e.stagingAreaName)
           }
         })
+        console.log(this.loginDetails.name)
       } catch(e) {
         console.log(e)
       }
@@ -113,12 +115,12 @@ export default {
         const result = await lguemployee()
         this.lguEmployees = result.data.response.result
         this.lguEmployees.map(e => {
-          console.log(e.lguid+'  '+this.loginlguid)
-          if(e.type == "VOLUME_CHECKER" && e.lguid == this.loginlguid) {
+          console.log(e.lguId+'  '+this.loginlguid)
+          if(e.type == "VOLUME_CHECKER" && e.lguId == this.loginlguid) {
             this.checkerList.push(e)
             this.checkerListNames.push(e.userName)
           }
-          if(e.type == "CONTROL_CHECKER" && e.lguid == this.loginlguid) {
+          if(e.type == "CONTROL_CHECKER" && e.lguId == this.loginlguid) {
             this.controlList.push(e)
             this.controlListNames.push(e.userName)
           }
@@ -274,7 +276,7 @@ export default {
                       <label
                         for="defaultFormCardtextEx"
                         class="grey-text font-weight-dark"
-                        >LGU</label
+                        >LGU Name</label
                       >
                       <input
                        class="form-control"
@@ -283,6 +285,20 @@ export default {
                       />
                   </b-col>
                   <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >CONTROL NO</label
+                    >
+                    <input
+                      v-model="controlno"
+                      class="form-control"
+                      name="body"
+                    />
+                  </b-col>
+                </b-row>
+                <b-row class="mt-3">
+                    <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -296,8 +312,6 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
-                </b-row>
-                <b-row class="mt-3">
                     <b-col>
                       <label
                         for="defaultFormCardtextEx"
@@ -310,18 +324,6 @@ export default {
                       >
                       </b-form-select>
                     </b-col>
-                  </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >CONTROL NO</label
-                    >
-                    <input
-                      v-model="controlno"
-                      class="form-control"
-                      name="body"
-                    />
                   </b-col>
                 </b-row>
                 <b-row class="mt-3">
@@ -367,6 +369,34 @@ export default {
                      <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
+                      >Volume Checker</label
+                    >
+                   <b-form-select
+                      v-model="checker"
+                      class="form-control"        
+                      :options="checkerListNames"
+                    >
+                    </b-form-select>
+                  </b-col>
+                  <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Control Checker</label
+                    >
+                     <b-form-select
+                      v-model.trim="control"
+                      class="form-control"        
+                      :options="controlListNames"
+                    >
+                    </b-form-select>
+                  </b-col>
+                </b-row>
+                <b-row class="mt-3">
+                  <b-col>
+                     <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
                       >Hauler</label
                     >
                    <b-form-select
@@ -377,22 +407,6 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
-                  <b-col>
-                     <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Volume Checker</label
-                    >
-                   <b-form-select
-                      v-model="checker"
-                      class="form-control"        
-                      :options="checkerListNames"
-                    >
-                    </b-form-select>
-                  </b-col>
-                  
-                </b-row>
-                <b-row class="mt-3">
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -407,6 +421,8 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
+                </b-row>
+                <b-row class="mt-3">
                   <b-col>
                     <label
                       for="defaultFormCardNameEx"
@@ -419,8 +435,6 @@ export default {
                       name="body"
                     />
                   </b-col>
-                </b-row>
-                <b-row class="mt-3">
                   <b-col>
                      <label
                       for="defaultFormCardNameEx"
@@ -434,6 +448,8 @@ export default {
                       readonly
                     />
                   </b-col>
+                </b-row>
+                <b-row class="mt-3">
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -447,8 +463,6 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
-                </b-row>
-                <b-row class="mt-3">
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -459,19 +473,6 @@ export default {
                       v-model.trim="helper"
                       class="form-control"        
                       :options="helperNames"
-                    >
-                    </b-form-select>
-                  </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Control Checker</label
-                    >
-                     <b-form-select
-                      v-model.trim="control"
-                      class="form-control"        
-                      :options="controlListNames"
                     >
                     </b-form-select>
                   </b-col>
