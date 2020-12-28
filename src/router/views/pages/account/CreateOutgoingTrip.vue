@@ -8,8 +8,7 @@ import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
 import { Datetime } from 'vue-datetime';
 import Multiselect from 'vue-multiselect'
 Vue.component('multiselect', Multiselect)
-import {
-  // eslint-disable-next-line no-unused-vars
+import { getLguById,
  stagingarea, lguemployee, haulers, getVehiclesByHaulerId, haulerEmployees, CreateOutgoingTrip
 } from '../../../../services/auth'
 
@@ -92,6 +91,8 @@ export default {
       this.loginlguid = result.lguemployee.lguId
       this.contractorDispatcherId = result.lguemployee.id
       this.contractorDispatcherName = result.lguemployee.userName
+      const result1 = await getLguById(this.loginlguid)
+      this.loginDetails.name = result1.data.response.result.lguName
     },
     async getStagingArea() {
       try {
@@ -101,7 +102,6 @@ export default {
         this.stagingAreas.map(e => {
           console.log(this.loginlguid+' '+e.lguName.id)
           if(this.loginlguid == e.lguName.id){
-            this.loginDetails.name = e.lguName.userName
             this.stagingAreaNames.push(e.stagingAreaName)
           }
         })
