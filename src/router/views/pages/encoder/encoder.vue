@@ -114,7 +114,7 @@ export default {
     }
   },
   computed: {
-    rows() {
+    /*rows() {
       //return this.tripdata.incomingTrips.length
     },
      rows1() {
@@ -122,7 +122,7 @@ export default {
     },
      rows2() {
       return this.tripdata.directTrips.length
-    },
+    },*/
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -156,7 +156,7 @@ export default {
         const result = await getAllOutgoingTrip()
         const data = result.data.response["OutgoingTrips:"]
         data.map(e => {
-          if(e.contractorDispatcherId == this.loginencoderid) {
+          if(e.contractorDispatcherId == this.loginencoderid && e.status == 'ASSIGNED') {
             this.outgoingTrips.push(e) 
           }
         })
