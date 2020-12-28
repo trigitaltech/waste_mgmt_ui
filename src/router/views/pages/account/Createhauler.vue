@@ -91,6 +91,7 @@ export default {
         code:'',
         baranggay:'',
         personalTitle: '',
+        haulerName:'',
         firstName: '',
         middleName: '',
         lastName: '',
@@ -162,9 +163,9 @@ export default {
           this.baranggay = e.id
           // this.baranggayCode = e.code
           // console.log("haii",e.districtId)
-          this.form.district = e.district[0].districtName
-          this.form.state = e.district[0].stateCode.stateName
-          this.form.country = e.district[0].stateCode.countryCode.countryName
+          this.form.district = e.districtName
+          this.form.state = e.state
+          this.form.country = e.country
         }
       })
     },
@@ -210,7 +211,7 @@ export default {
         const payload = {
         
                 code: this.form.code,
-                haulerName: this.form.userName,
+                haulerName: this.form.haulerName,
                 userName: this.form.userName,
                 password: this.form.password,
                 passwordStatus: 1,
@@ -305,14 +306,33 @@ export default {
                                 </ValidationProvider>-->
                             </div>
                           </div>
+                         
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">Personal Title</label>
-                              <multiselect
-                                v-model="form.personalTitle"
-                                placeholder="Select Personal Title"
-                                :options="titles"
-                              ></multiselect>
+                              <label for="default">Hauler Name</label>
+                              <!-- <ValidationProvider
+                                  v-slot="{ errors }"
+                                  name="First Name"
+                                  rules="required"
+                                >-->
+                              <input
+                                v-model.trim="form.haulerName"
+                                for="firstname"
+                                type="text"
+                                oninvalid="this.setCustomValidity('Hauler Name is required ')"
+                                oninput="setCustomValidity('')"
+                                placeholder="Enter HaulerName"
+                                class="form-control"
+                                required
+                              />
+                              <!-- <input
+                                    v-model.trim="form.firstName"
+                                    class="form-control"
+                                    placeholder="Enter First Name"
+                                    type="text"
+                                />-->
+                              <!-- <span class="text-danger">{{ errors[0] }}</span>
+                                </ValidationProvider>-->
                             </div>
                           </div>
                           <!-- <div class="col-md-4">
@@ -381,9 +401,19 @@ export default {
                                 </ValidationProvider>-->
                             </div>
                           </div>
+                           <div class="col-md-4">
+                            <div class="form-group mt-3 mt-sm-0">
+                              <label for="default">Personal Title</label>
+                              <multiselect
+                                v-model="form.personalTitle"
+                                placeholder="Select Personal Title"
+                                :options="titles"
+                              ></multiselect>
+                            </div>
+                          </div>
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">First Name</label>
+                              <label for="default">Contact First Name</label>
                               <!-- <ValidationProvider
                                   v-slot="{ errors }"
                                   name="First Name"
@@ -393,9 +423,9 @@ export default {
                                 v-model.trim="form.firstName"
                                 for="firstname"
                                 type="text"
-                                oninvalid="this.setCustomValidity('First Name is required ')"
+                                oninvalid="this.setCustomValidity('Contact First Name is required ')"
                                 oninput="setCustomValidity('')"
-                                placeholder="Enter FirstName"
+                                placeholder="Enter Contact FirstName"
                                 class="form-control"
                                 required
                               />
@@ -423,7 +453,7 @@ export default {
                             </div>-->
                            <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">Middle Name</label>
+                              <label for="default">Contact Middle Name</label>
                               <!-- <ValidationProvider
                                   v-slot="{ errors }"
                                   name="Last Name"
@@ -433,9 +463,9 @@ export default {
                                 v-model.trim="form.middleName"
                                 for="lastname"
                                 type="text"
-                                oninvalid="this.setCustomValidity('last name is required ')"
+                                oninvalid="this.setCustomValidity('Contact Middle name is required ')"
                                 oninput="setCustomValidity('')"
-                                placeholder="Enter LastName"
+                                placeholder="Enter Contact Middle Name"
                                 class="form-control"
                                 required
                               />
@@ -451,7 +481,7 @@ export default {
                           </div>
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">Last Name</label>
+                              <label for="default">Contact Last Name</label>
                               <!-- <ValidationProvider
                                   v-slot="{ errors }"
                                   name="Last Name"
@@ -461,9 +491,9 @@ export default {
                                 v-model.trim="form.lastName"
                                 for="lastname"
                                 type="text"
-                                oninvalid="this.setCustomValidity('last name is required ')"
+                                oninvalid="this.setCustomValidity('Contact last name is required ')"
                                 oninput="setCustomValidity('')"
-                                placeholder="Enter LastName"
+                                placeholder="Enter Contact LastName"
                                 class="form-control"
                                 required
                               />
@@ -603,7 +633,7 @@ export default {
                                   class="form-control"
                                   type="text"
                                   placeholder="Enter State"
-                               
+                               disabled
                                 />
                               </div>
                             </div>
@@ -615,7 +645,7 @@ export default {
                                   class="form-control"
                                   type="text"
                                   placeholder="Enter Country"
-                                
+                                disabled
                                 />
                               </div>
                             </div>

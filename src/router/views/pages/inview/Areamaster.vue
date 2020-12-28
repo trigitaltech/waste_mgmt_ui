@@ -71,7 +71,7 @@ export default {
        
 
          {
-          key: 'district[0].districtName',
+          key: 'districtName',
           label: 'DistrictName',
           sortable: true
         },

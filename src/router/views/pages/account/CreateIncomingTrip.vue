@@ -224,13 +224,14 @@ export default {
     //   }
     // },
     async getRoutes() {
+    
       try{
       for(var i = 0 ; i<this.areadata.length ;i++){
        if(this.area === this.areadata[i].areaName){
            this.areaid = this.areadata[i].id
-          const result2 = await getHaulerByBaranggayId(this.areadata[i].id)
+          const result2 = await haulers()
         
-        this.haulerList = result2.data.response.result
+        this.haulerList = result2.data.response.HaulerMaster
 
         this.haulerList.map(e=>{
  this.haulerListNames.push( e.haulerName)
@@ -629,20 +630,8 @@ export default {
                 
                 </b-row>
                 <b-row class="mt-3">
-                  <b-col>
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Code</label
-                    >
-                    <input
-                      v-model="code"
-                      class="form-control"
-                      name="trucktype"
-                      disabled
-                    />
-                  </b-col>
-                  <b-col class="ml-4">
+                
+                  <b-col class>
                      <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
@@ -657,9 +646,7 @@ export default {
                     readonly
                     />
                   </b-col>
-                </b-row>
-                <b-row class="mt-3">
-                  <b-col>
+                    <b-col>
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
@@ -673,6 +660,9 @@ export default {
                       disabled
                     />
                   </b-col>
+                </b-row>
+                <b-row class="mt-3">
+                
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -687,9 +677,7 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
-                </b-row>
-                <b-row class="mt-3">
-                  <b-col>
+                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -703,6 +691,9 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
+                </b-row>
+                <b-row class="mt-3">
+                 
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -717,8 +708,7 @@ export default {
                       >
                     </multiselect>
                   </b-col>
-                </b-row>
-                <b-row class="mt-3">
+               
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -733,7 +723,7 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
-                  <b-col></b-col>
+                 
                 </b-row>
                 <button
                   type="submit"

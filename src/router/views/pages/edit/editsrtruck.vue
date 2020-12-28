@@ -347,13 +347,19 @@ export default {
                     >
                       Time In</label
                     >
-                    <input
-                      id="defaultFormCardtextEx"
-                      type="text"
-                      class="form-control"
+                      <datetime 
                       v-model="input.timeIn"
-                      placeholder="Enter timein"
-                    />
+                      :format="{
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit'
+                      }"
+                      type="datetime"
+                      placeholder="SELECT Time"
+                 ></datetime>
+                
                   </b-col>
                   <b-col>
                     <label
@@ -362,13 +368,19 @@ export default {
                     >
                       Time Out</label
                     >
-                    <input
-                      id="defaultFormCardtextEx"
-                      type="text"
-                      class="form-control"
+                      <datetime 
                       v-model="input.timeOut"
-                      placeholder="Enter timeout"
-                    />
+                      :format="{
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit'
+                      }"
+                      type="datetime"
+                      placeholder="SELECT Time"
+                 ></datetime>
+                 
                   </b-col>
                   <b-col>
                     <label
