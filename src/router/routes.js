@@ -674,6 +674,7 @@ const pagesRoutes = [
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
+  
   {
     path: '/CreateClass',
     name: 'CreateClass',
@@ -1129,6 +1130,14 @@ const pagesRoutes = [
     name: 'Viewservicerequest',
     icon: 'check-square',
     component: () => lazyLoadView(import('@views/pages/views/viewservicerequest')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/ViewserviceTruck',
+    name: 'ViewserviceTruck',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewsrtruck')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },

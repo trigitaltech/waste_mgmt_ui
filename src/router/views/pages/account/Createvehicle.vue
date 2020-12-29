@@ -65,7 +65,7 @@ export default {
           active: true,
         },
       ],
-      haulers:[],
+      haulers:"",
       haulerdata:[],
       haulernames:[],
    owners:[],
@@ -110,7 +110,7 @@ export default {
     gethauler(){
 this.haulerdata.map(e=>{
   if(this.haulername === e.haulerName){
-    this.haulers =  e
+    this.haulers =  e.id
   }
 })
 
@@ -208,7 +208,7 @@ this.haulerdata.map(e=>{
           "vehicleNo": this.vehicleno,
           "plateNo": this.plateno,
           code:this.code,
-          hauler:this.haulers,
+          haulerId:this.haulers,
           volumeCapacity:this.volumecapacity,
           "ownerName": this.ownername,
           "ownerId": null,

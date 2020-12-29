@@ -125,9 +125,9 @@ export default {
       // console.log('ahahahahha')
       this.addres.map((e) => {
         if(e.areaName == this.form.baranggay){
-          this.form.district = e.district[0].districtName
-          this.form.state = e.district[0].stateCode.stateName
-          this.form.country = e.district[0].stateCode.countryCode.countryName
+          this.form.district = e.districtName
+          this.form.state = e.state
+          this.form.country = e.country
         }
       })
     },

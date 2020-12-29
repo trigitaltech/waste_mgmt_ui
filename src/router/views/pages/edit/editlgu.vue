@@ -80,7 +80,7 @@ export default {
       baranggayCode:[],
      form: {
     //  baranggay:this.$route.params.baranggay.areaName,
-       district:"",
+       district:this.$route.params.district,
        lguName:this.$route.params.lguName,
         lguCode:this.$route.params.code,
         personalidno:this.$route.params.personalIdNo,
@@ -205,7 +205,7 @@ export default {
     getdistricts(){
      this.addres.map(e=>{
         if(this.form.district === e.districtName){
-   
+  //  this.form.district = e.id
     this.form.state = e.stateCode.stateName
     this.form.country = e.stateCode.countryCode.countryName
    }
@@ -230,7 +230,7 @@ export default {
         const payload = {
           id: this.$route.params.id,
           code: this.form.lguCode,
-          lguName:this.form.userName,
+          lguName:this.form.lguName,
           userName: this.form.userName,
           password: this.form.password,
           passwordStatus: 1,
@@ -260,7 +260,7 @@ export default {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `LGU Editted Successfully`,
+            text: `LGU Edited Successfully`,
             duration: 5000,
           })
           this.$router.push({path:'/LGU/Lgu'})
@@ -321,17 +321,7 @@ export default {
                            
                            
                             </div>
-                          <div class="col-md-4">
-                            <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">Personal Title</label>
-                              <multiselect
-                                required
-                                v-model="form.personalTitle"
-                                placeholder="Select Personal Title"
-                                :options="titles"
-                              ></multiselect>
-                            </div>
-                          </div>
+                        
                           <!-- <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">Gender</label>
@@ -342,6 +332,34 @@ export default {
                                 ></multiselect>
                               </div>
                             </div>-->
+                               <div class="col-md-4">
+                            <div class="form-group mt-3 mt-sm-0">
+                              <label for="default">LGU Name</label>
+                              <!-- <ValidationProvider
+                                  v-slot="{ errors }"
+                                  name="First Name"
+                                  rules="required"
+                                >-->
+                              <input
+                                v-model.trim="form.lguName"
+                                for="firstname"
+                                type="text"
+                                oninvalid="this.setCustomValidity('Lgu Name is required ')"
+                                oninput="setCustomValidity('')"
+                                placeholder="Enter LGUName"
+                                class="form-control"
+                                required
+                              />
+                              <!-- <input
+                                    v-model.trim="form.firstName"
+                                    class="form-control"
+                                    placeholder="Enter First Name"
+                                    type="text"
+                                />-->
+                              <!-- <span class="text-danger">{{ errors[0] }}</span>
+                                </ValidationProvider>-->
+                            </div>
+                          </div>
                              <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">User Name</label>
@@ -398,9 +416,20 @@ export default {
                                 </ValidationProvider>-->
                             </div>
                           </div>
+                            <div class="col-md-4">
+                            <div class="form-group mt-3 mt-sm-0">
+                              <label for="default">Personal Title</label>
+                              <multiselect
+                                required
+                                v-model="form.personalTitle"
+                                placeholder="Select Personal Title"
+                                :options="titles"
+                              ></multiselect>
+                            </div>
+                          </div>
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">First Name</label>
+                              <label for="default">Contact First Name</label>
                               <!-- <ValidationProvider
                                   v-slot="{ errors }"
                                   name="First Name"
@@ -410,9 +439,9 @@ export default {
                                 v-model.trim="form.firstName"
                                 for="firstname"
                                 type="text"
-                                oninvalid="this.setCustomValidity('First Name is required ')"
+                                oninvalid="this.setCustomValidity('Contact First Name is required ')"
                                 oninput="setCustomValidity('')"
-                                placeholder="Enter FirstName"
+                                placeholder="Enter Contact FirstName"
                                 class="form-control"
                                 required
                               />
@@ -440,7 +469,7 @@ export default {
                             </div>-->
                            <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">Middle Name</label>
+                              <label for="default">Contact Middle Name</label>
                               <!-- <ValidationProvider
                                   v-slot="{ errors }"
                                   name="Last Name"
@@ -450,9 +479,9 @@ export default {
                                 v-model.trim="form.middleName"
                                 for="lastname"
                                 type="text"
-                                oninvalid="this.setCustomValidity('last name is required ')"
+                                oninvalid="this.setCustomValidity('Contact Middle name is required ')"
                                 oninput="setCustomValidity('')"
-                                placeholder="Enter LastName"
+                                placeholder="Enter Contact Middle Name"
                                 class="form-control"
                                 required
                               />
@@ -468,7 +497,7 @@ export default {
                           </div>
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">Last Name</label>
+                              <label for="default">Contact Last Name</label>
                               <!-- <ValidationProvider
                                   v-slot="{ errors }"
                                   name="Last Name"
@@ -478,9 +507,9 @@ export default {
                                 v-model.trim="form.lastName"
                                 for="lastname"
                                 type="text"
-                                oninvalid="this.setCustomValidity('last name is required ')"
+                                oninvalid="this.setCustomValidity('Contact last name is required ')"
                                 oninput="setCustomValidity('')"
-                                placeholder="Enter LastName"
+                                placeholder="Enter Contact LastName"
                                 class="form-control"
                                 required
                               />

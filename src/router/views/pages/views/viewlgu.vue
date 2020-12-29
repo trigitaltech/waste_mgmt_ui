@@ -75,7 +75,7 @@ export default {
       baranggayCode:"",
      form: {
        baranggay:this.$route.params.areaName,
-       district:"",
+       district:this.$route.params.district,
        lguName:this.$route.params.lguName,
         lguCode:this.$route.params.code,
         personalidno:this.$route.params.personalIdNo,
@@ -577,12 +577,12 @@ export default {
                           </div>
                           <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Baranggay</label>
+                                <label for="default">District</label>
                                 <input
-                                  v-model.trim="form.baranggay"
+                                  v-model.trim="form.district"
                                   class="form-control"
                                   type="text"
-                                  placeholder="Enter Baranggay"
+                                  placeholder="District"
                                   disabled
                                 />
                               </div>

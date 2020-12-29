@@ -75,7 +75,7 @@ export default {
       lgumaster:[],
       lguid:"",
       lgu:"",
-      district:this.$route.params.district
+      district:this.$route.params.districtName
     }
   },
   computed: {
@@ -124,7 +124,7 @@ this.addres.map(e=>{
 
   if(this.district === e.districtName){
     this.dist = [e]
-    this.districtcode = e.districtCode
+    // this.districtcode = e.districtCode
     this.state = e.stateCode.stateName
     this.countrys = e.stateCode.countryCode.countryName
   }
@@ -159,7 +159,7 @@ this.addres.map(e=>{
           country: this.countrys,
           state: this.state,
           zip: this.zip,
-          district: this.district,
+          districtName: this.district,
           description:this.description,
           isDeleted: false,
           createdDate: this.createddate,

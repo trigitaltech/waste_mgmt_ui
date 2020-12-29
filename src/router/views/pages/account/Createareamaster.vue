@@ -124,7 +124,7 @@ export default {
 // console.log('ahahahahha')
 this.addres.map(e=>{
   if(this.district === e.districtName){
-    this.districtcode = e.districtCode
+    // this.districtcode = e.districtCode
     this.state = e.stateCode.stateName
     this.countrys = e.stateCode.countryCode.countryName
   }
@@ -160,7 +160,7 @@ this.addres.map(e=>{
           description: this.description,
           city: "",
           zip:this.zip,
-          districtCode: this.districtcode,
+          districtName: this.district,
           lguId: this.lguid
         }
         let result = await createarea(payload)

@@ -67,7 +67,7 @@ export default {
         },
       ],
    
-    
+     district:this.$route.params.districtName
     }
   },
   computed: {
@@ -230,22 +230,7 @@ export default {
                  <br/>
                   <b-row>
                     
-                      <b-col>
-                    <!-- Default input email -->
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Supervisor</label
-                    >
-
-                  <input
-                    id="defaultFormCardEmailEx"
-                      v-model="supervisor"
-                      disabled
-                      type="email"
-                      class="form-control"
-                    />
-                      </b-col>
+                    
                       <b-col>
                     <label
                       for="defaultFormCardEmailEx"
@@ -301,7 +286,7 @@ export default {
                     >
                     <input
                     id="defaultFormCardEmailEx"
-                      v-model="city"
+                      v-model="district"
                       disabled
                       type="email"
                       class="form-control"

@@ -279,7 +279,6 @@ export default {
           country: this.form.country,
           pin: this.form.postCode,
           isDeleted: false,
-          status: 200,
           type: this.rolename,
           personalIdNo: this.form.personalidno,
          

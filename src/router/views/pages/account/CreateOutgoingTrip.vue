@@ -325,7 +325,7 @@ export default {
                       >
                       </b-form-select>
                     </b-col>
-                  </b-col>
+                
                 </b-row>
                 <b-row class="mt-3">
                   <b-col>
