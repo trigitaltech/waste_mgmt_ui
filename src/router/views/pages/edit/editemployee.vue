@@ -320,7 +320,7 @@ export default {
                               <input
                                 v-model.trim="form.password"
                                 for="firstname"
-                                type="text"
+                                type="password"
                               
                                 placeholder="Enter Password"
                                 class="form-control"

@@ -11,7 +11,7 @@ import {
 } from 'vee-validate/dist/vee-validate.full'
 import {
   servicerequests,
-  deleteservicerequest,
+  deleteservicerequest,serviceequipment
 } from '../../../../services/auth'
 
 export default {
@@ -52,23 +52,27 @@ export default {
           label: 'ID',
         },
         {
-          key: 'serviceNo',
-          label: 'serviceNo',
+          key: 'controlNo',
+          label: 'controlNo',
         },
 
         {
-          key: 'dumpingArea',
-          label: 'dumpingArea',
+          key: 'dumpingareaId',
+          label: 'dumpingareaId',
         },
 
         {
-          key: 'equipmentId',
-          label: 'equipmentId',
+          key: 'equipmentNo',
+          label: 'equipmentNo',
+        },
+        {
+          key: 'equipmentmodel',
+          label: 'equipmentmodel',
         },
 
         {
-          key: 'tripDate',
-          label: 'TripDate',
+          key: 'created_date',
+          label: 'Ticket Date',
         },
         {
           key: 'status',
@@ -135,7 +139,7 @@ export default {
     },
   },
   mounted() {
-    //   this.servicerequest()
+      this.servicerequest()
   },
   methods: {
     getDate(timeStamp) {
@@ -169,8 +173,8 @@ export default {
     },
     async servicerequest() {
       try {
-        const result = await servicerequests()
-        this.item = result.data.response.ServiceTicket
+        const result = await serviceequipment()
+        this.item = result.data.response.result
       } catch (error) {}
     },
     async refresh() {
@@ -242,13 +246,13 @@ export default {
                   <i class="fa fa-eye edit"></i>
                 </span>
               </router-link>
-              <router-link
+              <!-- <router-link
                 :to="{ name: 'Editservicerequest', params: data.item }"
               >
                 <span class="mr-2">
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>
-              </router-link>
+              </router-link> -->
               <span @click="deleteReq(data)">
                 <i class="fa fa-times edit"></i>
               </span>

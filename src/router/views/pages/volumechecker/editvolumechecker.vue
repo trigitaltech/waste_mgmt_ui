@@ -9,7 +9,7 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import { Edituser, users ,editvolumechecker,getnameByLguId,getnameByBRGY} from '../../../../services/auth'
+import { Edituser, users ,editvolumechecker,getnameByLguId,getnameByBRGY,Areamasters} from '../../../../services/auth'
 
 export default {
   page: {
@@ -92,10 +92,25 @@ export default {
     // this.userdata()
        this.getname()
      this.getBRGYname()
+     this.getplans()
       
   },
 
   methods: {
+    async getplans() {
+       try {
+        
+      const result = await  Areamasters()
+      var data = result.data.response.areaMaster
+      data.map(e=>{
+        if(this.$route.params.baranggayId === e.id){
+          this.baranggayid = e.areaName
+        }
+      })
+       
+      } catch (error) {}
+   
+    },
     async getBRGYname() {
       try {
         const result = await getnameByBRGY(this.$route.params.baranggayId)

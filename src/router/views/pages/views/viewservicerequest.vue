@@ -1,82 +1,132 @@
 <script>
+import Vue from 'vue'
 import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
+import NProgress from 'nprogress/nprogress'
+import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
+import { Datetime } from 'vue-datetime'
 import Multiselect from 'vue-multiselect'
-import { ModelSelect } from 'vue-search-select'
-import VueTimepicker from 'vue2-timepicker'
+import moment from 'moment'
+Vue.component('multiselect', Multiselect)
 import {
-  ValidationProvider,
-  ValidationObserver,
-} from 'vee-validate/dist/vee-validate.full'
-import {
- dumpinglocation,users,editservicerequest,equipment,employees
+  getVehiclesByhauler,
+  Createsrtruck,
+  getdumpdata,
+  dumpinglocation,
+  haulers,
+  Tripdownload,
+  Areamasters,
+  routemaster,
+  CreateIncomingTrip,
+  haulerEmployees,
+  vehicle,
+  getRoutesByBaranggayId,
 } from '../../../../services/auth'
-import { Datetime } from 'vue-datetime';
+
 export default {
   page: {
-    title: 'View Servicerequest',
+    title: 'Create Servicerequest Equipment',
     meta: [{ name: 'description', content: appConfig.description }],
-  },
-  components: {
-    VueTimepicker,
-      datetime: Datetime,
-    Layout,
-    PageHeader,
-    Multiselect,
-    ValidationProvider,
-    ValidationObserver,
-    ModelSelect,
   },
   data() {
     return {
-      operators:[],
-      employe:[],
-      users:[],
-      status:this.$route.params.status,
-      type:[],
-      tripdate:this.$route.params.tripDate,
-      time:this.$route.params.jobStartTime,
-      requesttype:this.$route.params.requestType,
-      equipmentno:"",
-      equipmentid:"",
-      equipmentperformance:"",
-      equipmentusage:"",
-      equipmenttype:"",
-      operatorname:this.$route.params.operatorName,
-      operator:"",
-      dumparea:this.$route.params.dumpingArea,
-      drivername:this.$route.params.driverName,
-      driverid:"",
-      controlcheckerid:"",
-      controlcheckername:this.$route.params.controlChekerName,
-      operatorid:"",
-     
-      dump:[],
-      createdby:this.$route.params.createdBy,
-      createddate: new Date(),
-      modifydate: new Date(),
-      modifyby:"",
-       option: [
-       
-        { value: 'SOILTRUCK', text: 'SOIL TRUCK' },
-        { value: 'EQUIPMENT', text: 'EQUIPMENT' },
+      inputs: [
+        {
+          name: '',
+        },
       ],
-      title: 'Register',
-     item:[{ value: null, text: 'Please select an user' }],
       items: [
         {
-          text: 'Home',
+          text: 'Servicerequests',
           href: '/',
         },
         {
-          text: 'ServiceRequests / View Servicerequest',
+          text: 'Servicerequest Equipment',
+          href: '#/Servicerequest/Equipment',
+        },
+        {
+          text: 'Create SR Equipment',
           active: true,
         },
       ],
+      areadata: [],
+      areaarray: '',
+      routedate: [],
+      haulerarray: [],
+      routearray: [],
+      emp: [],
+      dumpid: '',
+      dumpinglocation: '',
+      controlno: this.$route.params.controlNo,
+      tripDate: this.$route.params.created_date,
+      plateno: '',
+      hauler: '',
+      vehicleno: '',
+      Type:this.$route.params.type,
+      equipmentno:this.$route.params.equipmentNo,
+      model:this.$route.params.equipmentmodel,
+      driver1:this.$route.params.driverName,
+      helper1: this.$route.params.helperName,
+      volumecapacity: this.$route.params.volumeCapacity,
+      trucktype:this.$route.params.truckType,
+      frompoint:this.$route.params.fromPoint,
+      topoint:this.$route.params.toPoint,
+      dispatchedby:this.$route.params.dispatchedBy,
+      body: '',
+      area: '',
+      route: '',
+      driver: '',
+      contractor: '',
+      collector: null,
+      lgu: '',
+
+      vehicleno: '',
+      plates: [],
+      body: '',
+      vehicledata: [],
+timeinpm:this.$route.params.driverTimeIn,
+      driverid: '',
+      startTime: '',
+      drivers: [],
+      trucktype:this.$route.params.truckType,
+      Verified:this.$route.params.verifiedBy,
+      totaltrips:this.$route.params.totalTrips,
+      helpers: [],
+      vehicles: [],
+      servingAreas: [],
+      route: '',
    
+      helperid: '',
     
+      servingRoutes: [],
+      haulerid: '',
+      driverList: [],
+      hauler: '',
+      haulerList: [],
+      contractorList: [],
+      vehicledata: [],
+      paleroList: [],
+      garbage: null,
+      dumpings: [],
+      haulers: [],
+      dumpingdata: [],
+      plates: [],
+      haulerdata: [],
+      fromdumpings: [],
+      todumpings: [],
+      lgu: null,
+      dumpingid: '',
+      haulerid: '',
+      dispatcherid: '',
     }
+  },
+  components: {
+    Layout,
+    PageHeader,
+    VueTimepicker,
+    Multiselect,
+    datetime: Datetime,
   },
   computed: {
     getUserDetails() {
@@ -84,135 +134,28 @@ export default {
     },
   },
   mounted() {
-console.log(this.$route.params)
-    // this.getClientDetails()
-    // this.getplans()
-       this.createdby = this.getUserDetails.user.username
-    this.modifyby = this.getUserDetails.user.username
+    this.tripDate = moment(new Date()).format('DD-MM-YYYY')
+    this.startTime = moment(new Date()).format('DD-MM-YYYY hh:mm A')
+    console.log(this.tripDate + ' ' + this.startTime)
     // this.getdumping()
-    // this.getequipment()
-    // this.userdata()
-    // this.getemployees()
+    // this.gethaulers()
+    // this.areas()
+    console.log(this.$route.params)
+    // this.routes()
+    // this.getUsers()
+    // this.employeedata()
+    // this.getLgu()
+    // this.getvehicles()
   },
   methods: {
-    async getuid(){
-       this.users.map(e=>{
-         if(this.controlcheckername === e.userName){ 
-        this.controlcheckerid === e.id
-         }
-      })
-           
-    },
-     async userdata() {
-       try {
-    
-      const result = await users()
-      var item = result.data.response.Users
-      item.map(e=>{
-        this.users.push(e.userName)
-      })
-     
-      } catch (error) {}
-     },
-    async getdumping() {
-       try {
-      
-      const result = await  dumpinglocation()
-      var data = result.data.response.dumpingLocation
-      
-    
+    async getLgu() {
+      const result = JSON.parse(localStorage.getItem('auth.currentUser'))
 
-      data.map(e=>{
-      this.dump.push(e.dumpingAreaName)
-      console.log("user",e)
-      })
-       console.log("users",this.item)
-     
-      } catch (error) {}
-     },
-       async getemployees() {
-       try {
-       
-      const result = await  employees()
-      this.employe = result.data.response.result
-    this.employe.map(e=>{
-this.operators.push(e.type)
-    })
+      this.dispatcherid = result.lguemployee.id
 
-
-      } catch (error) {}
-   
+      console.log(this.loginDetails)
     },
-    async create() {
-      console.log("hai")
-      try {
-        const payload = {
-             
-                id: this.$route.params.id,
-              "tripDate": "2020-11-26T10:00:44.000+00:00" ,
-                "equipmentNo": "635GH",
-                "equipmentId": "DS513",
-                "equipmentType": "Compactt",
-                "jobStartTime": "2020-11-26T10:00:44.000+00:00",
-                "jobEndTime": "2020-11-26T10:00:44.000+00:00",
-                "requestType": "soil Truck",
-                "dumpingArea": "kukatpally",
-                "driverName": "cindy",
-                "driverId": 321,
-                "operatorId": 41321,
-                "controlCheckerid": 421,
-                "controlChekerName": "Candy",
-                "totalKmServed": 11,
-                "isDeleted": "false",
-                "status": "ASSIGNED",
-                "createdBy": "encoder",
-                "modifiedBy": "Admin",
-                "equipment_PERFORMANCE": 36,
-                "equipment_USAGE": 33,
-                "lgu": "Admin",
-                "operatorName": "Mindy"
-           
-            }
-            console.log("hello")
-        let result = await editservicerequest(payload)
-        console.log("hi",result)
-        if (result) {
-          this.$swal({
-            group: 'alert',
-            type: 'success',
-            text: `You Edited Service Request Successfully`,
-            duration: 5000,
-          })
-         
-           this.$router.push({path:'/Servicerequestdetails'})
-            
-        }
-      } catch (e) {
-        console.log("hi")
-        this.$toasted.error(e.message.error, {
-          duration: 7000,
-        })
-      }
-    },
-      async getequipment() {
-       try {
-      
-      const result = await  equipment()
-      var item = result.data.response.equipment
-       item.map(e=>{
-      this.type.push(e.equipmentType)
-      console.log("user",e)
-      })
-      } catch (error) {}
-   
-    },
-   
- 
-    async refresh() {
-      setTimeout(function () {
-        location.reload()
-      }, 200)
-    },
+  
   },
 }
 </script>
@@ -220,348 +163,332 @@ this.operators.push(e.type)
 <template>
   <Layout>
     <PageHeader :items="items" />
-
-    <div class="animated fadeIn">
+    <div class="animated">
       <b-card
-        header="View Servicerequest"
-      
+        header="View Servicerequest Equipment"
         class="mt-10 ml-10 mr-10 mx-auto"
       >
-        <div class="mt-3">
-          <!-- Card -->
-          <div class="card mx-xl-5">
-            <!-- Card body -->
+        <div class="mt-1">
+          <div class="mx-xl-5">
             <div class="card-body">
-              <!-- Default form subscription -->
-              <form >
+              <form @submit.prevent="create">
                 <b-row>
                   <b-col>
-                    <!-- Default input name -->
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
+                      >CONTROL NO</label
                     >
-                     Dumping Area </label
-                    >
-                      <input
-                      type="text"
-                      id="defaultFormCardtextEx"
+                    <input
+                      v-model="controlno"
                       class="form-control"
-                      v-model="dumparea"
-                        disabled
+                      placeholder="Enter Contol No"
+                      name="body"
+                      disabled
                     />
-
-
-                   <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Request Type</label
-                    >
-                      <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="requesttype"
-                        disabled
-                    />
-
-                    <br />
-
-                    <!-- Default input text -->
                   </b-col>
-                  <b-col >
-                      <label
+                  <b-col>
+                    <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Trip Date</label
                     >
-             <input
-                      type="text"
-                      id="defaultFormCardtextEx"
+                    <input
+                      v-model="tripDate"
                       class="form-control"
-                      v-model="tripdate"
+                      placeholder="Enter Contol No"
+                      name="body"
                       disabled
                     />
-
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >JOB Start Time</label
-                    >
-                  
-                  <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="time"
-                        disabled
-                    />
-                   
-                    <!-- Default input name -->
                   </b-col>
-                  <br />               
-                </b-row>
-                  <b-row v-if="this.requesttype === 'soil Truck'">
-                    
-                      <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Plate</label
-                    >
-                <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="plate"
-                      disabled
-                    />
-
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Body</label
-                    >
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="body"
-                       disabled
-                    
-                    />
-                  </b-col>
-               
-                 <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Driver Name</label
-                    >
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="drivername"
-                      disabled
-                    />
-
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Truck Type</label
-                    >
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="trucktype"
-                       disabled
-                    
-                    />
-                  </b-col>
-                  
-                </b-row>
-                  <b-row v-if="this.requesttype === 'EQUIPMENT'">
-                    
-                      <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >EQUIPMENT NO</label
-                    >
-                <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="equipmentno"
-                        placeholder="Enter Equipment No"
-                    />
-
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >EQUIPMENT ID</label
-                    >
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="equipmentid"
-                        placeholder="Enter Equipment ID"
-                    
-                    />
-                  </b-col>
-               
-                 <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >EQUIPMENT TYPE</label
-                    >
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="equipmenttype"
-                       placeholder="Enter Equipment Type"
-                    />
-
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >EQUIPMENT USAGE</label
-                    >
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="equipmentusage"
-                        placeholder="Enter Equipment Usage"
-                    
-                    />
-                  </b-col>
-                  
-                </b-row>
-             <b-row>
-                    <!-- Default input text -->
-                    <b-col v-if="this.requesttype === 'EQUIPMENT'">
-                          <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >EQUIPMENT PERFORMANCE</label>
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="equipmentperformance"
-                        placeholder="Enter Equipment Performance"
-                    
-                    />
-                    </b-col>
-                    <b-col>
-                   
-                  
-                    
-                    </b-col>
-                
                 </b-row>
                 <b-row>
                   <b-col>
-                     <label
+                    <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Operator</label>
-                      <input
-                      type="text"
-                      id="defaultFormCardtextEx"
+                      >Dumping Location</label
+                    >
+                    <input
+                      v-model="dumping"
                       class="form-control"
-                      v-model="operatorname"
-                       disabled
+                      placeholder="Enter Dumping"
+                      name="body"
+                      disabled
                     />
                   </b-col>
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Control Checker</label>
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
+                      >Hauler</label
+                    >
+                  <input
+                      v-model="controlno"
                       class="form-control"
-                      v-model="controlcheckername"
-                        disabled
+                      placeholder="Enter Contol No"
+                      name="body"
+                      disabled
                     />
-                  
-                    
-                    </b-col>
-                </b-row>
-                 <b-row>
+                  </b-col>
+                
+                
+               
                   <b-col>
-                     <label
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >Type</label
+                    >
+                    <input
+                      v-model="Type"
+                      class="form-control"
+                      name="body"
+                      readonly
+                      placeholder="Enter Type"
+                      disabled
+                    />
+                  </b-col>
+                 
+                </b-row>
+                <b-row>
+                  <b-col>
+                    <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >CreatedBy</label>
-                      <input
-                      type="text"
-                      id="defaultFormCardtextEx"
+                      >Equipment No</label
+                    >
+                   <input
+                      v-model="equipmentno"
                       class="form-control"
-                      v-model="createdby"
-                       disabled
+                    disabled
+                      name="body"
                     />
                   </b-col>
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Status</label>
+                      >Model</label
+                    >
                     <input
-                      type="text"
-                      id="defaultFormCardtextEx"
+                      v-model="model"
                       class="form-control"
-                      v-model="status"
-                        disabled
+                   
+                      name="body"
+                      disabled
                     />
-                  
-                    
-                    </b-col>
+                  </b-col>
                 </b-row>
-                <br />
+                <b-row class="mt-3">
+                  <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >From Dumping Point</label
+                    >
+                   <input
+                      v-model="frompoint"
+                      class="form-control"
+                      placeholder="Enter Contol No"
+                      name="body"
+                      disabled
+                    />
+                  </b-col>
+                  <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >To Dumping Point</label
+                    >
+                    <input
+                      v-model="topoint"
+                      class="form-control"
+                      placeholder="Enter Contol No"
+                      name="body"
+                      disabled
+                    />
+                  </b-col>
+                </b-row>
+                 <b-row class="mt-3">
+                  <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Dispatched By</label
+                    >
+                   <input
+                      v-model="dispatchedby"
+                      class="form-control"
+                      placeholder="Enter Dispacted By"
+                      name="body"
+                      disabled
+                    />
+                  </b-col>
+                  <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Verified By</label
+                    >
+                    <input
+                      v-model="Verified"
+                      class="form-control"
+                      placeholder="Enter Verified By"
+                      name="body"
+                      disabled
+                    />
+                  </b-col>
+                </b-row>
+                   <b-row >
+              <b-col md="4">
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  TiME IN AM</label
+                >
 
-               <!-- <b-button
-                  style="
-                    background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-info float-right mr-2"
-                  text="Create Tenant"
-                  @click="create()"
-                  >Edit</b-button
+                <input
+                  id="defaultFormCardtextEx"
+                  type="text"
+                  class="form-control"
+                  v-model="timeinpm"
+                  placeholder="Enter Time IN AM"
+                  disabled
+                />
+              </b-col>
+              <b-col md="4">
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  TIME OUT AM</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  type="text"
+                  class="form-control"
+                  v-model="timeinpm"
+                  placeholder="Enter Time Out Am"
+                  disabled
+                />
+              </b-col>
+              <b-col md="4">
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  TOTAL Trips</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  type="text"
+                  class="form-control"
+                  v-model="totaltrips"
+                  placeholder="Enter Total Trips"
+                  disabled
+                />
+              </b-col>
+             
+            </b-row>
+              <b-row >
+              <b-col md="4">
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Time IN PM</label
+                >
+
+                <input
+                  id="defaultFormCardtextEx"
+                  type="text"
+                  class="form-control"
+                  v-model="timeinpm"
+                  placeholder="Enter Time IN PM"
+                  disabled
+                />
+              </b-col>
+              <b-col md="4">
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  TIME OUT PM</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  type="text"
+                  class="form-control"
+                  v-model="timeinpm"
+                  placeholder="Enter Time Out PM"
+                  disabled
+                />
+              </b-col>
+              <b-col md="4">
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  TOTAL Trips</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  type="text"
+                  class="form-control"
+                  v-model="input"
+                  placeholder="Enter Total Trips"
+                  disabled
+                />
+              </b-col>
+             
+            </b-row>
+                <br />
+                <!-- <button
+                  type="submit"
+                  class="btn btn-custome float-right btn-secondary mb-3"
+                  >Submit</button
                 > -->
               </form>
-              <!-- Default form subscription -->
             </div>
-            <!-- Card body -->
           </div>
-          <!-- Card -->
         </div>
       </b-card>
     </div>
-    <!-- end row -->
   </Layout>
 </template>
-<style lang="scss">
 
- .vue__time-picker input.display-time {
-    
-    display: block;
-    width: 380%;
-    height: calc( 1.5em + 1rem + 2px );
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #4b4b5a;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #e2e7f1;
-    border-radius: 0.3rem;
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style lang="scss" scoped media="print">
+.cardheader.title {
+  color: black;
+}
+</style>
+<style lang="stylus" scoped>
+body {
+  font-family: Arial;
 }
 
-</style>
-<style lang="sass" scoped>
-.edit
-  color: white !important
-.text-center
-  text-align: center
-.form-div label
-  margin-top: 8px
-</style>
-<style lang="sass" scoped>
-.card-wrap
-  box-shadow: 0 0 10px #ccc
-  .role-details
-    margin: 10px
+.coupon {
+  border: 5px dotted #bbb;
+  width: 80%;
+  border-radius: 15px;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.container {
+  padding: 2px 16px;
+  background-color: #f1f1f1;
+}
+
+.promo {
+  background: #ccc;
+  padding: 3px;
+}
+
+.expire {
+  color: red;
+}
 </style>

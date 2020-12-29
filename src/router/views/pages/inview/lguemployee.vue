@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- deletelgu, lguemployee
+ deletelgu, lguemployee,lgus
 } from '../../../../services/auth'
 
 export default {
@@ -41,6 +41,7 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
+      lgudata:[],
        item: [],
         
         
@@ -55,7 +56,11 @@ export default {
 
           label: 'First Name',
         },
-       
+        {
+          key: 'lguId',
+          label: 'Lgu Name',
+          sortable: true
+        },
          {
           key: 'email',
 
@@ -96,8 +101,21 @@ export default {
   mounted() {
   
     this.getemployees()
+    this.getemploye()
   },
   methods: {
+     async getemploye() {
+       try {
+       
+      
+        // data.map( e => {
+        //   if(e.type!="ENCODER" && e.type!="VOLUME_CHECKER" && e.type!="DISPATCHER")
+        //     this.item.push(e)
+        // })
+        console.log(this.item)
+       
+      } catch (error) {}
+    },
     async deleteReq(data) {
      try{
           alert('1')
@@ -121,12 +139,23 @@ export default {
     async getemployees() {
        try {
         NProgress.start()
+        // debugger
         const result = await  lguemployee()
         this.item = result.data.response.result
-        // data.map( e => {
-        //   if(e.type=="ENCODER" || e.type=="VOLUME_CHECKER" || e.type=="DISPATCHER")
-        //     this.item.push(e)
-        // })
+       const result1 = await  lgus()
+        this.lgudata = result1.data.response.result
+
+         for (var i = 0; i < this.item.length; i++) {
+          
+  for (var j = 0; j < this.lgudata.length; j++) {
+if(this.lgudata[j].id === this.item[i].lguId ){
+  this.item[i].lguId = this.lgudata[j].lguName
+  
+  break
+}
+
+  }
+         }
           console.log(this.item)
         NProgress.done()
       } catch (error) {}
