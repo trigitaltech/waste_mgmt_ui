@@ -119,7 +119,7 @@ export const createLGU = (payload) => serviceMaker(`/LGU/admin/create`, methods.
 
 export const createhauleremployee = (payload) => serviceMaker(`/haulermaster/employees/admin`, methods.POST, api.NGB, payload)
 
-export const createlguemployee = (payload) => serviceMaker(`/LGU/employee/admin`, methods.POST, api.NGB, payload)
+export const createlguemployee = (payload) => serviceMaker(`/LGU/employee`, methods.POST, api.NGB, payload)
 
 export const createvehicle = (payload) => serviceMaker(`/vehicles/admin/encoders`, methods.POST, api.NGB, payload)
 
@@ -253,7 +253,7 @@ export const getEMPByLguId = (id,id2) => serviceMaker(`haulermaster/employees/ge
 
  export const getEMPhelpByLguId = (id,id3) => serviceMaker(`haulermaster/employees/getbytype/${id}/${id3}`,methods.GET,api.NGB)
 
-export const getlgubyId = (id) => serviceMaker(`/LGU/admin/${id}`,methods.GET,api.NGB)
+export const getlgubyId = (id) => serviceMaker(`/LGU/${id}`,methods.GET,api.NGB)
 
 
 export const getgarbagebyId = (id,id2) => serviceMaker(`/employees/details/${id}/${id2}`,methods.GET,api.NGB)
