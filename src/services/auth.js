@@ -287,3 +287,6 @@ export const incomingbytstatus = (status) => serviceMaker (`/tripincoming/billin
 
 
 export const checkerupdatebystatus = (payload) => serviceMaker (`/tripincoming/completetrip`, methods.PUT, api.NGB,payload)
+
+
+export const getLguById = (id) => serviceMaker(`/LGU/${id}`,methods.GET,api.NGB)
