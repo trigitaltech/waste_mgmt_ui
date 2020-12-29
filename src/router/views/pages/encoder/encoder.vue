@@ -76,7 +76,6 @@ export default {
           { key: 'helperName', label:'HelperName',  sortable: true },
             { key: 'loadingStartTime',label:'StartTime',  sortable: true },
               { key: 'bodyNo',label:'BodyNo',  sortable: true },
-                { key: 'typeOfUnit', label:'TruckType', sortable: true },
        { key: 'plateNo',label:'PlateNO',  sortable: true },
         { key: 'volumeCheckerName', label:'CheckerName', sortable: true },
         { key: 'status', sortable: true },
@@ -156,7 +155,7 @@ export default {
         const result = await getAllOutgoingTrip()
         const data = result.data.response["OutgoingTrips:"]
         data.map(e => {
-          if(e.contractorDispatcherId == this.loginencoderid && e.status == 'ASSIGNED') {
+          if(e.contractorDispatcherId == this.loginencoderid) {
             this.outgoingTrips.push(e) 
           }
         })
@@ -250,11 +249,10 @@ export default {
     },
     onFiltered() {
 
+    },
+    print() {
+      alert('1')
     }
-    
-   
-    
-   
   },
 }
 </script>
@@ -567,30 +565,18 @@ export default {
                   >
                     <template v-slot:cell(requestDate)="data"
                       >{{ getFormattedDate(data.item.requestDate) }}</template>
-                    <!-- <template v-slot:cell(action)="data">
-                      <button
-                        class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
-                        @click="print(data.item)"
-                      >
-                        <feather type="printer" class="icon-xs mr-2"></feather>Print
-                      </button>
-                      <button  @click="download(data.item)" style="border:1px;margin:5px;background-color:white">
-                        
-                      <download-excel
-                        class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
-                        :data="json_data"
-                        :fields="json_fields"
-                        worksheet="My Worksheet"
-                        name="vouchers.xls"
-                      >
-                        <feather type="download" class="icon-xs mr-2"  ></feather>Download
-                      </download-excel>
-                      </button> -->
-                      <!-- <download-excel :data="json_data">
-                  
-                        <feather type="download" class="icon-xs mr-2"></feather>Download
-                      </download-excel>-->
-                    <!-- </template> -->
+                    <template v-slot:cell(action)="data">
+                      <router-link v-if="data.item.status!='ASSIGNED'" :to="{ name: 'ViewOutgoingTrip', params: data.item }">
+                        <span class="mr-2" >
+                         <i class="fa fa-eye edit"></i>
+                        </span>
+                      </router-link>
+                      <span>
+                        <button @click="print(data.item)" class="btn-primary-outline">
+                          <i class="fa fa-print"></i>
+                        </button>
+                      </span>
+                    </template>
                   </b-table>
                 </div>
                 <div class="row">

@@ -1288,6 +1288,14 @@ const pagesRoutes = [
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
+  {
+    path: '/ViewOutgoingTrip',
+    name: 'ViewOutgoingTrip',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/encoder/ViewOutgoingTrip')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
 ]
 
 // error pages
