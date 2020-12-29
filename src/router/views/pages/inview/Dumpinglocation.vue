@@ -64,10 +64,7 @@ export default {
           key: 'address',
           label: 'Address',
         },
-       {
-          key: 'area',
-          label: 'Area',
-        },
+     
          
          {
           key: 'state',

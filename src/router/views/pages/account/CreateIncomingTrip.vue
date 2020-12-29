@@ -248,7 +248,7 @@ export default {
         })
 
          const result = await getRoutesByBaranggayId(this.areadata[i].id)
-          this.routedata = result.data.response.result
+          this.routedata = result.data.response.result.routeMaster
          
            
             if(this.routedata.length > 0) {

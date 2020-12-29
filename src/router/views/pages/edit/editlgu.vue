@@ -104,6 +104,7 @@ export default {
         voucherNo: '',
       },
       item2:[],
+      file:"",
       roles:[],
       rolename:"",
       titles: ['Mr.', 'Sri.', 'Mrs'],
@@ -251,7 +252,7 @@ export default {
           type: null,
           personalIdNo:this.form.personalidno,
         
-          id_PROOF_DOC_URL: null,
+          id_PROOF_DOC_URL: this.file,
          
          
         }
@@ -304,23 +305,7 @@ export default {
 
                         <div class="row">
                           
-                            <div class="col-md-4">
                             
-                           
-                        
-                              <div class="form-group mt-3 mt-sm-0">
-                                   <label for="default">Code</label>
-                                 
-                              <input required
-                                v-model.trim="form.lguCode"
-                                placeholder="Code"
-                                class="form-control"
-                                type="text"
-                              />
-                                    </div>
-                           
-                           
-                            </div>
                         
                           <!-- <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
@@ -686,6 +671,18 @@ export default {
                                     </div>
                            
                            
+                            </div>
+                             <div class="col-md-4">
+                            <div class="form-group mt-3 mt-sm-0">
+                                   <label for="default">ID Proof</label>
+                                 
+                                <b-form-file
+                                :state="Boolean(file)"
+                                placeholder="Choose a file..."
+                                drop-placeholder="Drop file here..."
+                                @change="readAgreement"
+                                ></b-form-file>
+                                    </div>
                             </div>
                           </div>
                         </fieldset>

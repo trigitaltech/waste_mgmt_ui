@@ -29,6 +29,7 @@ export default {
     return {
     
       serviceoffice:"",
+      file:"",
       personalidno:"",
       items: [
          {
@@ -275,18 +276,7 @@ export default {
                           </legend>
 
                           <div class="row">
-                            <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Code</label>
-
-                                <input
-                                  v-model.trim="form.code"
-                                  placeholder="Code"
-                                  class="form-control"
-                                  type="text"
-                                />
-                              </div>
-                            </div>
+                           
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">Personal Title</label>
@@ -644,7 +634,18 @@ export default {
                                 ></b-form-select>
                               </div>
                             </div>
-                           
+                            <div class="col-md-4">
+                            <div class="form-group mt-3 mt-sm-0">
+                                   <label for="default">ID Proof</label>
+                                 
+                                <b-form-file
+                                :state="Boolean(file)"
+                                placeholder="Choose a file..."
+                                drop-placeholder="Drop file here..."
+                                @change="readAgreement"
+                                ></b-form-file>
+                                    </div>
+                            </div>
                           </div>
                         </fieldset>
                       </div>

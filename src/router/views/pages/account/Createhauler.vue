@@ -112,6 +112,7 @@ export default {
         voucherNo: '',
       },
       servingAreas:[],
+      file:"",
       baranggay:"",
       areas:[],
       titles: ['Mr.', 'Sri.', 'Mrs'],
@@ -226,6 +227,7 @@ export default {
                 city: this.form.city,
                 state: this.form.state,
                 country: this.form.country,
+                   id_PROOF_DOC_URL:this.file,
                 pin: this.form.postCode,
                 isDeleted: false,
                 status: 200,
@@ -280,33 +282,7 @@ export default {
                         </legend>
 
                         <div class="row">
-                          <div class="col-md-4">
-                            <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">Code</label>
-                              <!-- <ValidationProvider
-                                  v-slot="{ errors }"
-                                  name="Last Name"
-                                  rules="required"
-                                >-->
-                              <input
-                                v-model.trim="form.code"
-                                for="lastname"
-                                type="text"
-                                placeholder="Enter Code"
-                                class="form-control"
-                                required
-                              />
-                              <!-- <input
-                                    v-model.trim="form.lastName"
-                                    class="form-control"
-                                    placeholder="Enter Last Name"
-                                    type="text"
-                                  />
-                                  <span class="text-danger">{{ errors[0] }}</span>
-                                </ValidationProvider>-->
-                            </div>
-                          </div>
-                         
+                        
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Hauler Name</label>
@@ -693,7 +669,18 @@ export default {
                            
                            
                             </div>
-                            
+                             <div class="col-md-4">
+                            <div class="form-group mt-3 mt-sm-0">
+                                   <label for="default">ID Proof</label>
+                                 
+                                <b-form-file
+                                :state="Boolean(file)"
+                                placeholder="Choose a file..."
+                                drop-placeholder="Drop file here..."
+                                @change="readAgreement"
+                                ></b-form-file>
+                                    </div>
+                            </div>
                           </div>
                           
                         </fieldset>

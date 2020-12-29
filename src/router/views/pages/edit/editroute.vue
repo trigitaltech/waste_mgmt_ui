@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      areaname:this.$route.params.areaName.areaName,
+      areaname:[],
       code:this.$route.params.code,
       areaid:this.$route.params.areaId,
       supervisor:this.$route.params.supervisor,
@@ -67,7 +67,8 @@ export default {
       ],
    areas:[],
    item2:[],
-    
+     areasid: [],
+      baranggays:[],
     }
   },
   computed: {
@@ -81,11 +82,36 @@ export default {
     // this.getClientDetails()
     // this.getplans()
     // this.roadsdata = this.$route.params.routeRoads
-    console.log("roads",this.roads)
+    console.log("roads",this.$route.params)
     this.userdata()
      this.getplans()
+    //  if(this.$route.params.baranggay.length > 0){
+    
+    //     for(var i = 0 ; i<this.$route.params.baranggay.length ;i++){
+     
+          // debugger
+        //   this.areaname.push([i].areaName)
+        // }
+    //  }
   },
   methods: {
+    getid() {
+       this.baranggays=[]
+       for(var i = 0 ; i<this.areaname.length ;i++){
+       
+         this.areas.map(e=>{
+        if(this.areaname[i] === e.areaName){
+             
+          this.baranggays.push(e)
+          // console.log("routedata",this.baranggays)
+       
+        }
+         })
+      
+       }
+      // console.log("haiiiiii",this.item2)
+     
+    },
     async getplans() {
        try {
         const result = await Areamasters()
@@ -98,27 +124,30 @@ export default {
 
       this.areas.map(e=>{
       this.item2.push(e.areaName)
-      console.log("user",e)
+     
+       
+     
+      // console.log("user",e)
       })
-       console.log("users",this.item)
+      //  console.log("users",this.item)
      
       } catch (error) {}
      },
-     getid(){
-        // console.log("haiiiiii",this.item2)
-        this.areas.map(e=>{
-            if(this.areaname === e.areaName){
-                this.areaid = e.id    
-                       }
-                        //  console.log("haiiiiii",this.sid)
-        })
-      },
+    //  getid(){
+    //     // console.log("haiiiiii",this.item2)
+    //     this.areas.map(e=>{
+    //         if(this.areaname === e.areaName){
+    //             this.areaid = e.id    
+    //                    }
+    //                     //  console.log("haiiiiii",this.sid)
+    //     })
+    //   },
      async userdata() {
        try {
       
       const result = await users()
       var data = result.data.response.Users
-      console.log("users",data[0].userName)
+      // console.log("users",data[0].userName)
       // JSON.parse(JSON.stringify(result))
       // for(i=0;i<data.length;i++){
       //   this.item[i]=data[i].userName
@@ -126,9 +155,9 @@ export default {
 
       data.map(e=>{
       this.item.push(e.userName)
-      console.log("user",e)
+      // console.log("user",e)
       })
-       console.log("users",this.item)
+      //  console.log("users",this.item)
      
       } catch (error) {}
      },
@@ -151,14 +180,13 @@ export default {
       try {
         const payload = {
            id:this.$route.params.id,
-            code: this.code,
+              code: this.code,
           routeName: this.routename,
           routeType: this.routetype,
           supervisor: this.supervisor,
-          areaName: this.areaname,
           routeDistance: this.routedistance,
           description: this.description,
-          isDeleted: false,
+          baranggay: this.baranggays,
           routeRoads: this.inputs,
         }
         let result = await editroute(payload)
@@ -208,18 +236,15 @@ export default {
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
                 >
-                  Area Name</label
+                  Baranggay</label
                 >
-                <b-form-select
+                 <multiselect
                   v-model="areaname"
+                  :multiple="true"
                   :options="item2"
-                  oninvalid="this.setCustomValidity('Area Name is required ')"
-                  oninput="setCustomValidity('')"
-                  placeholder="Select Area Name"
-                  class="form-control"
-                  required
-                  @change="getid"
-                ></b-form-select>
+                  @input="getid"
+                >
+                </multiselect>
                 <!-- Default input name -->
               </b-col>
               <b-col>

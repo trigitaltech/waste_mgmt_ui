@@ -45,10 +45,7 @@ export default {
         
         
       permissionColumns: [
-         {
-          key: 'code',
-          label: 'Code',
-        },
+        
          {
           key: 'lguName',
 

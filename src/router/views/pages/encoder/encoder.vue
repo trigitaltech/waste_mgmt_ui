@@ -146,7 +146,7 @@ export default {
     this.loginencoderid = result.lguemployee.id
     this.totalRows = this.items.length
     //this.getTripincoming
-    //this.gettrips()
+    this.gettrips()
     this.getOutgoingTrip()
   },
   methods: {
@@ -274,7 +274,7 @@ export default {
                   <feather type="grid" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Incoming Trips</h5>
-                    <!--<span class="text-muted">{{ tripdata.incomingTrips.length }}</span>-->
+                    <span class="text-muted">{{ tripdata.incomingTrips.length }}</span>
                   </div>
                 </div>
               </div>

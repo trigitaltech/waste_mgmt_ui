@@ -127,7 +127,7 @@ export default {
       createddate: new Date(),
       modifydate: new Date(),
       modifyby:"",
-     
+     file:"",
       bouquetsOpt: [
         { value: null, text: 'Please select an option' },
         'FTA  AND STARTER',
@@ -222,7 +222,7 @@ export default {
                 isDeleted: false,
                 status: 200,
                 personalIdNo: this.personalidno,
-                idProofDocURL:null,
+                idProofDocURL:this.file,
                 serviceOffice: this.sid,
                 type:this.employeetype
             }
@@ -657,8 +657,21 @@ export default {
                            
                            
                             </div>
-                             
+                             <div class="form-group mt-3 mt-sm-0">
+                                   <label for="default">ID Proof</label>
+                                 
+                                <b-form-file
+                                :state="Boolean(file)"
+                                placeholder="Choose a file..."
+                                drop-placeholder="Drop file here..."
+                                @change="readAgreement"
+                                ></b-form-file>
+                                    </div>
+                           
+                           
+                                                         
                           </div>
+                          
                           
                         </fieldset>
                         
