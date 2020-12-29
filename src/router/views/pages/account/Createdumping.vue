@@ -72,7 +72,11 @@ export default {
           active: true,
         },
       ],
-   
+    inputs: [
+        {
+         dumpingpointname:'',
+        },
+      ],
     
     }
   },
@@ -90,6 +94,16 @@ export default {
     this.getareas()
   },
   methods: {
+     add() {
+      this.inputs.push({
+     dumpingpointname:'',
+      })
+      console.log(this.inputs)
+    },
+
+    remove(index) {
+      this.inputs.splice(index, 1)
+    },
      async getareas() {
       try {
         const result = await Areamasters();
@@ -128,9 +142,9 @@ export default {
         if(e.areaName == this.baranggay){
           this.baranggayCode = e.code
           console.log("haii",e.districtId)
-          this.district = e.district[0].districtName
-          this.state = e.district[0].stateCode.stateName
-          this.country = e.district[0].stateCode.countryCode.countryName
+          this.district = e.districtName
+          this.state = e.state
+          this.country = e.country
         }
       })
     },
@@ -159,7 +173,8 @@ export default {
                 holiday_message: this.message,
                 zip: this.zip,
                 city: this.city,
-                area: this.baranggay
+                area: this.baranggay,
+                dumpingPoint:this.inputs
         }
         let result = await createdumping(payload)
         if (result) {
@@ -428,7 +443,45 @@ export default {
                     />
                   </b-col>
                   </b-row>
+
+                    <br />
+                   <b-row v-for="(input, k) in inputs" :key="k">
+                 
+                  <b-col md="6">
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                    >
+                      Dumping Point Name</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      type="text"
+                      class="form-control"
+                      v-model="input.dumpingpointname"
+                      placeholder="Enter Dumping Point Name"
+                    />
+                  </b-col>
+                    <b-col>
+                    <span>
+                       <i
+                    class="fas fa-minus-circle"
+                    @click="remove(k)"
+                    v-show="k || (!k && inputs.length > 1)"
+                    >Remove</i
+                  >
+                  <i
+                    class="fas fa-plus-circle"
+                    @click="add(k)"
+                    v-show="k == inputs.length - 1"
+                    >Add Dumping Point</i
+                  >
+                
+                    </span>
+                  </b-col>
+                   </b-row>
                 <br />
+
                <button
                           type="submit"
                          class="btn btn-custome float-right btn-secondary mb-3"

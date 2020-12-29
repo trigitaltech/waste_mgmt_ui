@@ -279,12 +279,11 @@ export default {
           country: this.form.country,
           pin: this.form.postCode,
           isDeleted: false,
-          status: 200,
           type: this.rolename,
           personalIdNo: this.form.personalidno,
          
           id_PROOF_DOC_URL: null,
-          lguid: this.lgusdata,
+          lguId: this.lgusdata,
 
           //baranggayCode: this.baranggayCode
         }

@@ -10,11 +10,16 @@ import Multiselect from 'vue-multiselect'
 import moment from 'moment'
 Vue.component('multiselect', Multiselect)
 import {
+  getVehiclesByhauler,
+  Createsrtruck,
+  getdumpdata,
+  dumpinglocation,
+  haulers,
   Tripdownload,
   Areamasters,
   routemaster,
   CreateIncomingTrip,
-  employees,
+  haulerEmployees,
   vehicle,
   getRoutesByBaranggayId,
 } from '../../../../services/auth'
@@ -38,7 +43,7 @@ export default {
         },
         {
           text: 'Servicerequest Trucks',
-          href: '#/Servicerequest/Equipment',
+          href: '#/Servicerequest/Truck',
         },
         {
           text: 'Create SR Equipment',
@@ -48,20 +53,35 @@ export default {
       areadata: [],
       areaarray: '',
       routedate: [],
+      haulerarray: [],
       routearray: [],
       emp: [],
+      dumpid: '',
+      dumpinglocation: '',
       controlno: '',
+      tripDate: '',
+      plateno: '',
+      hauler: '',
+      vehicleno: '',
+      fromdumpingpoint: '',
+      todumpingpoint: '',
+      driver: '',
+      helper: '',
+      volumecapacity: '',
+      trucktype: '',
+      body: '',
       area: '',
       route: '',
       driver: '',
       contractor: '',
       collector: null,
       lgu: '',
-      plate: '',
+
+      vehicleno: '',
       plates: [],
       body: '',
-      tripDate: '',
-      trucktype: '',
+      vehicledata: [],
+
       driverid: '',
       startTime: '',
       drivers: [],
@@ -70,15 +90,28 @@ export default {
       servingAreas: [],
       route: '',
       driver: '',
+      helperid: '',
       helper: null,
       servingRoutes: [],
+      haulerid: '',
       driverList: [],
       hauler: '',
       haulerList: [],
       contractorList: [],
+      vehicledata: [],
       paleroList: [],
       garbage: null,
+      dumpings: [],
+      haulers: [],
+      dumpingdata: [],
+      plates: [],
+      haulerdata: [],
+      fromdumpings: [],
+      todumpings: [],
       lgu: null,
+      dumpingid: '',
+      haulerid: '',
+      dispatcherid: '',
     }
   },
   components: {
@@ -97,37 +130,107 @@ export default {
     this.tripDate = moment(new Date()).format('DD-MM-YYYY')
     this.startTime = moment(new Date()).format('DD-MM-YYYY hh:mm A')
     console.log(this.tripDate + ' ' + this.startTime)
-    this.areas()
-    this.routes()
-    this.getUsers()
+    this.getdumping()
+    this.gethaulers()
+    // this.areas()
+    // this.routes()
+    // this.getUsers()
     this.employeedata()
-    this.getvehicles()
+    this.getLgu()
+    // this.getvehicles()
   },
   methods: {
-    async getRoutes() {
-      try {
-        this.areadata.map(async (e) => {
-          if (this.area === e.areaName) {
-            console.log(e)
-            this.areaarray = e
-            const result = await getRoutesByBaranggayId(e.id)
-            console.log(result)
-          }
-        })
-        const result = await getRoutesByBaranggayId(id)
-        console.log(result)
-      } catch (e) {
-        console.log(e)
+    async getLgu() {
+      const result = JSON.parse(localStorage.getItem('auth.currentUser'))
+
+      this.dispatcherid = result.lguemployee.id
+
+      console.log(this.loginDetails)
+    },
+    async getdump() {
+      for (var i = 0; i < this.dumpingdata.length; i++) {
+        if (this.dumpinglocation[0] === this.dumpingdata[i].dumpingAreaName) {
+          this.dumpid = this.dumpingdata[i].id
+          const result = await getdumpdata(this.dumpid)
+          var dumpdata = result.data.response.result.dumpingPoint
+          dumpdata.map((e) => {
+            this.fromdumpings.push(e.dumpingPointName)
+            this.todumpings.push(e.dumpingPointName)
+          })
+        }
       }
     },
-    async getvehicles() {
-      const result = await vehicle()
-      this.vehicles = result.data.response.vehicles
-      this.vehicles.map((e) => {
-        this.plates.push(e.plateNo)
-      })
-      console.log(this.plates)
+    platedetails() {
+      for (var i = 0; i < this.vehicledata.length; i++) {
+        if (this.plateno[0] === this.vehicledata[i].plateNo) {
+          this.vehicleno = this.vehicledata[i].vehicleNo
+          this.trucktype = this.vehicledata[i].vehicleType.truckType
+          this.volumecapacity = this.vehicledata[i].volumeCapacity
+        }
+      }
     },
+    async gethaulers() {
+      try {
+        const result = await haulers()
+        this.haulerdata = result.data.response.HaulerMaster
+        this.haulerdata.map((e) => {
+          this.haulers.push(e.haulerName)
+        })
+      } catch (error) {}
+    },
+    //   async getvehiclehauler() {
+    //    try {
+
+    //   const result = await  getVehiclesByhauler(id)
+    //   this.dumpingdata = result.data.response.dumpingLocation
+    //   this.dumpingdata.map(e=>{
+    //     this.dumpings.push(e.dumpingAreaName)
+    //   })
+
+    //   } catch (error) {}
+
+    // },
+    async getdumping() {
+      try {
+        const result = await dumpinglocation()
+        this.dumpingdata = result.data.response.dumpingLocation
+        this.dumpingdata.map((e) => {
+          this.dumpings.push(e.dumpingAreaName)
+        })
+      } catch (error) {}
+    },
+    async vehiclehauler() {
+      for (var i = 0; i < this.haulerdata.length; i++) {
+        if (this.hauler[0] === this.haulerdata[i].haulerName) {
+          this.haulerid = this.haulerdata[i].id
+          const result = await getVehiclesByhauler(this.haulerid)
+          this.vehicledata = result.data.response.result
+          this.vehicledata.map((e) => {
+            this.plates.push(e.plateNo)
+          })
+        }
+      }
+      //     debugger
+      //  this.haulerdata.map(e => {
+      //   if (this.hauler === e.haulerName) {
+      //     this.haulerid = e.id
+      //     debugger
+      //   }
+      //    console.log("haiiiiii",this.haulerid)
+      // })
+      //  if(this.haulerid !== ""){
+      //
+      //    console.log(result)
+      //  }
+    },
+    // async getvehicles() {
+    //   const result = await vehicle()
+    //   this.vehicles = result.data.response.vehicles
+    //   this.vehicles.map((e) => {
+    //     this.plates.push(e.plateNo)
+    //   })
+    //   console.log(this.plates)
+    // },
     getroutes() {
       this.routedata.map((e) => {
         if (this.route === e.routeName) {
@@ -142,18 +245,18 @@ export default {
         }
       })
     },
-    getid() {
-      console.log('haiiiiii')
-      this.emp.map((e) => {
-        if (this.driver === e.userName) {
-          this.driverid = e.id
-        }
-      })
-    },
+    // getid() {
+    //   console.log('haiiiiii')
+    //   this.emp.map((e) => {
+    //     if (this.driver === e.userName) {
+    //       this.driverid = e.id
+    //     }
+    //   })
+    // },
     async employeedata() {
       try {
-        const result = await employees()
-        this.emp = result.data.response.result
+        const result = await haulerEmployees()
+        this.emp = result.data.response.HaulerEmployees
         console.log(this.emp)
         this.emp.map((e) => {
           if (e.type == 'DRIVER') this.drivers.push(e.userName)
@@ -191,6 +294,23 @@ export default {
         }
       })
     },
+    getdriverid() {
+      // debugger
+      this.emp.map((e) => {
+        if (this.driver[0] === e.userName) {
+          this.driverid = e.id
+        }
+      })
+    },
+    gethelperid() {
+      // debugger
+      this.emp.map((e) => {
+        if (this.helper[0] === e.userName) {
+          this.helperid = e.id
+        }
+      })
+    },
+
     async create() {
       try {
         const date = moment(this.startTime).format('YYYY-MM-DDThh:mm:SS+00:00')
@@ -198,58 +318,60 @@ export default {
         const areaarray = Object.assign({}, areaarray, this.areaarray)
         let payload = {
           controlNo: this.controlno,
-          tripDate: this.tripDate,
-          lgu: this.lgu,
-          bodyNo: this.body,
-          plateNo: this.plate,
+
+          trip: this.tripDate,
+
+          dumpingareaId: this.dumpid,
+
+          PlateNo: this.plateno[0],
+
+          BodyNo: this.vehicleno[0],
+
           truckType: this.trucktype,
-          collectionStartTime: this.startTime,
-          servingArea: areaarray,
-          servingRoute: {
-            id: this.routearray.id,
-            code: this.routearray.code,
-            routeName: this.routearray.routeName,
-            routeType: this.routearray.routeType,
-            supervisor: this.routearray.supervisor,
-            route_distance: this.routearray.route_distance,
-            areaId: this.routearray.areaId,
-            areaName: this.areaarray.areaName,
-            isDeleted: false,
-            routeRoads: [],
-            createdDate: this.routearray.createdDate,
-            createdBy: '',
-            modifiedDate: this.routearray.modifiedDate,
-            modifiedBy: '',
-            description: this.routearray.description,
-          },
-          helperId: 199,
-          helperName: null,
+
           driverId: this.driverid,
-          driverName: this.driver,
-          contractorDispatcherName: null,
-          contractorDispatcherId: null,
-          contractorDispatcherVerified: null,
-          volumeCheckerName: null,
-          volumeCheckerId: null,
-          volumeCheckerVerified: null,
-          volumeCheckerMeasuredVolume: null,
-          volumeCheckerTotalKmServed: null,
-          isDeleted: false,
-          status: 'INITIATED',
-          createdBy: this.getUserDetails.user.username,
-          createdDate: this.tripDate,
-          modifiedBy: this.getUserDetails.user.username,
-          modifiedDate: this.tripDate,
+          driverName: this.driver[0],
+
+          HelperId: this.helperid,
+          HelperName: this.helper[0],
+
+          fromPoint: this.fromdumpingpoint[0],
+          toPoint: this.todumpingpoint[0],
+
+          volumeCapacity: this.volumecapacit,
+
+          haulerId: this.haulerid,
+
+          timeInAM: '',
+
+          timeOutAM: '',
+
+          timeInPM: '',
+
+          timeOutPM: '',
+
+          aMTrip: '',
+
+          pMTrip: '',
+
+          totalTrips: '',
+
+          driverTimeIn: '',
+
+          totalDistance: '',
+          equipmentNo:'',
+          type:'',
+          dispatchedBy: this.dispatcherid,
         }
-        const result = await CreateIncomigTrip(payload)
+        const result = await Createsrtrck(payload)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `Incoming Trip Created`,
+            text: `Service Request Truck Created`,
             duration: 5000,
           })
-          this.$router.push({ path: '/Trips/IncomingTrips' })
+          this.$router.push({ path: '/Servicerequest/Truck' })
         }
       } catch (e) {}
     },
@@ -257,7 +379,7 @@ export default {
       this.vehicles.map((e) => {
         if (e.plateNo == this.plate) {
           this.trucktype = e.vehicleType.code
-          this.body = e.vehicleNo
+          this.vehicleno = e.vehicleNo
         }
       })
     },
@@ -293,8 +415,8 @@ export default {
                     <input
                       v-model="controlno"
                       class="form-control"
-                      name="body"
                       placeholder="Enter Contol No"
+                      name="body"
                     />
                   </b-col>
                   <b-col>
@@ -318,9 +440,10 @@ export default {
                       >Dumping Location</label
                     >
                     <multiselect
-                      v-model="route"
+                      v-model="dumpinglocation"
                       :multiple="true"
-                      :options="servingRoutes"
+                      :options="dumpings"
+                      @input="getdump"
                     >
                     </multiselect>
                   </b-col>
@@ -331,9 +454,10 @@ export default {
                       >Hauler</label
                     >
                     <multiselect
-                      v-model="route"
+                      v-model="hauler"
                       :multiple="true"
-                      :options="servingRoutes"
+                      :options="haulers"
+                      @input="vehiclehauler"
                     >
                     </multiselect>
                   </b-col>
@@ -344,12 +468,13 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Equipment No</label
+                      >Plate No</label
                     >
                     <multiselect
-                      v-model="route"
+                      v-model="plateno"
                       :multiple="true"
-                      :options="servingRoutes"
+                      :options="plates"
+                      @input="platedetails"
                     >
                     </multiselect>
                   </b-col>
@@ -357,28 +482,59 @@ export default {
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Model</label
+                      >Truck Type</label
                     >
                     <input
                       v-model="trucktype"
                       class="form-control"
                       name="trucktype"
+                      placeholder="Enter Trucktype"
                       readonly
-                      placeholder="Enter Model"
                     />
                   </b-col>
                 </b-row>
-                <b-row class="mt-3">
+                <b-row>
+                  <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >Vehicle No</label
+                    >
+                    <input
+                      v-model="vehicleno"
+                      class="form-control"
+                      name="body"
+                      readonly
+                      placeholder="Enter Vehicle No"
+                    />
+                  </b-col>
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Operator</label
+                      >Volume Capacity</label
+                    >
+                    <input
+                      v-model="volumecapacity"
+                      class="form-control"
+                      name="trucktype"
+                      readonly
+                      placeholder="Enter Volume Capacity"
+                    />
+                  </b-col>
+                </b-row>
+                <b-row>
+                  <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Driver</label
                     >
                     <multiselect
-                      v-model="route"
+                      v-model="driver"
                       :multiple="true"
-                      :options="servingRoutes"
+                      :options="drivers"
+                      @input="getdriverid"
                     >
                     </multiselect>
                   </b-col>
@@ -386,12 +542,41 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Job Type</label
+                      >Helper</label
                     >
                     <multiselect
-                      v-model="route"
+                      v-model="helper"
                       :multiple="true"
-                      :options="servingRoutes"
+                      :options="helpers"
+                      @input="gethelperid"
+                    >
+                    </multiselect>
+                  </b-col>
+                </b-row>
+                <b-row class="mt-3">
+                  <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >From Dumping Point</label
+                    >
+                    <multiselect
+                      v-model="fromdumpingpoint"
+                      :multiple="true"
+                      :options="fromdumpings"
+                    >
+                    </multiselect>
+                  </b-col>
+                  <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >To Dumping Point</label
+                    >
+                    <multiselect
+                      v-model="todumpingpoint"
+                      :multiple="true"
+                      :options="todumpings"
                     >
                     </multiselect>
                   </b-col>

@@ -238,7 +238,7 @@ export default {
 
             <template v-slot:cell(actions)="data">
               <router-link
-                :to="{ name: 'Viewservicerequest', params: data.item }"
+                :to="{ name: 'ViewserviceTruck', params: data.item }"
               >
                 <span class="mr-2">
                   <i class="fa fa-eye edit"></i>

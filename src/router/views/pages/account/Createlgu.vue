@@ -223,7 +223,7 @@ export default {
         const payload = {
        
           code: this.form.lguCode,
-          lguName:this.form.userName,
+          lguName:this.form.lguName,
           userName: this.form.userName,
           password: this.form.password,
           passwordStatus: 1,
@@ -314,17 +314,7 @@ export default {
                            
                            
                             </div>
-                          <div class="col-md-4">
-                            <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">Personal Title</label>
-                              <multiselect
-                                required
-                                v-model="form.personalTitle"
-                                placeholder="Select Personal Title"
-                                :options="titles"
-                              ></multiselect>
-                            </div>
-                          </div>
+                         
                           <!-- <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">Gender</label>
@@ -336,6 +326,34 @@ export default {
                               </div>
                             </div>-->
                              <div class="col-md-4">
+                            <div class="form-group mt-3 mt-sm-0">
+                              <label for="default">LGU Name</label>
+                              <!-- <ValidationProvider
+                                  v-slot="{ errors }"
+                                  name="First Name"
+                                  rules="required"
+                                >-->
+                              <input
+                                v-model.trim="form.lguName"
+                                for="firstname"
+                                type="text"
+                                oninvalid="this.setCustomValidity('Lgu Name is required ')"
+                                oninput="setCustomValidity('')"
+                                placeholder="Enter LGUName"
+                                class="form-control"
+                                required
+                              />
+                              <!-- <input
+                                    v-model.trim="form.firstName"
+                                    class="form-control"
+                                    placeholder="Enter First Name"
+                                    type="text"
+                                />-->
+                              <!-- <span class="text-danger">{{ errors[0] }}</span>
+                                </ValidationProvider>-->
+                            </div>
+                          </div>
+                          <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">User Name</label>
                               <!-- <ValidationProvider
@@ -391,9 +409,20 @@ export default {
                                 </ValidationProvider>-->
                             </div>
                           </div>
+                           <div class="col-md-4">
+                            <div class="form-group mt-3 mt-sm-0">
+                              <label for="default">Personal Title</label>
+                              <multiselect
+                                required
+                                v-model="form.personalTitle"
+                                placeholder="Select Personal Title"
+                                :options="titles"
+                              ></multiselect>
+                            </div>
+                          </div>
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">First Name</label>
+                              <label for="default">Contact First Name</label>
                               <!-- <ValidationProvider
                                   v-slot="{ errors }"
                                   name="First Name"
@@ -403,9 +432,9 @@ export default {
                                 v-model.trim="form.firstName"
                                 for="firstname"
                                 type="text"
-                                oninvalid="this.setCustomValidity('First Name is required ')"
+                                oninvalid="this.setCustomValidity('Contact First Name is required ')"
                                 oninput="setCustomValidity('')"
-                                placeholder="Enter FirstName"
+                                placeholder="Enter Contact FirstName"
                                 class="form-control"
                                 required
                               />
@@ -433,7 +462,7 @@ export default {
                             </div>-->
                            <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">Middle Name</label>
+                              <label for="default">Contact Middle Name</label>
                               <!-- <ValidationProvider
                                   v-slot="{ errors }"
                                   name="Last Name"
@@ -443,9 +472,9 @@ export default {
                                 v-model.trim="form.middleName"
                                 for="lastname"
                                 type="text"
-                                oninvalid="this.setCustomValidity('last name is required ')"
+                                oninvalid="this.setCustomValidity('Contact Middle name is required ')"
                                 oninput="setCustomValidity('')"
-                                placeholder="Enter LastName"
+                                placeholder="Enter Contact MiddleName"
                                 class="form-control"
                                 required
                               />
@@ -461,7 +490,7 @@ export default {
                           </div>
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">Last Name</label>
+                              <label for="default">Contact Last Name</label>
                               <!-- <ValidationProvider
                                   v-slot="{ errors }"
                                   name="Last Name"
@@ -471,9 +500,9 @@ export default {
                                 v-model.trim="form.lastName"
                                 for="lastname"
                                 type="text"
-                                oninvalid="this.setCustomValidity('last name is required ')"
+                                oninvalid="this.setCustomValidity('Contact last name is required ')"
                                 oninput="setCustomValidity('')"
-                                placeholder="Enter LastName"
+                                placeholder="Enter Contact LastName"
                                 class="form-control"
                                 required
                               />
