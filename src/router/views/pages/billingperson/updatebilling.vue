@@ -15,6 +15,7 @@ import {
   editvolumechecker,
   approveincomingtrip,
   getnameByLguId,
+  Areamasters,
   getnameByBRGY
 } from '../../../../services/auth'
 
@@ -103,10 +104,25 @@ export default {
     // this.getplans()
     // this.userdata()
     this.getname()
-    THIS.getBRGYname()
+    this.getBRGYname()
+    this.getplans()
    
   },
   methods: {
+    async getplans() {
+       try {
+        
+      const result = await  Areamasters()
+      var data = result.data.response.areaMaster
+      data.map(e=>{
+        if(this.$route.params.baranggayId === e.id){
+          this.baranggayid = e.areaName
+        }
+      })
+       
+      } catch (error) {}
+   
+    },
      gettime(timeStamp) {
     // debugger
       //  console.log(timeStamp)

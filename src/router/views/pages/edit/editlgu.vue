@@ -227,7 +227,7 @@ export default {
      },
     async create() {
       try {
-        console.log(this.form.lguCode)
+        // console.log(this.form.lguCode)
         const payload = {
           id: this.$route.params.id,
           code: this.form.lguCode,
@@ -248,7 +248,7 @@ export default {
           country: this.form.country,
           pin: this.form.postCode,
           isDeleted: false,
-          status: 200,
+       
           type: null,
           personalIdNo:this.form.personalidno,
         
@@ -384,7 +384,7 @@ export default {
                               <input
                                 v-model.trim="form.password"
                                 for="firstname"
-                                type="text"
+                                type="password"
                                 oninvalid="this.setCustomValidity('Password is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Password"

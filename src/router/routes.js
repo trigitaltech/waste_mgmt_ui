@@ -971,6 +971,14 @@ const pagesRoutes = [
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
+    path: '/EditlandfilltripByVolumeChecker',
+    name: 'EditlandfilltripByVolumeChecker',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/volumechecker/editLandfillTripByVolumeChecker')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
     path: '/EditoutgoingtripByControlChecker',
     name: 'EditoutgoingtripByControlChecker',
     icon: 'check-square',

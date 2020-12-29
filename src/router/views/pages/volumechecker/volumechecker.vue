@@ -8,7 +8,8 @@ import moment from 'moment'
 
 // Vue.component('downloadExcel', JsonExcel)
 import {
-getincomingtrip,getoutgoingtrip,getTripsvolumebyId, getAllOutgoingTrip,checkerupdatebystatus
+getincomingtrip,getoutgoingtrip,getTripsvolumebyId, 
+getAllOutgoingTrip,checkerupdatebystatus, getAllDirectTrips
 } from '../../../../services/auth'
 
 export default {
@@ -65,6 +66,20 @@ export default {
         { key: 'status', sortable: true },
         { key:'action',label:'Action'}
       ],
+      landfill:[
+        { key: 'baranggayId', label:'Baranggay',sortable: true },
+        { key: 'contractorDispatcherName', label:'Dispatcher',sortable: true },
+        { key: 'controlNo', label:'ControlNo',  sortable: true },
+        { key: 'driverName', label:'DriverName',  sortable: true },
+          { key: 'helperName', label:'HelperName',  sortable: true },
+            { key: 'tripStartTime',label:'StartTime',  sortable: true },
+              { key: 'bodyNo',label:'BodyNo',  sortable: true },
+                { key: 'truckType', label:'TruckType', sortable: true },
+       { key: 'plateNo',label:'PlateNO',  sortable: true },
+        { key: 'volumeCheckerName', label:'CheckerName', sortable: true },
+        { key: 'status', sortable: true },
+        { key:'action'}
+      ],
        incoming: [
         { key: 'baranggayId', label:'Baranggay',sortable: true },
         { key: 'contractorDispatcherName', label:'Dispatcher',sortable: true },
@@ -81,7 +96,7 @@ export default {
         // { key: 'requestBy', sortable: true },
 
         // { key: 'status', sortable: true },
-        { key: 'action' },
+        { key: 'action' ,label:'Action'},
       ],
       voucherId: null,
       vouchers: {},
@@ -92,6 +107,7 @@ export default {
       loginlguid:"",
       incomingtripdata:[],
       allOutgoingTrips:[],
+      landfillTrips:[],
       volumeCheckerId:''
     }
   },
@@ -123,14 +139,28 @@ export default {
     this.getTripincoming()
     this.getOutgoingTrip()
     this.gettrips()
+    this.getLandfillTrip()
   },
   methods: {
+    async getLandfillTrip() {
+      try {
+        const result = await getAllDirectTrips()
+        const data = result.data.response.result
+        data.map(e => {
+          if(e.volumeCheckerId == this.volumeCheckerId) {
+            this.landfillTrips.push(e)
+          }
+        })
+      } catch(e) {
+        console.log(e)
+      }
+    },
     async getOutgoingTrip() {
       try {
         const result = await getAllOutgoingTrip()
         const data = result.data.response["OutgoingTrips:"]
         data.map(e => {
-          if(e.volumeCheckerId == this.volumeCheckerId && e.status=='ASSIGNED') {
+          if(e.volumeCheckerId == this.volumeCheckerId) {
             this.allOutgoingTrips.push(e)
           }
         })
@@ -731,8 +761,8 @@ export default {
                     :bordered="bordered"
                     :small="small"
                     :fixed="fixed"
-                    :items="exportVoucherData"
-                    :fields="exportFields"
+                    :items="landfillTrips"
+                    :fields="landfill"
                     responsive="sm"
                     thead-class="header"
                     :per-page="perPage"
@@ -741,33 +771,13 @@ export default {
                     :sort-desc.sync="sortDesc"
                     :filter="filter"
                     :filter-included-fields="filterOn"
-                    @filtered="onFiltered"
                   >
-                    <template v-slot:cell(requestDate)="data"
-                      >{{ getFormattedDate(data.item.requestDate) }}</template>
                     <template v-slot:cell(action)="data">
-                      <button
-                        class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
-                        @click="print(data.item)"
-                      >
-                        <feather type="printer" class="icon-xs mr-2"></feather>Print
-                      </button>
-                      <button  @click="download(data.item)" style="border:1px;margin:5px;background-color:white">
-                        
-                      <download-excel
-                        class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
-                        :data="json_data"
-                        :fields="json_fields"
-                        worksheet="My Worksheet"
-                        name="vouchers.xls"
-                      >
-                        <feather type="download" class="icon-xs mr-2"  ></feather>Download
-                      </download-excel>
-                      </button>
-                      <!-- <download-excel :data="json_data">
-                  
-                        <feather type="download" class="icon-xs mr-2"></feather>Download
-                      </download-excel>-->
+                      <router-link :to="{ name: 'EditlandfilltripByVolumeChecker', params: data.item }">
+                        <span class="mr-2" >
+                         <i class="fa fa-pencil-alt edit"></i>
+                        </span>
+                      </router-link>
                     </template>
                   </b-table>
                 </div>

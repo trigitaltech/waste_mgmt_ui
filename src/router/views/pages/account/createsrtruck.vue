@@ -127,6 +127,7 @@ export default {
     },
   },
   mounted() {
+    
     this.tripDate = moment(new Date()).format('DD-MM-YYYY')
     this.startTime = moment(new Date()).format('DD-MM-YYYY hh:mm A')
     console.log(this.tripDate + ' ' + this.startTime)
@@ -323,22 +324,22 @@ export default {
 
           dumpingareaId: this.dumpid,
 
-          PlateNo: this.plateno[0],
+          plateNo: this.plateno[0],
 
-          BodyNo: this.vehicleno[0],
+          bodyNo: this.vehicleno[0],
 
           truckType: this.trucktype,
 
           driverId: this.driverid,
           driverName: this.driver[0],
 
-          HelperId: this.helperid,
-          HelperName: this.helper[0],
+          helperId: this.helperid,
+          helperName: this.helper[0],
 
           fromPoint: this.fromdumpingpoint[0],
           toPoint: this.todumpingpoint[0],
 
-          volumeCapacity: this.volumecapacit,
+          volumeCapacity: this.volumecapacity,
 
           haulerId: this.haulerid,
 
