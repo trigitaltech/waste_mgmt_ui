@@ -99,11 +99,9 @@ export default {
   },
   methods: {
     async deleteReq(data) {
-       console.log("data",data.item.id)
-       var id = data.item.id
      try{
-          
-        const result = await deletelguemployee(data.item.id)
+          alert('1')
+        const result = await deletelguemployee(data.id)
         if (result) {
           this.$swal({
             group: 'alert',
@@ -202,9 +200,9 @@ export default {
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>
               </router-link>
-            <span @click="deleteReq(data)">
+            <button @click="deleteReq(data.item)" class="btn">
               <i class="fa fa-times edit"></i>
-            </span>
+            </button>
             </template>
           </b-table>
           <div style="float: right">
