@@ -28,14 +28,13 @@ export default {
       dumparea:"",
        areas:[],
       servingAreas:[],
+      selectedlgu:[],
       lgumaster:[],
       dumpmaster:[],
       code:"",
-      lgu:"",
       dumps:[],
-      lgus:[],
-      lguss:[],
-      lgudata:[],
+      lgusData:[],
+      lguNames:[],
       areaname: '',
       description: '',
       supervisor: null,
@@ -87,17 +86,29 @@ export default {
       return this.$store.getters['auth/loggedInDetails']
     },
   },
-  mounted() {
+  async mounted() {
     this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     // this.getClientDetails()
     // this.getplans()
     this.userdata()
-    // this.getlgus()
+    this.getlgus()
     this.getdumping()
     this.getareas()
   },
   methods: {
+    async getlgus() {
+      try {
+        const result = await lgus()
+        this.lgusData = result.data.response.result
+        this.lgusData.map(e => {
+          this.lguNames.push(e.lguName)
+        })
+        console.log(this.lguNames)
+      } catch(e) {
+        console.log(e)
+      }
+    },
     async getareas() {
       try {
         const result = await Areamasters();
@@ -123,13 +134,13 @@ export default {
     
     },
     async getdistricts(){
-        for(var i = 0 ; i<this.areas.length ;i++){
-       if(this.baranggay === this.areas[i].areaName){
+        /*for(var i = 0 ; i<this.areas.length ;i++){
+       if(this.baranggay == this.areas[i].areaName){
           this.lguid = this.areas[i].lguId
          
           const result = await getlgubyId(this.lguid)
           this.master = result.data.response.result
-         
+          console.log(this.master)
         
             this.lgus.push(this.master.lguName)
         
@@ -138,7 +149,16 @@ export default {
           this.state = this.areas[i].district[0].stateCode.stateName
           this.country = this.areas[i].district[0].stateCode.countryCode.countryName
        }
-     }
+      }*/ 
+      this.areas.map( e => {
+        if(this.baranggay == e.areaName) {
+          console.log(e)
+          this.lguid = e.id
+          this.district = e.district
+          this.state = e.state
+          this.country = e.country
+        }
+      })
      },
       // this.areas.map( e => {
       //   if(e.areaName == this.baranggay){
@@ -203,12 +223,15 @@ export default {
     },
     async create() {
       try {
+        this.lgusData.map(e => {
+          if(e.lguName == this.lgu) {
+            this.selectedlgu = e
+          }
+        })
         const payload = {
-          
-            code:this.code,
-            lguName: this.lguemployee,
-           
-            dumpingArea:this.dumpingarea ,
+          code:this.code,
+          lguName: this.selectedlgu,
+          dumpingArea:this.dumpingarea ,
           stagingAreaName: this.areaname,
           staging_type: this.stagingtype,
           supervisor: '',
@@ -500,7 +523,7 @@ export default {
                   placeholder="Select LGU"
                   @change="getlgudata"
                   label="value"
-                  :options="lgus"
+                  :options="lguNames"
                   oninvalid="this.setCustomValidity('lgu is required ')"
                   oninput="setCustomValidity('')"
                   class="form-control"

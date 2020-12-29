@@ -284,7 +284,7 @@ export default {
           personalIdNo: this.form.personalidno,
          
           id_PROOF_DOC_URL: null,
-          lguid: this.lgusdata,
+          lguId: this.lgusdata,
 
           //baranggayCode: this.baranggayCode
         }
@@ -697,13 +697,13 @@ export default {
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">LGU</label>
-                                <multiselect
+                                <b-form-select
                                   required
                                   v-model="lguname"
                                   placeholder="Select LGU"
                                   :options="lgus"
-                                  @input="getlgu"
-                                ></multiselect>
+                                  @change="getlgu"
+                                ></b-form-select>
                               </div>
                             </div>
                           </div>

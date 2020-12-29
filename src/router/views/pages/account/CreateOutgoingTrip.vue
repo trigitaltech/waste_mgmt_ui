@@ -115,7 +115,8 @@ export default {
         const result = await lguemployee()
         this.lguEmployees = result.data.response.result
         this.lguEmployees.map(e => {
-          console.log(e.lguId+'  '+this.loginlguid)
+          console.log(e.lguId+' '+this.loginlguid)
+          console.log(e.type)
           if(e.type == "VOLUME_CHECKER" && e.lguId == this.loginlguid) {
             this.checkerList.push(e)
             this.checkerListNames.push(e.userName)

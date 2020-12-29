@@ -10,7 +10,7 @@ import Multiselect from 'vue-multiselect'
 import moment from 'moment';
 Vue.component('multiselect', Multiselect)
 import {
- getBaraggayByLguId,getHaulerByBaraggayId, CreateIncomingTrip,haulerEmployees,vehicle,getgarbagebyId,getvolumebyId,
+ getBaraggayByLguId,getHaulerByBaraggayId, CreateIncomingTrip,haulerEmployees,vehicle,getgarbagebyId,getvolumebyId,getLguById,
  getRoutesByBaranggayId, haulers, getVehiclesByHaulerId, users,employees,lguemployee,getnameByLguId,getHaulerByBaranggayId,getEMPByLguId,getEMPhelpByLguId
 } from '../../../../services/auth'
 
@@ -119,11 +119,12 @@ export default {
       this.loginlguid = result.lguemployee.lguId
      this.dispatcherid = result.lguemployee.id
      this.dispatchername = result.lguemployee.firstName
+     const result1 = await getLguById(this.loginlguid)
       this.loginDetails = {
         
         lguEmployeeCode: result.lguemployee.code,
         id: result.lguemployee.lguid,
-        name: result.lguemployee.lgu_Id.userName
+        name: result1.data.response.result.lguName
       }
       console.log(this.loginDetails)
     },
