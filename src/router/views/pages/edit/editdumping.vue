@@ -213,26 +213,7 @@ export default {
               <!-- Default form subscription -->
                <form @submit.prevent="create">
                 <b-row class="mb-3">
-                  <b-col>
-                <!-- Default input name -->
-                <label
-                  for="defaultFormCardNameEx"
-                  class="grey-text font-weight-dark"
-                >
-                  Code</label
-                >
-                <input
-                  id="defaultFormCardNameEx"
-                  v-model="code"
-                  type="text"
-                  oninvalid="this.setCustomValidity('Code is required ')"
-                  oninput="setCustomValidity('')"
-                  placeholder="Enter Code"
-                  class="form-control"
-                  required
-                />
-                <!-- Default input text -->
-              </b-col>
+               
                   <b-col>
                     <!-- Default input name -->
                     <label

@@ -28,7 +28,7 @@ export default {
       supervisor: null,
       routename: '',
       routetype: null,
-      areaname: '',
+      areaname: [],
       areatype: '',
       routedistance: '',
       description: '',
@@ -62,7 +62,7 @@ export default {
           text: 'Setup',
           href: '/',
         },
-         {
+        {
           text: 'Route Master',
           href: '#/Setup/RouteMaster',
         },
@@ -71,6 +71,8 @@ export default {
           active: true,
         },
       ],
+      areasid: [],
+      baranggays:[],
     }
   },
   computed: {
@@ -99,13 +101,21 @@ export default {
       this.inputs.splice(index, 1)
     },
     getid() {
-      // console.log("haiiiiii",this.item2)
-      this.areas.map((e) => {
-        if (this.areaname === e.areaName) {
-          this.areaid = e.id
+       this.baranggays=[]
+       for(var i = 0 ; i<this.areaname.length ;i++){
+      
+         this.areas.map(e=>{
+        if(this.areaname[i] === e.areaName){
+             
+          this.baranggays.push(e)
+          console.log("routedata",this.baranggays)
+       
         }
-        //  console.log("haiiiiii",this.sid)
-      })
+         })
+      
+       }
+      // console.log("haiiiiii",this.item2)
+     
     },
     async getplans() {
       try {
@@ -148,10 +158,9 @@ export default {
           routeName: this.routename,
           routeType: this.routetype,
           supervisor: this.supervisor,
-          areaName: this.areaname,
           routeDistance: this.routedistance,
           description: this.description,
-          isDeleted: false,
+          baranggay: this.baranggays,
           routeRoads: this.inputs,
         }
         let result = await createroute(payload)
@@ -198,16 +207,14 @@ export default {
                 >
                   Baranggay Name</label
                 >
-                <b-form-select
+                <multiselect
                   v-model="areaname"
+                  :multiple="true"
                   :options="item2"
-                  oninvalid="this.setCustomValidity('Area Name is required ')"
-                  oninput="setCustomValidity('')"
-                  placeholder="Select Area Name"
-                  class="form-control"
-                  required
-                  @change="getid"
-                ></b-form-select>
+                  @input="getid"
+                >
+                </multiselect>
+
                 <!-- Default input name -->
               </b-col>
               <b-col>

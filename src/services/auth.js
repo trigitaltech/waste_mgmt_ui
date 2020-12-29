@@ -119,7 +119,7 @@ export const createLGU = (payload) => serviceMaker(`/LGU/admin/create`, methods.
 
 export const createhauleremployee = (payload) => serviceMaker(`/haulermaster/employees/admin`, methods.POST, api.NGB, payload)
 
-export const createlguemployee = (payload) => serviceMaker(`/LGU/employee/admin`, methods.POST, api.NGB, payload)
+export const createlguemployee = (payload) => serviceMaker(`/LGU/employee`, methods.POST, api.NGB, payload)
 
 export const createvehicle = (payload) => serviceMaker(`/vehicles/admin/encoders`, methods.POST, api.NGB, payload)
 
@@ -214,7 +214,7 @@ export const getVehiclesByhauler = (id) => serviceMaker(`/vehicles/vehiclebyhaul
 
 export const searchvoucher = (id) => serviceMaker(`/vouchers/verify?pinNumber=${id}`, methods.GET, api.NGB)
 
-export const getRoutesByBaranggayId = (id) => serviceMaker(`/routemaster/getRoutesByBrg/${id}`,methods.GET,api.NGB);
+export const getRoutesByBaranggayId = (id) => serviceMaker(`/areamaster/baranggay/${id}`,methods.GET,api.NGB);
 
 export const getoutgoingtrip = (id,payload) => serviceMaker(
     `/getoutgoingtripbydatefilter/${id}`,
@@ -247,13 +247,13 @@ export const getHaulerByBaranggayId = (id) => serviceMaker(`haulermaster/hauler/
 export const addpermissiontorole = (id,payload) => serviceMaker(`/roles/assigningpermissions/${id}`, methods.PUT, api.NGB,payload)
 
 
-export const getnameByLguId = (id) => serviceMaker(`/LGU/admin/${id}`,methods.GET,api.NGB)
+export const getnameByLguId = (id) => serviceMaker(`/LGU/${id}`,methods.GET,api.NGB)
 
 export const getEMPByLguId = (id,id2) => serviceMaker(`haulermaster/employees/getbytype/${id}/${id2}`,methods.GET,api.NGB)
 
  export const getEMPhelpByLguId = (id,id3) => serviceMaker(`haulermaster/employees/getbytype/${id}/${id3}`,methods.GET,api.NGB)
 
-export const getlgubyId = (id) => serviceMaker(`/LGU/admin/${id}`,methods.GET,api.NGB)
+export const getlgubyId = (id) => serviceMaker(`/LGU/${id}`,methods.GET,api.NGB)
 
 
 export const getgarbagebyId = (id,id2) => serviceMaker(`/employees/details/${id}/${id2}`,methods.GET,api.NGB)

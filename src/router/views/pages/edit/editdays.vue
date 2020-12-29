@@ -116,26 +116,7 @@ export default {
           <!-- Default form subscription -->
           <form @submit.prevent="create">
             <b-row>
-              <b-col>
-                <!-- Default input name -->
-                <label
-                  for="defaultFormCardNameEx"
-                  class="grey-text font-weight-dark"
-                >
-                  Code</label
-                >
-                <input
-                  v-model="code"
-                  type="text"
-                  oninvalid="this.setCustomValidity('Code is required ')"
-                  oninput="setCustomValidity('')"
-                  placeholder="Enter Code"
-                  class="form-control"
-                  required
-                />
-
-                <!-- Default input text -->
-              </b-col>
+              
 
               <b-col>
                 <label
@@ -158,10 +139,7 @@ export default {
               </b-col>
 
               <br />
-            </b-row>
-
-            <br />
-            <b-row>
+           
               <b-col>
                 <!-- Default input name -->
                 <label
@@ -182,7 +160,8 @@ export default {
 
                 <!-- Default input text -->
               </b-col>
-
+            </b-row>
+            <b-row>
               <b-col>
                 <label
                   for="defaultFormCardNameEx"
@@ -202,7 +181,7 @@ export default {
 
                 <!-- Default input name -->
               </b-col>
-
+<b-col></b-col>
               <br />
             </b-row>
 

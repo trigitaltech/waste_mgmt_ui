@@ -45,11 +45,7 @@ export default {
         
         
       permissionColumns: [
-          {
-          key: 'code',
-
-          label: 'code',
-        },
+        
          {
           key: 'salutation',
           label: 'Salutation',

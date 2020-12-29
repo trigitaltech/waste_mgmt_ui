@@ -169,21 +169,7 @@ export default {
               <!-- Default form subscription -->
               <form>
                 <b-row>
-                   <b-col>
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Code</label
-                >
-                <input
-                  v-model="code"
-                  type="text"
-               
-                  placeholder="Enter Code"
-                  class="form-control"
-               disabled
-                />
-              </b-col>
+                  
                   <b-col>
                     <!-- Default input name -->
                     <label
