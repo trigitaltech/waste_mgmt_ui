@@ -219,24 +219,9 @@ this.addres.map(e=>{
         <div class="mt-3">
           <!-- Default form subscription -->
          <form @submit.prevent="create">
+           
             <b-row>
-              <b-col>
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Code</label
-                >
-                <input
-                  v-model="code"
-                  type="text"
-                  oninvalid="this.setCustomValidity('Code is required ')"
-                  oninput="setCustomValidity('')"
-                  placeholder="Enter Code"
-                  class="form-control"
-                  required
-                />
-              </b-col>
-              <b-col>
+                <b-col>
                 <!-- Default input name -->
                 <label
                   for="defaultFormCardNameEx"
@@ -258,11 +243,6 @@ this.addres.map(e=>{
               </b-col>
 
               
-
-              <br />
-            </b-row>
-            <br />
-            <b-row>
               <b-col>
                 <label
                   for="defaultFormCardNameEx"

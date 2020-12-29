@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  Areamasters,deletearea
+  Areamasters,deletearea,lgus
 } from '../../../../services/auth'
 import NProgress from 'nprogress/nprogress'
 export default {
@@ -51,11 +51,7 @@ export default {
           label: 'ID',
           sortable: true
         },
-        {
-          key: 'code',
-          label: 'Code',
-          sortable: true
-        },
+       
          {
           key: 'description',
           label: 'Description',
@@ -63,13 +59,16 @@ export default {
         },
         
          {
+          key: 'lguId',
+          label: 'lguId',
+          sortable: true
+        },
+         {
           key: 'areaName',
           label: 'AreaName',
           sortable: true
         },
         
-       
-
          {
           key: 'districtName',
           label: 'DistrictName',
@@ -91,6 +90,8 @@ export default {
           active: true,
         },
       ],
+      lgudata:[],
+      lguname:[],
     }
   },
   computed: {
@@ -103,8 +104,22 @@ export default {
   },
   mounted() {
     this.getplans()
+    this.getemployees()
   },
   methods: {
+     async getemployees() {
+       try {
+       
+        const result = await  lgus()
+        this.lgudata = result.data.response.result
+        // data.map( e => {
+        //   if(e.type!="ENCODER" && e.type!="VOLUME_CHECKER" && e.type!="DISPATCHER")
+        //     this.item.push(e)
+        // })
+        console.log(this.item)
+       
+      } catch (error) {}
+    },
      getDate(timeStamp) {
     // debugger
       //  console.log(timeStamp)

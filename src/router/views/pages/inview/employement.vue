@@ -66,16 +66,7 @@ export default {
 
           label: 'email',
         },
-        {
-          key: 'Baranggay',
-
-          label: 'Area',
-        },
-         {
-          key: 'city',
-
-          label: 'City',
-        },
+      
          {
           key: 'state',
 

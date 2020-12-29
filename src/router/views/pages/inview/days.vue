@@ -50,10 +50,7 @@ export default {
 
           label: 'ID',
         },
-         {
-          key: 'code',
-          label:'CODE',
-        },
+        
          {
           key: 'tripClass',
 

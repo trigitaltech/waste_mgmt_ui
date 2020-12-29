@@ -112,6 +112,7 @@ export default {
       lgusnames: [],
       distopt:[],
       lgusdata: "",
+      file:"",
       lguname: this.$route.params.lguName,
       bouquetsOpt: [
         { value: null, text: 'Please select an option' },
@@ -283,7 +284,7 @@ export default {
           type: this.rolename,
           personalIdNo: this.form.personalidno,
           service_OFFICE: this.sid,
-          id_PROOF_DOC_URL: null,
+          id_PROOF_DOC_URL: this.file,
           lguId: this.lgusdata,
 
           //baranggayCode: this.baranggayCode
@@ -336,18 +337,7 @@ export default {
                           </legend>
 
                           <div class="row">
-                            <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Code</label>
-
-                                <input
-                                  v-model.trim="form.lguCode"
-                                  placeholder="Code"
-                                  class="form-control"
-                                  type="text"
-                                />
-                              </div>
-                            </div>
+                           
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">Personal Title</label>
@@ -716,6 +706,18 @@ export default {
                                   @input="getlgu"
                                 ></multiselect>
                               </div>
+                            </div>
+                             <div class="col-md-4">
+                            <div class="form-group mt-3 mt-sm-0">
+                                   <label for="default">ID Proof</label>
+                                 
+                                <b-form-file
+                                :state="Boolean(file)"
+                                placeholder="Choose a file..."
+                                drop-placeholder="Drop file here..."
+                                @change="readAgreement"
+                                ></b-form-file>
+                                    </div>
                             </div>
                           </div>
                         </fieldset>

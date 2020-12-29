@@ -382,7 +382,7 @@ export default {
               </router-link>
               
              <b-button size="sm" class="mr-2" variant="primary"  @click="updateReq(data)" :hidden="data.item.status === 'COMPLETED'">
-              <i class="fa fa-check-square-o"></i>
+              <i class="fa fa-check-square"></i>
              </b-button>
            </template>
                       <!-- <download-excel :data="json_data">

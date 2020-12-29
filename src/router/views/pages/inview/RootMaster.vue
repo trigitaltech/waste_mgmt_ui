@@ -59,11 +59,11 @@ export default {
           key: 'routeName',
           label: 'Route Name',
         },
-         {
-          key: 'areaName.areaName',
+        //  {
+        //   key: 'areaName.areaName',
 
-          label: 'Area Name',
-        },
+        //   label: 'Area Name',
+        // },
        
         
          {
@@ -138,7 +138,11 @@ export default {
       const result = await  routemaster()
       this.item = result.data.response.RouteMaster
        NProgress.done()
-      } catch (error) {}
+      } catch (error) {
+        this.$toasted.error(error.error, {
+          duration: 7000,
+        })
+      }
    
     },
     async refresh() {
