@@ -143,7 +143,7 @@ export default {
       try {
       var status = "COMPLETED"
         const result1 = await incomingbytstatus(status)
-        this.incomingtripdata = result1.data.response.result
+        this.incomingtripdata = result1.data.response.Incomingtrip
         // console.log(this.areadata)
         // this.servingAreas.push(this.areadata.areaName)
         

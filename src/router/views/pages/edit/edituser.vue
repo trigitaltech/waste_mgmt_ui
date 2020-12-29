@@ -356,7 +356,7 @@ export default {
                               <input
                                 v-model.trim="form.password"
                                 for="firstname"
-                                type="text"
+                                type="password"
                             
                                 class="form-control"
                               disabled

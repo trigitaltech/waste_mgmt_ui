@@ -58,17 +58,21 @@ export default {
       emp: [],
       dumpid: '',
       dumpinglocation: '',
-      controlno: '',
-      tripDate: '',
+      controlno: this.$route.params.controlNo,
+      tripDate: this.$route.params.created_date,
       plateno: '',
       hauler: '',
       vehicleno: '',
-      fromdumpingpoint: '',
-      todumpingpoint: '',
-      driver: '',
-      helper: '',
-      volumecapacity: '',
-      trucktype: '',
+      
+      driver1:this.$route.params.driverName,
+      helper1: this.$route.params.helperName,
+      volumecapacity: this.$route.params.volumeCapacity,
+      trucktype:this.$route.params.truckType,
+      frompoint:this.$route.params.fromPoint,
+      topoint:this.$route.params.toPoint,
+      amtrips:this.$route.params.amTrip,
+      pmtrips:this.$route.params.pmTrip,
+      haulerss:this.$route.params.haulerId,
       body: '',
       area: '',
       route: '',
@@ -81,17 +85,21 @@ export default {
       plates: [],
       body: '',
       vehicledata: [],
-
+      plateno:this.$route.params.plateNo,
+timeinpm:this.$route.params.driverTimeIn,
       driverid: '',
       startTime: '',
       drivers: [],
+      trucktype:this.$route.params.truckType,
+      Verified:this.$route.params.verifiedBy,
+      totaltrips:this.$route.params.totalTrips,
       helpers: [],
       vehicles: [],
       servingAreas: [],
       route: '',
-      driver: '',
+   bodyno:this.$route.params.bodyNo,
       helperid: '',
-      helper: null,
+    dumping:this.$route.params.dumpingareaId,
       servingRoutes: [],
       haulerid: '',
       driverList: [],
@@ -133,6 +141,7 @@ export default {
     // this.getdumping()
     // this.gethaulers()
     // this.areas()
+    console.log(this.$route.params)
     // this.routes()
     // this.getUsers()
     // this.employeedata()
@@ -354,6 +363,7 @@ export default {
                       class="form-control"
                       placeholder="Enter Contol No"
                       name="body"
+                      disabled
                     />
                   </b-col>
                   <b-col>
@@ -363,10 +373,11 @@ export default {
                       >Trip Date</label
                     >
                     <input
-                      v-model="controlno"
+                      v-model="tripDate"
                       class="form-control"
                       placeholder="Enter Contol No"
                       name="body"
+                      disabled
                     />
                   </b-col>
                 </b-row>
@@ -378,10 +389,11 @@ export default {
                       >Dumping Location</label
                     >
                     <input
-                      v-model="controlno"
+                      v-model="dumping"
                       class="form-control"
-                      placeholder="Enter Contol No"
+                      placeholder="Enter Dumping"
                       name="body"
+                      disabled
                     />
                   </b-col>
                   <b-col>
@@ -391,10 +403,11 @@ export default {
                       >Hauler</label
                     >
                   <input
-                      v-model="controlno"
+                      v-model="haulerss"
                       class="form-control"
                       placeholder="Enter Contol No"
                       name="body"
+                      disabled
                     />
                   </b-col>
                 </b-row>
@@ -407,10 +420,11 @@ export default {
                       >Plate No</label
                     >
                    <input
-                      v-model="controlno"
+                      v-model="plateno"
                       class="form-control"
                       placeholder="Enter Contol No"
                       name="body"
+                      disabled
                     />
                   </b-col>
                   <b-col>
@@ -420,10 +434,11 @@ export default {
                       >Truck Type</label
                     >
                      <input
-                      v-model="controlno"
+                      v-model="trucktype"
                       class="form-control"
                       placeholder="Enter Contol No"
                       name="body"
+                      disabled
                     />
                   </b-col>
                 </b-row>
@@ -435,11 +450,12 @@ export default {
                       >Vehicle No</label
                     >
                     <input
-                      v-model="vehicleno"
+                      v-model="bodyno"
                       class="form-control"
                       name="body"
                       readonly
                       placeholder="Enter Vehicle No"
+                      disabled
                     />
                   </b-col>
                   <b-col>
@@ -454,6 +470,7 @@ export default {
                       name="trucktype"
                       readonly
                       placeholder="Enter Volume Capacity"
+                      disabled
                     />
                   </b-col>
                 </b-row>
@@ -465,9 +482,9 @@ export default {
                       >Driver</label
                     >
                    <input
-                      v-model="controlno"
+                      v-model="driver1"
                       class="form-control"
-                      placeholder="Enter Contol No"
+                    disabled
                       name="body"
                     />
                   </b-col>
@@ -478,10 +495,11 @@ export default {
                       >Helper</label
                     >
                     <input
-                      v-model="controlno"
+                      v-model="helper1"
                       class="form-control"
-                      placeholder="Enter Contol No"
+                   
                       name="body"
+                      disabled
                     />
                   </b-col>
                 </b-row>
@@ -493,10 +511,11 @@ export default {
                       >From Dumping Point</label
                     >
                    <input
-                      v-model="controlno"
+                      v-model="frompoint"
                       class="form-control"
                       placeholder="Enter Contol No"
                       name="body"
+                      disabled
                     />
                   </b-col>
                   <b-col>
@@ -506,7 +525,7 @@ export default {
                       >To Dumping Point</label
                     >
                     <input
-                      v-model="controlno"
+                      v-model="topoint"
                       class="form-control"
                       placeholder="Enter Contol No"
                       name="body"
@@ -526,6 +545,7 @@ export default {
                       class="form-control"
                       placeholder="Enter Dispacted By"
                       name="body"
+                      disabled
                     />
                   </b-col>
                   <b-col>
@@ -535,7 +555,7 @@ export default {
                       >Verified By</label
                     >
                     <input
-                      v-model="controlno"
+                      v-model="Verified"
                       class="form-control"
                       placeholder="Enter Verified By"
                       name="body"
@@ -549,15 +569,16 @@ export default {
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
                 >
-                  TiME IN AM</label
+                  AM TRIPS</label
                 >
 
                 <input
                   id="defaultFormCardtextEx"
                   type="text"
                   class="form-control"
-                  v-model="input"
+                  v-model="amtrips"
                   placeholder="Enter Time IN AM"
+                  disabled
                 />
               </b-col>
               <b-col md="4">
@@ -565,14 +586,15 @@ export default {
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
                 >
-                  TIME OUT AM</label
+                  PM TRIPS</label
                 >
                 <input
                   id="defaultFormCardtextEx"
                   type="text"
                   class="form-control"
-                  v-model="input"
+                  v-model="pmtrips"
                   placeholder="Enter Time Out Am"
+                  disabled
                 />
               </b-col>
               <b-col md="4">
@@ -586,67 +608,20 @@ export default {
                   id="defaultFormCardtextEx"
                   type="text"
                   class="form-control"
-                  v-model="input"
+                  v-model="totaltrips"
                   placeholder="Enter Total Trips"
+                  disabled
                 />
               </b-col>
              
             </b-row>
-              <b-row >
-              <b-col md="4">
-                <label
-                  for="defaultFormCardNameEx"
-                  class="grey-text font-weight-dark"
-                >
-                  Time IN PM</label
-                >
-
-                <input
-                  id="defaultFormCardtextEx"
-                  type="text"
-                  class="form-control"
-                  v-model="input"
-                  placeholder="Enter Time IN PM"
-                />
-              </b-col>
-              <b-col md="4">
-                <label
-                  for="defaultFormCardNameEx"
-                  class="grey-text font-weight-dark"
-                >
-                  TIME OUT PM</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  type="text"
-                  class="form-control"
-                  v-model="input"
-                  placeholder="Enter Time Out PM"
-                />
-              </b-col>
-              <b-col md="4">
-                <label
-                  for="defaultFormCardNameEx"
-                  class="grey-text font-weight-dark"
-                >
-                  TOTAL Trips</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  type="text"
-                  class="form-control"
-                  v-model="input"
-                  placeholder="Enter Total Trips"
-                />
-              </b-col>
-             
-            </b-row>
+            
                 <br />
-                <button
+                <!-- <button
                   type="submit"
                   class="btn btn-custome float-right btn-secondary mb-3"
                   >Submit</button
-                >
+                > -->
               </form>
             </div>
           </div>

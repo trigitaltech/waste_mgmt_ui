@@ -41,6 +41,7 @@ export default {
      manufacturedate:"",
      totalkmsserved:"",
      totalhoursserved:"",
+     models:"",
       createdby: "",
       createddate: new Date(),
       modifydate: new Date(),
@@ -171,6 +172,7 @@ this.haulerdata.map(e=>{
             description:this.description,
               hauler:this.haulers,
             isDeleted: false,
+            model:this.models,
             status:"WORKING",
             createdBy: this.createdby
         }
@@ -362,7 +364,18 @@ this.haulerdata.map(e=>{
                     <b-row class="mb-3">
                   <b-col md="6">
                     <!-- Default input text -->
-                  
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Model</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="models"
+                      type="text"
+                      class="form-control"
+                    />
+
                      </b-col>
                
                  

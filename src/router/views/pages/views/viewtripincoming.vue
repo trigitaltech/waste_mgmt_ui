@@ -8,7 +8,7 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import { Edituser, users } from '../../../../services/auth'
+import { Edituser, users,Areamasters } from '../../../../services/auth'
 
 export default {
   page: {
@@ -27,7 +27,7 @@ export default {
     return {
          printPdf: [],
     data:this.$route.params,
-      baranggayid: this.$route.params.baranggayId,
+      baranggayid:"",
       contractorDispatcherId:this.$route.params.contractorDispatcherId,
       contractorDispatcherName: this.$route.params.contractorDispatcherName,
       contractorDispatcherVerified: this.$route.params.contractorDispatcherVerified,
@@ -84,10 +84,24 @@ export default {
     // this.$route.params.data.response.result = this.$route.params.data.response.result
     // this.modifyby = this.getUserDetails.user.username
     // this.getClientDetails()
-    // this.getplans()
+    this.getplans()
     // this.userdata()
   },
   methods: {
+     async getplans() {
+       try {
+        
+      const result = await  Areamasters()
+      var data = result.data.response.areaMaster
+      data.map(e=>{
+        if(this.$route.params.baranggayId === e.id){
+          this.baranggayid = e.areaName
+        }
+      })
+       
+      } catch (error) {}
+   
+    },
        demoFun() {
       console.log('heee')
       var divContents = document.getElementById('pdf-voucher').innerHTML

@@ -1,84 +1,120 @@
 <script>
+import Vue from 'vue'
 import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
+import NProgress from 'nprogress/nprogress'
+import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
+import { Datetime } from 'vue-datetime'
 import Multiselect from 'vue-multiselect'
-import { ModelSelect } from 'vue-search-select'
-import VueTimepicker from 'vue2-timepicker'
+import moment from 'moment'
+Vue.component('multiselect', Multiselect)
 import {
-  ValidationProvider,
-  ValidationObserver,
-} from 'vee-validate/dist/vee-validate.full'
-import {
- dumpinglocation,users,editservicerequest,equipment,employees
+  assignequipsrequipment,
+  Tripdownload,
+  Areamasters,
+  routemaster,
+  CreateIncomingTrip,
+  employees,
+  vehicle,
+  getRoutesByBaranggayId,
+  equipmentby,
+  updatesrtruck,
+  assignequipsrtruck,
+  getvolumebyId
 } from '../../../../services/auth'
-import { Datetime } from 'vue-datetime';
+
 export default {
   page: {
-    title: 'Edit Servicerequest',
+    title: 'Edit Servicerequest Equipment',
     meta: [{ name: 'description', content: appConfig.description }],
-  },
-  components: {
-    VueTimepicker,
-      datetime: Datetime,
-    Layout,
-    PageHeader,
-    Multiselect,
-    ValidationProvider,
-    ValidationObserver,
-    ModelSelect,
   },
   data() {
     return {
-      operators:[],
-      employe:[],
-      users:[],
-      status:this.$route.params.status,
-      type:[],
-      tripdate:this.$route.params.tripDate,
-      time:this.$route.params.jobStartTime,
-      requesttype:this.$route.params.requestType,
-      equipmentno:"",
-      tripkms:"",
-      mmda:"",
-      equipmentid:"",
-      equipmentperformance:"",
-      equipmentusage:"",
-      equipmenttype:"",
-      operatorname:this.$route.params.operatorName,
-      operator:"",
-      dumparea:this.$route.params.dumpingArea,
-      drivername:this.$route.params.driverName,
-      driverid:"",
-      controlcheckerid:"",
-      controlcheckername:this.$route.params.controlChekerName,
-      operatorid:"",
-     
-      dump:[],
-      createdby: "",
-      createddate: new Date(),
-      modifydate: new Date(),
-      modifyby:"",
-       option: [
-       
-        { value: 'SOILTRUCK', text: 'SOIL TRUCK' },
-        { value: 'EQUIPMENT', text: 'EQUIPMENT' },
+      inputs: [
+        {
+          name: '',
+        },
       ],
-      title: 'Register',
-     item:[{ value: null, text: 'Please select an user' }],
       items: [
         {
-          text: 'Home',
+          text: 'Servicerequests',
           href: '/',
         },
         {
-          text: 'ServiceRequests / Edit Servicerequest',
+          text: 'Servicerequest Equipment',
+          href: '#/Servicerequest/Equipment',
+        },
+        {
+          text: 'Edit SR Equipment',
           active: true,
         },
       ],
-   
-    oid:"",
+      areadata: [],
+      areaarray: '',
+      routedate: [],
+      routearray: [],
+      emp: [],
+      controlno: '',
+      area: '',
+      route: '',
+      driver: '',
+      contractor: '',
+      collector: null,
+      lgu: '',
+      plate: '',
+      plates: [],
+      body: '',
+      tripDate: '',
+      trucktype: '',
+      driverid: '',
+      startTime: '',
+      drivers: [],
+      helpers: [],
+      vehicles: [],
+      servingAreas: [],
+      route: '',
+      driver: '',
+      helper: null,
+      servingRoutes: [],
+      driverList: [],
+       checkerListNames:[],
+      hauler: '',
+      haulerList: [],
+      contractorList: [],
+      paleroList: [],
+      garbage: null,
+      lgu: null,
+      equip: [],
+      equipments: [],
+      equipmentused: '',
+      drivertimein: '',
+      distancekms: '',
+      equipmentarray: [],
+      verifiedby:"",
+      dispatchedby:"",
+      inputs: [
+        {
+          timeIn: '',
+          timeOut: '',
+          duration: '',
+          bucketLoaded: '',
+        },
+      ],
+      loginlguid:"",
+      checkerList:[],
+      dispatcherListNames:[],
+      dispatcherlist:[],
+      dispatchId:"",
+      checkerId:"",
     }
+  },
+  components: {
+    Layout,
+    PageHeader,
+    VueTimepicker,
+    Multiselect,
+    datetime: Datetime,
   },
   computed: {
     getUserDetails() {
@@ -86,146 +122,159 @@ export default {
     },
   },
   mounted() {
-     console.log(this.$route.params)
-    // this.getClientDetails()
-    // this.getplans()
-       this.createdby = this.getUserDetails.user.username
-    this.modifyby = this.getUserDetails.user.username
-    this.getdumping()
-    this.getequipment()
-    this.userdata()
-    this.getemployees()
+    this.tripDate = moment(new Date()).format('DD-MM-YYYY')
+     this.drivertimein = new Date()
+    console.log(this.tripDate + ' ' + this.startTime)
+    this.getLgu()
+    this.getequipments()
+    this.getvolume()
+  
+  this.getvolume1()
   },
   methods: {
-     getoid() {
-      console.log("hai")
-      
-    this.employe.map(e=>{
-    
-         if(this.operatorname === e.type){ 
-        this.oid = e.id
-        console.log("id",this.oid)
-         }
-      })
+     async getLgu() {
+      const result = JSON.parse(localStorage.getItem('auth.currentUser'))
+      this.loginlguid = result.lguemployee.lguId
+     this.dispatcherid = result.lguemployee.id
+     this.dispatchername = result.lguemployee.firstName
     },
-  
-    async getuid(){
-       this.users.map(e=>{
-         if(this.controlcheckername === e.userName){ 
-        this.controlcheckerid === e.id
-         }
-      })
-           
-    },
-     async userdata() {
-       try {
-    
-      const result = await users()
-      var item = result.data.response.Users
-      item.map(e=>{
-        this.users.push(e.userName)
-      })
-     
-      } catch (error) {}
-     },
-    async getdumping() {
-       try {
-      
-      const result = await  dumpinglocation()
-      var data = result.data.response.dumpingLocation
-      
-    
-
-      data.map(e=>{
-      this.dump.push(e.dumpingAreaName)
-      console.log("user",e)
-      })
-       console.log("users",this.item)
-     
-      } catch (error) {}
-     },
-       async getemployees() {
-       try {
-       
-      const result = await  employees()
-      this.employe = result.data.response.result
-    this.employe.map(e=>{
-this.operators.push(e.type)
-    })
-
-
-      } catch (error) {}
-   
-    },
-    async create() {
-      console.log("hai")
+     async getvolume() {
       try {
-        const payload = {
+        var id3 = "VOLUME_CHECKER"
+        const result = await getvolumebyId(this.loginlguid,id3)
+       this.checkerList = result.data.response.result
+        
+              this.checkerList.map(g => {
              
-                id: this.$route.params.id,
-               tripDate: this.tripdate ,
-                equipmentNo: this.equipmentno,
-                equipmentId: this.equipmentid,
-                equipmentType: this.equipmenttype,
-                jobStartTime: this.time,
-                jobEndTime: "2020-11-26T10:00:44.000+00:00",
-                requestType: this.requesttype,
-                dumpingArea: this.dumparea,
-                driverName: this.drivername,
-                driverId: this.driverid,
-                operatorId: this.oid,
-                controlCheckerid: this.cid,
-                controlChekerName: this.controlcheckername,
-                totalKmServed: null,
-                isDeleted: "false",
-                status: "ASSIGNED",
-                createdBy: "encoder",
-                modifiedBy: "Admin",
-                   equipment_USAGE:this.equipmentusage,
-                equipment_PERFORMANCE:this.equipmentperformance,
-                lgu: "Admin",
-                  operatorName: this.operatorname,
-           
-            }
-            console.log("hello")
-        let result = await editservicerequest(payload)
-        console.log("hi",result)
+                      this.checkerListNames.push(g.userName)
+      })
+      } catch(e) {
+        console.log(e)
+      }
+    },
+     async getvolume1() {
+      try {
+        var id1 = "ENCODER"
+        const result = await getvolumebyId(this.loginlguid,id1)
+       this.dispatcherlist = result.data.response.result
+        
+              this.dispatcherlist.map(g => {
+             
+                      this.dispatcherListNames.push(g.userName)
+      })
+      } catch(e) {
+        console.log(e)
+      }
+    },
+    add() {
+      this.inputs.push({
+        timeIn: '',
+        timeOut: '',
+        duration: '',
+        bucketLoaded: '',
+      })
+      console.log(this.inputs)
+    },
+
+    remove(index) {
+      this.inputs.splice(index, 1)
+    },
+    
+    async getequipments() {
+      const result = await equipmentby()
+      this.equipments = result.data.response.equipment
+      this.equipments.map((e) => {
+        this.equip.push(e.equipmentNo)
+      })
+      // console.log(this.plates)
+    },
+ getequipCode() {
+      console.log("hai",this.equipmentused)
+      this.equipmentarray=[]
+       for(var i = 0 ; i<this.equipmentused.length ;i++){
+        //  debugger
+         this.equipments.map(e=>{
+        if(this.equipmentused[i] === e.equipmentNo){
+             
+          this.equipmentarray.push({equipment:e.id})
+          console.log("routedata",this.equipmentarray)
+       
+        }
+         })
+      
+       }
+    },
+   getCheckerId() {
+        this.checkerList.map(e => {
+          if(this.verifiedby == e.userName){
+            this.checkerId = e.id
+          }
+        })
+      },
+       getdispatchid() {
+        this.dispatcherlist.map(e => {
+          if(this.dispatchedby == e.userName){
+            this.dispatchId = e.id
+          }
+        })
+      },
+  
+    // async firstFunction() {
+    //   console.log('firsyt')
+    //   try {
+    //     let payload = {
+       
+    //     }
+    //     const result = await updatesrtruck(payload)
+    //     if (result) {
+    //       this.$swal({
+    //         group: 'alert',
+    //         type: 'success',
+    //         text: `Updated Service request Truck`,
+    //         duration: 5000,
+    //       })
+    //       this.$router.push({ path: '/Servicerequest/Truck' })
+    //     }
+    //   } catch (e) {}
+    // },
+    async update() {
+      console.log('second')
+      try {
+        let payload = {
+        
+                
+                  serviceTicketEquipementReport:this.inputs,
+                  "totaldistance":this.distancekms,
+                  "driverTimeIn":this.drivertimein,
+                  "dispatcherBy":this.dispatchId,
+                  "verifiedBY":this.checkerId
+                  }
+
+        const result = await assignequipsrequipment(this.$route.params.id,payload)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You Edited Service Request Successfully`,
+            text: `Updated Service request Equipment`,
             duration: 5000,
           })
-         
-           this.$router.push({path:'/Servicerequestdetails'})
-            
+          this.$router.push({ path: '/Servicerequest/Truck' })
         }
-      } catch (e) {
-        console.log("hi")
-        this.$toasted.error(e.message.error, {
-          duration: 7000,
-        })
-      }
+      } catch (e) {}
     },
-      async getequipment() {
-       try {
-      
-      const result = await  equipment()
-      var item = result.data.response.equipment
-       item.map(e=>{
-      this.type.push(e.equipmentType)
-      console.log("user",e)
+    getTruckType() {
+      this.vehicles.map((e) => {
+        if (e.plateNo == this.plate) {
+          this.trucktype = e.vehicleType.code
+          this.body = e.vehicleNo
+        }
       })
-      } catch (error) {}
-   
     },
-   
- 
-    async refresh() {
-      setTimeout(function () {
-        location.reload()
-      }, 200)
+    add(index) {
+      if (this.inputs.length <= 4) this.inputs.push({ name: '' })
+    },
+    remove(index) {
+      this.inputs.splice(index, 1)
     },
   },
 }
@@ -234,328 +283,219 @@ this.operators.push(e.type)
 <template>
   <Layout>
     <PageHeader :items="items" />
-
-    <div class="animated fadeIn">
+    <div class="animated">
       <b-card
-        header="Edit Servicerequest"
-       
+        header="Edit Servicerequest Equipment"
         class="mt-10 ml-10 mr-10 mx-auto"
       >
-        <div class="mt-3">
-          <!-- Card -->
-          <div class="card mx-xl-5">
-            <!-- Card body -->
+        <div class="mt-1">
+          <div class="mx-xl-5">
             <div class="card-body">
-              <!-- Default form subscription -->
-              <form >
-                <b-row>
+              <form @submit.prevent="update()">
+                <!-- <b-row>
                   <b-col>
-                    <!-- Default input name -->
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                    >
-                     Dumping Area </label
-                    >
-                    <b-form-select
-                        v-model="dumparea"
-                      :options="dump"
-                    
-                    ></b-form-select>
-
-
-                   <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Request Type</label
-                    >
-                    <b-form-select
-                      v-model="requesttype"
-                      :options="option"
-                    
-                    ></b-form-select>
-
-                    <br />
-
-                    <!-- Default input text -->
-                  </b-col>
-                  <b-col >
-                      <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Trip Date</label
-                    >
-            <datetime type="datetime" v-model="tripdate" input-class="form-control"></datetime>
-
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Trip Start Time</label
-                    >
-                    <b-col >
-                <vue-timepicker v-model="time" format="hh:mm A" input-class="form-control"></vue-timepicker>
-                    </b-col>
-                    <!-- Default input name -->
-                  </b-col>
-                  <br />               
-                </b-row>
-                  <b-row v-if="this.requesttype === 'soil Truck'">
-                    
-                      <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Plate</label
-                    >
-                <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="plate"
-                        placeholder="Enter Plate"
-                    />
-
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Body</label
+                      >Driver Time IN</label
                     >
                     <input
-                      type="text"
-                      id="defaultFormCardtextEx"
+                      v-model="drivertimein"
                       class="form-control"
-                      v-model="body"
-                        placeholder="Enter BODY"
-                    
+                      name="body"
+                      placeholder="Enter Driver Time In"
                     />
-                  </b-col>
-               
-                 <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Driver Name</label
-                    >
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="drivername"
-                       placeholder="Enter Driver Name"
-                    />
-
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Truck Type</label
-                    >
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="trucktype"
-                        placeholder="Enter Truck Type"
-                    
-                    />
-                  </b-col>
-                  
-                </b-row>
-                  <b-row v-if="this.requesttype === 'EQUIPMENT'">
-                    
-                      <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >EQUIPMENT NO</label
-                    >
-                <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="equipmentno"
-                        placeholder="Enter Equipment No"
-                    />
-
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >EQUIPMENT ID</label
-                    >
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="equipmentid"
-                        placeholder="Enter Equipment ID"
-                    
-                    />
-                  </b-col>
-               
-                 <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >EQUIPMENT TYPE</label
-                    >
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="equipmenttype"
-                       placeholder="Enter Equipment Type"
-                    />
-
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >EQUIPMENT USAGE</label
-                    >
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="equipmentusage"
-                        placeholder="Enter Equipment Usage"
-                    
-                    />
-                  </b-col>
-                  
-                </b-row>
-             <b-row>
-                    <!-- Default input text -->
-                    <b-col v-if="this.requesttype === 'EQUIPMENT'">
-                          <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >EQUIPMENT PERFORMANCE</label>
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="equipmentperformance"
-                        placeholder="Enter Equipment Performance"
-                    
-                    />
-                    </b-col>
-                    <b-col>
-                   
-                  
-                    
-                    </b-col>
-                
-                </b-row>
-                <b-row>
-                  <b-col>
-                     <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Operator</label>
-                   <b-form-select
-                      v-model="operatorname"
-                      :options="operators"
-                     @change="getoid()"
-                    ></b-form-select>
                   </b-col>
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Control Checker</label>
-                   <b-form-select
-                      v-model="controlcheckername"
-                      :options="users"
-                    @change="getuid()"
-                    ></b-form-select>
-                  
-                    
-                    </b-col>
+                      >DISTANCE (KMS)</label
+                    >
+                    <input
+                      type="text"
+                      v-model="distancekms"
+                      class="form-control"
+                      placeholder="Enter distancekms"
+                    />
+                  </b-col>
                 </b-row>
-                  <b-row>
-                    <!-- Default input text -->
-                    <b-col >
-                          <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Trip KMS</label>
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="tripkms"
-                        placeholder="Enter Tripkms"
-                    
-                    />
-                    </b-col>
-                     <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >MMDA </label>
-                    <input
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="mmda"
-                        placeholder="Enter MMDA"
-                    
-                    />
-                  
-                    
-                    </b-col>
-                  </b-row>
+                -->
+
                 <br />
-               <b-button
-            class="btn btn-custome float-right btn-secondary mb-3"
-            text="Create Tenant"
-                  @click="create()"
-                  >Edit</b-button
+                <b-row v-for="(input, k) in inputs" :key="k">
+                 
+                  <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                    >
+                      Time In</label
+                    >
+                      <datetime 
+                      v-model="input.timeIn"
+                      :format="{
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit'
+                      }"
+                      type="datetime"
+                      placeholder="SELECT Time"
+                 ></datetime>
+                
+                  </b-col>
+                  <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                    >
+                      Time Out</label
+                    >
+                      <datetime 
+                      v-model="input.timeOut"
+                      :format="{
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit'
+                      }"
+                      type="datetime"
+                      placeholder="SELECT Time"
+                 ></datetime>
+                 
+                  </b-col>
+                  <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                    >
+                      Duration</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      type="text"
+                      class="form-control"
+                      v-model="input.duration"
+                      placeholder="Enter duration"
+                    />
+                  </b-col>
+                  <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                    >
+                      Buckets Loaded</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      type="text"
+                      class="form-control"
+                      v-model="input.bucketLoaded"
+                      placeholder="Enter bucketsloaded"
+                    />
+                  </b-col>
+                  <b-col>
+                    <span>
+                      <i
+                        class="fas fa-minus-circle"
+                        @click="remove(k)"
+                        v-show="k || (!k && inputs.length > 1)"
+                      ></i>
+                      <br />
+                      <i
+                        style="width: 50px"
+                        class="fas fa-plus-circle"
+                        @click="add(k)"
+                        v-show="k == inputs.length - 1"
+                      ></i>
+                    </span>
+                  </b-col>
+                </b-row>
+
+                <br/>
+                 <b-row>
+                   <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Verified BY</label
+                    >
+                     <b-form-select
+                      v-model.trim="verifiedby"
+                      class="form-control"        
+                      :options="checkerListNames"
+                      @change="getCheckerId" 
+                    >
+                    </b-form-select>
+                  </b-col>
+                  <b-col> </b-col>
+                </b-row>
+                 <b-row>
+                  <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Dispatched BY</label
+                    >
+                    <multiselect
+                      v-model="dispatchedby"
+                      :multiple="true"
+                      :options="dispatcherListNames"
+                      @input="getdispatchid"
+                    >
+                    </multiselect>
+                  </b-col>
+                  <b-col> </b-col>
+                </b-row>
+                <br />
+                <button
+                  type="submit"
+                  class="btn btn-custome float-right btn-secondary mb-3"
+                 
+                  >Submit</button
                 >
               </form>
-              <!-- Default form subscription -->
             </div>
-            <!-- Card body -->
           </div>
-          <!-- Card -->
         </div>
       </b-card>
     </div>
-    <!-- end row -->
   </Layout>
 </template>
-<style lang="scss">
 
- .vue__time-picker input.display-time {
-    
-    display: block;
-    width: 380%;
-    height: calc( 1.5em + 1rem + 2px );
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #4b4b5a;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #e2e7f1;
-    border-radius: 0.3rem;
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style lang="scss" scoped media="print">
+.cardheader.title {
+  color: black;
+}
+</style>
+<style lang="stylus" scoped>
+body {
+  font-family: Arial;
 }
 
-</style>
-<style lang="sass" scoped>
-.edit
-  color: white !important
-.text-center
-  text-align: center
-.form-div label
-  margin-top: 8px
-</style>
-<style lang="sass" scoped>
-.card-wrap
-  box-shadow: 0 0 10px #ccc
-  .role-details
-    margin: 10px
+.coupon {
+  border: 5px dotted #bbb;
+  width: 80%;
+  border-radius: 15px;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.container {
+  padding: 2px 16px;
+  background-color: #f1f1f1;
+}
+
+.promo {
+  background: #ccc;
+  padding: 3px;
+}
+
+.expire {
+  color: red;
+}
 </style>

@@ -11,7 +11,8 @@ import moment from 'moment'
 Vue.component('multiselect', Multiselect)
 import {
   getVehiclesByhauler,
-  Createsrtruck,
+  equipment,
+  Createsrequipment,
   getdumpdata,
   dumpinglocation,
   haulers,
@@ -58,6 +59,9 @@ export default {
       emp: [],
       dumpid: '',
       dumpinglocation: '',
+        jobtypes: ["JOBTYPE1", ,
+        "JOBTYPE2",
+      ],
       controlno: '',
       tripDate: '',
       plateno: '',
@@ -112,6 +116,13 @@ export default {
       dumpingid: '',
       haulerid: '',
       dispatcherid: '',
+      equipmentdata:[],
+      equipments:[],
+      equipment:'',
+      model:"",
+      jobtype:"",
+      operator:"",
+      operatorid:"",
     }
   },
   components: {
@@ -132,6 +143,7 @@ export default {
     console.log(this.tripDate + ' ' + this.startTime)
     this.getdumping()
     this.gethaulers()
+    this.getequipment()
     // this.areas()
     // this.routes()
     // this.getUsers()
@@ -210,27 +222,9 @@ export default {
           })
         }
       }
-      //     debugger
-      //  this.haulerdata.map(e => {
-      //   if (this.hauler === e.haulerName) {
-      //     this.haulerid = e.id
-      //     debugger
-      //   }
-      //    console.log("haiiiiii",this.haulerid)
-      // })
-      //  if(this.haulerid !== ""){
-      //
-      //    console.log(result)
-      //  }
+     
     },
-    // async getvehicles() {
-    //   const result = await vehicle()
-    //   this.vehicles = result.data.response.vehicles
-    //   this.vehicles.map((e) => {
-    //     this.plates.push(e.plateNo)
-    //   })
-    //   console.log(this.plates)
-    // },
+   
     getroutes() {
       this.routedata.map((e) => {
         if (this.route === e.routeName) {
@@ -245,22 +239,21 @@ export default {
         }
       })
     },
-    // getid() {
-    //   console.log('haiiiiii')
-    //   this.emp.map((e) => {
-    //     if (this.driver === e.userName) {
-    //       this.driverid = e.id
-    //     }
-    //   })
-    // },
+   getoperatorid(){
+        this.emp.map(e=> {
+          if(this.operator[0] === e.userName){
+this.operatorid = e.id
+          }
+        })
+   },
     async employeedata() {
       try {
         const result = await haulerEmployees()
         this.emp = result.data.response.HaulerEmployees
         console.log(this.emp)
         this.emp.map((e) => {
-          if (e.type == 'DRIVER') this.drivers.push(e.userName)
-          if (e.type == 'HELPER') this.helpers.push(e.userName)
+          if (e.type == 'OPERATOR') this.drivers.push(e.userName)
+        
         })
       } catch (error) {}
     },
@@ -294,6 +287,27 @@ export default {
         }
       })
     },
+     async getequipment() {
+       try {
+      
+      const result = await  equipment()
+      this.equipmentdata = result.data.response.equipment
+      this.equipmentdata.map(e=>{
+        this.equipments.push(e.equipmentNo)
+      })
+   
+      } catch (error) {}
+   
+    },
+    
+     getequip() {
+      // debugger
+      this.equipmentdata.map((e) => {
+        if (this.equipment[0] === e.equipmentNo) {
+          this.model = e.model
+        }
+      })
+    },
     getdriverid() {
       // debugger
       this.emp.map((e) => {
@@ -322,24 +336,12 @@ export default {
           trip: this.tripDate,
 
           dumpingareaId: this.dumpid,
-
-          PlateNo: this.plateno[0],
-
-          BodyNo: this.vehicleno[0],
-
-          truckType: this.trucktype,
-
-          driverId: this.driverid,
-          driverName: this.driver[0],
-
-          HelperId: this.helperid,
-          HelperName: this.helper[0],
-
+            equipmentNo:this.equipment[0],
+          equipmentmodel:this.model,
+          type:this.jobtype[0],
           fromPoint: this.fromdumpingpoint[0],
           toPoint: this.todumpingpoint[0],
-
-          volumeCapacity: this.volumecapacit,
-
+       
           haulerId: this.haulerid,
 
           timeInAM: '',
@@ -359,19 +361,18 @@ export default {
           driverTimeIn: '',
 
           totalDistance: '',
-          equipmentNo:'',
-          type:'',
+        verifiedBy:this.operatorid,
           dispatchedBy: this.dispatcherid,
         }
-        const result = await Createsrtrck(payload)
+        const result = await Createsrequipment(payload)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `Service Request Truck Created`,
+            text: `Service Request Equipment Created`,
             duration: 5000,
           })
-          this.$router.push({ path: '/Servicerequest/Truck' })
+          this.$router.push({ path: '/Servicerequest/Equipment' })
         }
       } catch (e) {}
     },
@@ -468,13 +469,13 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Plate No</label
+                      >Equipment</label
                     >
                     <multiselect
-                      v-model="plateno"
+                      v-model="equipment"
                       :multiple="true"
-                      :options="plates"
-                      @input="platedetails"
+                      :options="equipments"
+                     @input="getequip"
                     >
                     </multiselect>
                   </b-col>
@@ -482,59 +483,31 @@ export default {
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Truck Type</label
+                      >Model</label
                     >
                     <input
-                      v-model="trucktype"
+                      v-model="model"
                       class="form-control"
                       name="trucktype"
-                      placeholder="Enter Trucktype"
+                      placeholder="Enter Model"
+                      disabled
                       readonly
                     />
                   </b-col>
                 </b-row>
-                <b-row>
-                  <b-col>
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Vehicle No</label
-                    >
-                    <input
-                      v-model="vehicleno"
-                      class="form-control"
-                      name="body"
-                      readonly
-                      placeholder="Enter Vehicle No"
-                    />
-                  </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Volume Capacity</label
-                    >
-                    <input
-                      v-model="volumecapacity"
-                      class="form-control"
-                      name="trucktype"
-                      readonly
-                      placeholder="Enter Volume Capacity"
-                    />
-                  </b-col>
-                </b-row>
+                
                 <b-row>
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Driver</label
+                      >Operator</label
                     >
                     <multiselect
-                      v-model="driver"
+                      v-model="operator"
                       :multiple="true"
                       :options="drivers"
-                      @input="getdriverid"
+                      @input="getoperatorid"
                     >
                     </multiselect>
                   </b-col>
@@ -542,18 +515,18 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Helper</label
+                      >Job Type</label
                     >
                     <multiselect
-                      v-model="helper"
+                      v-model="jobtype"
                       :multiple="true"
-                      :options="helpers"
-                      @input="gethelperid"
+                      :options="jobtypes"
+                    
                     >
                     </multiselect>
                   </b-col>
                 </b-row>
-                <b-row class="mt-3">
+                 <b-row class="mt-3">
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -581,6 +554,7 @@ export default {
                     </multiselect>
                   </b-col>
                 </b-row>
+                
                 <br />
                 <button
                   type="submit"

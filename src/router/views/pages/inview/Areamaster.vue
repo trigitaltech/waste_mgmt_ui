@@ -60,7 +60,7 @@ export default {
         
          {
           key: 'lguId',
-          label: 'lguId',
+          label: 'Lgu Name',
           sortable: true
         },
          {
@@ -112,6 +112,15 @@ export default {
        
         const result = await  lgus()
         this.lgudata = result.data.response.result
+         for (var i = 0; i < this.item.length; i++) {
+  for (var j = 0; j < this.lgudata.length; j++) {
+if(this.lgudata[j].id === this.item[i].lguId ){
+  this.item[i].lguId = this.lgudata[j].lguName
+  break
+}
+
+  }
+         }
         // data.map( e => {
         //   if(e.type!="ENCODER" && e.type!="VOLUME_CHECKER" && e.type!="DISPATCHER")
         //     this.item.push(e)

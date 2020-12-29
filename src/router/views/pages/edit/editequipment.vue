@@ -29,6 +29,7 @@ export default {
       haulerdata:[],
       haulernames:[],
       haulername:"",
+      models:this.$route.params.model,
      equipmentno:this.$route.params.equipmentNo,
      equipmenttype:this.$route.params.equipmentType,
      ownername:this.$route.params.ownerName,
@@ -175,7 +176,8 @@ this.haulerdata.map(e=>{
             createdBy: this.createdby,
               hauler:this.haulers,
             modifiedDate: this.modifydate,
-            modifiedBy: this.modifyby
+            modifiedBy: this.modifyby,
+            model:this.models
         }
         let result = await Editequipment(payload)
         if (result) {
@@ -341,8 +343,21 @@ this.haulerdata.map(e=>{
                 </b-row>
                 <b-row class="mb-3">
                    
-                    
-                     
+                    <b-col>
+
+                        <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Model</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="models"
+                      type="text"
+                      class="form-control"
+                    />
+                    </b-col>
+                     <b-col></b-col>
                
                 </b-row>
                 <b-button
