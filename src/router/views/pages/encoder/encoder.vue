@@ -9,7 +9,7 @@ import moment from 'moment'
 // Vue.component('downloadExcel', JsonExcel)
 import {
 getincomingtrip,getoutgoingtrip,getTripsdetailsbyId,getAllOutgoingTrip
-,getnameByLguId
+,getnameByLguId, getAllDirectTrips
 } from '../../../../services/auth'
 
 export default {
@@ -61,9 +61,9 @@ export default {
         { key: 'driverName', label:'DriverName',  sortable: true },
           { key: 'helperName', label:'HelperName',  sortable: true },
             { key: 'tripStartTime',label:'StartTime',  sortable: true },
-              { key: 'truckBodyNo',label:'BodyNo',  sortable: true },
+              { key: 'bodyNo',label:'BodyNo',  sortable: true },
                 { key: 'truckType', label:'TruckType', sortable: true },
-       { key: 'truckplateNo',label:'PlateNO',  sortable: true },
+       { key: 'plateNo',label:'PlateNO',  sortable: true },
         { key: 'volumeCheckerName', label:'CheckerName', sortable: true },
       
 
@@ -76,7 +76,6 @@ export default {
           { key: 'helperName', label:'HelperName',  sortable: true },
             { key: 'loadingStartTime',label:'StartTime',  sortable: true },
               { key: 'bodyNo',label:'BodyNo',  sortable: true },
-                { key: 'typeOfUnit', label:'TruckType', sortable: true },
        { key: 'plateNo',label:'PlateNO',  sortable: true },
         { key: 'volumeCheckerName', label:'CheckerName', sortable: true },
         { key: 'status', sortable: true },
@@ -109,6 +108,7 @@ export default {
       tabIndex: 0,
       tripdata:[],
       outgoingTrips:[],
+      landfillTrips:[],
       loginlguid:"",
       loginencoderid:''
     }
@@ -147,16 +147,30 @@ export default {
     this.loginencoderid = result.lguemployee.id
     this.totalRows = this.items.length
     //this.getTripincoming
-    this.gettrips()
+    //this.gettrips()
     this.getOutgoingTrip()
+    this.getLandfillTrip()
   },
   methods: {
+    async getLandfillTrip() {
+      try {
+        const result = await getAllDirectTrips()
+        const data = result.data.response.result
+        data.map(e => {
+          if(e.contractorDispatcherId == this.loginencoderid) {
+            this.landfillTrips.push(e)
+          }
+        })
+      } catch(e) {
+        console.log(e)
+      }
+    },
     async getOutgoingTrip() {
       try {
         const result = await getAllOutgoingTrip()
         const data = result.data.response["OutgoingTrips:"]
         data.map(e => {
-          if(e.contractorDispatcherId == this.loginencoderid && e.status == 'ASSIGNED') {
+          if(e.contractorDispatcherId == this.loginencoderid) {
             this.outgoingTrips.push(e) 
           }
         })
@@ -238,7 +252,7 @@ export default {
       let date
       // if (timeStamp !== undefined){
         // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
-   return moment(timeStamp).format('HH:mm:ss')
+   return moment(timeStamp).format('HH:mm A')
       // }
     },
      getFormattedDate(timeStamp) {
@@ -250,18 +264,17 @@ export default {
     },
     onFiltered() {
 
+    },
+    print() {
+      alert('1')
     }
-    
-   
-    
-   
   },
 }
 </script>
 
 <template>
   <Layout>
-   
+    <pdf 
     <div class="row justify-content-center">
 
       <div class="col-lg-12">
@@ -276,7 +289,7 @@ export default {
                   <feather type="grid" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Incoming Trips</h5>
-                    <span class="text-muted">{{ tripdata.incomingTrips.length }}</span>
+                    <!--<span class="text-muted">{{ tripdata.incomingTrips.length }}</span>-->
                   </div>
                 </div>
               </div>
@@ -565,32 +578,15 @@ export default {
                     :filter-included-fields="filterOn"
                     @filtered="onFiltered"
                   >
-                    <template v-slot:cell(requestDate)="data"
-                      >{{ getFormattedDate(data.item.requestDate) }}</template>
-                    <!-- <template v-slot:cell(action)="data">
-                      <button
-                        class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
-                        @click="print(data.item)"
-                      >
-                        <feather type="printer" class="icon-xs mr-2"></feather>Print
-                      </button>
-                      <button  @click="download(data.item)" style="border:1px;margin:5px;background-color:white">
-                        
-                      <download-excel
-                        class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
-                        :data="json_data"
-                        :fields="json_fields"
-                        worksheet="My Worksheet"
-                        name="vouchers.xls"
-                      >
-                        <feather type="download" class="icon-xs mr-2"  ></feather>Download
-                      </download-excel>
-                      </button> -->
-                      <!-- <download-excel :data="json_data">
-                  
-                        <feather type="download" class="icon-xs mr-2"></feather>Download
-                      </download-excel>-->
-                    <!-- </template> -->
+                    <template v-slot:cell(loadingStartTime)="data"
+                      >{{ getDate(data.item.loadingStartTime) }}</template>
+                    <template v-slot:cell(action)="data">
+                      <router-link v-if="data.item.status!='ASSIGNED'" :to="{ name: 'ViewOutgoingTrip', params: data.item }">
+                        <span class="mr-2" >
+                         <i class="fa fa-eye edit"></i>
+                        </span>
+                      </router-link>
+                    </template>
                   </b-table>
                 </div>
                 <div class="row">
@@ -747,7 +743,7 @@ export default {
                     :bordered="bordered"
                     :small="small"
                     :fixed="fixed"
-                    :items="tripdata.directTrips"
+                    :items="landfillTrips"
                     :fields="landfill"
                     responsive="sm"
                     thead-class="header"

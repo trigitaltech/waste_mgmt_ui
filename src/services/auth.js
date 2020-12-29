@@ -298,3 +298,7 @@ export const checkerupdatebystatus = (payload) => serviceMaker (`/tripincoming/c
 
 
 export const getLguById = (id) => serviceMaker(`/LGU/${id}`,methods.GET,api.NGB)
+
+export const CreateDirectTrip = (payload) => serviceMaker(`/routetolandfilling/admin/create`,methods.POST,api.NGB,payload)
+
+export const getAllDirectTrips = () => serviceMaker(`/routetolandfilling/all`,methods.GET,api.NGB)
