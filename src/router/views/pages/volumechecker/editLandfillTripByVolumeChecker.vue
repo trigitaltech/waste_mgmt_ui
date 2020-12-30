@@ -90,13 +90,54 @@ export default {
       dumpingLocationId:null,
       controlCheckerId:null,
       controlCheckerName:'',
+      lguName:'',
+      baranggayName:'',
+      stagingAreaName:'',
+      dumpingLocationName:'',
       tripData:[]
     };
   },
   components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime, },
   mounted() {
+    this.getLgu()
     this.tripData = this.$route.params
+    this.getBaraggay()
     console.log(this.tripData)
+  },
+  methods:{
+    async getLgu() {
+      const result = JSON.parse(localStorage.getItem('auth.currentUser'))
+      this.loginlguid = result.lguemployee.lguId
+      const result1 = await getLguById(this.loginlguid)
+      this.lguName = result1.data.response.result.lguName
+    },
+    async getBaraggay() {
+      try {
+        const result = await getBaraggayByLguId(this.loginlguid)
+        const data = result.data.response.result
+        data.map( e => {
+          console.log(e.id+' '+this.tripData.baranggayId)
+          if(e.id == this.tripData.baranggayId) {
+            this.baranggayName = e.areaName
+          }
+        })
+      } catch(e) {
+        console.log(e)
+      }
+    },
+    async getStagingArea() {
+      try {
+        const result = await stagingarea()
+        const data = result.data.response.stagingArea
+        data.map(e => {
+          if(this.tripData.stagingAreaId == e.id){
+            console.log(e)
+          }
+        })
+      } catch(e) {
+        console.log(e)
+      }
+    },
   }
 }
 </script>
@@ -122,7 +163,7 @@ export default {
                       >
                       <input
                        class="form-control"
-                       v-model="loginDetails.name"
+                       v-model="lguName"
                        readonly
                       />
                   </b-col>
@@ -132,13 +173,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >Baranggay</label
                     >
-                    <b-form-select
-                      v-model.trim="area"
-                      class="form-control"        
-                      :options="tripData.routes"
-                      @change="getRoutes" 
-                    >
-                    </b-form-select>
+                    <input
+                       class="form-control"
+                       v-model="baranggayName"
+                       readonly
+                      />
                   </b-col>
                 </b-row>
                 <b-row class="mt-3">
@@ -163,7 +202,7 @@ export default {
                       >CONTROL NO</label
                     >
                     <input
-                      v-model="controlno"
+                      v-model="tripData.controlNo"
                       class="form-control"
                       name="body"
                     />
@@ -229,13 +268,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >Plate No</label
                     >
-                     <b-form-select
-                      v-model="plate"
-                      :options="plates"
-                      class="form-control"
-                      @change="getTruckType"
-                    >
-                    </b-form-select>
+                     <input
+                       class="form-control"
+                       v-model="tripData.plateNo"
+                       readonly
+                      />
                   </b-col>
                   <b-col class="ml-4">
                      <label
@@ -244,7 +281,7 @@ export default {
                       >Truck Type</label
                     >
                    <input
-                      v-model="trucktype"
+                      v-model="tripData.truckType"
                       class="form-control"
                       name="trucktype"
                       readonly
@@ -259,7 +296,7 @@ export default {
                       >Body</label
                     >
                     <input
-                      v-model="body"
+                      v-model="tripData.bodyNo"
                       class="form-control"
                       name="body"
                       readonly
@@ -271,13 +308,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >Driver Name</label
                     >
-                     <b-form-select
-                      v-model.trim="driver"
-                      class="form-control"        
-                      :options="drivers"
-                      @change="getid" 
-                    >
-                    </b-form-select>
+                     <input
+                       class="form-control"
+                       v-model="tripData.driverName"
+                       readonly
+                      />
                   </b-col>
                 </b-row>
                 <b-row class="mt-3">
@@ -287,13 +322,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >Helper</label
                     >
-                     <b-form-select
-                      v-model.trim="helper"
-                      class="form-control"        
-                      :options="helpers"
-                      @change="gethelperid" 
-                    >
-                    </b-form-select>
+                     <input
+                       class="form-control"
+                       v-model="tripData.helperName"
+                       readonly
+                      />
                   </b-col>
                   <b-col>
                     <label
@@ -316,13 +349,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >Volume Checker</label
                     >
-                     <b-form-select
-                      v-model.trim="checker"
-                      class="form-control"        
-                      :options="checkerListNames"
-                      @change="getCheckerId" 
-                    >
-                    </b-form-select>
+                     <input
+                       class="form-control"
+                       v-model="tripData.volumeCheckerName"
+                       readonly
+                      />
                   </b-col>
                   <b-col>
                     <label
@@ -330,13 +361,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >Control Checker</label
                     >
-                     <b-form-select
-                      v-model.trim="control"
-                      class="form-control"        
-                      :options="controlListNames"
-                      @change="getControlId"
-                    >
-                    </b-form-select>
+                     <input
+                       class="form-control"
+                       v-model="tripData.controlCheckerName"
+                       readonly
+                      />
                   </b-col>
                 </b-row>
                 <b-row class="mt-3">
@@ -346,13 +375,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >Staging Area</label
                     >
-                     <b-form-select
-                      v-model.trim="staging"
-                      class="form-control"        
-                      :options="stagingAreaNames"
-                      @change="getDumpingLocation" 
-                    >
-                    </b-form-select>
+                     <input
+                       class="form-control"
+                       v-model="tripData.stagingAreaName"
+                       readonly
+                      />
                   </b-col>
                   <b-col>
                     <label
@@ -361,7 +388,7 @@ export default {
                       >Dumping Location</label
                     >
                      <input
-                      v-model="dumping"
+                      v-model="tripData.dumpingLocationName"
                       class="form-control"
                       readonly
                     >
