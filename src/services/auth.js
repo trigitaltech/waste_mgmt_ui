@@ -143,6 +143,7 @@ export const edithauler = (payload) => serviceMaker(`/haulermaster/admin`, metho
 
 export const Editclass = (payload) => serviceMaker(`/trips/class/admin`, methods.PUT, api.NGB, payload)
 
+
 export const editrole = (payload) => serviceMaker(`/roles/admin`, methods.PUT, api.NGB, payload)
 
 export const editarea = (payload) => serviceMaker(`/areamaster/admin`, methods.PUT, api.NGB, payload)
