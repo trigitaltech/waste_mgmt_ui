@@ -65,7 +65,14 @@ export default {
       TripColumns: [
         {
           key: 'id',
-          label: 'Id'
+          label: 'Id',
+          sortable: true,
+        },
+        
+          {
+          key: 'controlNo',
+          label: 'controlNo',
+          sortable: true,
         },
         {
           key: 'tripDate',
@@ -97,7 +104,7 @@ export default {
   },
   computed: {
     rows() {
-      return this.exportVoucherData.length
+      return this.item.length
     },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
@@ -182,14 +189,28 @@ export default {
       >
         <div>
           <div class="mx-xl-5">
-            <div class="float-right">
+            
+         <b-row>
+           <b-col>
+              
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           </b-col>
+           <b-col>
+        
                 <b-button
                   class="btn btn-custome float-right btn-secondary mb-4 mr-2"
                   text="Create Tenant"
                   @click="$router.push({path:'/CreateIncomingTrip'})"
                   >Create Incoming Trip</b-button
                 >
-              </div>
+           </b-col>
+         </b-row>
             <div class="card-body">
               <div class="mt-3">
           <b-table
@@ -218,11 +239,11 @@ export default {
               <i class="fa fa-eye"></i>
             </b-button>
               </router-link>
-            <router-link :to="{ name: 'EditIncomingTrip', params: data.item }">
+            <!-- <router-link :to="{ name: 'EditIncomingTrip', params: data.item }">
                 <b-button size="sm" class="mr-2" variant="primary"  :hidden="data.item.status === 'APPROVED' || data.item.status === 'REJECTED' ">
                   <i class="fas fa-pencil-alt edit"></i>
                 </b-button>
-              </router-link>
+              </router-link> -->
                <span @click="deleteReq(data)">
               <i class="fa fa-times edit"></i>
             </span>
@@ -230,11 +251,10 @@ export default {
           </b-table>
           <div style="float: right">
             <b-pagination
-              v-model="currentPage"
+               v-model="currentPage"
               :per-page="perPage"
+              :total-rows="rows"
               aria-controls="my-table"
-              prev-text="Prev"
-              next-text="Next"
               hide-goto-end-buttons
             ></b-pagination>
           </div>

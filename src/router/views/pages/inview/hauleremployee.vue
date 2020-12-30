@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- hauleremployee,deleteemployee
+ hauleremployee,deletehauleremployee
 } from '../../../../services/auth'
 
 export default {
@@ -114,12 +114,12 @@ export default {
        var id = data.item.id
      try{
           
-        const result = await deleteemployee(data.item.id)
+        const result = await deletehauleremployee(data.item.id)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You Deleted Employee Successfully`,
+            text: `You Deleted Hauler Employee Successfully`,
             duration: 5000,
           })
          this.refresh()

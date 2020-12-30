@@ -54,6 +54,7 @@ export default {
       helperName: this.$route.params.helperName,
       id: this.$route.params.id,
       isDeleted: this.$route.params,
+          inputs:this.$route.params.garbageCollector,
       lguId: "",
       modifiedBy: this.$route.params.modifiedBy,
       modifiedDate: this.$route.params.modifiedDate,
@@ -353,7 +354,7 @@ export default {
                   class="form-control"
                 />
               </b-col>
-              <b-col>
+             <b-col v-for="(input, k) in inputs" :key="k">
                 <label
                   for="defaultFormCardEmailEx"
                   class="grey-text font-weight-dark"
@@ -361,7 +362,7 @@ export default {
                 >
                 <input
                   id="defaultFormCardEmailEx"
-                  v-model="garbageCollector"
+                  v-model="input.garbageCollectorName"
                   disabled
                   type="email"
                   class="form-control"

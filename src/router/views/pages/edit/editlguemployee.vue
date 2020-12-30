@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  createlguemployee,
+  editlguemployee,
   roles,
   Areamasters,
   lgus,
@@ -75,8 +75,8 @@ export default {
       baranggayCode: '',
 
       form: {
-            lguName: this.$route.params.lguName,
-        lguCode: this.$route.params.code,
+            lgunames: this.$route.params.lguName,
+       
         personalidno: this.$route.params.personalIdNo,
         personalTitle:this.$route.params.salutation,
         firstName:this.$route.params.firstName,
@@ -112,13 +112,15 @@ export default {
       lgusnames: [],
       distopt:[],
       lgusdata: "",
+    
       file:"",
-      lguname: this.$route.params.lguName,
+      lguname: "",
       bouquetsOpt: [
         { value: null, text: 'Please select an option' },
         'FTA  AND STARTER',
       ],
       clientTemplete: {},
+      lgudata:[],
     }
   },
   computed: {
@@ -137,8 +139,10 @@ export default {
     this.getareas()
     this.getemployees()
     this.getaddresss()
+    
   },
   methods: {
+    
     async getcity() {
       // console.log('ahahahahha')
       this.addres.map((e) => {
@@ -221,7 +225,8 @@ export default {
       })
     },
     getlgu() {
-      this.lgusnames.map((e) => {
+      this.lgusnames.map(e => {
+       
         if (this.lguname === e.lguName) {
           this.lgusdata = e.id
         }
@@ -233,12 +238,16 @@ export default {
         this.lgusnames = result.data.response.result
         this.lgusnames.map((e) => {
           this.lgus.push(e.lguName)
+             
+            if(this.$route.params.id === e.id){
+              this.lguname = e.lguName
+            }
         })
         // data.map( e => {
         //   if(e.type!="ENCODER" && e.type!="VOLUME_CHECKER" && e.type!="DISPATCHER")
         //     this.item.push(e)
         // })
-        console.log(this.item)
+        // console.log(this.item)
       } catch (error) {}
     },
     async roledata() {
@@ -260,10 +269,10 @@ export default {
     },
     async create() {
       try {
-        console.log(this.form.lguCode)
+      
         const payload = {
-          code: this.form.lguCode,
-          lguName: this.form.userName,
+         id:this.$route.params.id,
+          lguName: this.form.lgunames,
           userName: this.form.userName,
           password: this.form.password,
           passwordStatus: 1,
@@ -358,6 +367,34 @@ export default {
                                 ></multiselect>
                               </div>
                             </div>-->
+                            <div class="col-md-4">
+                              <div class="form-group mt-3 mt-sm-0">
+                                <label for="default">LGU Name</label>
+                                <!-- <ValidationProvider
+                                  v-slot="{ errors }"
+                                  name="First Name"
+                                  rules="required"
+                                >-->
+                                <input
+                                  v-model.trim="form.lgunames"
+                                  for="firstname"
+                                  type="text"
+                                  oninvalid="this.setCustomValidity('Lgu Name is required ')"
+                                  oninput="setCustomValidity('')"
+                                  placeholder="Enter LguName"
+                                  class="form-control"
+                                  required
+                                />
+                                <!-- <input
+                                    v-model.trim="form.firstName"
+                                    class="form-control"
+                                    placeholder="Enter First Name"
+                                    type="text"
+                                />-->
+                                <!-- <span class="text-danger">{{ errors[0] }}</span>
+                                </ValidationProvider>-->
+                              </div>
+                            </div>
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">User Name</label>
@@ -698,13 +735,15 @@ export default {
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">LGU</label>
-                                <multiselect
-                                  required
-                                  v-model="lguname"
-                                  placeholder="Select LGU"
+                                  <b-form-select
+                                  v-model.trim="lguname"
+                                      placeholder="Select LGU"
+                                  label="value"
+                                  class="form-control"
                                   :options="lgus"
-                                  @input="getlgu"
-                                ></multiselect>
+                                  @change="getlgu"
+                                ></b-form-select>
+                              
                               </div>
                             </div>
                              <div class="col-md-4">

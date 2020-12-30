@@ -28,13 +28,13 @@ export default {
   data() {
     return {
       code:this.$route.params.code,
-      classtype:this.$route.params.baranggay.classType,
+      classtype:this.$route.params.classType,
       roads:this.$route.params.routeRoads,
-      areaid:this.$route.params.baranggay.id,
+      areaid:this.$route.params.id,
       supervisor:this.$route.params.supervisor,
      routename:this.$route.params.routeName,
      routetype:this.$route.params.routeType,
-     areaname:this.$route.params.baranggay.areaName,
+     areaname:this.$route.params.areaName,
      routedistance:this.$route.params.routeDistance,
      description:this.$route.params.description,
      city:this.$route.params.city,

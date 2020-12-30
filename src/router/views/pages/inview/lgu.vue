@@ -61,11 +61,7 @@ export default {
 
           label: 'Email',
         },
-         {
-          key: 'code',
-
-          label: 'Code',
-        },
+        
       
        
 

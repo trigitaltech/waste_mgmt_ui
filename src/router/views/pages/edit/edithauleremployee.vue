@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- createhauleremployee,Areamasters,haulers,address
+ edithauleremployee,Areamasters,haulers,address
 } from '../../../../services/auth'
 
 export default {
@@ -62,27 +62,25 @@ export default {
       sid:"",
       
      form: {
-       code:"",
-       district:"",
-        personalTitle: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        userName:'',
-        password:'',
-        email: '',
-        number: '',
-        address: '',
-        city: '',
-        area:'',
-        address2:'',
-        state: '',
-        country: '',
-        postCode: '',
-        stbNumber: '',
-        bouquets: null,
-        amount: 0,
-        voucherNo: '',
+       baranggay:"",
+       haulerName:this.$route.params.haulerName,
+        code:this.$route.params.code,
+        personalTitle: this.$route.params.contactSalutation,
+        firstName:  this.$route.params.contactFirstName,
+        middleName:  this.$route.params.contactMiddleName,
+        lastName:  this.$route.params.contactLastName,
+        userName: this.$route.params.userName,
+        password: this.$route.params.password,
+        email:  this.$route.params.email,
+        number:  this.$route.params.phone,
+        address:  this.$route.params.addressLine1,
+        city: this.$route.params.city,
+        area: this.$route.params.area,
+        address2: this.$route.params.addressLine2,
+        state:  this.$route.params.state,
+        country:  this.$route.params.country,
+        postCode:  this.$route.params.pin,
+       
       },
       areas:[],
       titles: ['Mr.', 'Sri.', 'Mrs'],
@@ -114,6 +112,7 @@ export default {
   },
   mounted() {
     // this.getClientDetails()
+    console.log(this.$route.params)
     this.getaddresss()
     this.getemployees()
     this.getplans()
@@ -200,7 +199,7 @@ export default {
     async create() {
       try {
         const payload =              {
-          code:this.form.code,
+                id:this.$route.params.id,
                 userName: this.form.userName,
                 password: this.form.password,
                 passwordStatus: 1,
@@ -225,7 +224,7 @@ export default {
                 type:this.rolename,
                 haulerId:this.haulerarray
             }
-        let result = await createhauleremployee(payload)
+        let result = await edithauleremployee(payload)
         if (result) {
           this.$swal({
             group: 'alert',

@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- deletelgu, lguemployee,lgus
+ deletelguemployee, lguemployee,lgus
 } from '../../../../services/auth'
 
 export default {
@@ -118,13 +118,13 @@ export default {
     },
     async deleteReq(data) {
      try{
-          alert('1')
+        
         const result = await deletelguemployee(data.id)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You Deleted Employee Successfully`,
+            text: `You Deleted lGU Employee Successfully`,
             duration: 5000,
           })
          this.getemployees()

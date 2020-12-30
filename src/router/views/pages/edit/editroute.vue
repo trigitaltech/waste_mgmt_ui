@@ -34,7 +34,7 @@ export default {
      routename:this.$route.params.routeName,
      routetype:this.$route.params.routeType,
      areaname:this.$route.params.areaName,
-     routedistance:this.$route.params.route_distance,
+     routedistance:this.$route.params.routeDistance,
      description:this.$route.params.description,
      city:this.$route.params.city,
       createdby:this.$route.params.createdBy,
@@ -43,7 +43,14 @@ export default {
       modifyby:"",
       title: 'Register',
     // roads:this.$route.params.routeRoads,
-       inputs: this.$route.params.routeRoads,
+       inputs: [
+        {
+          id:this.$route.params.id,
+          code: '',
+          roadName:'',
+        routeName:'',
+        },
+      ],
       option: [
         
         { value: 'mainroad', text: 'Mainroad' },
@@ -125,7 +132,7 @@ export default {
       this.areas.map(e=>{
       this.item2.push(e.areaName)
      
-       
+      //  if(this.$route.params.)
      
       // console.log("user",e)
       })
@@ -163,7 +170,7 @@ export default {
      },
       add() {
       this.inputs.push({
-     
+       id:this.$route.params.id,
         
         code: '',
         roadName:'',
@@ -387,65 +394,7 @@ export default {
             <br />
 
             <b-row>
-              <!-- <b-col> -->
-              <!-- Default input text -->
-              <!-- <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Created Date</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="createddate"
-                    />
- <br/>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Modify Date</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="modifydate"
-                    />
-                  </b-col> -->
-
-              <!-- <br/>
-
-                   <b-col> -->
-              <!-- Default input text -->
-              <!-- <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Created By</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="createdby"
-                    />
- <br/>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Modify By</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="modifyby"
-                    />
-                  </b-col> -->
+         
             </b-row>
             <!-- <b-row>
               <b-col>

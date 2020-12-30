@@ -53,6 +53,11 @@ export const simpleactivation = (payload) => serviceMaker(`/auth/signup`, method
 export const reviewAttendance = (payload) => serviceMaker('/attendence/checker/admin/review',methods.POST,api.NGB,payload)
 
 
+
+export const deletehauleremployee = (id) => serviceMaker(`/haulermaster/employees/admin/${id}`, methods.DELETE, api.NGB)
+
+export const deletelguemployee = (id) => serviceMaker(`/LGU/employee/${id}`, methods.DELETE, api.NGB)
+
 export const deletedays = (id) => serviceMaker(`/trips/days/admin/${id}`, methods.DELETE, api.NGB)
 
 export const deletetype = (id) => serviceMaker(`/trips/type/admin/${id}`, methods.DELETE, api.NGB)
@@ -113,7 +118,7 @@ export const createemployee = (payload) => serviceMaker(`/employees/admin/create
 
 export const createhauler = (payload) => serviceMaker(`/haulermaster/admin`, methods.POST, api.NGB, payload)
 
-export const createLGU = (payload) => serviceMaker(`/LGU/admin/create`, methods.POST, api.NGB, payload)
+export const createLGU = (payload) => serviceMaker(`/LGU/create`, methods.POST, api.NGB, payload)
 
 
 
@@ -138,6 +143,7 @@ export const edithauler = (payload) => serviceMaker(`/haulermaster/admin`, metho
 
 export const Editclass = (payload) => serviceMaker(`/trips/class/admin`, methods.PUT, api.NGB, payload)
 
+
 export const editrole = (payload) => serviceMaker(`/roles/admin`, methods.PUT, api.NGB, payload)
 
 export const editarea = (payload) => serviceMaker(`/areamaster/admin`, methods.PUT, api.NGB, payload)
@@ -154,7 +160,7 @@ export const editroute = (payload) => serviceMaker (`/routemaster/admin`, method
 
 export const Editequipment = (payload) => serviceMaker (`/equipment/admin/encoders/owner`, methods.PUT, api.NGB, payload)
 
-export const Editlgu = (payload) => serviceMaker (`/LGU/admin`, methods.PUT, api.NGB, payload)
+export const Editlgu = (payload) => serviceMaker (`/LGU/update`, methods.PUT, api.NGB, payload)
 
 export const editstaging = (payload) => serviceMaker (`/stagingarea/admin`, methods.PUT, api.NGB, payload)
 
@@ -275,6 +281,9 @@ export const getTripsdetailsbyId = (id) => serviceMaker(`/LGU/trips/${id}`,metho
 
 export const getTripsvolumebyId = (id) => serviceMaker(`/tripincoming/getincomingtripforvolumechecker/${id}`,methods.GET,api.NGB)
 
+export const edithauleremployee = (payload) => serviceMaker (`/haulermaster/employees/admin`, methods.PUT, api.NGB, payload)
+
+export const editlguemployee = (payload) => serviceMaker (`/LGU/employee`, methods.PUT, api.NGB, payload)
 
 export const editvolumechecker = (payload) => serviceMaker (`tripincoming/updatetripvolume`, methods.PUT, api.NGB, payload)
 

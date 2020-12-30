@@ -320,7 +320,7 @@ export default {
         let payload = {
           controlNo: this.controlno,
 
-          trip: this.tripDate,
+          tripDate: this.tripDate,
 
           dumpingareaId: this.dumpid,
 
