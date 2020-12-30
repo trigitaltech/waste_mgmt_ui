@@ -8,7 +8,7 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import {editstaging,users,lguEmployees ,dumpinglocation,Areamasters,getlgubyId}from '../../../../services/auth'
+import {editstaging,users,lguEmployees ,dumpinglocation,Areamasters,getlgubyId,lgus}from '../../../../services/auth'
 import csc from "country-state-city";
 export default {
   page: {
@@ -25,14 +25,15 @@ export default {
   },
   data() {
     return {
-         dumparea:"",
+         dumparea:this.$route.params.dumpingAreaName,
       lgumaster:[],
          areas:[],
       servingAreas:[],
     master:[],
+    baranggay:'',
       dumpmaster:[],
       code:this.$route.params.code,
-      lgu:"",
+      lgu:this.$route.params.lguName.lguName,
       dumps:[],
       lgus:[],
       address:this.$route.params.address,
@@ -79,8 +80,9 @@ export default {
           active: true,
         },
       ],
-   
-    
+   lguNames:[],
+   lgusData:[],
+    selectedlgu:[],
     }
   },
   computed: {
@@ -98,8 +100,21 @@ export default {
     //  this.getlgus()
     this.getdumping()
      this.getareas()
+     this.getlgus()
   },
   methods: {
+      async getlgus() {
+      try {
+        const result = await lgus()
+        this.lgusData = result.data.response.result
+        this.lgusData.map(e => {
+          this.lguNames.push(e.lguName)
+        })
+        console.log(this.lguNames)
+      } catch(e) {
+        console.log(e)
+      }
+    },
     async getareas() {
       try {
         const result = await Areamasters();
@@ -126,9 +141,9 @@ export default {
             this.lgus.push(this.master.lguName)
         
          
-            this.district = this.areas[i].district[0].districtName
-          this.state = this.areas[i].district[0].stateCode.stateName
-          this.country = this.areas[i].district[0].stateCode.countryCode.countryName
+            this.district = this.areas[i].district.districtName
+          this.state = this.areas[i].district.stateCode.stateName
+          this.country = this.areas[i].district.stateCode.countryCode.countryName
        }
      }
      },
@@ -212,9 +227,10 @@ export default {
      },
     async create() {
       try {
+      
         const payload = {
                 id:this.$route.params.id,
-                 code:this.code,
+                
                  lguName: this.lguemployee,
                  dumpingArea:this.dumpingarea ,
                 stagingAreaName:this.areaname,

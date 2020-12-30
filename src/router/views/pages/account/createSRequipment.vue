@@ -333,7 +333,7 @@ this.operatorid = e.id
         let payload = {
           controlNo: this.controlno,
 
-          trip: this.tripDate,
+          tripDate: this.tripDate,
 
           dumpingareaId: this.dumpid,
             equipmentNo:this.equipment[0],

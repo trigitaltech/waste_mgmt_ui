@@ -30,6 +30,7 @@ export default {
          printPdf: [],
     data:this.$route.params,
       baranggayid: "",
+         inputs:this.$route.params.garbageCollector,
       contractorDispatcherId:this.$route.params.contractorDispatcherId,
       contractorDispatcherName: this.$route.params.contractorDispatcherName,
       contractorDispatcherVerified: this.$route.params.contractorDispatcherVerified,
@@ -320,7 +321,7 @@ export default {
                   class="form-control"
                 />
               </b-col>
-              <b-col>
+              <b-col v-for="(input, k) in inputs" :key="k">
                 <label
                   for="defaultFormCardEmailEx"
                   class="grey-text font-weight-dark"
@@ -328,7 +329,7 @@ export default {
                 >
                 <input
                   id="defaultFormCardEmailEx"
-                  v-model="garbageCollector"
+                  v-model="input.garbageCollectorName"
                   disabled
                   type="email"
                   class="form-control"

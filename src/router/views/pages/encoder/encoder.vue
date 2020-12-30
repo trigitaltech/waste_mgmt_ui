@@ -9,7 +9,7 @@ import moment from 'moment'
 // Vue.component('downloadExcel', JsonExcel)
 import {
 getincomingtrip,getoutgoingtrip,getTripsdetailsbyId,getAllOutgoingTrip
-,getnameByLguId, getAllDirectTrips
+,getnameByLguId, getAllDirectTrips,BILLINGTRIPS
 } from '../../../../services/auth'
 
 export default {
@@ -100,6 +100,7 @@ export default {
         // { key: 'status', sortable: true },
         // { key: 'action' },
       ],
+      incomingData:[],
       voucherId: null,
       vouchers: {},
       exportVouchers: false,
@@ -114,15 +115,15 @@ export default {
     }
   },
   computed: {
-    /*rows() {
-      //return this.tripdata.incomingTrips.length
-    },
-     rows1() {
-      return this.tripdata.outgoingTrips.length
-    },
-     rows2() {
-      return this.tripdata.directTrips.length
-    },*/
+    rows() {
+return this.incomingData.length
+   },
+    //  rows1() {
+    //   return this.tripdata.outgoingTrips.length
+    // },
+    //  rows2() {
+    //   return this.tripdata.directTrips.length
+    // },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -146,7 +147,7 @@ export default {
     this.loginlguid = result.user.id
     this.loginencoderid = result.lguemployee.id
     this.totalRows = this.items.length
-    //this.getTripincoming
+    this.getTripincoming()
     //this.gettrips()
     this.getOutgoingTrip()
     this.getLandfillTrip()
@@ -201,17 +202,12 @@ export default {
   
       try {
     
-        const  payload = {
-                startDate: this.startDate,
-                endDate: this.endDate
-                }
-               
-                console.log("payload",payload)
-        let result = await getincomingtrip(this.iid,payload)
+      
+        let result = await BILLINGTRIPS()
        
       
         //   let response = await getincomingtrip(payload)
-        //   this.tableData = response.data.pageItems
+          this.incomingData = result.data.response.Incomingtrip
       
          
       } catch (e) {
@@ -274,8 +270,8 @@ export default {
 
 <template>
   <Layout>
-    <pdf 
-    <div class="row justify-content-center">
+    <!-- <pdf > -->
+<div class="row justify-content-center">
 
       <div class="col-lg-12">
          <b-card header="Encoder" class="mt-10 ml-10 mr-10 mx-auto">
@@ -289,7 +285,7 @@ export default {
                   <feather type="grid" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Incoming Trips</h5>
-                    <!--<span class="text-muted">{{ tripdata.incomingTrips.length }}</span>-->
+                    <span class="text-muted">{{ incomingData.length }}</span>
                   </div>
                 </div>
               </div>
@@ -372,7 +368,7 @@ export default {
                     :bordered="bordered"
                     :small="small"
                     :fixed="fixed"
-                    :items="tripdata.incomingTrips"
+                    :items="incomingData"
                     :fields="incoming"
                     responsive="sm"
                     thead-class="header"
