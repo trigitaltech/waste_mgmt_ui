@@ -42,8 +42,10 @@ export default {
       code: '',
       areas: [],
       roads: [],
+      baranggay:'',
       inputs: [
         {
+          baranggayId:'',
           code: '',
           roadname: '',
           routename: '',
@@ -93,6 +95,7 @@ export default {
         code: '',
         roadname: '',
         routename: '',
+        baranggayId:''
       })
       console.log(this.inputs)
     },
@@ -117,6 +120,24 @@ export default {
       // console.log("haiiiiii",this.item2)
      
     },
+     getbaranggayid() {
+      
+       for(var i = 0 ; i<this.baranggay.length ;i++){
+      
+         this.areas.map(e=>{
+        if(this.baranggay[i] === e.areaName){
+             
+          this.inputs.baranggayId = e.id
+          console.log("routedata",this.baranggays)
+       
+        }
+         })
+      
+       }
+      // console.log("haiiiiii",this.item2)
+     
+    },
+    
     async getplans() {
       try {
         const result = await Areamasters()
@@ -439,7 +460,24 @@ export default {
             <br />
 
             <b-row v-for="(input, k) in inputs" :key="k">
-              <b-col md="4">
+                <b-col>
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Baranggay Name</label
+                >
+                <b-form-select
+                  v-model="input.baranggayId"
+                
+                  :options="item2"
+                 class="form-control"
+                >
+                </b-form-select>
+
+                <!-- Default input name -->
+              </b-col>
+              <b-col >
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
@@ -455,7 +493,7 @@ export default {
                   placeholder="Enter code"
                 />
               </b-col>
-              <b-col md="4">
+              <b-col>
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
@@ -470,7 +508,7 @@ export default {
                   placeholder="Enter roadname"
                 />
               </b-col>
-              <b-col md="4">
+              <b-col >
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
@@ -485,6 +523,7 @@ export default {
                   placeholder="Enter routename"
                 />
               </b-col>
+            
               <b-col>
                 <span>
                   <i
