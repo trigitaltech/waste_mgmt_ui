@@ -195,7 +195,9 @@ export default {
       const result = await roles()
       this.roledata1 = result.data.response.RoleMaster
       this.roledata1.map(e=>{
+        if(e.code === 'ADMIN'){
         this.roles.push(e.code)
+        }
       })
       // console.log("users",data[0].userName)
       // JSON.parse(JSON.stringify(result))

@@ -116,14 +116,14 @@ export default {
   },
   computed: {
     rows() {
-return this.incomingData.length
+return this.tripdata.incomingTrips.length
    },
-    //  rows1() {
-    //   return this.tripdata.outgoingTrips.length
-    // },
-    //  rows2() {
-    //   return this.tripdata.directTrips.length
-    // },
+     rows1() {
+      return this.tripdata.outgoingTrips.length
+    },
+     rows2() {
+      return this.tripdata.directTrips.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -148,7 +148,7 @@ return this.incomingData.length
     this.loginencoderid = result.lguemployee.id
     this.totalRows = this.items.length
     this.getTripincoming()
-    //this.gettrips()
+    this.gettrips()
     this.getOutgoingTrip()
     this.getLandfillTrip()
   },
@@ -285,7 +285,7 @@ return this.incomingData.length
                   <feather type="grid" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Incoming Trips</h5>
-                    <span class="text-muted">{{ incomingData.length }}</span>
+                    <span class="text-muted">{{ tripdata.incomingTrips.length }}</span>
                   </div>
                 </div>
               </div>
@@ -295,7 +295,7 @@ return this.incomingData.length
                   <feather type="calendar" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Outgoing Trips</h5>
-                    <!--<span class="text-muted">{{ tripdata.outgoingTrips.length }}</span>-->
+                    <span class="text-muted">{{ tripdata.outgoingTrips.length }}</span>
                   </div>
                 </div>
               </div>
@@ -304,7 +304,7 @@ return this.incomingData.length
                   <feather type="check-square" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Landfill Trips</h5>
-                    <!--<span class="text-muted">{{ tripdata.directTrips.length  }}</span>-->
+                    <span class="text-muted">{{ tripdata.directTrips.length  }}</span>
                   </div>
                 </div>
               </div>
@@ -368,7 +368,7 @@ return this.incomingData.length
                     :bordered="bordered"
                     :small="small"
                     :fixed="fixed"
-                    :items="incomingData"
+                    :items="tripdata.incomingTrips"
                     :fields="incoming"
                     responsive="sm"
                     thead-class="header"
@@ -562,7 +562,7 @@ return this.incomingData.length
                     :bordered="bordered"
                     :small="small"
                     :fixed="fixed"
-                    :items="outgoingTrips"
+                    :items="tripdata.outgoingTrips"
                     :fields="exportFields"
                     responsive="sm"
                     thead-class="header"
@@ -739,7 +739,7 @@ return this.incomingData.length
                     :bordered="bordered"
                     :small="small"
                     :fixed="fixed"
-                    :items="landfillTrips"
+                    :items="tripdata.directTrips"
                     :fields="landfill"
                     responsive="sm"
                     thead-class="header"

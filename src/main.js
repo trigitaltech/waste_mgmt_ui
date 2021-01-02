@@ -25,6 +25,15 @@ import { Datetime } from 'vue-datetime';
 import 'vue-datetime/dist/vue-datetime.css'
 import 'ant-design-vue/dist/antd.css'
 import VueTreeList from 'vue-tree-list'
+import IdleVue from "idle-vue";
+
+const eventsHub = new Vue();
+Vue.use(IdleVue, {
+  eventEmitter: eventsHub,
+  store,
+  idleTime: 300000, // 60 seconds
+  startAtIdle: false
+});
 
 Vue.use(Antd)
 Vue.use(VueTreeList)
