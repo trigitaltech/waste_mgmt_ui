@@ -27,6 +27,35 @@ export default {
   },
   data() {
     return {
+       permissionColumns:[
+        {
+          key:'id'
+
+        },
+        {
+          key:'code'
+
+        },
+         {
+          key:'routeName'
+          
+        },
+         {
+          key:'roadName'
+          
+        }
+      ],
+         striped: false,
+      bordered: true,
+      filter: '',
+      perPage: 10,
+      hover: true,
+      currentPage: 1,
+      small: false,
+      dark: false,
+      fixed: false,
+   
+      roads:this.$route.params.routeRoads,
       areaname:[],
       code:this.$route.params.code,
       areaid:this.$route.params.areaId,
@@ -46,6 +75,7 @@ export default {
        inputs: [
         {
           id:this.$route.params.id,
+          baranggayId:'',
           code: '',
           roadName:'',
         routeName:'',
@@ -79,6 +109,9 @@ export default {
     }
   },
   computed: {
+    // rows(){
+    //   return this.roads.length
+    // },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -171,7 +204,7 @@ export default {
       add() {
       this.inputs.push({
        id:this.$route.params.id,
-        
+        baranggayId:'',
         code: '',
         roadName:'',
         routeName:'',
@@ -418,7 +451,24 @@ export default {
             <br />
 
             <b-row v-for="(input, k) in inputs" :key="k">
-              <b-col md="4">
+                 <b-col>
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Baranggay Name</label
+                >
+                <b-form-select
+                  v-model="input.baranggayId"
+                
+                  :options="item2"
+                 class="form-control"
+                >
+                </b-form-select>
+
+                <!-- Default input name -->
+              </b-col>
+              <b-col >
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
@@ -434,7 +484,7 @@ export default {
                   placeholder="Enter code"
                 />
               </b-col>
-              <b-col md="4">
+              <b-col >
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
@@ -449,7 +499,7 @@ export default {
                   placeholder="Enter roadname"
                 />
               </b-col>
-              <b-col md="4">
+              <b-col >
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
@@ -491,6 +541,62 @@ export default {
               <!-- Default form subscription -->
         </div>
       </b-card>
+        <div class="animated fadeIn" >
+      <b-row >
+      <b-col md="12">
+          <b-card
+            class="card-wrap"
+            header="List Of Roads For Route"
+          >
+          <b-row>
+        <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+          </b-row>
+           
+           <div class="mt-3">
+          <b-table
+            id="my-table"
+            :dark="dark"
+            :hover="hover"
+            :striped="striped"
+            ref="roles"
+            :bordered="bordered"
+            :filter="filter"
+            :responsive="true"
+            :current-page="currentPage"
+            :per-page="perPage"
+            :small="small"
+            :fixed="fixed"
+            :fields="permissionColumns"
+            :items="roads"
+            class="mt-3"
+         
+          >    </b-table>
+
+        
+          <div style="float: right">
+            <b-pagination
+              v-model="currentPage"
+              :per-page="perPage"
+              :total-rows="rows"
+              aria-controls="my-table"
+              hide-goto-end-buttons
+            ></b-pagination>
+          </div>
+        </div>
+        
+          </b-card>
+      </b-col>
+      </b-row>
+                 </div>
     </div>
     <!-- end row -->
   </Layout>
