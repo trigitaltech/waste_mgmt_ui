@@ -84,10 +84,10 @@ export default {
       clientId: '',
       options: ['DAF'],
       item:[ { value: 'INTERNAL', text: 'INTERNAL' },
-        { value: 'DRIVER', text: 'DRIVER' },
-          { value: 'CONTRACTOR', text: 'CONTRACTOR' },
-          { value: 'HELPER', text: 'HELPER' },
-          { value: 'OPERATOR', text: 'OPERATOR' },
+      
+          { value: 'OFFICE_ENCODER', text: 'OFFICE_ENCODER' },
+         
+          { value: 'PAYROLL', text: 'PAYROLL' },
           { value: 'PALERO', text: 'PALERO' },
            { value: 'BILLING', text: 'BILLING' }],
       file:"",
@@ -689,7 +689,7 @@ export default {
                           > -->
                         <button
                           type="submit"
-                          class="btn btn-primary d-inline-flex align-items-center"
+                         class="btn btn-custome float-right btn-secondary mb-3"
                           >Submit</button
                         >
                       </div>

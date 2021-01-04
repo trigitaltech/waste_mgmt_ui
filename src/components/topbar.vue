@@ -69,8 +69,9 @@ export default {
           >
         </span>
       </a>-->
+        <!-- @click="goToHomePage" -->
       <button class="navbar-brand logo ml-0 mr-md-2 h3 w-25 btn btn-primary-outline" 
-          @click="goToHomePage"
+        
           style="color:#4b4b5a;font-size:20px">
         WASTE MANAGEMENT
       </button>
