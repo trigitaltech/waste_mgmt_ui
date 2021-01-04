@@ -224,13 +224,13 @@ export default {
                     <div class="media-body">
                       <span
                         class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
-                        >TRIPS INCOMING</span
+                        >BARANGGAY</span
                       >
-                      <h2 class="mb-0 text-dark-blue">0$</h2>
+                      <h2 class="mb-0 text-dark-blue">0</h2>
                     </div>
                     <div class="align-self-center" style="position: relative;">
                       <i
-                        class="far fa-money-bill-alt"
+                        class="far fa-building"
                         style="font-size: 90px;position: absolute;right: -31px;top: -49px;opacity: 0.3;color: #fff;"
                       ></i>
                     </div>
@@ -264,7 +264,7 @@ export default {
                       <div class="media-body">
                         <span
                           class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
-                          >TRIP OUTGOING</span
+                          >LGUS</span
                         >
                         <h2 class="mb-0 text-dark-blue">0</h2>
                       </div>
@@ -273,7 +273,7 @@ export default {
                         style="position: relative;"
                       >
                         <i
-                          class="fas fa-chart-line"
+                          class="fas fa-user-plus"
                           style="font-size: 100px;position: absolute;right: -33px;top: -55px;opacity: 0.3;color: #fff;"
                         ></i>
                       </div>
@@ -305,13 +305,13 @@ background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
                     <div class="media-body">
                       <span
                         class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
-                        >STAFF ATTENDANCE</span
+                        >HAULERS</span
                       >
                       <h2 class="mb-0 text-dark-blue">0</h2>
                     </div>
                     <div class="align-self-center" style="position: relative;">
                       <i
-                        class="fas fa-chart-pie"
+                        class="fas fa-user-secret"
                         style="font-size: 100px;position: absolute;right: -33px;top: -55px;opacity: 0.3;color: #fff;"
                       ></i>
                     </div>
@@ -342,13 +342,13 @@ background-image: linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%);
                     <div class="media-body">
                       <span
                         class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
-                        >FUEL CONSUMED</span
+                        >ROUTES</span
                       >
                       <h2 class="mb-0 text-dark-blue">0</h2>
                     </div>
                     <div class="align-self-center" style="position: relative;">
                       <i
-                        class="fas fa-chart-bar"
+                        class="fas fa-road"
                         style="font-size: 100px;position: absolute;right: -33px;top: -55px;opacity: 0.3;color: #fff;"
                       ></i>
                     </div>
@@ -365,6 +365,187 @@ background-image: linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%);
             </div>
             <!-- Grid column -->
           </div>
+             <div class="row white-text">
+            <!-- Grid column -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <!-- Card Primary -->
+              <div
+                class="card classic-admin-card primary-color"
+                style="background-color: #928DAB;">
+                <div class="card-body" style="overflow: hidden;">
+                  <div class="media p-3">
+                    <div class="media-body">
+                      <span
+                        class="text-dark-gray text-uppercase font-size-12 font-weight-bold"
+                        >TRIPS</span
+                      >
+                      <h2 class="mb-0 text-dark-blue">0</h2>
+                    </div>
+                    <div class="align-self-center" style="position: relative;">
+                      <i
+                        class="far fa-money-bill-alt"
+                        style="font-size: 90px;position: absolute;right: -31px;top: -49px;opacity: 0.3;color: #fff;"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div>
+            <i class="far fa-money-bill-alt"></i>
+          </div> -->
+                <!-- <div class="progress md-progress mx-2">
+            <div class="progress-bar grey darken-3" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="card-body pt-2 pb-3">
+            <p class="small mb-0">Better than last week (25%)</p>
+          </div> -->
+              </div>
+              <!-- Card Primary -->
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <!-- Card Yellow -->
+              <div
+                class="card classic-admin-card warning-color"
+                style="background-color: #CB3066;
+    "
+              >
+                <div>
+                  <div class="card-body" style="overflow: hidden;">
+                    <div class="media p-3">
+                      <div class="media-body">
+                        <span
+                          class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
+                          >SERVICEREQUESTS</span
+                        >
+                        <h2 class="mb-0 text-dark-blue">0</h2>
+                      </div>
+                      <div
+                        class="align-self-center"
+                        style="position: relative;"
+                      >
+                        <i
+                          class="fas fa-address-card"
+                          style="font-size: 100px;position: absolute;right: -33px;top: -55px;opacity: 0.3;color: #fff;"
+                        ></i>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- <div class="progress md-progress mx-2">
+            <div class="progress-bar bg grey darken-3" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="card-body pt-2 pb-3">
+            <p class="small mb-0">Worse than last week (25%)</p>
+          </div> -->
+                </div>
+                <!-- Card Yellow -->
+              </div>
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <!-- Card Blue -->
+              <div
+                class="card classic-admin-card light-blue lighten-1"
+                style="background-color: #EF629F;
+
+"
+              >
+                <div class="card-body" style="overflow: hidden;">
+                  <div class="media p-3">
+                    <div class="media-body">
+                      <span
+                        class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
+                        >EQUIPMENTS</span
+                      >
+                      <h2 class="mb-0 text-dark-blue">0</h2>
+                    </div>
+                    <div class="align-self-center" style="position: relative;">
+                      <i
+                          class="fas fa-toolbox"
+                        style="font-size: 100px;position: absolute;right: -33px;top: -55px;opacity: 0.3;color: #fff;"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="progress md-progress mx-2">
+            <div class="progress-bar grey darken-3" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="card-body pt-2 pb-3">
+            <p class="small mb-0">Better than last week (75%)</p>
+          </div> -->
+              </div>
+              <!-- Card Blue -->
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <!-- Card Red -->
+              <div
+                class="card classic-admin-card red accent-2"
+                style="background-color: #2980b9;
+
+"
+              >
+                <div class="card-body" style="overflow: hidden;">
+                  <div class="media p-3">
+                    <div class="media-body">
+                      <span
+                        class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
+                        >VEHICLES</span
+                      >
+                      <h2 class="mb-0 text-dark-blue">0</h2>
+                    </div>
+                    <div class="align-self-center" style="position: relative;">
+                      <i
+                   class="fas fa-truck"
+                        style="font-size: 100px;position: absolute;right: -33px;top: -55px;opacity: 0.3;color: #fff;"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="progress md-progress mx-2">
+            <div class="progress-bar grey darken-3" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div class="card-body pt-2 pb-3">
+            <p class="small mb-0">Better than last week (25%)</p>
+          </div> -->
+              </div>
+              <!-- Card Red -->
+            </div>
+            <!-- Grid column -->
+        
+           <div class="col-xl-3 col-md-6 mb-4">
+              <!-- Card Red -->
+              <div
+                class="card classic-admin-card red accent-2"
+                style="background-color: #ff7e5f;
+
+"
+              >
+                <div class="card-body" style="overflow: hidden;">
+                  <div class="media p-3">
+                    <div class="media-body">
+                      <span
+                        class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
+                        >EMPLOYEES</span
+                      >
+                      <h2 class="mb-0 text-dark-blue">0</h2>
+                    </div>
+                    <div class="align-self-center" style="position: relative;">
+                      <i
+                      class="fas fa-users"
+                        style="font-size: 100px;position: absolute;right: -33px;top: -55px;opacity: 0.3;color: #fff;"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           </div>
+             </div>
         </section>
         <!-- Section: Block Content -->
       </div>

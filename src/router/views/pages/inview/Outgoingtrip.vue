@@ -5,7 +5,7 @@ import PageHeader from '@components/page-header'
 import NProgress from 'nprogress/nprogress'
 import moment from "moment";
 import {
- Tripdownload,incomingtrips,deletetripincoming
+ Tripdownload,incomingtrips,deletetripincoming,getAllOutgoingTrip
 } from '../../../../services/auth'
 
 export default {
@@ -46,7 +46,7 @@ export default {
       totalRows: 1,
       currentPage: 1,
       perPage: 10,
-      item: {  },
+      item: [],
       pageOptions: [10, 25, 50, 100],
       filter: null,
       filterOn: [],
@@ -63,34 +63,41 @@ export default {
       dark: false,
       fixed: false,
       TripColumns: [
-        {
+     {
           key: 'id',
-          label: 'Id'
+          label: 'Id',
+          sortable: true,
+        },
+        
+          {
+          key: 'controlNo',
+          label: 'controlNo',
+          sortable: true,
         },
         {
           key: 'tripDate',
           label: 'Trip Date',
         },
         {
-          key: 'plateNo',
-          label: 'Plate No',
+          key: 'truckBodyNo',
+          label: 'Truck BodyNo',
         },
         {
           key: 'truckType',
           label: 'Truck Type',
         },
         {
-          key: 'bodyNO',
-          label: 'Body No',
+          key: 'truckplateNo',
+          label: 'Truck plateNo',
         },
         {
           key: 'status',
           label: 'Status',
         },
-        {
-          key: 'actions',
-          sortable: true,
-        },
+        // {
+        //   key: 'actions',
+        //   sortable: true,
+        // },
       ],
       loginUserType:null
     }
@@ -156,8 +163,8 @@ export default {
     },
     async getTrips() {
       try{
-        let result = await incomingtrips();
-        this.item = result.data.response.Incomingtrip;
+        let result = await getAllOutgoingTrip();
+        this.item = result.data.response.OutgoingTrips
         console.log(result);
       }
       catch(e) {
@@ -202,7 +209,7 @@ export default {
             responsive="sm"
             :current-page="currentPage"
             :per-page="perPage"
-          
+          :items="item"
             :small="small"
             :fixed="fixed"
             :fields="TripColumns"

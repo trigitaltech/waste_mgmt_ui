@@ -50,25 +50,26 @@ mobile:this.username
             this.tryingToLogIn = false
             this.isAuthError = false
             // Redirect to the originally requested page, or to the home page
-            if(token.user.roles[0].code === "ENCODER")
+            console.log(token)
+            if(token.user.roles[0].name === "ENCODER" )
             { 
               this.$router.push(
                 this.$route.query.redirectFrom || { name: 'Encoder' }
               )
             }
-              else if(token.user.roles[0].code === "VOLUME_CHECKER")
+              else if(token.user.roles[0].name === "VOLUME_CHECKER")
             { 
               this.$router.push(
                 this.$route.query.redirectFrom || { name: 'Volumechecker' }
               )
             }
-             else if(token.user.roles[0].code === "CONTROL_CHECKER")
+             else if(token.user.roles[0].name === "CONTROL_CHECKER")
             { 
               this.$router.push(
                 this.$route.query.redirectFrom || { name: 'Controlchecker' }
               )
             }
-            else if(token.user.roles[0].code === "BILLING")
+            else if(token.user.roles[0].name === "BILLING")
             { 
               this.$router.push(
                 this.$route.query.redirectFrom || { name: 'Billingperson' }
