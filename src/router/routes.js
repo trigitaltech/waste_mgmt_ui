@@ -538,7 +538,15 @@ const inviewRoutes = [
         component: () => lazyLoadView(import('@views/pages/inview/Outgoingtrip.vue')),
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
-      }
+      },
+      {
+          path: 'DirectTrips',
+          name: 'DirectTrips',
+          icon: 'check-square',
+          component: () => lazyLoadView(import('@views/pages/inview/Tripdetails.vue')),
+          meta: { authRequired: true },
+          props: (route) => ({ user: store.state.auth.currentUser || {} }),
+        },
     ]
   },
   {
@@ -1154,6 +1162,22 @@ const pagesRoutes = [
     name: 'Viewtripincoming',
     icon: 'check-square',
     component: () => lazyLoadView(import('@views/pages/views/viewtripincoming')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Viewtripoutgoing',
+    name: 'Viewtripoutgoing',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewtripoutgoing')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Viewdirecttrip',
+    name: 'Viewdirecttrip',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewdirecttrip')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },

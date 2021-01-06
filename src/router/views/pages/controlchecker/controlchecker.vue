@@ -8,7 +8,7 @@ import moment from 'moment'
 
 // Vue.component('downloadExcel', JsonExcel)
 import {
-getincomingtrip,getoutgoingtrip,getTripsvolumebyId, getAllOutgoingTrip
+getincomingtrip,getoutgoingtrip,getTripsvolumebyId, getAllOutgoingTrip,getAllDirectTrips
 } from '../../../../services/auth'
 
 export default {
@@ -92,6 +92,7 @@ export default {
       loginlguid:"",
       incomingtripdata:[],
       allOutgoingTrips:[],
+      alldirectTrips:[],
       controlCheckerId:''
     }
   },
@@ -123,17 +124,31 @@ export default {
     this.getTripincoming()
     this.getOutgoingTrip()
     this.gettrips()
+    this.getdirectTrip()
   },
   methods: {
     async getOutgoingTrip() {
       try {
         const result = await getAllOutgoingTrip()
-        const data = result.data.response["OutgoingTrips:"]
+        const data = result.data.response.OutgoingTrips
         data.map(e => {
           if(e.controlCheckerId == this.controlCheckerId && (e.status == "STARTED" || e.status=="COMPLETED" || e.status == "VERIFIED")) {
             this.allOutgoingTrips.push(e)
           }
         })
+      } catch(error) {
+        console.log(error)
+      }
+    },
+     async getdirectTrip() {
+      try {
+        const result = await getAllDirectTrips()
+        this.alldirectTrips = result.data.response.result
+        // data.map(e => {
+        //   if(e.controlCheckerId == this.controlCheckerId && (e.status == "STARTED" || e.status=="COMPLETED" || e.status == "VERIFIED")) {
+        //     this.alldirectTrips.push(e)
+        //   }
+        // })
       } catch(error) {
         console.log(error)
       }
@@ -247,7 +262,7 @@ export default {
                   <feather type="calendar" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Outgoing Trips</h5>
-                    <span class="text-muted">{{ vouchers.purchaseDate }}</span>
+                    <span class="text-muted">{{ allOutgoingTrips.length }}</span>
                   </div>
                 </div>
               </div>
@@ -690,7 +705,7 @@ export default {
                     :bordered="bordered"
                     :small="small"
                     :fixed="fixed"
-                    :items="exportVoucherData"
+                    :items="alldirectTrips"
                     :fields="exportFields"
                     responsive="sm"
                     thead-class="header"
@@ -704,7 +719,7 @@ export default {
                   >
                     <template v-slot:cell(requestDate)="data"
                       >{{ getFormattedDate(data.item.requestDate) }}</template>
-                    <template v-slot:cell(action)="data">
+                    <!-- <template v-slot:cell(action)="data">
                       <button
                         class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
                         @click="print(data.item)"
@@ -722,12 +737,12 @@ export default {
                       >
                         <feather type="download" class="icon-xs mr-2"  ></feather>Download
                       </download-excel>
-                      </button>
+                      </button> -->
                       <!-- <download-excel :data="json_data">
                   
                         <feather type="download" class="icon-xs mr-2"></feather>Download
                       </download-excel>-->
-                    </template>
+                    <!-- </template> -->
                   </b-table>
                 </div>
                 <div class="row">

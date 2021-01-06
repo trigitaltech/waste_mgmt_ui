@@ -5,7 +5,7 @@ import PageHeader from '@components/page-header'
 import NProgress from 'nprogress/nprogress'
 import moment from "moment";
 import {
- Tripdownload,incomingtrips,deletetripincoming,getAllOutgoingTrip
+ Tripdownload,incomingtrips,deletetripincoming,getAllOutgoingTrip,deletetripoutgoing
 } from '../../../../services/auth'
 
 export default {
@@ -79,25 +79,29 @@ export default {
           label: 'Trip Date',
         },
         {
-          key: 'truckBodyNo',
-          label: 'Truck BodyNo',
+          key: 'driverName',
+          label: 'driverName',
         },
         {
-          key: 'truckType',
-          label: 'Truck Type',
+          key: 'helperName',
+          label: 'helperName',
         },
         {
-          key: 'truckplateNo',
+          key: 'plateNo',
           label: 'Truck plateNo',
+        },
+          {
+          key: 'bodyNo',
+          label: 'Truck BodyNo',
         },
         {
           key: 'status',
           label: 'Status',
         },
-        // {
-        //   key: 'actions',
-        //   sortable: true,
-        // },
+        {
+          key: 'actions',
+          sortable: true,
+        },
       ],
       loginUserType:null
     }
@@ -144,12 +148,12 @@ export default {
        var id = data.item.id
      try{
           
-        const result = await deletetripincoming(data.item.id)
+        const result = await deletetripoutgoing(data.item.id)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You Deleted Tripincoming Successfully`,
+            text: `You Deleted Tripoutgoing Successfully`,
             duration: 5000,
           })
          this.refresh()
@@ -219,20 +223,22 @@ export default {
             <template v-slot:cell(time_in)="data">
               <div>{{ data.item.tripDate | formatdatetime }}</div>
             </template>
-            <template v-slot:cell(actions)="data">
-              <router-link :to="{ name: 'Viewincomingtrip', params: data.item }">
+               <template v-slot:cell(actions)="data">
+              <router-link :to="{ name: 'Viewtripoutgoing', params: data.item }">
               <b-button size="sm" class="mr-2" variant="primary" >
               <i class="fa fa-eye"></i>
             </b-button>
               </router-link>
-            <router-link :to="{ name: 'EditIncomingTrip', params: data.item }">
+            <!-- <router-link :to="{ name: 'EditIncomingTrip', params: data.item }">
                 <b-button size="sm" class="mr-2" variant="primary"  :hidden="data.item.status === 'APPROVED' || data.item.status === 'REJECTED' ">
                   <i class="fas fa-pencil-alt edit"></i>
                 </b-button>
-              </router-link>
+              </router-link> -->
+               <b-button size="sm" class="mr-2" variant="danger" >
                <span @click="deleteReq(data)">
               <i class="fa fa-times edit"></i>
             </span>
+               </b-button>
            </template>
           </b-table>
           <div style="float: right">

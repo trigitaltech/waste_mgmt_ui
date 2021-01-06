@@ -158,7 +158,7 @@ export default {
     async getOutgoingTrip() {
       try {
         const result = await getAllOutgoingTrip()
-        const data = result.data.response["OutgoingTrips:"]
+        const data = result.data.response.OutgoingTrips
         data.map(e => {
           if(e.volumeCheckerId == this.volumeCheckerId) {
             this.allOutgoingTrips.push(e)

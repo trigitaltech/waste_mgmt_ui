@@ -295,7 +295,7 @@ export default {
                               ></multiselect>
                             </div>
                           </div>
-                          <div class="col-md-4">
+                          <!-- <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Code</label>
                               <input
@@ -305,7 +305,7 @@ export default {
                                 required
                               />
                             </div>
-                          </div>
+                          </div> -->
                              <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">User Name</label>

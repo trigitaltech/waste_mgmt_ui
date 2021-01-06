@@ -244,9 +244,11 @@ export default {
                   <i class="fas fa-pencil-alt edit"></i>
                 </b-button>
               </router-link> -->
+               <b-button size="sm" class="mr-2" variant="danger" >
                <span @click="deleteReq(data)">
               <i class="fa fa-times edit"></i>
             </span>
+               </b-button>
            </template>
           </b-table>
           <div style="float: right">

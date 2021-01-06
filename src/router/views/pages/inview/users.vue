@@ -72,10 +72,7 @@ export default {
           key: 'addressLine1',
           label: 'addressLine1',
         },
-         {
-          key: 'city',
-          label: 'city',
-        },
+        
          {
           key: 'state',
           label: 'state',

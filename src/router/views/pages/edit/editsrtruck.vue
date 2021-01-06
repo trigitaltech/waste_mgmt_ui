@@ -134,8 +134,8 @@ export default {
      async getLgu() {
       const result = JSON.parse(localStorage.getItem('auth.currentUser'))
       this.loginlguid = result.lguemployee.lguId
-     this.dispatcherid = result.lguemployee.id
-     this.dispatchername = result.lguemployee.firstName
+     this.dispatcherid = result.user.id
+     this.dispatchername = result.user.userName
     },
      async getvolume() {
       try {

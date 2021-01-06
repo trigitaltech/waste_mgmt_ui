@@ -31,6 +31,7 @@ export default {
   },
   data() {
     return {
+        printPdf: [],
       inputs: [
         {
           name: '',
@@ -156,184 +157,30 @@ timeinpm:this.$route.params.driverTimeIn,
 
       console.log(this.loginDetails)
     },
-    async getdump() {
-      for (var i = 0; i < this.dumpingdata.length; i++) {
-        if (this.dumpinglocation[0] === this.dumpingdata[i].dumpingAreaName) {
-          this.dumpid = this.dumpingdata[i].id
-          const result = await getdumpdata(this.dumpid)
-          var dumpdata = result.data.response.result.dumpingPoint
-          dumpdata.map((e) => {
-            this.fromdumpings.push(e.dumpingPointName)
-            this.todumpings.push(e.dumpingPointName)
-          })
-        }
-      }
-    },
-    platedetails() {
-      for (var i = 0; i < this.vehicledata.length; i++) {
-        if (this.plateno[0] === this.vehicledata[i].plateNo) {
-          this.vehicleno = this.vehicledata[i].vehicleNo
-          this.trucktype = this.vehicledata[i].vehicleType.truckType
-          this.volumecapacity = this.vehicledata[i].volumeCapacity
-        }
-      }
-    },
-    async gethaulers() {
-      try {
-        const result = await haulers()
-        this.haulerdata = result.data.response.HaulerMaster
-        this.haulerdata.map((e) => {
-          this.haulers.push(e.haulerName)
-        })
-      } catch (error) {}
-    },
-    //   async getvehiclehauler() {
-    //    try {
-
-    //   const result = await  getVehiclesByhauler(id)
-    //   this.dumpingdata = result.data.response.dumpingLocation
-    //   this.dumpingdata.map(e=>{
-    //     this.dumpings.push(e.dumpingAreaName)
-    //   })
-
-    //   } catch (error) {}
-
-    // },
-    async getdumping() {
-      try {
-        const result = await dumpinglocation()
-        this.dumpingdata = result.data.response.dumpingLocation
-        this.dumpingdata.map((e) => {
-          this.dumpings.push(e.dumpingAreaName)
-        })
-      } catch (error) {}
-    },
-    async vehiclehauler() {
-      for (var i = 0; i < this.haulerdata.length; i++) {
-        if (this.hauler[0] === this.haulerdata[i].haulerName) {
-          this.haulerid = this.haulerdata[i].id
-          const result = await getVehiclesByhauler(this.haulerid)
-          this.vehicledata = result.data.response.result
-          this.vehicledata.map((e) => {
-            this.plates.push(e.plateNo)
-          })
-        }
-      }
-      //     debugger
-      //  this.haulerdata.map(e => {
-      //   if (this.hauler === e.haulerName) {
-      //     this.haulerid = e.id
-      //     debugger
-      //   }
-      //    console.log("haiiiiii",this.haulerid)
-      // })
-      //  if(this.haulerid !== ""){
-      //
-      //    console.log(result)
-      //  }
-    },
-    // async getvehicles() {
-    //   const result = await vehicle()
-    //   this.vehicles = result.data.response.vehicles
-    //   this.vehicles.map((e) => {
-    //     this.plates.push(e.plateNo)
-    //   })
-    //   console.log(this.plates)
-    // },
-    getroutes() {
-      this.routedata.map((e) => {
-        if (this.route === e.routeName) {
-          this.routearray.push(e)
-        }
-      })
-    },
-    getareas() {
-      this.areadata.map((e) => {
-        if (this.area === e.areaName) {
-          this.areaarray = e
-        }
-      })
-    },
-    // getid() {
-    //   console.log('haiiiiii')
-    //   this.emp.map((e) => {
-    //     if (this.driver === e.userName) {
-    //       this.driverid = e.id
-    //     }
-    //   })
-    // },
-    async employeedata() {
-      try {
-        const result = await haulerEmployees()
-        this.emp = result.data.response.HaulerEmployees
-        console.log(this.emp)
-        this.emp.map((e) => {
-          if (e.type == 'DRIVER') this.drivers.push(e.userName)
-          if (e.type == 'HELPER') this.helpers.push(e.userName)
-        })
-      } catch (error) {}
-    },
-    async areas() {
-      try {
-        const result = await Areamasters()
-        this.areadata = result.data.response.areaMaster
-        this.areadata.map((e) => {
-          if (e.areaName != null) this.servingAreas.push(e.areaName)
-        })
-      } catch (error) {
-        console.log(error)
-      }
-      console.log(this.servingAreas)
-    },
-    async routes() {
-      try {
-        const result = await routemaster()
-        console.log(result)
-        this.routedata = result.data.response.RouteMaster
-        this.routedata.map((e) => {
-          if (e.routeName != null) this.servingRoutes.push(e.routeName)
-        })
-      } catch (error) {}
-    },
-    getRouteObject(name) {
-      this.routedata.map((e) => {
-        if (name == e.routeName) {
-          console.log(e)
-          return e
-        }
-      })
-    },
-    getdriverid() {
-      // debugger
-      this.emp.map((e) => {
-        if (this.driver[0] === e.userName) {
-          this.driverid = e.id
-        }
-      })
-    },
-    gethelperid() {
-      // debugger
-      this.emp.map((e) => {
-        if (this.helper[0] === e.userName) {
-          this.helperid = e.id
-        }
-      })
+     demoFun() {
+      console.log('heee')
+      var divContents = document.getElementById('pdf-voucher').innerHTML
+      console.log("divcontents",divContents)
+      var a = window.open('', '', 'height=500, width=500')
+      a.document.write('<html>')
+      a.document.write('<body >')
+      a.document.write('<div>')
+      a.document.write(divContents)
+      a.document.write('</div></body></html>')
+      a.document.close()
+      a.print()
     },
 
-   
-    getTruckType() {
-      this.vehicles.map((e) => {
-        if (e.plateNo == this.plate) {
-          this.trucktype = e.vehicleType.code
-          this.vehicleno = e.vehicleNo
-        }
-      })
-    },
-    add(index) {
-      if (this.inputs.length <= 4) this.inputs.push({ name: '' })
-    },
-    remove(index) {
-      this.inputs.splice(index, 1)
+       create(pay) {
+     
+        this.printPdf = this.$route.params
+        console.log("haii",this.printPdf)
+
+        setTimeout(() => {
+         
+          this.demoFun()
+        }, 2000)
+      
     },
   },
 }
@@ -615,7 +462,16 @@ timeinpm:this.$route.params.driverTimeIn,
               </b-col>
              
             </b-row>
-            
+             <b-row>
+              <b-col>
+                     <b-button
+                  class="btn btn-custome ml-4 btn-secondary mb-3 float-right mr-2"
+                  text="Create Tenant"
+                  @click="create"
+                  >PRINT</b-button
+                >
+                  </b-col>
+            </b-row>
                 <br />
                 <!-- <button
                   type="submit"
@@ -627,6 +483,102 @@ timeinpm:this.$route.params.driverTimeIn,
           </div>
         </div>
       </b-card>
+    </div>
+     <div
+      id="pdf-voucher"
+      class="mt-4 pdf-voucher"
+      style="font-family: sans-serif;display:none"
+    >
+      <section class="pdf-content row justify-content-center">
+        <h1 style="text-align:center;font-size:24px;text-decoration:underline">
+          INT'L SWIMS INC.
+        </h1>    
+        <h6 style="text-align:center;margin-top:-20px">INTERNATIONAL SOLID WASTE INTEGRATED</h6>
+        <h6 style="text-align:center;margin-top:-16px">MANAGEMENT SPECIAL INCORPORATED</h6>
+        <h1 style="text-align:center;font-size:22px">SERVICE REQUEST TRUCK TICKET</h1>
+         <!-- <h2 style="margin-left:40px">
+          Baranggay: 
+          <span style="font-size:18px">{{baranggayid}}</span>
+        </h2> -->
+      <h2 style="margin-left:40px">
+          Driver's Name: 
+          <span style="font-size:18px">{{printPdf.driverName}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+          Total TRIPS: 
+          <span style="font-size:18px">{{printPdf.totalTrips}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+          Plate No: 
+          <span style="font-size:18px">{{printPdf.plateNo}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+          Date: 
+          <span style="font-size:18px">{{printPdf.tripDate | formatDate}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+          Hauler Name: 
+          <span style="font-size:18px">{{printPdf.haulerName}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+          TRUCK TYPE: 
+          <span style="font-size:18px">{{printPdf.truckType}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+       TOTAL DISTANCE: 
+          <span style="font-size:18px">{{printPdf.totalDistance}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+          Time In: 
+          <span style="font-size:18px">{{printPdf.tripStartTime | formatTime}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+          Volume: 
+          <span style="font-size:18px">{{printPdf.volumeCheckerMeasuredVolume}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+          Time Out: 
+          <span style="font-size:18px">{{printPdf.tripEndTime | formatTime}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+          Body No: 
+          <span style="font-size:18px">{{printPdf.bodyNo}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+          FROM POINT: 
+          <span style="font-size:18px">{{printPdf.fromPoint}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+         TO POINT: 
+          <span style="font-size:18px">{{printPdf.toPoint}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+        AM Trip: 
+          <span style="font-size:18px">{{printPdf.amTrip}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+          PM Trip: 
+          <span style="font-size:18px">{{printPdf.pmTrip}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+          TICKET NO: 
+          <span style="font-size:18px">000000{{printPdf.id}}</span>
+        </h2>
+         <h2 style="margin-left:450px;margin-top:-44px">
+          CONTROL NO:
+          <span style="font-size:18px">{{printPdf.controlNo}}</span>
+        </h2>
+        <p style="margin-left:480px;margin-top:30px;font-size:22px">
+          CUSTOMER'S COPY
+        </p>
+        <h4 style="margin-left:40px">NOTE:</h4>
+        <p style="margin-left:40px">1. Waste collected should be segregated and sprayed with deodorizer prior to transport to the site.</p>
+        <p style="margin-left:40px">2. Truck must be sealed/covered and that there is no leakage of waste liquid while transporting</p>
+        <p style="margin-left:40px">3. Any violation in transporting of which cargo will be responsibility of the hauling contractor.</p>
+        <p style="margin-left:40px">4. The permit to Dump Certificate should be surrendered to the Gate guard before entering the premises.</p>
+        <p style="margin-left:40px">5. Observe and obey RA 9003 and the rules and regulations set by INT’L SWIMS INC</p>
+        <p style="margin-left:40px">6. Any violation therefore shall be grounded for suspension or cancellation of the accreditation.</p>
+      </section>
     </div>
   </Layout>
 </template>

@@ -52,7 +52,23 @@ export const simpleactivation = (payload) => serviceMaker(`/auth/signup`, method
 
 export const reviewAttendance = (payload) => serviceMaker('/attendence/checker/admin/review',methods.POST,api.NGB,payload)
 
+export const dashboardbrgy = () => serviceMaker('/dashboard/baranggay/count',methods.GET,api.NGB)
+export const dashboardlgu = () => serviceMaker('/dashboard/lgu/count',methods.GET,api.NGB)
+export const dashboardhauler = () => serviceMaker('/dashboard/hauler/count',methods.GET,api.NGB)
+export const dashboardroute = () => serviceMaker('/dashboard/route/count',methods.GET,api.NGB)
+export const dashboardvehicle = () => serviceMaker('/dashboard/vehicle/count',methods.GET,api.NGB)
+export const dashboardequipment = () => serviceMaker('/dashboard/equipment/count',methods.GET,api.NGB)
+export const dashboardincoming = () => serviceMaker('/dashboard/incomingtrip/count',methods.GET,api.NGB)
+export const dashboardoutgoing = () => serviceMaker('/dashboard/outgoingtrip/count',methods.GET,api.NGB)
+export const dashboarddirect = () => serviceMaker('/dashboard/directtrip/count',methods.GET,api.NGB)
+export const dashboardemployee = () => serviceMaker('/dashboard/employee/count',methods.GET,api.NGB)
+export const dashboardsrequipment = () => serviceMaker('/dashboard/srequipment/count',methods.GET,api.NGB)
+export const dashboardsrtruck = () => serviceMaker('/dashboard/srtruck/count',methods.GET,api.NGB)
+export const dashboarddumping = () => serviceMaker('/dashboard/dumping/count',methods.GET,api.NGB)
 
+export const deletedirectrip = (id) => serviceMaker(`/routetolandfilling/deleteByid/${id}`, methods.DELETE, api.NGB)
+
+export const deletetripoutgoing = (id) => serviceMaker(`/tripoutgoing/admin/${id}`, methods.DELETE, api.NGB)
 
 export const deletehauleremployee = (id) => serviceMaker(`/haulermaster/employees/admin/${id}`, methods.DELETE, api.NGB)
 
