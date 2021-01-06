@@ -65,11 +65,11 @@ export default {
           href: '/',
         },
         {
-          text: 'Trip Incoming',
-          href: '#/Trips/IncomingTrips',
+          text: 'Trip Outgoing',
+          href: '#/Trips/OutgoingTrips',
         },
         {
-          text: 'View Trip Incoming',
+          text: 'View Outgoing',
           active: true,
         },
       ],
@@ -380,12 +380,7 @@ export default {
         </h1>    
         <h6 style="text-align:center;margin-top:-20px">INTERNATIONAL SOLID WASTE INTEGRATED</h6>
         <h6 style="text-align:center;margin-top:-16px">MANAGEMENT SPECIAL INCORPORATED</h6>
-        <h1 style="text-align:center;font-size:22px">TRIP INCOMING TICKET</h1>
-     
-         <h2 style="margin-left:40px">
-          Baranggay: 
-          <span style="font-size:18px">{{baranggayid}}</span>
-        </h2>
+        <h1 style="text-align:center;font-size:22px">TRIP OUTGOING TICKET</h1>
         <h2 style="margin-left:40px">
           Driver's Name: 
           <span style="font-size:18px">{{printPdf.driverName}}</span>
@@ -396,7 +391,7 @@ export default {
         </h2>
         <h2 style="margin-left:40px">
           Plate No: 
-          <span style="font-size:18px">{{printPdf.truckplateNo}}</span>
+          <span style="font-size:18px">{{printPdf.plateNo}}</span>
         </h2>
         <h2 style="margin-left:450px;margin-top:-44px">
           Date: 
@@ -428,7 +423,7 @@ export default {
         </h2>
         <h2 style="margin-left:40px">
           Body No: 
-          <span style="font-size:18px">{{printPdf.truckBodyNo}}</span>
+          <span style="font-size:18px">{{printPdf.bodyNo}}</span>
         </h2>
         <h2 style="margin-left:450px;margin-top:-44px">
           Dumping Location: 

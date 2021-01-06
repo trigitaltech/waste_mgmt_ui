@@ -138,7 +138,7 @@ export default {
     },
   },
   mounted() {
-    this.tripDate = moment(new Date()).format('DD-MM-YYYY')
+    this.tripDate = new Date()
     this.startTime = moment(new Date()).format('DD-MM-YYYY hh:mm A')
     console.log(this.tripDate + ' ' + this.startTime)
     this.getdumping()
@@ -155,7 +155,7 @@ export default {
     async getLgu() {
       const result = JSON.parse(localStorage.getItem('auth.currentUser'))
 
-      this.dispatcherid = result.lguemployee.id
+      this.dispatcherid = result.user.id
 
       console.log(this.loginDetails)
     },
@@ -327,9 +327,9 @@ this.operatorid = e.id
 
     async create() {
       try {
-        const date = moment(this.startTime).format('YYYY-MM-DDThh:mm:SS+00:00')
-        console.log(date)
-        const areaarray = Object.assign({}, areaarray, this.areaarray)
+        // const date = moment(this.startTime).format('YYYY-MM-DDThh:mm:SS+00:00')
+        // console.log(date)
+        // const areaarray = Object.assign({}, areaarray, this.areaarray)
         let payload = {
           controlNo: this.controlno,
 

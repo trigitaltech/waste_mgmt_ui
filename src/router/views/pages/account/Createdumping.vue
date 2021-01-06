@@ -74,7 +74,7 @@ export default {
       ],
     inputs: [
         {
-         dumpingpointname:'',
+         dumpingPointName:'',
         },
       ],
     
@@ -96,7 +96,7 @@ export default {
   methods: {
      add() {
       this.inputs.push({
-     dumpingpointname:'',
+     dumpingPointName:'',
       })
       console.log(this.inputs)
     },
@@ -438,7 +438,7 @@ export default {
                       id="defaultFormCardtextEx"
                       type="text"
                       class="form-control"
-                      v-model="input.dumpingpointname"
+                      v-model="input.dumpingPointName"
                       placeholder="Enter Dumping Point Name"
                     />
                   </b-col>

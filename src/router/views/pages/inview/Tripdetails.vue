@@ -9,14 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  registerTemplete,
-  TripdetailsTemplete,
-  simpleactivation,
-  editcustomer,
-  plans,
-  planprice,
-  searchvoucher,
-  redeem,
+ getAllDirectTrips,deletedirectrip
 } from '../../../../services/auth'
 
 export default {
@@ -34,7 +27,26 @@ export default {
   },
   data() {
     return {
-      plandata: '',
+       items: [
+        {
+          text: 'Trips',
+          href: '/',
+        },
+        {
+          text: 'Direct Trips',
+          active: true,
+        },
+      ],
+      totalRows: 1,
+      currentPage: 1,
+      perPage: 10,
+      item: [],
+      pageOptions: [10, 25, 50, 100],
+      filter: null,
+      filterOn: [],
+      sortBy: 'age',
+      sortDesc: false,
+      tabIndex: 0,
       striped: false,
       bordered: true,
       filter: '',
@@ -44,72 +56,48 @@ export default {
       small: false,
       dark: false,
       fixed: false,
-      amount: '',
-      submitted: false,
-      title: 'Register',
-      item: { key: 'resource', value: 'Frozen Yogurt', name: '159' },
-
-      TripdetailsColumns: [
-        {
-          key: 'resource',
-
-          label: 'Resource',
+      item:[],
+      TripColumns: [
+     {
+          key: 'id',
+          label: 'Id',
+          sortable: true,
+        },
+        
+          {
+          key: 'controlNo',
+          label: 'controlNo',
+          sortable: true,
         },
         {
-          key: 'name',
-          label: 'Tripdetails',
+          key: 'tripDate',
+          label: 'Trip Date',
         },
-
+        {
+          key: 'driverName',
+          label: 'driverName',
+        },
+        {
+          key: 'helperName',
+          label: 'helperName',
+        },
+        {
+          key: 'plateNo',
+          label: 'Truck plateNo',
+        },
+          {
+          key: 'bodyNo',
+          label: 'Truck BodyNo',
+        },
+        {
+          key: 'status',
+          label: 'Status',
+        },
         {
           key: 'actions',
           sortable: true,
         },
       ],
-      items: [
-        {
-          text: 'Home',
-          href: '/',
-        },
-        {
-          text: 'Tripdetailss',
-          active: true,
-        },
-      ],
-      finalModel: {},
-      selected: null,
-      clientId: '',
-      options: ['DAF'],
-      item: {
-        value: '',
-        text: '',
-      },
-      form: {
-        personalTitle: '',
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        gender: '',
-        email: '',
-        number: '',
-        address: '',
-        Tripdetails: '',
-        state: '',
-        country: '',
-        postCode: '',
-        stbNumber: '',
-        bouquets: null,
-        amount: 0,
-        voucherNo: '',
-      },
-      titles: ['Mr.', 'Sri.', 'Mrs'],
-      vouchernumber: '',
-      genderOpt: ['Male', 'Female', 'Other'],
-      TripdetailsOpt: [],
-      bouquetsOpt: [
-        { value: null, text: 'Please select an option' },
-        'FTA  AND STARTER',
-      ],
-      clientTemplete: {},
     }
   },
   computed: {
@@ -118,11 +106,45 @@ export default {
     },
   },
   mounted() {
-    this.getClientDetails()
-    this.getplans()
+     this.totalRows = this.items.length
+    // this.getClientDetails()
+    this.getTrips()
   },
   methods: {
+
    
+     async deleteReq(data) {
+       console.log("data",data.item.id)
+       var id = data.item.id
+     try{
+          
+        const result = await  deletedirectrip(data.item.id)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `You Deleted DirectTrip Successfully`,
+            duration: 5000,
+          })
+         this.refresh()
+        }
+      } catch (e) {
+         this.$toasted.error(e.message.error, {
+          duration: 7000,
+        })
+      }
+     
+    },
+    async getTrips() {
+      try{
+        let result = await getAllDirectTrips();
+          this.item = result.data.response.result
+        console.log(result);
+      }
+      catch(e) {
+        console.log(e);
+      }
+    },
     async refresh() {
       setTimeout(function () {
         location.reload()
@@ -138,17 +160,17 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="Tripdetailss"
+        header=" Direct Trip"
 
         class="mt-10 ml-10 mr-10 mx-auto"
       >
-        <b-col md="12">
+        <b-col >
           <b-button
-            class="btn btn-custome float-right btn-secondary mb-3"
-            text="Create Tenant"
-            @click="$router.push({ path: '/create' })"
-            >Create Tripdetails</b-button
-          >
+                      class="btn btn-custome btn-secondary ml-5 mb-2 mr-2 float-right"
+                      text="Create Incoming Trip"
+                      @click="$router.push({path:'/CreateLandfillTrip'})"
+                      >Create Landfill Trip</b-button
+                    >
         </b-col>
         <div class="mt-3">
           <b-table
@@ -163,42 +185,36 @@ export default {
             :current-page="currentPage"
             :per-page="perPage"
             thead-class="header"
+            :items="item"
             :small="small"
             :fixed="fixed"
-            :fields="TripdetailsColumns"
-            :items="item"
+            :fields="TripColumns"
+           
             class="mt-3"
           >
-            <template slot="actions" slot-scope="data">
-              <b-button
-                size="sm"
-                class="mr-2"
-                variant="primary"
-                @click="editTripdetails(data)"
-              >
-                <i class="fas fa-pencil-alt edit"></i>
-              </b-button>
-              <b-button
-                size="sm"
-                class="mr-2"
-                variant="danger"
-                @click="deleteTripdetails(data)"
-              >
-                <i class="fa fa-times bin"></i>
-              </b-button>
-              <!-- <b-button size="sm" class="mr-2" variant="html5 icon" @click="deleteTripdetails(data)">
-              <i class="fa fa-times"></i>
+               <template v-slot:cell(actions)="data">
+              <router-link :to="{ name: 'Viewdirecttrip', params: data.item }">
+              <b-button size="sm" class="mr-2" variant="primary" >
+              <i class="fa fa-eye"></i>
             </b-button>
-            <b-button size="sm" class="mr-2" variant="facebook" @click="editTripdetails(data)">
-              <i class="fa fa-pencil"></i>
-            </b-button>-->
-            </template>
+              </router-link>
+            <!-- <router-link :to="{ name: 'EditIncomingTrip', params: data.item }">
+                <b-button size="sm" class="mr-2" variant="primary"  :hidden="data.item.status === 'APPROVED' || data.item.status === 'REJECTED' ">
+                  <i class="fas fa-pencil-alt edit"></i>
+                </b-button>
+              </router-link> -->
+             <b-button size="sm" class="mr-2" variant="danger" >
+               <span @click="deleteReq(data)">
+              <i class="fa fa-times edit"></i>
+            </span>
+               </b-button>
+           </template>
           </b-table>
           <div style="float: right">
             <b-pagination
               v-model="currentPage"
               :per-page="perPage"
-              :total-rows="Tripdetails"
+              :total-rows="totalRows"
               aria-controls="my-table"
               hide-goto-end-buttons
             ></b-pagination>

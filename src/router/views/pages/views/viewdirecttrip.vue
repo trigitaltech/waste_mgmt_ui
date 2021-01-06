@@ -51,9 +51,9 @@ export default {
       tripEndTime: this.$route.params.tripEndTime,
       tripIncomingAreaRoute: this.$route.params.tripIncomingAreaRoute,
       tripStartTime: this.$route.params.tripStartTime,
-      truckBodyNo: this.$route.params.truckBodyNo,
+      truckBodyNo: this.$route.params.bodyNo,
       truckType: this.$route.params.truckType,
-      truckplateNo: this.$route.params.truckplateNo,
+      truckplateNo: this.$route.params.plateNo,
       volumeCheckerId: this.$route.params.volumeCheckerId,
       volumeCheckerMeasuredVolume: this.$route.params.volumeCheckerMeasuredVolume,
       volumeCheckerName:this.$route.params.volumeCheckerName,
@@ -65,11 +65,11 @@ export default {
           href: '/',
         },
         {
-          text: 'Trip Incoming',
-          href: '#/Trips/IncomingTrips',
+          text: 'Direct Trips',
+          href: '#/Trips/DirectTrips',
         },
         {
-          text: 'View Trip Incoming',
+          text: 'View Direct Trips',
           active: true,
         },
       ],
@@ -137,7 +137,7 @@ export default {
     <PageHeader :items="items" />
 
     <div class="animated fadeIn">
-      <b-card header="View Trip Coming" class="mt-10 ml-10 mr-10 mx-auto">
+      <b-card header="View Direct Trip" class="mt-10 ml-10 mr-10 mx-auto">
         <div class="mt-3">
           <!-- Default form subscription -->
           <form>
@@ -380,13 +380,12 @@ export default {
         </h1>    
         <h6 style="text-align:center;margin-top:-20px">INTERNATIONAL SOLID WASTE INTEGRATED</h6>
         <h6 style="text-align:center;margin-top:-16px">MANAGEMENT SPECIAL INCORPORATED</h6>
-        <h1 style="text-align:center;font-size:22px">TRIP INCOMING TICKET</h1>
-     
+        <h1 style="text-align:center;font-size:22px">DIRECT TRIP TICKET</h1>
          <h2 style="margin-left:40px">
           Baranggay: 
           <span style="font-size:18px">{{baranggayid}}</span>
         </h2>
-        <h2 style="margin-left:40px">
+      <h2 style="margin-left:40px">
           Driver's Name: 
           <span style="font-size:18px">{{printPdf.driverName}}</span>
         </h2>
@@ -396,7 +395,7 @@ export default {
         </h2>
         <h2 style="margin-left:40px">
           Plate No: 
-          <span style="font-size:18px">{{printPdf.truckplateNo}}</span>
+          <span style="font-size:18px">{{printPdf.plateNo}}</span>
         </h2>
         <h2 style="margin-left:450px;margin-top:-44px">
           Date: 
@@ -428,7 +427,7 @@ export default {
         </h2>
         <h2 style="margin-left:40px">
           Body No: 
-          <span style="font-size:18px">{{printPdf.truckBodyNo}}</span>
+          <span style="font-size:18px">{{printPdf.bodyNo}}</span>
         </h2>
         <h2 style="margin-left:450px;margin-top:-44px">
           Dumping Location: 
