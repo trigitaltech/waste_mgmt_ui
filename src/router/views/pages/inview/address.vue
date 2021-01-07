@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- address
+ address,deletedistrict
 } from '../../../../services/auth'
 
 export default {
@@ -54,6 +54,10 @@ export default {
         {
           key: 'districtName',
           label: 'District',
+        },
+        {
+          key:'actions',
+
         }
       ],
       items: [
@@ -118,6 +122,29 @@ export default {
   
   },
   methods: {
+  
+     async deleteReq(data) {
+       console.log("data",data.item.id)
+       var id = data.item.id
+     try{
+          
+        const result = await   deletedistrict (data.item.id)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `You Deleted District Successfully`,
+            duration: 5000,
+          })
+         this.refresh()
+        }
+      } catch (e) {
+         this.$toasted.error(e.message.error, {
+          duration: 7000,
+        })
+      }
+     
+    },
     async getaddresss() {
        try {
       
@@ -209,27 +236,24 @@ export default {
             :fields="cityColumns"
             :items="item"
           >
-            <template slot="actions" slot-scope="data">
-              <b-button
-                size="sm"
-                class="mr-2"
-                variant="primary"
-                @click="editcity(data)"
-              >
-                <i class="fas fa-pencil-alt edit"></i>
-              </b-button>
-              <b-button
-                size="sm"
-                class="mr-2"
-                variant="danger"
-                @click="deletecity(data)"
-              >
-                <i class="fa fa-times bin"></i>
-              </b-button>
-              <!-- <b-button size="sm" class="mr-2" variant="html5 icon" @click="deletecity(data)">
+           <template v-slot:cell(actions)="data">
+             <!-- <router-link :to="{ name: 'Viewarea', params: data.item }">
+                <span class="mr-3" >
+                 <i class="fa fa-eye edit"></i>
+                </span>
+              </router-link>
+             <router-link :to="{ name: 'Editarea', params: data.item }">
+               <span class="mr-3">
+                  <i class="fas fa-pencil-alt edit"></i>
+                </span>
+              </router-link> -->
+             <span class="mr-3" @click="deleteReq(data)">
+              <i class="fa fa-times edit"></i>
+            </span>
+            <!-- <b-button size="sm" class="mr-2" variant="html5 icon" @click="deleteAreamaster(data)">
               <i class="fa fa-times"></i>
-            </b-button>
-            <b-button size="sm" class="mr-2" variant="facebook" @click="editcity(data)">
+            </b-button>  -->
+            <!-- <b-button size="sm" class="mr-2" variant="facebook" @click="editAreamaster(data)">
               <i class="fa fa-pencil"></i>
             </b-button>-->
             </template>

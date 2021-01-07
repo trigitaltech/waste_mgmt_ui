@@ -50,8 +50,13 @@ export default {
         { value: 'Areastaging', text: 'Area Staging' },
         { value: 'Centralstaging', text: 'Central Staging' },
       ],
-      item1:[{ value: 'Truck', text: 'Truck' },
-        { value: 'Machine', text: 'Machine' }],
+       item1:[{ value: 'BH', text: 'BH '},
+        { value: 'BD', text: 'BD' },
+        { value: 'PL', text: 'PL' },
+        { value: 'PL', text: 'PL' },
+        { value: 'RR', text: 'RR' },
+        { value: 'RG', text: 'RG' },
+        ],
       items: [
          {
           text: 'Haulers',

@@ -52,8 +52,13 @@ export default {
         { value: 'Areastaging', text: 'Area Staging' },
         { value: 'Centralstaging', text: 'Central Staging' },
       ],
-      item1:[{ value: 'Truck', text: 'Truck' },
-        { value: 'Machine', text: 'Machine' }],
+      item1:[{ value: 'BH', text: 'BH '},
+        { value: 'BD', text: 'BD' },
+        { value: 'PL', text: 'PL' },
+        { value: 'PL', text: 'PL' },
+        { value: 'RR', text: 'RR' },
+        { value: 'RG', text: 'RG' },
+        ],
       items: [
         {
           text: 'Haulers',
@@ -227,7 +232,7 @@ this.haulerdata.map(e=>{
                      Equipment No</label
                     >
                     <input
-                      type="number"
+                      type="text"
                       id="defaultFormCardNameEx"
                       v-model="equipmentno"
                      
@@ -272,7 +277,7 @@ this.haulerdata.map(e=>{
                       >Equipment Id</label
                     >
                     <input
-                      type="number"
+                      type="text"
                       id="defaultFormCardtextEx"
                       v-model="equipmentid"
                     

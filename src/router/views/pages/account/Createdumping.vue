@@ -266,9 +266,9 @@ export default {
                     </b-col>
                 </b-row>
                <b-row class="mb-3">
-                   <b-col>
+                   <!-- <b-col> -->
                     <!-- Default input text -->
-                     <label
+                     <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Baranggay</label
@@ -280,8 +280,25 @@ export default {
                                 :options="servingAreas"
                                 @input="getdistricts"
                               ></multiselect>
-                  </b-col>         
-                
+                  </b-col>          -->
+                 <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Address</label
+                    >
+                    <b-textarea
+                      id="defaultFormCardtextEx"
+                      v-model="address"
+                      type="text"
+                      class="form-control"
+                       oninvalid="this.setCustomValidity('Address is required ')"
+                                oninput="setCustomValidity('')"
+                               
+                              placeholder="Enter Address"
+                                required
+                    />
+                  </b-col>
                   <b-col>
                     <!-- Default input text -->
                     <label
@@ -299,27 +316,10 @@ export default {
                   </b-col>
                 </b-row>
                   <b-row class="mb-3">
-                     <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Address</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="address"
-                      type="text"
-                      class="form-control"
-                       oninvalid="this.setCustomValidity('Address is required ')"
-                                oninput="setCustomValidity('')"
-                               
-                              placeholder="Enter Address"
-                                required
-                    />
-                  </b-col>
+                    
                     <b-col>
                     <!-- Default input text -->
-                    <label
+                    <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Zip</label
@@ -330,15 +330,15 @@ export default {
                       type="text"
                       class="form-control"
                       placeholder="Enter zip"
-                    />
+                    /> -->
                   </b-col>
                   
                   
                   </b-row>
-                  <b-row class="mb-3">
-                  <b-col>
+                  <!-- <b-row class="mb-3">
+                  <b-col> -->
                     <!-- Default input text -->
-                    <label
+                    <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >District</label
@@ -351,11 +351,11 @@ export default {
                       placeholder="Enter district"
                       disabled
                     />
-                  </b-col>
+                  </b-col> -->
                 
-                   <b-col>
+                   <!-- <b-col> -->
                     <!-- Default input name -->
-                    <label
+                    <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >State</label
@@ -389,8 +389,8 @@ export default {
                 <b-row class="mb-3">
                     
                     
-                </b-row>
-                <b-row>
+                </b-row> -->
+                <!-- <b-row>
                 <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -422,7 +422,7 @@ export default {
                       placeholder="Enter holidaymessage"
                     />
                   </b-col>
-                  </b-row>
+                  </b-row> -->
 
                     <br />
                    <b-row v-for="(input, k) in inputs" :key="k">

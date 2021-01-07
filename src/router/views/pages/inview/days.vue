@@ -61,6 +61,11 @@ export default {
 
           label: 'TripType',
         },
+         {
+          key: 'day',
+
+          label: 'DAY',
+        },
        
         {
           key: 'actions',

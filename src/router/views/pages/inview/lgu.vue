@@ -162,7 +162,7 @@ export default {
                     ></b-form-input>
            
         </b-col>
-         <b-col md="9">
+         <b-col md="9" v-if="this.$store.getters['auth/loggedInDetails'].user.type !== 'LGU'">
           <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
@@ -188,7 +188,7 @@ export default {
             :items="item"
             class="mt-3"
           >
-            <template v-slot:cell(actions)="data">
+            <template v-slot:cell(actions)="data" v-if="this.$store.getters['auth/loggedInDetails'].user.type !== 'LGU'">
              <router-link :to="{ name: 'Viewlgu', params: data.item }">
                 <span class="mr-2 " >
                  <i class="fa fa-eye edit"></i>

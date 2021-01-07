@@ -65,17 +65,17 @@ export default {
           label: 'email',
         },
        
-         {
-          key: 'state',
+        //  {
+        //   key: 'state',
 
-          label: 'State',
-        },
+        //   label: 'State',
+        // },
         
-         {
-          key: 'country',
+        //  {
+        //   key: 'country',
 
-          label: 'Country',
-        },
+        //   label: 'Country',
+        // },
          
        
 
