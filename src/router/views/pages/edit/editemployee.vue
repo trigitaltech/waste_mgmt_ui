@@ -597,7 +597,7 @@ export default {
                                            ></b-form-select>
                                     </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4" v-if="employeetype !== 'PALERO' && employeetype !== 'null'">
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Service office</label>
                                  

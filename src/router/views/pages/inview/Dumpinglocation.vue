@@ -66,14 +66,14 @@ export default {
         },
      
          
-         {
-          key: 'state',
-          label: 'State',
-        },
-         {
-          key: 'country',
-          label: 'Country',
-        },
+        //  {
+        //   key: 'state',
+        //   label: 'State',
+        // },
+        //  {
+        //   key: 'country',
+        //   label: 'Country',
+        // },
        
 
         {

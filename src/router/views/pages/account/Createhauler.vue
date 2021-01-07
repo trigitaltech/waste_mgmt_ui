@@ -530,7 +530,7 @@ export default {
 
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">Address lane 1</label>
+                              <label for="default">Address</label>
                               <!-- <ValidationProvider
                                   v-slot="{ errors }"
                                   name="Address"
@@ -540,7 +540,7 @@ export default {
                                 v-model.trim="form.address"
                                 for="address"
                                 type="text"
-                                oninvalid="this.setCustomValidity('Address Lane1 is required ')"
+                                oninvalid="this.setCustomValidity('Address  is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Address"
                                 class="form-control"
@@ -556,15 +556,15 @@ export default {
                                 </ValidationProvider>-->
                             </div>
                           </div>
-                         <div class="col-md-4">
+                         <!-- <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">Address lane 2</label>
+                              <label for="default">Address lane 2</label> -->
                               <!-- <ValidationProvider
                                   v-slot="{ errors }"
                                   name="Address"
                                   rules="required"
                                 >-->
-                              <input
+                              <!-- <input
                                 v-model.trim="form.address2"
                                 for="address"
                                 type="text"
@@ -624,7 +624,7 @@ export default {
                                 disabled
                                 />
                               </div>
-                            </div>
+                            </div> -->
                             <!--<div class="col-md-3">
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Employee Type</label>

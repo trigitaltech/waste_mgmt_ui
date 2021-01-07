@@ -8,7 +8,12 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import { createroute, users, Areamasters } from '../../../../services/auth'
+import {
+  createroute,
+  users,
+  Areamasters,
+  days,
+} from '../../../../services/auth'
 
 export default {
   page: {
@@ -42,10 +47,10 @@ export default {
       code: '',
       areas: [],
       roads: [],
-      baranggay:'',
+      baranggay: '',
       inputs: [
         {
-          baranggayId:'',
+          baranggayId: '',
           code: '',
           roadname: '',
           routename: '',
@@ -74,7 +79,11 @@ export default {
         },
       ],
       areasid: [],
-      baranggays:[],
+      daysdata: [],
+      baranggays: [],
+      daysmaster: [],
+      days: [],
+      Days: [{ day: 'SUNDAY'},{ day: 'MONDAY'},{ day: 'TUESDAY'},{ day: 'WEDNESDAY'},{ day: 'THURSDAY'},{ day: 'FRIDAY'},{ day: 'SATURDAY'}],
     }
   },
   computed: {
@@ -88,6 +97,7 @@ export default {
     // this.getClientDetails()
     this.getplans()
     this.userdata()
+    this.getdays()
   },
   methods: {
     add() {
@@ -95,7 +105,7 @@ export default {
         code: '',
         roadname: '',
         routename: '',
-        baranggayId:''
+        baranggayId: '',
       })
       console.log(this.inputs)
     },
@@ -104,40 +114,41 @@ export default {
       this.inputs.splice(index, 1)
     },
     getid() {
-       this.baranggays=[]
-       for(var i = 0 ; i<this.areaname.length ;i++){
-      
-         this.areas.map(e=>{
-        if(this.areaname[i] === e.areaName){
-             
-          this.baranggays.push(e)
-          console.log("routedata",this.baranggays)
-       
-        }
-         })
-      
-       }
+      this.baranggays = []
+      for (var i = 0; i < this.areaname.length; i++) {
+        this.areas.map((e) => {
+          if (this.areaname[i] === e.areaName) {
+            this.baranggays.push(e)
+            console.log('routedata', this.baranggays)
+          }
+        })
+      }
       // console.log("haiiiiii",this.item2)
-     
     },
-     getbaranggayid() {
-      
-       for(var i = 0 ; i<this.baranggay.length ;i++){
-      
-         this.areas.map(e=>{
-        if(this.baranggay[i] === e.areaName){
-             
-          this.inputs.baranggayId = e.id
-          console.log("routedata",this.baranggays)
-       
-        }
-         })
-      
-       }
+    getbaranggayid() {
+      for (var i = 0; i < this.baranggay.length; i++) {
+        this.areas.map((e) => {
+          if (this.baranggay[i] === e.areaName) {
+            this.inputs.baranggayId = e.id
+            console.log('routedata', this.baranggays)
+          }
+        })
+      }
       // console.log("haiiiiii",this.item2)
-     
     },
-    
+    // async getdays() {
+    //   try {
+    //     const result = await days()
+    //     this.daysmaster = result.data.response.TripDays
+        //  this.daysmaster.map(e=>{
+        //    this.Days.push(e.day)
+        //  })
+    //   } catch (error) {}
+    // },
+    getdaysdata() {
+      this.daysdata = []
+      this.daysdata.push({ day: this.days })
+    },
     async getplans() {
       try {
         const result = await Areamasters()
@@ -183,6 +194,7 @@ export default {
           description: this.description,
           baranggay: this.baranggays,
           routeRoads: this.inputs,
+          days: this.days
         }
         let result = await createroute(payload)
         if (result) {
@@ -264,7 +276,7 @@ export default {
             </b-row>
             <br />
             <b-row>
-              <b-col>
+              <!-- <b-col>
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
@@ -278,10 +290,10 @@ export default {
                   placeholder="Select Route Type"
                   class="form-control"
                   required
-                ></b-form-select>
+                ></b-form-select> -->
 
-                <!-- Default input name -->
-              </b-col>
+              <!-- Default input name -->
+              <!-- </b-col> -->
 
               <b-col>
                 <!-- Default input name -->
@@ -302,13 +314,9 @@ export default {
                   required
                 />
               </b-col>
-              <br />
-            </b-row>
-            <br />
-            <b-row>
-              <b-col>
-                <!-- Default input text -->
-                <label
+              <!-- <b-col> -->
+              <!-- Default input text -->
+              <!-- <label
                   for="defaultFormCardtextEx"
                   class="grey-text font-weight-dark"
                   >Supervisor</label
@@ -323,7 +331,7 @@ export default {
                   class="form-control"
                   required
                 ></b-form-select>
-              </b-col>
+              </b-col> -->
               <b-col>
                 <label
                   for="defaultFormCardtextEx"
@@ -360,18 +368,27 @@ export default {
                 />
               </b-col>
               <b-col>
-                <!-- <label
-                  for="defaultFormCardtextEx"
+                <label
+                  for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
-                  >City</label
                 >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="city"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter city"
-                /> -->
+                  Days</label
+                >
+                <multiselect
+                  v-model="days"
+                  placeholder="Select Days"
+                  :options="Days"
+                  :multiple="true"
+                  :close-on-select="false"
+                  :clear-on-select="false"
+                  :preserve-search="true"
+                  label="day"
+                  track-by="day"
+                 
+                  @input="getdaysdata"
+                ></multiselect>
+
+                <!-- Default input name -->
               </b-col>
             </b-row>
 
@@ -460,7 +477,7 @@ export default {
             <br />
 
             <b-row v-for="(input, k) in inputs" :key="k">
-                <b-col>
+              <b-col>
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
@@ -469,15 +486,14 @@ export default {
                 >
                 <b-form-select
                   v-model="input.baranggayId"
-                
                   :options="item2"
-                 class="form-control"
+                  class="form-control"
                 >
                 </b-form-select>
 
                 <!-- Default input name -->
               </b-col>
-              <b-col >
+              <b-col>
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
@@ -508,7 +524,7 @@ export default {
                   placeholder="Enter roadname"
                 />
               </b-col>
-              <b-col >
+              <b-col>
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
@@ -523,7 +539,7 @@ export default {
                   placeholder="Enter routename"
                 />
               </b-col>
-            
+
               <b-col>
                 <span>
                   <i

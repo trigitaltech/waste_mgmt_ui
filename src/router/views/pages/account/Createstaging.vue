@@ -344,7 +344,63 @@ export default {
                 />
                 <!-- Default input text -->
               </b-col>
-              <b-col>
+             
+            </b-row>
+            <!-- <b-row class="mb-3"> -->
+             <!-- <b-col> -->
+                    <!-- Default input text -->
+                     <!-- <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Baranggay</label
+                    >
+                   <multiselect
+                                required
+                                v-model="baranggay"
+                                placeholder="Select Baranggay"
+                                :options="servingAreas"
+                                @input="getdistricts"
+                              ></multiselect>
+                  </b-col>         
+                 -->
+             
+              <!-- <b-col> -->
+                <!-- Default input name -->
+                <!-- <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >State</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="state"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter state"
+                  disabled
+                />
+              </b-col> -->
+              <!-- <br />
+            </b-row> -->
+           
+            <b-row class="mb-3">
+              
+              <!-- <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Country</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="country"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter country"
+                  disabled
+                />
+              </b-col> -->
+               <b-col>
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
@@ -360,139 +416,8 @@ export default {
                   required
                 ></b-form-select>
               </b-col>
-            </b-row>
-            <b-row class="mb-3">
-             <b-col>
-                    <!-- Default input text -->
-                     <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Baranggay</label
-                    >
-                   <multiselect
-                                required
-                                v-model="baranggay"
-                                placeholder="Select Baranggay"
-                                :options="servingAreas"
-                                @input="getdistricts"
-                              ></multiselect>
-                  </b-col>         
-                
-             
-              <b-col>
-                <!-- Default input name -->
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >State</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="state"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter state"
-                  disabled
-                />
-              </b-col>
-              <br />
-            </b-row>
-           
-            <b-row class="mb-3">
-              
-              <b-col>
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Country</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="country"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter country"
-                  disabled
-                />
-              </b-col>
-               <b-col>
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Address</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="address"
-                  type="text"
-                  oninvalid="this.setCustomValidity('Address is required ')"
-                  oninput="setCustomValidity('')"
-                  placeholder="Enter Address"
-                  class="form-control"
-                  required
-                />
-              </b-col>
-            </b-row>
-              <b-row class="mb-3">
-              <!-- <b-col>
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Location</label
-                >
-                <GmapAutocomplete
-                  :placeholder="'Select Target Location'"
-                  class="form-control"
-                  @place_changed="setPlace"
-                ></GmapAutocomplete>
-              </b-col> -->
-              <b-col>
-                <!-- Default input text -->
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Zip</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="zip"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter zip"
-                />
-              </b-col>
-             <b-col>
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Working Hours</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="workinghours"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter working hours"
-                />
-              </b-col>
-            </b-row>
-            <b-row class="mb-3">
-             
-              <b-col>
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Holiday Message</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="message"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter holiday message"
-                />
-              </b-col>
-               <b-col>
+               
+                <b-col>
                 <!-- Default input text -->
                 <label
                   for="defaultFormCardtextEx"
@@ -511,11 +436,10 @@ export default {
                   required
                 ></b-form-select>
               </b-col>
-             
             </b-row>
-             <b-row class="mb-3">
-             
-              <b-col>
+              <b-row class="mb-3">
+                
+             <b-col>
                 <!-- Default input text -->
                 <label
                   for="defaultFormCardtextEx"
@@ -530,6 +454,73 @@ export default {
                   placeholder="Enter description"
                 />
               </b-col>
+              <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Address</label
+                >
+                <b-textarea
+                  id="defaultFormCardtextEx"
+                  v-model="address"
+                  type="text"
+                  oninvalid="this.setCustomValidity('Address is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Enter Address"
+                  class="form-control"
+                  required
+                />
+              </b-col>
+              <!-- <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Location</label
+                >
+                <GmapAutocomplete
+                  :placeholder="'Select Target Location'"
+                  class="form-control"
+                  @place_changed="setPlace"
+                ></GmapAutocomplete>
+              </b-col> -->
+              <!-- <b-col> -->
+                <!-- Default input text -->
+                <!-- <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Zip</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="zip"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter zip"
+                />
+              </b-col> -->
+             <!-- <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Working Hours</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="workinghours"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter working hours"
+                />
+              </b-col> -->
+            </b-row>
+            <b-row class="mb-3">
+             
+             
+             
+            </b-row>
+             <b-row class="mb-3">
+             
+              
             </b-row>
           
             <br />

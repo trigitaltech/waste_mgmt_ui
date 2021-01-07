@@ -70,7 +70,11 @@ export default {
           active: true,
         },
       ],
-   
+     inputs: [
+        {
+         dumpingPointName:'',
+        },
+      ],
     
     }
   },
@@ -89,6 +93,16 @@ export default {
     this.userdata()
   },
   methods: {
+     add() {
+      this.inputs.push({
+     dumpingPointName:'',
+      })
+      console.log(this.inputs)
+    },
+
+    remove(index) {
+      this.inputs.splice(index, 1)
+    },
      async userdata() {
        try {
       
@@ -158,7 +172,8 @@ export default {
                 holiday_message: this.message,
                 zip: this.zip,
                 city: this.city,
-                area: this.baranggay
+                area: this.baranggay,
+                 dumpingPoint:this.inputs
         }
         let result = await editdumping(payload)
         if (result) {
@@ -212,8 +227,7 @@ export default {
         <div class="mt-3">
               <!-- Default form subscription -->
                <form @submit.prevent="create">
-                <b-row class="mb-3">
-               
+               <b-row>
                   <b-col>
                     <!-- Default input name -->
                     <label
@@ -251,9 +265,9 @@ export default {
                     </b-col>
                 </b-row>
                <b-row class="mb-3">
-                   <b-col>
+                   <!-- <b-col> -->
                     <!-- Default input text -->
-                     <label
+                     <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Baranggay</label
@@ -265,8 +279,25 @@ export default {
                                 :options="servingAreas"
                                 @input="getdistricts"
                               ></multiselect>
-                  </b-col>         
-                
+                  </b-col>          -->
+                 <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Address</label
+                    >
+                    <b-textarea
+                      id="defaultFormCardtextEx"
+                      v-model="address"
+                      type="text"
+                      class="form-control"
+                       oninvalid="this.setCustomValidity('Address is required ')"
+                                oninput="setCustomValidity('')"
+                               
+                              placeholder="Enter Address"
+                                required
+                    />
+                  </b-col>
                   <b-col>
                     <!-- Default input text -->
                     <label
@@ -284,27 +315,10 @@ export default {
                   </b-col>
                 </b-row>
                   <b-row class="mb-3">
-                     <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Address</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="address"
-                      type="text"
-                      class="form-control"
-                       oninvalid="this.setCustomValidity('Address is required ')"
-                                oninput="setCustomValidity('')"
-                               
-                              placeholder="Enter Address"
-                                required
-                    />
-                  </b-col>
+                    
                     <b-col>
                     <!-- Default input text -->
-                    <label
+                    <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Zip</label
@@ -315,15 +329,15 @@ export default {
                       type="text"
                       class="form-control"
                       placeholder="Enter zip"
-                    />
+                    /> -->
                   </b-col>
                   
                   
                   </b-row>
-                  <b-row class="mb-3">
-                  <b-col>
+                  <!-- <b-row class="mb-3">
+                  <b-col> -->
                     <!-- Default input text -->
-                    <label
+                    <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >District</label
@@ -336,11 +350,11 @@ export default {
                       placeholder="Enter district"
                       disabled
                     />
-                  </b-col>
+                  </b-col> -->
                 
-                   <b-col>
+                   <!-- <b-col> -->
                     <!-- Default input name -->
-                    <label
+                    <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >State</label
@@ -374,8 +388,8 @@ export default {
                 <b-row class="mb-3">
                     
                     
-                </b-row>
-                <b-row>
+                </b-row> -->
+                <!-- <b-row>
                 <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -407,8 +421,46 @@ export default {
                       placeholder="Enter holidaymessage"
                     />
                   </b-col>
-                  </b-row>
+                  </b-row> -->
+
+                    <br />
+                   <b-row v-for="(input, k) in inputs" :key="k">
+                 
+                  <b-col md="6">
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                    >
+                      Dumping Point Name</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      type="text"
+                      class="form-control"
+                      v-model="input.dumpingPointName"
+                      placeholder="Enter Dumping Point Name"
+                    />
+                  </b-col>
+                    <b-col>
+                    <span>
+                       <i
+                    class="fas fa-minus-circle"
+                    @click="remove(k)"
+                    v-show="k || (!k && inputs.length > 1)"
+                    >Remove</i
+                  >
+                  <i
+                    class="fas fa-plus-circle"
+                    @click="add(k)"
+                    v-show="k == inputs.length - 1"
+                    >Add Dumping Point</i
+                  >
+                
+                    </span>
+                  </b-col>
+                   </b-row>
                 <br />
+
                <button
                           type="submit"
                          class="btn btn-custome float-right btn-secondary mb-3"

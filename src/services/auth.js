@@ -66,6 +66,9 @@ export const dashboardsrequipment = () => serviceMaker('/dashboard/srequipment/c
 export const dashboardsrtruck = () => serviceMaker('/dashboard/srtruck/count',methods.GET,api.NGB)
 export const dashboarddumping = () => serviceMaker('/dashboard/dumping/count',methods.GET,api.NGB)
 
+
+export const deletedistrict = (id) => serviceMaker(`/location/district/${id}`, methods.DELETE, api.NGB)
+
 export const deletedirectrip = (id) => serviceMaker(`/routetolandfilling/deleteByid/${id}`, methods.DELETE, api.NGB)
 
 export const deletetripoutgoing = (id) => serviceMaker(`/tripoutgoing/admin/${id}`, methods.DELETE, api.NGB)

@@ -54,7 +54,8 @@ export default {
       small: false,
       dark: false,
       fixed: false,
-   
+    days: [],
+      Days: [{ day: 'SUNDAY'},{ day: 'MONDAY'},{ day: 'TUESDAY'},{ day: 'WEDNESDAY'},{ day: 'THURSDAY'},{ day: 'FRIDAY'},{ day: 'SATURDAY'}],
       roads:this.$route.params.routeRoads,
       areaname:[],
       code:this.$route.params.code,
@@ -228,6 +229,7 @@ export default {
           description: this.description,
           baranggay: this.baranggays,
           routeRoads: this.inputs,
+           days: this.days
         }
         let result = await editroute(payload)
         if (result) {
@@ -313,8 +315,31 @@ export default {
             </b-row>
             <br />
             <b-row>
-              <b-col>
+               <b-col>
                 <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Days</label
+                >
+                <multiselect
+                  v-model="days"
+                  placeholder="Select Days"
+                  :options="Days"
+                  :multiple="true"
+                  :close-on-select="false"
+                  :clear-on-select="false"
+                  :preserve-search="true"
+                  label="day"
+                  track-by="day"
+                 
+                  @input="getdaysdata"
+                ></multiselect>
+
+                <!-- Default input name -->
+              </b-col>
+              <!-- <b-col> -->
+                <!-- <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
                   >Route Type</label
@@ -327,10 +352,10 @@ export default {
                   placeholder="Select Route Type"
                   class="form-control"
                   required
-                ></b-form-select>
+                ></b-form-select> -->
 
                 <!-- Default input name -->
-              </b-col>
+              <!-- </b-col> -->
 
               <b-col>
                 <!-- Default input name -->
@@ -355,9 +380,24 @@ export default {
             </b-row>
             <br />
             <b-row>
-              <b-col>
+               <b-col>
                 <!-- Default input text -->
                 <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Description</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="description"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Description"
+                />
+              </b-col>
+              <!-- <b-col> -->
+                <!-- Default input text -->
+                <!-- <label
                   for="defaultFormCardtextEx"
                   class="grey-text font-weight-dark"
                   >Supervisor</label
@@ -371,8 +411,8 @@ export default {
                   oninput="setCustomValidity('')"
                   class="form-control"
                   required
-                ></b-form-select>
-              </b-col>
+                ></b-form-select> -->
+              <!-- </b-col> -->
               <b-col>
                 <label
                   for="defaultFormCardtextEx"
@@ -393,21 +433,7 @@ export default {
             </b-row>
             <br />
             <b-row>
-              <b-col>
-                <!-- Default input text -->
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Description</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="description"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter Description"
-                />
-              </b-col>
+             
               <b-col>
                 <!-- <label
                   for="defaultFormCardtextEx"

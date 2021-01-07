@@ -12,7 +12,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- Createdays
+ Createdays,classmaster
 } from '../../../../services/auth'
 
 export default {
@@ -46,10 +46,16 @@ export default {
           active: true,
         },
       ],
+      days: [
+      
+        { value: 'BIO', text: 'BIO' },
+        { value: 'NON-BIO', text: 'NON-BIO' },
+      ],
       code:"",
       triptype:"",
       tripclass:"",
-      day:""
+      day:"",
+      TripClass:[],
     }
   },
   computed: {
@@ -58,6 +64,7 @@ export default {
     },
   },
   mounted() {
+    this.getclass()
     // this.getClientDetails()
     // this.getplans()
     this.createdby = this.getUserDetails.user.username
@@ -94,7 +101,19 @@ export default {
         })
       }
     },
-
+ async getclass() {
+       try {
+       
+      const result = await  classmaster()
+      var data = result.data.response.TripClass
+      data.map(e=>{
+        this.TripClass.push(e.name)
+      })
+       
+      } catch (error) {}
+   
+    },
+    
     async refresh() {
       setTimeout(function () {
         location.reload()
@@ -123,12 +142,13 @@ export default {
                 >
                   Trip Type</label
                 >
-                <input
+                <b-form-select
                   v-model="triptype"
                   type="text"
                   oninvalid="this.setCustomValidity('Trip Type is required ')"
                   oninput="setCustomValidity('')"
                   placeholder="Enter Trip Type"
+                  :options="days"
                   class="form-control"
                   required
                 />
@@ -167,19 +187,20 @@ export default {
                 >
                 Trip Class</label
                 >
-                <input
+                 <b-form-select
                   v-model="tripclass"
                   type="text"
-                  oninvalid="this.setCustomValidity('Trip Class is required ')"
-                  oninput="setCustomValidity('')"
-                  placeholder="Enter Trip Class"
+                
+                  placeholder="Enter Trip Type"
+                  :options="TripClass"
                   class="form-control"
                   required
                 />
+               
 
                 <!-- Default input name -->
               </b-col>
-<b-col></b-col>
+           <b-col></b-col>
               <br />
             </b-row>
 

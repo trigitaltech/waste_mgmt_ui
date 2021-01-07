@@ -129,6 +129,9 @@ export default {
   mounted() {
     // this.getClientDetails()
     // this.getplans()
+    if(this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "LGU"){
+    this.lguname = this.$store.getters['auth/loggedInDetails'].lgu.lguName
+    }
     this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     this.roledata()
@@ -223,6 +226,9 @@ export default {
       this.lgusnames.map((e) => {
         if (this.lguname === e.lguName) {
           this.lgusdata = e.id
+            this.form.state = e.state
+          this.form.country = e.country
+
         }
       })
     },
@@ -410,6 +416,35 @@ export default {
                                 />-->
                                 <!-- <span class="text-danger">{{ errors[0] }}</span>
                                 </ValidationProvider>-->
+                              </div>
+                            </div>
+                                <div class="col-md-4">
+                              <div class="form-group mt-3 mt-sm-0">
+                                <label
+                                  for="defaultFormCardEmailEx"
+                                  class="grey-text font-weight-dark"
+                                  >Type</label
+                                >
+                                <b-form-select
+                                  v-model.trim="rolename"
+                                  placeholder="Select Supervisor"
+                                  label="value"
+                                  class="form-control"
+                                  :options="roles"
+                                  @change="getroles"
+                                ></b-form-select>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group mt-3 mt-sm-0">
+                                <label for="default">LGU</label>
+                                <b-form-select
+                                  required
+                                  v-model="lguname"
+                                  placeholder="Select LGU"
+                                  :options="lgus"
+                                  @change="getlgu"
+                                ></b-form-select>
                               </div>
                             </div>
                             <div class="col-md-4">
@@ -665,35 +700,7 @@ export default {
                                 />
                               </div>
                             </div>
-                            <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label
-                                  for="defaultFormCardEmailEx"
-                                  class="grey-text font-weight-dark"
-                                  >Type</label
-                                >
-                                <b-form-select
-                                  v-model.trim="rolename"
-                                  placeholder="Select Supervisor"
-                                  label="value"
-                                  class="form-control"
-                                  :options="roles"
-                                  @change="getroles"
-                                ></b-form-select>
-                              </div>
-                            </div>
-                            <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">LGU</label>
-                                <b-form-select
-                                  required
-                                  v-model="lguname"
-                                  placeholder="Select LGU"
-                                  :options="lgus"
-                                  @change="getlgu"
-                                ></b-form-select>
-                              </div>
-                            </div>
+                        
                               <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">ID Proof</label>
