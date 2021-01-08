@@ -8,7 +8,7 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import { createarea, users ,address,lgus} from '../../../../services/auth'
+import { createarea, users ,address,lgus,statebylgu} from '../../../../services/auth'
 
 export default {
   page: {
@@ -85,6 +85,7 @@ export default {
       addres:[],
       lgus:[],
       lgumaster:[],
+      lgudata:[],
       lguid:"",
       lgu:"",
     }
@@ -102,40 +103,52 @@ export default {
     console.log("hiiiii",this.distopt)
     this.userdata()
     this.getaddresss()
-    this.getlgus()
+    // this.getlgus()
   },
   methods: {
-      async getlgus() {
-       try {
+    //   async getlgus() {
+    //    try {
         
-        const result = await  lgus()
-        this.lgumaster  = result.data.response.result
-        console.log(this.lgumaster)
-        this.lgumaster.map(e=>{
-          // debugger
-          this.lgus.push(e.lguName)
-          console.log(this.lgus)
-        })
+    //     const result = await  lgus()
+    //     this.lgumaster  = result.data.response.result
+    //     console.log(this.lgumaster)
+    //     this.lgumaster.map(e=>{
+    //       // debugger
+    //       this.lgus.push(e.lguName)
+    //       console.log(this.lgus)
+    //     })
        
-      } catch (error) {}
-    },
+    //   } catch (error) {}
+    // },
 
    async getcity(){
 // console.log('ahahahahha')
-this.addres.map(e=>{
-  if(this.district === e.districtName){
+for(var i = 0 ; i<this.addres.length ;i++){
+  if(this.district === this.addres[i].districtName){
     // this.districtcode = e.districtCode
-    this.state = e.stateCode.stateName
-    this.countrys = e.stateCode.countryCode.countryName
+    this.state = this.addres[i].stateCode.stateName
+    this.countrys = this.addres[i].stateCode.countryCode.countryName
+    
+      const result = await  statebylgu(this.state)
+         this.lgus=[]
+      this.lgudata = result.data.response.result
+      console.log(this.lgudata)
+      //  this.lgudata.map( e => {
+        
+            this.lgus.push(this.lgudata.lguName)
+        // })
+      
   }
-})
+  
+}
+
     },
      async getaddresss() {
        try {
       
       const result = await  address()
       this.addres = result.data.response.result
-      console.log("address",this.addres)
+      // console.log("address",this.addres)
     this.addres.map(e=>{
       // debugger
       this.distopt.push(e.districtName)
@@ -181,20 +194,20 @@ this.addres.map(e=>{
       }
     },
      getlgudata(){
-       this.lgumaster.map(e=>{
-         if(this.lgu === e.lguName ){
+     
+         if(this.lgu ===  this.lgudata.lguName ){
           // debugger
-          this.lguid = e.id
+          this.lguid =  this.lgudata.id
           // console.log(this.lgus)
          }
-        })
+      
     
     },
     async userdata() {
       try {
         const result = await users()
         var data = result.data.response.Users
-        console.log('users', data[0].userName)
+        // console.log('users', data[0].userName)
         // JSON.parse(JSON.stringify(result))
         // for(i=0;i<data.length;i++){
         //   this.item[i]=data[i].userName
@@ -202,9 +215,9 @@ this.addres.map(e=>{
 
         data.map((e) => {
           this.item.push(e.userName)
-          console.log('user', e)
+          // console.log('user', e)
         })
-        console.log('users', this.item)
+        // console.log('users', this.item)
       } catch (error) {}
     },
     async refresh() {
@@ -409,6 +422,14 @@ this.addres.map(e=>{
                   class="grey-text font-weight-dark"
                   >LGU</label
                 >
+                  <!-- <input
+                  id="defaultFormCardtextEx"
+                  v-model="lgus"
+                  placeholder="Enter Lgu"
+                  type="text"
+                  disabled
+                  class="form-control"
+                /> -->
                 <b-form-select
                   v-model.trim="lgu"
                   placeholder="Select LGU"

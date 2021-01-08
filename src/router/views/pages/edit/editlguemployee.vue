@@ -14,6 +14,7 @@ import {
   Areamasters,
   lgus,
   address,
+  districtsbylgu
 } from '../../../../services/auth'
 
 export default {
@@ -154,7 +155,7 @@ export default {
     },
     async getaddresss() {
       try {
-        const result = await address()
+        const result = await districtsbylgu(this.$store.getters['auth/loggedInDetails'].lgu.id)
         this.addres = result.data.response.result
         console.log('address', this.addres)
         this.addres.map((e) => {

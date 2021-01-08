@@ -229,9 +229,9 @@ if(this.lgudata[j].id === this.item[i].lguId ){
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>
               </router-link>
-            <button @click="deleteReq(data.item)" class="btn">
+           <span @click="deleteReq(data)">
               <i class="fa fa-times edit"></i>
-            </button>
+            </span>
             </template>
           </b-table>
           <div style="float: right">

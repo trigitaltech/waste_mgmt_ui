@@ -8,7 +8,7 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import { editarea, users ,address,lgus} from '../../../../services/auth'
+import { editarea, users ,address,lgus,statebylgu} from '../../../../services/auth'
 
 export default {
   page: {
@@ -72,7 +72,7 @@ export default {
         },
       ],
        lgus:[],
-      lgumaster:[],
+      lgudata:[],
       lguid:"",
       lgu:"",
       district:this.$route.params.districtName
@@ -91,44 +91,54 @@ export default {
     // this.getplans()
     this.userdata()
     this.getaddresss()
-    this.getlgus()
+    // this.getlgus()
   },
   methods: {
-     getlgudata(){
-       this.lgumaster.map(e=>{
-         if(this.lgu === e.lguName ){
+      getlgudata(){
+     
+         if(this.lgu ===  this.lgudata.lguName ){
           // debugger
-          this.lguid = e.id
+          this.lguid =  this.lgudata.id
           // console.log(this.lgus)
          }
-        })
+      
     
     },
-      async getlgus() {
-       try {
+    //   async getlgus() {
+    //    try {
         
-        const result = await  lgus()
-        this.lgumaster  = result.data.response.result
-        console.log(this.lgumaster)
-        this.lgumaster.map(e=>{
-          // debugger
-          this.lgus.push(e.lguName)
-          console.log(this.lgus)
-        })
+    //     const result = await  lgus()
+    //     this.lgumaster  = result.data.response.result
+    //     console.log(this.lgumaster)
+    //     this.lgumaster.map(e=>{
+    //       // debugger
+    //       this.lgus.push(e.lguName)
+    //       console.log(this.lgus)
+    //     })
        
-      } catch (error) {}
-    },
-      async getcity(){
+    //   } catch (error) {}
+    // },
+  async getcity(){
 // console.log('ahahahahha')
-this.addres.map(e=>{
-
-  if(this.district === e.districtName){
-    this.dist = [e]
+for(var i = 0 ; i<this.addres.length ;i++){
+  if(this.district === this.addres[i].districtName){
     // this.districtcode = e.districtCode
-    this.state = e.stateCode.stateName
-    this.countrys = e.stateCode.countryCode.countryName
+    this.state = this.addres[i].stateCode.stateName
+    this.countrys = this.addres[i].stateCode.countryCode.countryName
+    
+      const result = await  statebylgu(this.state)
+        this.lgus=[]
+      this.lgudata = result.data.response.result
+      console.log(this.lgudata)
+      //  this.lgudata.map( e => {
+      
+            this.lgus.push(this.lgudata.lguName)
+        // })
+      
   }
-})
+  
+}
+
     },
      async getaddresss() {
        try {

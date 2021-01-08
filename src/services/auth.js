@@ -16,9 +16,16 @@ export const lguemployee = () => serviceMaker(`/LGU/employee/all`, methods.GET, 
 
 export const classmaster = () => serviceMaker(`/trips/class/all`, methods.GET, api.NGB)
 
+export const statess = () => serviceMaker(`/location/states`, methods.GET, api.NGB)
+
 export const days = () => serviceMaker(`/trips/days/all`, methods.GET, api.NGB)
 
 export const type = () => serviceMaker(`/trips/type/all`, methods.GET, api.NGB)
+
+
+export const districtsbylgu = (id) => serviceMaker(`/LGU/districts/${id}`, methods.GET, api.NGB)
+
+export const statebylgu = (state) => serviceMaker(`/LGU/lgu/${state}`, methods.GET, api.NGB)
 
 export const stagingarea = () => serviceMaker(`/stagingarea/all`, methods.GET, api.NGB)
 

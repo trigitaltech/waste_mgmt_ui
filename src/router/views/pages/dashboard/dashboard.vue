@@ -340,7 +340,7 @@ export default {
                   );
                 "
               >
-                <div class="card-body" style="overflow: hidden">
+                <div class="card-body" style="overflow: hidden" >
                   <div class="media p-3">
                     <div class="media-body">
                       <span
