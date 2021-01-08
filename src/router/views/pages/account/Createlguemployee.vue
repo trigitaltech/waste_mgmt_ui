@@ -11,6 +11,7 @@ import {
 import {
   createlguemployee,
   roles,
+  districtsbylgu,
   Areamasters,
   lgus,
   address,
@@ -131,6 +132,7 @@ export default {
     // this.getplans()
     if(this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "LGU"){
     this.lguname = this.$store.getters['auth/loggedInDetails'].lgu.lguName
+    this.lgusdata = this.$store.getters['auth/loggedInDetails'].lgu.id
     }
     this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
@@ -152,7 +154,7 @@ export default {
     },
     async getaddresss() {
       try {
-        const result = await address()
+        const result = await districtsbylgu(this.$store.getters['auth/loggedInDetails'].lgu.id)
         this.addres = result.data.response.result
         console.log('address', this.addres)
         this.addres.map((e) => {

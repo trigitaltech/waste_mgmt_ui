@@ -54,10 +54,15 @@ this.menuItems = []
         }
         }
          else if (this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "LGU"){
-           if(this.menuItems1[j].name === "LGU" ){
+           if(this.menuItems1[j].name === 'LGU'){
           this.menuItems.push(this.menuItems1[j])
         }
         }
+          else if (this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "HAULER"){
+           if(this.menuItems1[j].name === "HAULERS" ){
+          this.menuItems.push(this.menuItems1[j])
+           }
+          }
          else if (this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "DRIVER" || this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "HELPER" ){
            if(this.menuItems1[j].name === "HAULERS" ){
           this.menuItems.push(this.menuItems1[j])

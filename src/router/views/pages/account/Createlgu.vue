@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- createLGU,roles,Areamasters,address
+ createLGU,roles,Areamasters,address, statess
 } from '../../../../services/auth'
 
 export default {
@@ -190,12 +190,12 @@ export default {
     async getaddresss() {
        try {
       
-      const result = await  address()
+      const result = await  statess()
       this.addres = result.data.response.result
       console.log("address",this.addres)
     this.addres.map(e=>{
       // debugger
-      this.distopt.push(e.districtName)
+      this.distopt.push(e.stateName)
     })
       
       } catch (error) {}
@@ -203,10 +203,10 @@ export default {
     },
     getdistricts(){
      this.addres.map(e=>{
-        if(this.form.district === e.districtName){
+        if(this.form.state === e.stateName){
    
-    this.form.state = e.stateCode.stateName
-    this.form.country = e.stateCode.countryCode.countryName
+    // this.form.state = e.stateCode.stateName
+    this.form.country = e.countryCode.countryName
    }
      })
     },
@@ -608,18 +608,18 @@ export default {
                           </div>
                              <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">District</label>
+                                <label for="default">State</label>
                                 <multiselect
                                 required
-                                v-model="form.district"
-                                placeholder="Select District"
+                                v-model="form.state"
+                                placeholder="Select State"
                                 :options="distopt"
                                 @input="getdistricts"
                               ></multiselect>
                               </div>
                             </div>
                          
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">State</label>
                                 <input
@@ -631,7 +631,7 @@ export default {
                                   disabled
                                 />
                               </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">Country</label>

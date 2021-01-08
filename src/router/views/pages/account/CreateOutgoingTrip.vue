@@ -75,7 +75,8 @@ export default {
       controlCheckerId:'',
       dumpingLocationId:'',
       contractorDispatcherName:'',
-      contractorDispatcherId:''
+      contractorDispatcherId:'',
+      district:""
     };
   },
   components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime, },
@@ -89,6 +90,7 @@ export default {
     async getLgu() {
       const result = JSON.parse(localStorage.getItem('auth.currentUser'))
       this.loginlguid = result.lguemployee.lguId
+       this.district = result.lguemployee.district
       this.contractorDispatcherId = result.lguemployee.id
       this.contractorDispatcherName = result.lguemployee.userName
       const result1 = await getLguById(this.loginlguid)
@@ -477,6 +479,26 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
+                </b-row>
+                <b-row>
+                   <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >District</label
+                    >
+                     <input
+                      v-model.trim="district"
+                      class="form-control"        
+                     disabled
+                    />
+                  
+                  </b-col>
+                 <b-col>
+
+                 </b-col>
+
+
                 </b-row>
                 <button
                    class="btn btn-custome float-right btn-secondary mt-3 mr-2"

@@ -88,6 +88,7 @@ export default {
       loginDetails:{},
     routearray:[],
     date:"",
+    district:"",
     time:"",
     };
   },
@@ -118,6 +119,7 @@ export default {
       const result = JSON.parse(localStorage.getItem('auth.currentUser'))
       this.loginlguid = result.lguemployee.lguId
      this.dispatcherid = result.lguemployee.id
+     this.district = result.lguemployee.district
      this.dispatchername = result.lguemployee.firstName
      const result1 = await getLguById(this.loginlguid)
       this.loginDetails = {
@@ -725,6 +727,24 @@ export default {
                     </b-form-select>
                   </b-col>
                  
+                </b-row>
+                <b-row>
+                  <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >District</label
+                    >
+                     <input
+                      v-model.trim="district"
+                      class="form-control"        
+                     disabled
+                    />
+                  
+                  </b-col>
+                 <b-col>
+
+                 </b-col>
                 </b-row>
                 <button
                   type="submit"
