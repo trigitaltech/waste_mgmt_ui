@@ -386,6 +386,7 @@ export default {
                   track-by="day"
                  
                   @input="getdaysdata"
+                
                 ></multiselect>
 
                 <!-- Default input name -->

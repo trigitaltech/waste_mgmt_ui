@@ -12,7 +12,7 @@ Vue.component('multiselect', Multiselect)
 import {
  getBaraggayByLguId,getHaulerByBaraggayId, CreateDirectTrip,haulerEmployees,vehicle,
  getRoutesByBaranggayId, haulers, getVehiclesByHaulerId, users,employees,lguemployee,
- getLguById,stagingarea
+ getLguById,stagingarea,editdirecttripvolumechecker
 } from '../../../../services/auth'
 
 export default {
@@ -66,6 +66,8 @@ export default {
       controlListNames:[],
       hauler:"",
       haulerCode:"",
+      volumecollected:"",
+      totalkms:'',
       haulerList:[],
       haulerListNames:[],
       collectorList:[],
@@ -138,6 +140,33 @@ export default {
         console.log(e)
       }
     },
+  async create() {
+      try {
+        const payload =   {
+            id :this.$route.params.id,
+           volumeCheckerMeasuredVolume:this.volumecollected,         
+        volumeCheckerTotalKm: this.totalkms,
+        volumeCheckerVerified:"1"
+       }
+        let result = await editdirecttripvolumechecker(payload)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `Updated Volume Checker Successfully`,
+            duration: 5000,
+          })
+         
+           this.$router.push({path:'/Volumechecker'})
+            
+        }
+      } catch (e) {
+        this.$toasted.error(e.message.errors[0].developerMessage, {
+          duration: 7000,
+        })
+      }
+    },
+
   }
 }
 </script>
@@ -394,7 +423,43 @@ export default {
                     >
                   </b-col>
                 </b-row>
+                <b-row>
+                   <b-col>
+                <!-- Default input email -->
+
+                <label
+                  for="defaultFormCardEmailEx"
+                  class="grey-text font-weight-dark"
+                  >Volume Collected</label
+                >
+                <input
+                  id="defaultFormCardEmailEx"
+                  v-model="volumecollected"
+                placeholder="Enter volume"
+                  type="text"
+                  class="form-control"
+                />
+              </b-col>
+
+              <b-col>
+                <!-- Default input email -->
+                <label
+                  for="defaultFormCardEmailEx"
+                  class="grey-text font-weight-dark"
+                  >Total Kms</label
+                >
+                <input
+                  id="defaultFormCardEmailEx"
+                  v-model="totalkms"
+                  placeholder="Enter Totalkms"
+                
+                  type="text"
+                  class="form-control"
+                />
+              </b-col>
+                </b-row>
                 <button
+           
                   type="submit"
                    class="btn float-right btn-secondary mt-3 mr-2"
                   >Submit</button>

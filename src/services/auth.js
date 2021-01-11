@@ -313,6 +313,9 @@ export const editlguemployee = (payload) => serviceMaker (`/LGU/employee`, metho
 
 export const editvolumechecker = (payload) => serviceMaker (`tripincoming/updatetripvolume`, methods.PUT, api.NGB, payload)
 
+export const editdirecttripvolumechecker = (payload) => serviceMaker (`/routetolandfilling/volumeChecker`, methods.PUT, api.NGB, payload)
+
+
 export const BILLINGTRIPS = (payload) => serviceMaker (`tripincoming/all`, methods.GET, api.NGB, payload)
 
 
