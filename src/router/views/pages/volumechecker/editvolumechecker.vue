@@ -9,7 +9,7 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import { Edituser, users ,editvolumechecker,getnameByLguId,getnameByBRGY,Areamasters} from '../../../../services/auth'
+import { Edituser, users ,editvolumechecker,getnameByLguId,getnameByBRGY,Areamasters,checkerupdatebystatus} from '../../../../services/auth'
 
 export default {
   page: {
@@ -151,7 +151,32 @@ export default {
       a.document.close()
       a.print()
     },
-
+  async updateReq() {
+      
+  try{
+      const  payload = {
+               
+               tripId: this.$route.params.id
+      }
+   
+          
+        const result = await checkerupdatebystatus(payload)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `Trip Completed `,
+            duration: 5000,
+          })
+          this.$router.push({path:'/Volumechecker'})
+        }
+      } catch (e) {
+         this.$toasted.error(e.message.error, {
+          duration: 7000,
+        })
+      }
+     
+    },
         async create() {
       try {
         const payload =   {
@@ -168,7 +193,7 @@ export default {
             duration: 5000,
           })
          
-           this.$router.push({path:'/Volumechecker'})
+       
             
         }
       } catch (e) {
@@ -405,7 +430,7 @@ export default {
                   id="defaultFormCardEmailEx"
                   v-model="volumecollected"
                 placeholder="Enter volume"
-                  type="email"
+                  type="text"
                   class="form-control"
                 />
               </b-col>
@@ -422,19 +447,27 @@ export default {
                   v-model="totalkms"
                   placeholder="Enter Totalkms"
                 
-                  type="email"
+                  type="text"
                   class="form-control"
                 />
               </b-col>
             </b-row>
             <b-row>
               <b-col>
+                 <b-button
+                  class="btn btn-custome ml-4 btn-secondary mb-3 float-right mr-2 mt-5"
+                  text="Create Tenant"
+                  @click="updateReq"
+                  >Approve</b-button
+                >
                      <b-button
                   class="btn btn-custome ml-4 btn-secondary mb-3 float-right mr-2 mt-5"
                   text="Create Tenant"
                   @click="create"
                   >Update</b-button
                 >
+                 
+                    
                   </b-col>
             </b-row>
 

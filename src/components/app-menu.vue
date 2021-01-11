@@ -55,6 +55,9 @@ this.menuItems = []
         }
          else if (this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "LGU"){
            if(this.menuItems1[j].name === 'LGU'){
+            // var lguData1 = this.menuItems1[j].children[1];
+            // this.menuItems1[j].children = [];
+            // this.menuItems1[j].children.push(lguData1)
           this.menuItems.push(this.menuItems1[j])
         }
         }

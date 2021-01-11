@@ -145,12 +145,12 @@ export default {
     async getLandfillTrip() {
       try {
         const result = await getAllDirectTrips()
-        const data = result.data.response.result
-        data.map(e => {
-          if(e.volumeCheckerId == this.volumeCheckerId) {
-            this.landfillTrips.push(e)
-          }
-        })
+  this.landfillTrips = result.data.response.result
+        // data.map(e => {
+        //   if(e.volumeCheckerId == this.volumeCheckerId) {
+        //     this.landfillTrips.push(e)
+        //   }
+        // })
       } catch(e) {
         console.log(e)
       }
@@ -174,6 +174,7 @@ export default {
       this.loginlguid = result.lguemployee.id
         const result1 = await getTripsvolumebyId(this.loginlguid)
         this.incomingtripdata = result1.data.response.result
+        
         // console.log(this.areadata)
         // this.servingAreas.push(this.areadata.areaName)
         
@@ -317,7 +318,7 @@ export default {
                   <feather type="calendar" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Outgoing Trips</h5>
-                    <span class="text-muted">{{ vouchers.purchaseDate }}</span>
+                    <span class="text-muted">{{ allOutgoingTrips.length }}</span>
                   </div>
                 </div>
               </div>
@@ -326,7 +327,7 @@ export default {
                   <feather type="check-square" class="align-self-center icon-dual icon-lg mr-4"></feather>
                   <div class="media-body">
                     <h5 class="mt-0 mb-0">Total No Of Landfill Trips</h5>
-                    <span class="text-muted">{{ vouchers.status }}</span>
+                    <span class="text-muted">{{ landfillTrips.length }}</span>
                   </div>
                 </div>
               </div>
@@ -411,9 +412,9 @@ export default {
                 </b-button>
               </router-link>
               
-             <b-button size="sm" class="mr-2" variant="primary"  @click="updateReq(data)" :hidden="data.item.status === 'COMPLETED'">
+             <!-- <b-button size="sm" class="mr-2" variant="primary"  @click="updateReq(data)" :hidden="data.item.status === 'COMPLETED'">
               <i class="fa fa-check-square"></i>
-             </b-button>
+             </b-button> -->
            </template>
                       <!-- <download-excel :data="json_data">
                   

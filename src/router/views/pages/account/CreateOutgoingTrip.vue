@@ -7,6 +7,7 @@ import NProgress from 'nprogress/nprogress'
 import VueTimepicker from 'vue2-timepicker/src/vue-timepicker.vue'
 import { Datetime } from 'vue-datetime';
 import Multiselect from 'vue-multiselect'
+import moment from 'moment';
 Vue.component('multiselect', Multiselect)
 import { getLguById,
  stagingarea, lguemployee, haulers, getVehiclesByHaulerId, haulerEmployees, CreateOutgoingTrip
@@ -79,8 +80,12 @@ export default {
       district:""
     };
   },
-  components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime, },
+  components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime,moment },
   mounted() {
+     this.date = moment(new Date()).format('DD/MM/YYYY')
+    this.time = moment(new Date()).format('HH:mm:ss')
+    this.tripDate = new Date()
+    this.startTime = new Date()
     this.getLgu()
     this.getStagingArea()
     this.getLguEmployee()
@@ -330,7 +335,31 @@ export default {
                 
                 </b-row>
                 <b-row class="mt-3">
-                  <b-col>
+                   <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Trip Date</label
+                    >
+                    <input
+                      type="text"
+                      v-model="date"
+                      class="form-control"
+                    />
+                  </b-col>
+                  <b-col class="ml-3">
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark mr-2"
+                      >Trip Start Time</label
+                    >
+                    <input
+                      v-model="time"
+                      class="form-control"
+                      type="text"
+                    />
+                  </b-col>
+                  <!-- <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -365,7 +394,7 @@ export default {
                       type="datetime"
                       placeholder="SELECT Time"
                  ></datetime>
-                  </b-col>
+                  </b-col> -->
                 </b-row>
                 <b-row class="mt-3">
                   <b-col>
