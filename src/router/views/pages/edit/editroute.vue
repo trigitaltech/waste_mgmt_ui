@@ -27,12 +27,48 @@ export default {
   },
   data() {
     return {
+       permissionColumns:[
+        {
+          key:'id'
+
+        },
+        {
+          key:'code'
+
+        },
+        {
+          key:'baranggayId',
+          label:'Baranggay'
+        },
+         {
+          key:'routeName'
+          
+        },
+         {
+          key:'roadName'
+          
+        }
+      ],
+         striped: false,
+      bordered: true,
+      filter: '',
+      perPage: 10,
+      hover: true,
+      currentPage: 1,
+      small: false,
+      dark: false,
+      fixed: false,
+    days: [],
+      Days: [{ day: 'SUNDAY'},{ day: 'MONDAY'},{ day: 'TUESDAY'},{ day: 'WEDNESDAY'},{ day: 'THURSDAY'},{ day: 'FRIDAY'},{ day: 'SATURDAY'}],
+      roads:this.$route.params.routeRoads,
+      areaname:[],
+      code:this.$route.params.code,
       areaid:this.$route.params.areaId,
       supervisor:this.$route.params.supervisor,
      routename:this.$route.params.routeName,
      routetype:this.$route.params.routeType,
      areaname:this.$route.params.areaName,
-     routedistance:this.$route.params.route_distance,
+     routedistance:this.$route.params.routeDistance,
      description:this.$route.params.description,
      city:this.$route.params.city,
       createdby:this.$route.params.createdBy,
@@ -40,6 +76,16 @@ export default {
       modifydate: new Date(),
       modifyby:"",
       title: 'Register',
+    // roads:this.$route.params.routeRoads,
+       inputs: [
+        {
+          id:this.$route.params.id,
+          baranggayId:'',
+          code: '',
+          roadName:'',
+        routeName:'',
+        },
+      ],
       option: [
         
         { value: 'mainroad', text: 'Mainroad' },
@@ -52,17 +98,25 @@ export default {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Route Master',
+          href: '#/Setup/RouteMaster',
+        },
         {
-          text: 'RouteMaster / Edit RouteMaster',
+          text: 'Edit RouteMaster',
           active: true,
         },
       ],
    areas:[],
    item2:[],
-    
+     areasid: [],
+      baranggays:[],
     }
   },
   computed: {
+    // rows(){
+    //   return this.roads.length
+    // },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -72,11 +126,37 @@ export default {
     this.modifyby = this.getUserDetails.user.username
     // this.getClientDetails()
     // this.getplans()
-    console.log(this.$route.params)
+    // this.roadsdata = this.$route.params.routeRoads
+    console.log("roads",this.$route.params)
     this.userdata()
      this.getplans()
+    //  if(this.$route.params.baranggay.length > 0){
+    
+    //     for(var i = 0 ; i<this.$route.params.baranggay.length ;i++){
+     
+          // debugger
+        //   this.areaname.push([i].areaName)
+        // }
+    //  }
   },
   methods: {
+    getid() {
+       this.baranggays=[]
+       for(var i = 0 ; i<this.areaname.length ;i++){
+       
+         this.areas.map(e=>{
+        if(this.areaname[i] === e.areaName){
+             
+          this.baranggays.push(e)
+          // console.log("routedata",this.baranggays)
+       
+        }
+         })
+      
+       }
+      // console.log("haiiiiii",this.item2)
+     
+    },
     async getplans() {
        try {
         const result = await Areamasters()
@@ -89,27 +169,30 @@ export default {
 
       this.areas.map(e=>{
       this.item2.push(e.areaName)
-      console.log("user",e)
+     
+      //  if(this.$route.params.)
+     
+      // console.log("user",e)
       })
-       console.log("users",this.item)
+      //  console.log("users",this.item)
      
       } catch (error) {}
      },
-     getid(){
-        // console.log("haiiiiii",this.item2)
-        this.areas.map(e=>{
-            if(this.areaname === e.areaName){
-                this.areaid = e.id    
-                       }
-                        //  console.log("haiiiiii",this.sid)
-        })
-      },
+    //  getid(){
+    //     // console.log("haiiiiii",this.item2)
+    //     this.areas.map(e=>{
+    //         if(this.areaname === e.areaName){
+    //             this.areaid = e.id    
+    //                    }
+    //                     //  console.log("haiiiiii",this.sid)
+    //     })
+    //   },
      async userdata() {
        try {
       
       const result = await users()
       var data = result.data.response.Users
-      console.log("users",data[0].userName)
+      // console.log("users",data[0].userName)
       // JSON.parse(JSON.stringify(result))
       // for(i=0;i<data.length;i++){
       //   this.item[i]=data[i].userName
@@ -117,29 +200,40 @@ export default {
 
       data.map(e=>{
       this.item.push(e.userName)
-      console.log("user",e)
+      // console.log("user",e)
       })
-       console.log("users",this.item)
+      //  console.log("users",this.item)
      
       } catch (error) {}
      },
+      add() {
+      this.inputs.push({
+       id:this.$route.params.id,
+        baranggayId:'',
+        code: '',
+        roadName:'',
+        routeName:'',
+      
+      })
+      console.log(this.inputs)
+    },
+
+    remove(index) {
+      this.inputs.splice(index, 1)
+    },
     async create() {
       try {
         const payload = {
            id:this.$route.params.id,
-            routeName:this.routename,
-            routeType:this.routetype,
-            supervisor: this.supervisor,
-            route_distance:this.routedistance,
-            areaId:this.areaid,
-            areaName: this.areaname,
-            "isDeleted": false,
-         createdDate: this.createddate,
-          createdBy: this.createdby,
-          modifiedDate: this.modifydate,
-          modifiedBy: this.modifyby,
-            description:this.description,
-            city:this.city
+              code: this.code,
+          routeName: this.routename,
+          routeType: this.routetype,
+          supervisor: this.supervisor,
+          routeDistance: this.routedistance,
+          description: this.description,
+          baranggay: this.baranggays,
+          routeRoads: this.inputs,
+           days: this.days
         }
         let result = await editroute(payload)
         if (result) {
@@ -182,247 +276,357 @@ export default {
         <div class="mt-3">
               <!-- Default form subscription -->
              <form @submit.prevent="create">
-                <b-row>
-                  <b-col>
-                    <!-- Default input name -->
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                    >
-                     Route Name</label
-                    >
-                    <input
-                      id="defaultFormCardNameEx"
-                      v-model="routename"
-                     
-                      type="text"
-                         oninvalid="this.setCustomValidity('Route Name is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Select Routename"
-                                class="form-control"
-                                required
-                  
-                    />
+            <b-row>
+              <b-col>
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Baranggay</label
+                >
+                 <multiselect
+                  v-model="areaname"
+                  :multiple="true"
+                  :options="item2"
+                  @input="getid"
+                >
+                </multiselect>
+                <!-- Default input name -->
+              </b-col>
+              <b-col>
+                <!-- Default input name -->
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Route Name</label
+                >
+                <input
+                  id="defaultFormCardNameEx"
+                  v-model="routename"
+                  type="text"
+                  oninvalid="this.setCustomValidity('Route Name is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Enter Routename"
+                  class="form-control"
+                  required
+                />
 
-                
+                <!-- Default input text -->
+              </b-col>
 
-                  
-                    <!-- Default input text -->
-                  </b-col>
-                  
-                  <b-col>
-                     <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Route Type</label
-                    >
-                    <b-form-select
-                      v-model="routetype"
-                      :options="option"
-                        oninvalid="this.setCustomValidity('Route Type is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Select Route Type"
-                                class="form-control"
-                                required
-                
-                    ></b-form-select>
-
-                    <!-- Default input name -->
-                  
-                  </b-col>
-              
-                  <br />
-                
-                
-                  
-               
-                </b-row>
-                 <br/>
-                  <b-row>
+              <br />
+            </b-row>
+            <br />
+            <b-row>
+               <b-col>
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Days</label
+                >
+                <multiselect
+                  v-model="days"
+                  placeholder="Select Days"
+                  :options="Days"
+                  :multiple="true"
+                  :close-on-select="false"
+                  :clear-on-select="false"
+                  :preserve-search="true"
+                  label="day"
+                  track-by="day"
                  
-                  
-                  <b-col>
-                     <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                    >
-                     Area Name</label
-                    >
-                      <b-form-select
-                      v-model="areaname"
-                      :options="item2"
-                        oninvalid="this.setCustomValidity('Area Name is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Select Area Name"
-                                class="form-control"
-                                required
-              
-                       @change="getid"
-                    ></b-form-select>
-                    <!-- Default input name -->
-                  
-                  </b-col>
-              
-                  <br />
-                
-                
-                  
-               
-                </b-row>
-                <br/>
-                  <b-row>
-                    
-                      <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Supervisor</label
-                    >
-                   <b-form-select
+                  @input="getdaysdata"
+                ></multiselect>
+
+                <!-- Default input name -->
+              </b-col>
+              <!-- <b-col> -->
+                <!-- <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                  >Route Type</label
+                >
+                <b-form-select
+                  v-model="routetype"
+                  :options="option"
+                  oninvalid="this.setCustomValidity('Route Type is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Select Route Type"
+                  class="form-control"
+                  required
+                ></b-form-select> -->
+
+                <!-- Default input name -->
+              <!-- </b-col> -->
+
+              <b-col>
+                <!-- Default input name -->
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Code</label
+                >
+                <input
+                  id="defaultFormCardNameEx"
+                  v-model="code"
+                  type="text"
+                  oninvalid="this.setCustomValidity('code is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Enter code"
+                  class="form-control"
+                  required
+                />
+              </b-col>
+              <br />
+            </b-row>
+            <br />
+            <b-row>
+               <b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Description</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="description"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Description"
+                />
+              </b-col>
+              <!-- <b-col> -->
+                <!-- Default input text -->
+                <!-- <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Supervisor</label
+                >
+                <b-form-select
                   v-model.trim="supervisor"
                   placeholder="Select Supervisor"
                   label="value"
                   :options="item"
-                     oninvalid="this.setCustomValidity('Supervisor is required ')"
-                                oninput="setCustomValidity('')"
-                             
-                                class="form-control"
-                                required
-              
-                ></b-form-select>
-                  </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Route Distance</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="routedistance"
-                   
-                      type="text"
-                         oninvalid="this.setCustomValidity('Route distance is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Select Route Distance"
-                                class="form-control"
-                                required
-              
-                    />
-                  </b-col>
-                  </b-row>
-                <br/>
-                <b-row>
+                  oninvalid="this.setCustomValidity('Supervisor is required ')"
+                  oninput="setCustomValidity('')"
+                  class="form-control"
+                  required
+                ></b-form-select> -->
+              <!-- </b-col> -->
+              <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Route Distance</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="routedistance"
+                  type="text"
+                  oninvalid="this.setCustomValidity('Route distance is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Enter Route Distance"
+                  class="form-control"
+                  required
+                />
+              </b-col>
+            </b-row>
+            <br />
+            <b-row>
+             
+              <b-col>
+                <!-- <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >City</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="city"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter city"
+                /> -->
+              </b-col>
+            </b-row>
+
+            <br />
+
+            <b-row>
+         
+            </b-row>
+            <!-- <b-row>
+              <b-col>
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Road Name</label
+                >
+                <multiselect
+                  :multiple="true"
+                  :close-on-select="true"
+                  v-model.trim="roads"
+                  placeholder="Select Roads"
+                  :options="option"
+                  @input="getcity"
+                ></multiselect>
+              </b-col>
+            </b-row> -->
+
+            <br />
+
+            <b-row v-for="(input, k) in inputs" :key="k">
                  <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Description</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="description"
-                      type="text"
-                      class="form-control"
-                    />
-                  </b-col>
-                  <b-col>
-                      <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >City</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="city"
-                      type="text"
-                      class="form-control"
-                    />
-                  </b-col>
-                  
-                </b-row>
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Baranggay Name</label
+                >
+                <b-form-select
+                  v-model="input.baranggayId"
                 
-                 <br/>
+                  :options="item2"
+                 class="form-control"
+                >
+                </b-form-select>
 
-  
-                
-                <b-row>
-                  
-                  
-                   <!-- <b-col> -->
-                    <!-- Default input text -->
-                    <!-- <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Created Date</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="createddate"
-                    />
- <br/>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Modify Date</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="modifydate"
-                    />
-                  </b-col> -->
+                <!-- Default input name -->
+              </b-col>
+              <b-col >
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Code</label
+                >
 
-                  <!-- <br/>
+                <input
+                  id="defaultFormCardtextEx"
+                  type="text"
+                  class="form-control"
+                  v-model="input.code"
+                  placeholder="Enter code"
+                />
+              </b-col>
+              <b-col >
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Road Name</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  type="text"
+                  class="form-control"
+                  v-model="input.roadName"
+                  placeholder="Enter roadname"
+                />
+              </b-col>
+              <b-col >
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Route Name</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  type="text"
+                  class="form-control"
+                  v-model="input.routeName"
+                  placeholder="Enter routename"
+                />
+              </b-col>
+              <b-col>
+                <span>
+                  <i
+                    class="fas fa-minus-circle"
+                    @click="remove(k)"
+                    v-show="k || (!k && inputs.length > 1)"
+                    >Remove</i
+                  >
+                  <i
+                    class="fas fa-plus-circle"
+                    @click="add(k)"
+                    v-show="k == inputs.length - 1"
+                    >Add Roads</i
+                  >
+                </span>
+              </b-col>
+            </b-row>
 
-                   <b-col> -->
-                    <!-- Default input text -->
-                    <!-- <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Created By</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="createdby"
-                    />
- <br/>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Modify By</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="modifyby"
-                    />
-                  </b-col> -->
-                </b-row>
-              
-              
-                <br />
-                <button
-                          type="submit"
-                         class="btn btn-custome float-right btn-secondary mb-3"
-                          >Submit</button
-                        >
-              </form>
+            <button
+              type="submit"
+              class="btn btn-custome float-right btn-secondary mb-3"
+              >Submit</button
+            >
+          </form>
               <!-- Default form subscription -->
         </div>
       </b-card>
+        <div class="animated fadeIn" >
+      <b-row >
+      <b-col md="12">
+          <b-card
+            class="card-wrap"
+            header="List Of Roads For Route"
+          >
+          <b-row>
+        <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+          </b-row>
+           
+           <div class="mt-3">
+          <b-table
+            id="my-table"
+            :dark="dark"
+            :hover="hover"
+            :striped="striped"
+            ref="roles"
+            :bordered="bordered"
+            :filter="filter"
+            :responsive="true"
+            :current-page="currentPage"
+            :per-page="perPage"
+            :small="small"
+            :fixed="fixed"
+            :fields="permissionColumns"
+            :items="roads"
+            class="mt-3"
+         
+          >    </b-table>
+
+        
+          <div style="float: right">
+            <b-pagination
+              v-model="currentPage"
+              :per-page="perPage"
+              :total-rows="rows"
+              aria-controls="my-table"
+              hide-goto-end-buttons
+            ></b-pagination>
+          </div>
+        </div>
+        
+          </b-card>
+      </b-col>
+      </b-row>
+                 </div>
     </div>
     <!-- end row -->
   </Layout>

@@ -3,12 +3,13 @@ import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
+import { Datetime } from 'vue-datetime';
 import { ModelSelect } from 'vue-search-select'
 import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import {createequipment,Areamasters,employees}from '../../../../services/auth'
+import {createequipment,Areamasters,employees,haulers}from '../../../../services/auth'
 
 export default {
   page: {
@@ -16,6 +17,7 @@ export default {
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
+    datetime: Datetime,
     Layout,
     PageHeader,
     Multiselect,
@@ -25,6 +27,10 @@ export default {
   },
   data() {
     return {
+         haulers:[],
+      haulerdata:[],
+      haulernames:[],
+      haulername:"",
      equipmentno:"",
      equipmenttype:"",
      ownername:"",
@@ -35,6 +41,7 @@ export default {
      manufacturedate:"",
      totalkmsserved:"",
      totalhoursserved:"",
+     models:"",
       createdby: "",
       createddate: new Date(),
       modifydate: new Date(),
@@ -45,15 +52,26 @@ export default {
         { value: 'Areastaging', text: 'Area Staging' },
         { value: 'Centralstaging', text: 'Central Staging' },
       ],
-      item1:[{ value: 'Truck', text: 'Truck' },
-        { value: 'Machine', text: 'Machine' }],
+      item1:[{ value: 'BH', text: 'BH '},
+        { value: 'BD', text: 'BD' },
+        { value: 'PL', text: 'PL' },
+        { value: 'PL', text: 'PL' },
+        { value: 'RR', text: 'RR' },
+        { value: 'RG', text: 'RG' },
+        ],
       items: [
         {
-          text: 'Home',
+          text: 'Haulers',
           href: '/',
         },
+         {
+          text: 'HaulerEquipment',
+          href: '#/Hauler/Equipment',
+        },
+        
+        
         {
-          text: 'Equipment / Create Equipment',
+          text: 'Create Equipment',
           active: true,
         },
       ],
@@ -74,8 +92,31 @@ export default {
     // this.getplans()
     this.areadata()
     this.employeedata()
+    this.getemployees()
   },
   methods: {
+    async getemployees() {
+       try {
+       
+      const result = await haulers()
+      this.haulerdata  = result.data.response.HaulerMaster
+      this.haulerdata.map(e=>{
+        this.haulernames.push(e.haulerName)
+      })
+
+      
+      } catch (error) {}
+   
+    },
+    gethauler(){
+this.haulerdata.map(e=>{
+  if(this.haulername === e.haulerName){
+    this.haulers =  e
+  }
+})
+
+
+    },
        getid(){
         console.log("haiiiiii",)
         this.emp.map(e=>{
@@ -126,22 +167,19 @@ export default {
       try {
         const payload = {
             equipmentType:this.equipmenttype,
-            equipmentNo:this.equipmentno,
-            ownerName: String(this.ownername),
-            ownerId:this.ownerid,
-            equipmentId:this.equipmentid,
-            servingArea:this.servingarea,
+            equipmentNo:parseInt(this.equipmentno),
+           
+            equipmentId:parseInt(this.equipmentid),
             manufactureDate: this.manufacturedate,
             warrantyStatus: "NOT EXPIRED",
-            totalKmServed: this.totalkmsserved,
-            totalHourServed: this.totalhoursserved,
+            totalKmServed: parseInt(this.totalkmsserved),
+            totalHourServed: parseInt(this.totalhoursserved),
             description:this.description,
+              hauler:this.haulers,
             isDeleted: false,
-            status: 22,
-            createdDate: this.createddate,
-            createdBy: this.createdby,
-            modifiedDate: this.modifydate,
-            modifiedBy: this.modifyby
+            model:this.models,
+            status:"WORKING",
+            createdBy: this.createdby
         }
         let result = await createequipment(payload)
         if (result) {
@@ -152,7 +190,7 @@ export default {
             duration: 5000,
           })
          
-           this.$router.push({path:'/Equipment'})
+           this.$router.push({path:'/Hauler/Equipment'})
             
         }
       } catch (e) {
@@ -194,9 +232,10 @@ export default {
                      Equipment No</label
                     >
                     <input
+                      type="text"
                       id="defaultFormCardNameEx"
                       v-model="equipmentno"
-                      type="text"
+                     
                       class="form-control"
                     /> <!-- Default input text -->
                   </b-col>
@@ -215,23 +254,22 @@ export default {
                 ></b-form-select>
                   </b-col>
                 </b-row>
-                <b-row class="mb-3">
+                <b-row >
                   <b-col>
-                    <label
+                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Owner Name</label
+                      >Hauler</label
                     >
-                     <b-form-select
-                  v-model.trim="ownername"
-                  placeholder="Select Supervisor"
-                  label="value"
-                class="form-control"
-                :options="owners"
-                  @change="getid"
-                ></b-form-select>
+                    <multiselect
+                                v-model="haulername"
+                                placeholder="Select Hauler"
+                                :options="haulernames"
+                                @input="gethauler"
+                              ></multiselect>
                   </b-col>
                   <b-col>
+               
                      <!-- Default input name -->
                     <label
                       for="defaultFormCardtextEx"
@@ -239,17 +277,18 @@ export default {
                       >Equipment Id</label
                     >
                     <input
+                      type="text"
                       id="defaultFormCardtextEx"
                       v-model="equipmentid"
-                      type="text"
+                    
                       class="form-control"
                     />
                   </b-col>
                 </b-row>
-                  <b-row class="mb-3">
+                  <b-row >
                     <b-col>
                     <!-- Default input text -->
-                    <label
+                    <!--<label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Serving Area</label
@@ -260,24 +299,25 @@ export default {
                   label="value"
                   class="form-control"
                   :options="item"
-                ></b-form-select>
-                  </b-col>
-                  <b-col>
+                ></b-form-select>-->
+                
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Manufacture Date</label
                     >
-                    <input
-                      id="defaultFormCardtextEx"
+                    <datetime 
                       v-model="manufacturedate"
-                      type="text"
-                      class="form-control"
-                    />
+                      :format="{
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric'
+                      }"
+                      id="defaultFormCardtextEx"
+                 ></datetime>
                   </b-col>
-                  </b-row>
-                  <b-row class="mb-3">
-                 <b-col>
+               
+                 <b-col >
                     <!-- Default input text -->
                     <label
                       for="defaultFormCardtextEx"
@@ -285,12 +325,15 @@ export default {
                       >Total Kms Served</label
                     >
                     <input
+                      type="number"
                       id="defaultFormCardtextEx"
                       v-model="totalkmsserved"
-                      type="text"
+                    
                       class="form-control"
                     />
                   </b-col>
+                  </b-row>
+                  <b-row>
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -298,15 +341,15 @@ export default {
                       >Total Hours Served</label
                     >
                     <input
+                      type="number"
                       id="defaultFormCardtextEx"
                       v-model="totalhoursserved"
-                      type="text"
+                   
                       class="form-control"
                     />
                   </b-col>
                   
-                </b-row>
-                <b-row class="mb-3">
+              
                      <b-col>
                     <!-- Default input text -->
                     <label
@@ -322,6 +365,26 @@ export default {
                     />
 
                      </b-col>
+                </b-row>
+                    <b-row class="mb-3">
+                  <b-col md="6">
+                    <!-- Default input text -->
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Model</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="models"
+                      type="text"
+                      class="form-control"
+                    />
+
+                     </b-col>
+               
+                 
+                     <!-- </b-col> -->
                 </b-row>
                 <b-button
                   class="btn btn-custome float-right btn-secondary mb-3"

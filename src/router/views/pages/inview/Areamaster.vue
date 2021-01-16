@@ -4,17 +4,18 @@ import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
+import moment from 'moment'
 import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  Areamasters,deletearea
+  Areamasters,deletearea,lgus
 } from '../../../../services/auth'
 import NProgress from 'nprogress/nprogress'
 export default {
   page: {
-    title: 'Areamaster',
+    title: 'Baranggay',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -27,6 +28,8 @@ export default {
   },
   data() {
     return {
+        filter: '',
+      filterOn: [],
       plandata: '',
       striped: false,
       bordered: true,
@@ -40,7 +43,7 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-      item: {},
+      item: [],
 
       AreamasterColumns: [
         {
@@ -54,32 +57,24 @@ export default {
           label: 'Description',
           sortable: true
         },
+        
          {
-          key: 'createdDate',
-          label: 'Created Date',
-          sortable: true
-        },
-         {
-          key: 'createdBy',
-          label: 'Created By',
+          key: 'lguId',
+          label: 'Lgu Name',
           sortable: true
         },
          {
           key: 'areaName',
-          label: 'Area Name',
+          label: 'AreaName',
           sortable: true
         },
-
-        {
-          key: 'city',
-          label: 'City',
-          sortable: true
-        },
+        
          {
-          key: 'state',
-          label: 'State',
+          key: 'districtName',
+          label: 'DistrictName',
           sortable: true
         },
+       
         {
           key: 'actions',
           sortable: true
@@ -91,21 +86,58 @@ export default {
           href: '/',
         },
         {
-          text: 'Areamaster',
+          text: 'Baranggay',
           active: true,
         },
       ],
+      lgudata:[],
+      lguname:[],
     }
   },
   computed: {
+    rows(){
+     return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
   },
   mounted() {
     this.getplans()
+    this.getemployees()
   },
   methods: {
+     async getemployees() {
+       try {
+       
+        const result = await  lgus()
+        this.lgudata = result.data.response.result
+         for (var i = 0; i < this.item.length; i++) {
+  for (var j = 0; j < this.lgudata.length; j++) {
+if(this.lgudata[j].id === this.item[i].lguId ){
+  this.item[i].lguId = this.lgudata[j].lguName
+  break
+}
+
+  }
+         }
+        // data.map( e => {
+        //   if(e.type!="ENCODER" && e.type!="VOLUME_CHECKER" && e.type!="DISPATCHER")
+        //     this.item.push(e)
+        // })
+        console.log(this.item)
+       
+      } catch (error) {}
+    },
+     getDate(timeStamp) {
+    // debugger
+      //  console.log(timeStamp)
+      let date
+      // if (timeStamp !== undefined){
+        // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
+   return moment(timeStamp).format('DD/MM/YYYY')
+      // }
+    },
    async deleteReq(data) {
        console.log("data",data.item.id)
        var id = data.item.id
@@ -155,17 +187,29 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="Areas"
+        header="Baranggay"
 
         class="mt-10 ml-10 mr-10 mx-auto"
       >
-        <b-col md="12">
+       <b-row>
+        <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+        <b-col >
             <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/CreateArea' })"
-          >Create Area</b-button>
+          >Create Baranggay</b-button>
         </b-col>
+       </b-row>
         <div class="mt-3">
           <b-table
             id="my-table"
@@ -183,7 +227,11 @@ export default {
             :fields="AreamasterColumns"
             :items="item"
             class="mt-3"
+           
           >
+             <template v-slot:cell(createdDate)="data">
+                            <div class="table-row">{{ getDate(data.item.createdDate) }}</div>
+                        </template>
             <template v-slot:cell(actions)="data">
              <router-link :to="{ name: 'Viewarea', params: data.item }">
                 <span class="mr-3" >
@@ -210,7 +258,7 @@ export default {
             <b-pagination
               v-model="currentPage"
               :per-page="perPage"
-              :total-rows="Area"
+              :total-rows="rows"
               aria-controls="my-table"
               hide-goto-end-buttons
             ></b-pagination>
@@ -221,6 +269,13 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
+<style scoped>
+.table thead th {
+    outline: none !important;
+    color: black;
+}
+
+</style>
 <style lang="sass" scoped>
 .edit
   color: #a7a7a7 !important

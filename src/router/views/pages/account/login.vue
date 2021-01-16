@@ -50,9 +50,36 @@ mobile:this.username
             this.tryingToLogIn = false
             this.isAuthError = false
             // Redirect to the originally requested page, or to the home page
-            this.$router.push(
-              this.$route.query.redirectFrom || { name: 'Dashboard' }
-            )
+            console.log(token)
+            if(token.user.roles[0].name === "ENCODER" )
+            { 
+              this.$router.push(
+                this.$route.query.redirectFrom || { name: 'Encoder' }
+              )
+            }
+              else if(token.user.roles[0].name === "VOLUME_CHECKER")
+            { 
+              this.$router.push(
+                this.$route.query.redirectFrom || { name: 'Volumechecker' }
+              )
+            }
+             else if(token.user.roles[0].name === "CONTROL_CHECKER")
+            { 
+              this.$router.push(
+                this.$route.query.redirectFrom || { name: 'Controlchecker' }
+              )
+            }
+            else if(token.user.roles[0].name === "BILLING")
+            { 
+              this.$router.push(
+                this.$route.query.redirectFrom || { name: 'Billingperson' }
+              )
+            }
+            else {
+              this.$router.push(
+                this.$route.query.redirectFrom || { name: 'Dashboard' }
+              )
+            }
           })
           .catch((error) => {
             console.log(error)
@@ -79,8 +106,13 @@ mobile:this.username
       <div class="container">
         <div class="container my-5 px-0 z-depth-1">
           <!--Section: Content-->
-          <section
+           <section
             class="p-5 my-md-5 text-center"
+            style="
+              background-image: linear-gradient(109.6deg, #30cfd0 11.2%, #330867 92.5%);
+              background-size: cover;
+              background-position: center center;
+            "
           >
             <form class="my-5 mx-md-5" action="">
               <div class="row">
@@ -136,17 +168,22 @@ mobile:this.username
                           <!-- <button type="button" class="btn btn-outline-orange btn-rounded my-4 waves-effect">Warning</button> -->
                          
                           <b-button
+                             style="
+              background-image: linear-gradient(109.6deg, #30cfd0 11.2%, #330867 92.5%);
+              background-size: cover;
+              background-position: center center;
+            "
                             class="btn btn-outline-orange btn-rounded my-4 waves-effect"
                             text="Create Tenant"
                             @click="tryToLogIn"
                             >Login</b-button
                           >
-                             <b-button
+                             <!-- <b-button
                             class="btn btn-outline-orange btn-rounded my-4 waves-effect"
                             text="Create Tenant"
                               @click="$router.push({ path: '/register' })"
                             >Register</b-button
-                          >
+                          > -->
                         </div>
                       </form>
                       <!-- Form -->

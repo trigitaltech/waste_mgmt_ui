@@ -8,7 +8,7 @@ import NProgress from 'nprogress/nprogress'
 // Vue.component('downloadExcel', JsonExcel)
 import {
   // eslint-disable-next-line no-unused-vars
- Tripdownload
+ Tripdownload,getIncomingTrips
 } from '../../../../services/auth'
 
 export default {
@@ -91,12 +91,22 @@ export default {
     }
   },
   mounted() {
+    this.getTrips()
     this.getVoucherDetails()
     this.getExportVoucherDetails()
     // Set the initial number of items
     this.totalRows = this.items.length
   },
   methods: {
+    async getTrips() {
+      try{
+        let result = await getIncomingTrips();
+        console.log(result);
+      }
+      catch(e) {
+        console.log(e);
+      }
+    },
     onProgress(progress) {
       if (progress > 99) {
         NProgress.done()
@@ -227,7 +237,7 @@ export default {
 
 <template>
   <Layout>
-    <PageHeader :title="title" :items="items" />
+    <PageHeader :items="items" />
    <div class="animated fadeIn">
       <b-card
         header="Trip Incoming Details"
@@ -235,6 +245,10 @@ export default {
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-3">
+          <!-- Card -->
+          <div class="mx-xl-5">
+            <!-- Card body -->
+            <div class="card-body">
               <!-- Default form subscription -->
               <form>
                 <b-row>
@@ -260,7 +274,7 @@ export default {
                   </b-col>
                   <b-col>
                      <b-button
-                  class="btn btn-custome float-right btn-secondary mb-3"
+                  class="btn btn-custome ml-4 btn-secondary mb-3"
                   text="Create Tenant"
                   @click="create"
                   >Generate</b-button
@@ -270,7 +284,9 @@ export default {
                 <br />
                
               </form>
+            </div>
               <!-- Default form subscription -->
+            </div>
         </div>
       </b-card>
    </div>

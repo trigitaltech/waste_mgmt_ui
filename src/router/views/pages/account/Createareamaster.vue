@@ -9,12 +9,16 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- createarea,users
+  createarea,
+  users,
+  address,
+  lgus,
+  statebylgu,
 } from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Create AreaMaster',
+    title: 'Create Baranggay',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -27,41 +31,70 @@ export default {
   },
   data() {
     return {
-       description:"",
-      supervisor:null,
-      city:"",
-    areaname:"",
-    areaid:"",
-    areasqkm:"",
-    country:"",
-    state:"",
-    zip:"",
-      message:"",
-      areatype:null,
-      createdby: "",
+      districtcode: '',
+      cityOpt: [],
+      description: '',
+      supervisor: null,
+      city: '',
+      areaname: '',
+      areaid: '',
+      areasqkm: '',
+      countrys: '',
+      state: '',
+      zip: '',
+      classtype: '',
+      daytype: '',
+      message: '',
+      areatype: null,
+      createdby: '',
       createddate: new Date(),
       modifydate: new Date(),
-      modifyby:"",
-      item:[ { value: null, text: 'Please select an user' }],
-      ite:[],
-       option: [
+      modifyby: '',
+      code: '',
+      district: '',
+      item: [{ value: null, text: 'Please select an user' }],
+      ite: [],
+      option: [
         { value: null, text: 'Please select an option' },
         { value: 'urban', text: 'Urban' },
         { value: 'rural', text: 'Rural' },
-        
       ],
+      classes: [
+        { value: 'MAINROAD', text: 'MAINROAD' },
+        { value: 'SPECIAL TRIP', text: 'SPECIAL TRIP' },
+        { value: 'BARANGGAY', text: 'BARANGGAY' },
+      ],
+      days: [
+        { value: 'SUNDAY', text: 'SUNDAY' },
+        { value: 'MONDAY', text: 'MONDAY' },
+        { value: 'TUESDAY', text: 'TUESDAY' },
+        { value: 'WEDNESDAY', text: 'WEDNESDAY' },
+        { value: 'THURSDAY', text: 'THURSDAY' },
+        { value: 'FRIDAY', text: 'FRIDAY' },
+        { value: 'SATURDAY', text: 'SATURDAY' },
+      ],
+      distopt: [],
+      districtList:[],
       items: [
         {
           text: 'Setup',
           href: '/',
         },
         {
-          text: 'Areamaster / Create Area',
+          text: 'Baranggay',
+          href: '#/Setup/AreaMaster',
+        },
+        {
+          text: 'Create Baranggay',
           active: true,
         },
       ],
-   
-    
+      addres: [],
+      lgus: [],
+      lgumaster: [],
+      lgudata: [],
+      lguid: '',
+      lgu: '',
     }
   },
   computed: {
@@ -70,34 +103,81 @@ export default {
     },
   },
   mounted() {
-     this.createdby = this.getUserDetails.user.username
+    this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     // this.getClientDetails()
     // this.getplans()
-this.userdata() 
-
+    console.log('hiiiii', this.distopt)
+    this.userdata()
+    // this.getaddresss()
+    this.getlgus()
+    // this.getlgus()
   },
   methods: {
+
+      async getlgus() {
+       try {
+        const result = await  lgus()
+        this.lgumaster  = result.data.response.result
+        console.log(this.lgumaster)
+        this.lgumaster.map(e=>{
+          // debugger
+          this.lgus.push(e.lguName)
+          console.log(this.lgus)
+        })
+
+      } catch (error) {}
+    },
+    async getcity() {
+      // console.log('ahahahahha')
+      for (var i = 0; i < this.addres.length; i++) {
+        if (this.district === this.addres[i].districtName) {
+          // this.districtcode = e.districtCode
+          this.state = this.addres[i].stateCode.stateName
+          this.countrys = this.addres[i].stateCode.countryCode.countryName
+
+          const result = await statebylgu(this.state)
+          // this.lgus = []
+          // this.lgudata = result.data.response.result
+          // console.log(this.lgudata)
+          //  this.lgudata.map( e => {
+
+          // this.lgus.push(this.lgudata.lguName)
+          // })
+        }
+      }
+    },
+    // async getaddresss() {
+    //   try {
+    //     const result = await address()
+    //     this.addres = result.data.response.result
+    //     // console.log("address",this.addres)
+    //     this.addres.map((e) => {
+    //       // debugger
+    //       this.distopt.push(e.districtName)
+    //     })
+    //     // console.log(this.distopt,"himanchal")
+    //   } catch (error) {}
+    // },
     async create() {
       try {
-        const payload =  {
-          
-            areaName : this.areaname,
-            areaType: this.areatype,
-            supervisor: this.supervisor,
-            areaSqKm:this.areasqkm,
-            isDeleted: true,
-           createdDate: this.createddate,
-          createdBy: this.createdby,
-          modifiedDate: this.modifydate,
-          modifiedBy: this.modifyby,
-            state: this.state,
-            country: this.country,
-            description: this.description,
-            city: this.city,
-            zip: this.zip
-        
-
+        const payload = {
+          // code: this.code,
+          areaName: this.areaname,
+          areaType: this.areatype,
+          classType: this.classtype,
+          // dayType: '',
+          supervisor: this.supervisor,
+          areaSqKm: this.areasqkm,
+          isDeleted: false,
+          state: this.state,
+          country: this.countrys,
+          description: this.description,
+          // city: '',
+          zip: this.zip,
+          districtName: this.district,
+          lguId: this.lguid,
+          lguName:this.lguName,
         }
         let result = await createarea(payload)
         if (result) {
@@ -107,9 +187,8 @@ this.userdata()
             text: `You Created Area Successfully`,
             duration: 5000,
           })
-         
-           this.$router.push({path:'/Setup/AreaMaster'})
-            
+
+          this.$router.push({ path: '/Setup/AreaMaster' })
         }
       } catch (e) {
         this.$toasted.error(e.message.errors[0].developerMessage, {
@@ -117,27 +196,46 @@ this.userdata()
         })
       }
     },
-  async userdata() {
-       try {
-      
-      const result = await users()
-      var data = result.data.response.Users
-      console.log("users",data[0].userName)
-      // JSON.parse(JSON.stringify(result))
-      // for(i=0;i<data.length;i++){
-      //   this.item[i]=data[i].userName
-      // }
+    async getlgudata() {
+      this.distopt = []
+      this.districtList = []
+      this.lgumaster.map(async e => {
+        if(this.lgu == e.lguName) {
+           this.lguName=this.lguName
+          this.state = e.state
+          this.lguid = e.id
+          this.countrys = e.country
+          const result = await address()
+          const data = result.data.response.result
+          data.map(e => {
+            if(e.stateCode.stateName == this.state){
+              this.districtList.push(e)
+              this.distopt.push(e.districtName)
+            }
+          })
 
-      data.map(e=>{
-      this.item.push(e.userName)
-      console.log("user",e)
+        }
       })
-       console.log("users",this.item)
-     
+    },
+    async userdata() {
+      try {
+        const result = await users()
+        var data = result.data.response.Users
+        // console.log('users', data[0].userName)
+        // JSON.parse(JSON.stringify(result))
+        // for(i=0;i<data.length;i++){
+        //   this.item[i]=data[i].userName
+        // }
+
+        data.map((e) => {
+          this.item.push(e.userName)
+          // console.log('user', e)
+        })
+        // console.log('users', this.item)
       } catch (error) {}
-     },
+    },
     async refresh() {
-      setTimeout(function () {
+      setTimeout(function() {
         location.reload()
       }, 200)
     },
@@ -150,283 +248,222 @@ this.userdata()
     <PageHeader :items="items" />
 
     <div class="animated fadeIn">
-      <b-card
-        header="Create Area"
-        class="mt-10 ml-10 mr-10 mx-auto"
-      >
+      <b-card header="Create Baranggay" class="mt-10 ml-10 mr-10 mx-auto">
         <div class="mt-3">
-              <!-- Default form subscription -->
-             <form @submit.prevent="create">
-                <b-row>
-                  <b-col>
-                    <!-- Default input name -->
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                    >
-                     Area Name</label
-                    >
-                    <input
-                      v-model="areaname"
-                    
-                      type="text"
-                       oninvalid="this.setCustomValidity('Area Name is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Enter Area Name"
-                                class="form-control"
-                                required
-                    />
+          <!-- Default form subscription -->
+          <form @submit.prevent="create">
+            <b-row>
+              <b-col>
+                <!-- Default input name -->
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                >
+                  Baranggay Name</label
+                >
+                <input
+                  v-model="areaname"
+                  type="text"
+                  oninvalid="this.setCustomValidity('Area Name is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Enter Area Name"
+                  class="form-control"
+                  required
+                />
 
-                
+                <!-- Default input text -->
+              </b-col>
 
-                  
-                    <!-- Default input text -->
-                  </b-col>
-                  
-                  <b-col>
-                     <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Area Type</label
-                    >
-                    <b-form-select
-                      v-model="areatype"
-                      :options="option"
-                      oninvalid="this.setCustomValidity('Area Type is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Select Area Type"
-                                class="form-control"
-                                required
-                    ></b-form-select>
-
-                    <!-- Default input name -->
-                  
-                  </b-col>
-              
-                  <br />
-                
-                
-                  
-               
-                </b-row>
-                 <br/>
-                  <b-row>
-                    
-                      <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Supervisor</label
-                    >
-
-                   <b-form-select
-                  v-model.trim="supervisor"
-                 oninvalid="this.setCustomValidity('Supervisor is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Select Supervisor"
-                                class="form-control"
-                                required
-                  :options="item"
-                  
+              <b-col>
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                  >Class Type</label
+                >
+                <b-form-select
+                  v-model="classtype"
+                  :options="classes"
+                  oninvalid="this.setCustomValidity('Area Type is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Select Class Type"
+                  class="form-control"
+                  required
                 ></b-form-select>
-                  </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Area SqKm</label
-                    >
-                    <input
-                      v-model="areasqkm"
-                    
-                      type="text"
-                       oninvalid="this.setCustomValidity('Area Sqkm is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Enter Area Sqkm"
-                                class="form-control"
-                                required
-                    />
-                  </b-col>
-                  </b-row>
-                <br/>
-                <b-row>
-                 <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Description</label
-                    >
-                    <input
-                      v-model="description"
-                     
-                      type="text"
-                       oninvalid="this.setCustomValidity('Description is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Enter Description"
-                                class="form-control"
-                                required
-                    />
-                  </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >City</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="city"
-                      type="text"
-                      class="form-control"
-                         placeholder="Enter city"
-                    />
-                  </b-col>
-                </b-row>
-                 <br/>
 
-  <b-row>
-                  
-                  
-                   <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >State</label
-                    >
-                    <input
-                   
-                      id="defaultFormCardtextEx"
-                      v-model="state"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter state"
-                    />
- <br/>
-                
-                  </b-col>
+                <!-- Default input name -->
+              </b-col>
+              <b-col>
+                <label
+                  for="defaultFormCardNameEx"
+                  class="grey-text font-weight-dark"
+                  >Baranggay Type</label
+                >
+                <b-form-select
+                  v-model="areatype"
+                  :options="option"
+                  oninvalid="this.setCustomValidity('Area Type is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Select Area Type"
+                  class="form-control"
+                  required
+                ></b-form-select>
 
-                  <br/>
+                <!-- Default input name -->
+              </b-col>
+            </b-row>
+            <br />
 
-                   <b-col>
-                    <!-- Default input text -->
-                  
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Country</label
-                    >
-                    <input
-                    id="defaultFormCardtextEx"
-                  
-                      v-model="country"
-                      placeholder="Enter country"
-                      type="text"
-                      class="form-control"
-                    />
-                  </b-col>
-                
-                     <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Zip</label
-                    >
-                    <input
-                   id="defaultFormCardtextEx"
-                      v-model="zip"
-                      placeholder="Enter Zip"
-                      type="text"
-                      class="form-control"
-                    />
-                     </b-col>
-                </b-row>
-<br/>
-                
-                <b-row>
-                  
-                  
-                   <!-- <b-col> -->
-                    <!-- Default input text -->
-                    <!-- <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Created Date</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="createddate"
-                    />
- <br/>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Modify Date</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="modifydate"
-                    />
-                  </b-col> -->
-
-                  <!-- <br/>
-
-                   <b-col> -->
-                    <!-- Default input text -->
-                    <!-- <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Created By</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="createdby"
-                    />
- <br/>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Modify By</label
-                    >
-                    <input
-                    disabled
-                      type="text"
-                      id="defaultFormCardtextEx"
-                      class="form-control"
-                      v-model="modifyby"
-                    />
-                  </b-col> -->
-                </b-row>
-              
-              
+            <b-row>
+              <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Baranggay SqKm</label
+                >
+                <input
+                  v-model="areasqkm"
+                  type="text"
+                  oninvalid="this.setCustomValidity('Area Sqkm is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Enter Area Sqkm"
+                  class="form-control"
+                  required
+                />
+              </b-col>
+              <b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Description</label
+                >
+                <input
+                  v-model="description"
+                  type="text"
+                  oninvalid="this.setCustomValidity('Description is required ')"
+                  oninput="setCustomValidity('')"
+                  placeholder="Enter Description"
+                  class="form-control"
+                  required
+                />
+              </b-col>
+            </b-row>
+            <br />
+            <b-row>
+              <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >LGU</label
+                >
+                <!-- <input
+                  id="defaultFormCardtextEx"
+                  v-model="lgus"
+                  placeholder="Enter Lgu"
+                  type="text"
+                  disabled
+                  class="form-control"
+                /> -->
+                <b-form-select
+                  v-model.trim="lgu"
+                  placeholder="Select LGU"
+                  @change="getlgudata"
+                  label="value"
+                  :options="lgus"
+                  oninvalid="this.setCustomValidity('lgu is required ')"
+                  oninput="setCustomValidity('')"
+                  class="form-control"
+                  required
+                ></b-form-select>
+              </b-col>
+              <b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >State</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="state"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter state"
+                  disabled
+                />
                 <br />
-               <button
-                          type="submit"
-                         class="btn btn-custome float-right btn-secondary mb-3"
-                          >Submit</button
-                        >
-              </form>
-              <!-- Default form subscription -->
+              </b-col>
+            </b-row>
+            <br />
+            <b-row>
+              <br />
+              <b-col>
+                <!-- Default input text -->
+
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Country</label
+                >
+                <input
+                  disabled
+                  id="defaultFormCardtextEx"
+                  v-model="countrys"
+                  placeholder="Enter country"
+                  type="text"
+                  class="form-control"
+                />
+              </b-col>
+              <b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >District</label
+                >
+                <multiselect
+                  v-model.trim="district"
+                  placeholder="Select distict"
+                  :options="distopt"
+                  @input="getcity"
+                ></multiselect>
+              </b-col>
+            </b-row>
+            <br />
+
+            <b-row>
+              <b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Zip</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="zip"
+                  placeholder="Enter Zip"
+                  type="text"
+                  class="form-control"
+                />
+              </b-col>
+              <b-col> </b-col>
+            </b-row>
+            <br />
+            <button
+              type="submit"
+              class="btn btn-custome float-right btn-secondary mb-3"
+              >Submit</button
+            >
+          </form>
+          <!-- Default form subscription -->
         </div>
       </b-card>
     </div>
     <!-- end row -->
   </Layout>
 </template>
-<style lang="scss">
-</style>
+<style lang="scss"></style>
 <style lang="sass" scoped>
 .edit
   color: #a7a7a7 !important

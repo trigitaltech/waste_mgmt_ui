@@ -18,13 +18,63 @@ export default {
   data() {
     return {
       menuItems: authProtectedRoutes,
-      ticket:false
+      ticket:false,
+      menuItems1:[]
     }
   },
   computed: {
     ...authComputed,
   },
   mounted: function() {
+    console.log(authProtectedRoutes)
+     console.log("ROLES",this.$store.getters['auth/loggedInDetails'].user.roles[0].name)
+this.menuItems1=this.menuItems
+this.menuItems = []
+    for(var j=0; j<this.menuItems1.length;j++){
+      if(this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "ENCODER" || 
+      this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "VOLUME_CHECKER" ||
+       this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "CONTROL_CHECKER"){
+        if(this.menuItems1[j].name === "Trips" || this.menuItems1[j].name ===  "Reports" ){
+          this.menuItems.push(this.menuItems1[j])
+        }
+       }
+        else if (this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "OFFICE_ENCODER"){
+           if(this.menuItems1[j].name === "ServiceRequest" || this.menuItems1[j].name ===  "Reports" ){
+          this.menuItems.push(this.menuItems1[j])
+        }
+        }
+         else if (this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "BILLING"){
+           if(this.menuItems1[j].name === "ServiceRequest" || this.menuItems1[j].name ===  "Reports" || this.menuItems1[j].name === "Trips" ){
+          this.menuItems.push(this.menuItems1[j])
+        }
+        }
+         else if (this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "PAYROLL"){
+           if(this.menuItems1[j].name === "ServiceRequest" || this.menuItems1[j].name ===  "Reports" || this.menuItems1[j].name === "Trips" || this.menuItems1[j].name === "Payroll" ){
+          this.menuItems.push(this.menuItems1[j])
+        }
+        }
+         else if (this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "LGU"){
+           if(this.menuItems1[j].name === 'LGU'){
+            // var lguData1 = this.menuItems1[j].children[1];
+            // this.menuItems1[j].children = [];
+            // this.menuItems1[j].children.push(lguData1)
+          this.menuItems.push(this.menuItems1[j])
+        }
+        }
+          else if (this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "HAULER"){
+           if(this.menuItems1[j].name === "HAULERS" ){
+          this.menuItems.push(this.menuItems1[j])
+           }
+          }
+         else if (this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "DRIVER" || this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "HELPER" ){
+           if(this.menuItems1[j].name === "HAULERS" ){
+          this.menuItems.push(this.menuItems1[j])
+        }
+        }
+      else {
+        this.menuItems.push(this.menuItems1[j])
+      }
+    }
     // eslint-disable-next-line no-unused-vars
     var menuRef = null
     if (this.mode === 'horizontal') {

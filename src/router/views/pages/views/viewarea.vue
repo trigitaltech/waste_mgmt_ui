@@ -14,7 +14,7 @@ import {
 
 export default {
   page: {
-    title: 'Create AreaMaster',
+    title: 'View Baranggay',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -27,6 +27,8 @@ export default {
   },
   data() {
     return {
+        classtype:this.$route.params.classType,
+      code:this.$route.params.code,
        description:this.$route.params.description,
       supervisor: this.$route.params.supervisor,
       city: this.$route.params.city,
@@ -35,6 +37,7 @@ export default {
     areasqkm: this.$route.params.areaSqKm,
     country: this.$route.params.country,
     state: this.$route.params.state,
+    lguName:this.$route.params.lguName,
     zip: this.$route.params.zip,
       message:"",
       areatype:this.$route.params.areaType,
@@ -55,13 +58,17 @@ export default {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Baranggay',
+          href: '#/Setup/AreaMaster',
+        },
         {
-          text: 'Areas / View Areas',
+          text: 'View Baranggay',
           active: true,
         },
       ],
    
-    
+     district:this.$route.params.districtName
     }
   },
   computed: {
@@ -97,11 +104,8 @@ export default {
             country: this.country,
             description: this.description,
             city: this.city,
-            zip: this.zip
-      
-
-        
-
+            zip: this.zip,
+            lguName: this.lguName
         }
         let result = await Edituser(payload)
         if (result) {
@@ -155,7 +159,7 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="View Areas"
+        header="View Baranggay"
 
         class="mt-10 ml-10 mr-10 mx-auto"
       >
@@ -163,13 +167,14 @@ export default {
               <!-- Default form subscription -->
               <form>
                 <b-row>
+                  
                   <b-col>
                     <!-- Default input name -->
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
                     >
-                     Area Name</label
+                     Baranggay Name</label
                     >
                     <input
                     id="defaultFormCardNameEx"
@@ -178,10 +183,6 @@ export default {
                       type="text"
                       class="form-control"
                     />
-
-                
-
-                  
                     <!-- Default input email -->
                   </b-col>
                   
@@ -209,26 +210,12 @@ export default {
                  <br/>
                   <b-row>
                     
+                    
                       <b-col>
-                    <!-- Default input email -->
                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
-                      >Supervisor</label
-                    >
-
-                  <input
-                    id="defaultFormCardEmailEx"
-                      v-model="supervisor"
-                      disabled
-                      type="email"
-                      class="form-control"
-                    />
-             
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Area SqKm</label
+                      >Baranggay SqKm</label
                     >
                     <input
                     id="defaultFormCardEmailEx"
@@ -238,9 +225,24 @@ export default {
                       class="form-control"
                     />
                   </b-col>
-
+   <b-col>
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Class Type</label
+                >
+                <input
+                  v-model="classtype"
+                  type="text"
+               
+                  placeholder="Enter Code"
+                  class="form-control"
+               disabled
+                />
+              </b-col>
+                  </b-row>
                 <br/>
-                
+               <b-row>
                  <b-col>
                     <!-- Default input email -->
                     <label
@@ -255,15 +257,30 @@ export default {
                       type="email"
                       class="form-control"
                     />
-
+                 </b-col>
+                 <!-- <b-col>
                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
-                      >City</label
+                      >LGU Name</label
                     >
                     <input
                     id="defaultFormCardEmailEx"
-                      v-model="city"
+                      v-model="lguName"
+                      disabled
+                      type="text"
+                      class="form-control"
+                    />
+                  </b-col> -->
+                 <b-col>
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >District</label
+                    >
+                    <input
+                    id="defaultFormCardEmailEx"
+                      v-model="district"
                       disabled
                       type="email"
                       class="form-control"

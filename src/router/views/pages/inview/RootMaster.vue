@@ -12,6 +12,7 @@ import {
   routemaster,deleteroute
 } from '../../../../services/auth'
 import NProgress from 'nprogress/nprogress'
+import Createstaging from '../account/Createstaging.vue'
 export default {
   page: {
     title: 'Rootmaster',
@@ -24,9 +25,12 @@ export default {
     ValidationProvider,
     ValidationObserver,
     ModelSelect,
+    Createstaging,
   },
   data() {
     return {
+        filter: '',
+      filterOn: [],
       plandata: '',
       striped: false,
       bordered: true,
@@ -40,44 +44,40 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-      item: { key: 'resource', value: 'Frozen Yogurt', name: '159' },
+      item: [],
 
       RootmasterColumns: [
           {
-          key: 'areaId',
-
-          label: 'Area Id',
+          key: 'id',
+          label: 'Route ID',
         },
-         {
-          key: 'areaName',
-
-          label: 'Area Name',
+           {
+          key: 'code',
+          label: 'Code',
         },
-         {
-          key: 'createdBy',
-          label: 'CreatedBy',
-        },
-        
         {
           key: 'routeName',
           label: 'Route Name',
         },
-         {
-          key: 'routeType',
-          label: 'Route Name',
-        },
+        //  {
+        //   key: 'areaName.areaName',
+
+        //   label: 'Area Name',
+        // },
+       
+        
+        //  {
+        //   key: 'routeType',
+        //   label: 'Route Type',
+        // },
 
          {
-          key: 'route_distance',
+          key: 'routeDistance',
           label: 'Route Distance',
         },
       
-         {
-          key: 'city',
-          label: 'City',
-        },
-       
-
+      
+        
         {
           key: 'actions',
           sortable: true,
@@ -97,6 +97,9 @@ export default {
     }
   },
   computed: {
+     rows(){
+     return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -135,7 +138,11 @@ export default {
       const result = await  routemaster()
       this.item = result.data.response.RouteMaster
        NProgress.done()
-      } catch (error) {}
+      } catch (error) {
+        this.$toasted.error(error.error, {
+          duration: 7000,
+        })
+      }
    
     },
     async refresh() {
@@ -156,14 +163,26 @@ export default {
         header="Routemasters"
 
         class="mt-10 ml-10 mr-10 mx-auto"
-      >
-        <b-col md="12">
+      ><b-row>
+         <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+        <b-col >
+        
             <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/CreateRoute' })"
           >Create Route</b-button>
         </b-col>
+        </b-row>
         <div class="mt-3">
           <b-table
             id="my-table"
@@ -181,6 +200,7 @@ export default {
             :fields="RootmasterColumns"
             :items="item"
             class="mt-3"
+             
           >
            <template v-slot:cell(actions)="data">
             <router-link :to="{ name: 'Viewroute', params: data.item }">
@@ -202,7 +222,7 @@ export default {
             <b-pagination
               v-model="currentPage"
               :per-page="perPage"
-              :total-rows="Area"
+              :total-rows="rows"
               aria-controls="my-table"
               hide-goto-end-buttons
             ></b-pagination>
@@ -226,4 +246,11 @@ export default {
   box-shadow: 0 0 10px #ccc
   .role-details
     margin: 10px
+</style>
+<style scoped>
+.table thead th {
+    outline: none !important;
+    color: black;
+}
+
 </style>

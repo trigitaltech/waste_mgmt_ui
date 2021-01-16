@@ -9,19 +9,12 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  registerTemplete,
-  cityTemplete,
-  simpleactivation,
-  editcustomer,
-  plans,
-  planprice,
-  searchvoucher,
-  redeem,
+ address,deletedistrict
 } from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'city',
+    title: 'Address',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -51,19 +44,21 @@ export default {
 
       cityColumns: [
         {
-          key: 'resource',
-
-          label: 'Resource',
+          key: 'stateCode.countryCode.countryName',
+          label: 'Country',
         },
         {
-          key: 'name',
-          label: 'city',
+          key: 'stateCode.stateName',
+          label: 'State',
         },
-
         {
-          key: 'actions',
-          sortable: true,
+          key: 'districtName',
+          label: 'District',
         },
+        {
+          key:'actions',
+
+        }
       ],
       items: [
         {
@@ -71,7 +66,7 @@ export default {
           href: '/',
         },
         {
-          text: 'citys',
+          text: 'Address',
           active: true,
         },
       ],
@@ -109,18 +104,56 @@ export default {
         { value: null, text: 'Please select an option' },
         'FTA  AND STARTER',
       ],
+      item:[],
       clientTemplete: {},
     }
   },
+
   computed: {
+     rows(){
+     return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
   },
   mounted() {
+    this.getaddresss()
   
   },
   methods: {
+  
+     async deleteReq(data) {
+       console.log("data",data.item.id)
+       var id = data.item.id
+     try{
+          
+        const result = await   deletedistrict (data.item.id)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `You Deleted District Successfully`,
+            duration: 5000,
+          })
+         this.refresh()
+        }
+      } catch (e) {
+         this.$toasted.error(e.message.error, {
+          duration: 7000,
+        })
+      }
+     
+    },
+    async getaddresss() {
+       try {
+      
+      const result = await  address()
+      this.item = result.data.response.result
+      
+      } catch (error) {}
+   
+    },
     
     async refresh() {
       setTimeout(function () {
@@ -137,11 +170,37 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="Citys"
+        header="Address"
 
         class="mt-10 ml-10 mr-10 mx-auto"
       >
-        <b-col md="12">
+       <b-row>
+        <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+      <b-col md="9">
+      
+           <b-button
+            style="
+              background-image: linear-gradient(
+                109.6deg,
+                rgba(48, 207, 208, 1) 11.2%,
+                rgba(51, 8, 103, 1) 92.5%
+              );
+            "
+            class="btn btn-custome float-right btn-secondary"
+            text="Create Tenant"
+            @click="$router.push({ path: '/Createaddress' })"
+            >Create Country</b-button
+          >
+      
           <b-button
             style="
               background-image: linear-gradient(
@@ -150,15 +209,18 @@ export default {
                 rgba(51, 8, 103, 1) 92.5%
               );
             "
-            class="btn btn-custome float-right btn-secondary mb-3"
+            class="btn btn-custome float-right btn-secondary mr-3"
             text="Create Tenant"
-            @click="$router.push({ path: '/create' })"
-            >Create City</b-button
+            @click="$router.push({ path: '/Treeview' })"
+            >TreeView</b-button
           >
-        </b-col>
-        <div class="mt-3">
+      
+      </b-col>
+       </b-row>
+        <div>
           <b-table
             id="my-table"
+            class="w-75"
             :dark="dark"
             :hover="hover"
             :striped="striped"
@@ -173,29 +235,25 @@ export default {
             :fixed="fixed"
             :fields="cityColumns"
             :items="item"
-            class="mt-3"
           >
-            <template slot="actions" slot-scope="data">
-              <b-button
-                size="sm"
-                class="mr-2"
-                variant="primary"
-                @click="editcity(data)"
-              >
-                <i class="fas fa-pencil-alt edit"></i>
-              </b-button>
-              <b-button
-                size="sm"
-                class="mr-2"
-                variant="danger"
-                @click="deletecity(data)"
-              >
-                <i class="fa fa-times bin"></i>
-              </b-button>
-              <!-- <b-button size="sm" class="mr-2" variant="html5 icon" @click="deletecity(data)">
+           <template v-slot:cell(actions)="data">
+             <!-- <router-link :to="{ name: 'Viewarea', params: data.item }">
+                <span class="mr-3" >
+                 <i class="fa fa-eye edit"></i>
+                </span>
+              </router-link>
+             <router-link :to="{ name: 'Editarea', params: data.item }">
+               <span class="mr-3">
+                  <i class="fas fa-pencil-alt edit"></i>
+                </span>
+              </router-link> -->
+             <span class="mr-3" @click="deleteReq(data)">
+              <i class="fa fa-times edit"></i>
+            </span>
+            <!-- <b-button size="sm" class="mr-2" variant="html5 icon" @click="deleteAreamaster(data)">
               <i class="fa fa-times"></i>
-            </b-button>
-            <b-button size="sm" class="mr-2" variant="facebook" @click="editcity(data)">
+            </b-button>  -->
+            <!-- <b-button size="sm" class="mr-2" variant="facebook" @click="editAreamaster(data)">
               <i class="fa fa-pencil"></i>
             </b-button>-->
             </template>
@@ -204,7 +262,7 @@ export default {
             <b-pagination
               v-model="currentPage"
               :per-page="perPage"
-              :total-rows="city"
+              :total-rows="rows"
               aria-controls="my-table"
               hide-goto-end-buttons
             ></b-pagination>
@@ -215,6 +273,13 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
+<style scoped>
+.table thead th {
+    outline: none !important;
+    color: black;
+}
+
+</style>
 <style lang="sass" scoped>
 .edit
   color: #a7a7a7 !important

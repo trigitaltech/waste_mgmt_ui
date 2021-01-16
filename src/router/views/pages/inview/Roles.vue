@@ -5,6 +5,7 @@ import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
 import NProgress from 'nprogress/nprogress'
+import moment from 'moment'
 import {
   ValidationProvider,
   ValidationObserver,
@@ -41,7 +42,7 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-       item: {},
+       item: [],
       permissionColumns: [
          {
           key: 'id',
@@ -53,16 +54,8 @@ export default {
           label: 'NAME',
           sortable: true,
         },
-         {
-          key: 'createdBy',
-          label: 'createdBy',
-          sortable: true,
-        },
-         {
-          key: 'createdDate',
-          label: 'createdDate',
-          sortable: true,
-        },
+         
+        
         {
           key: 'actions',
           sortable: true,
@@ -86,6 +79,9 @@ export default {
     }
   },
   computed: {
+     rows(){
+     return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -94,6 +90,15 @@ export default {
     this.role()
   },
   methods: {
+     getDate(timeStamp) {
+    // debugger
+      //  console.log(timeStamp)
+      let date
+      // if (timeStamp !== undefined){
+        // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
+    return moment(timeStamp).format('DD/MM/YYYY')
+      // }
+    },
      async deleteReq(data) {
        console.log("data",data.item.id)
        var id = data.item.id
@@ -142,13 +147,25 @@ export default {
         header="Roles"
           class="mt-10 ml-10 mr-10 mx-auto"
       >
-         <b-col md="12">
+       <b-row>
+        <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+         <b-col md="9">
           <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/CreateRole' })"
           >Create Role</b-button>
         </b-col>
+       </b-row>
         <div class="mt-3">
           <b-table
             id="my-table"
@@ -166,7 +183,10 @@ export default {
             :fields="permissionColumns"
             :items="item"
             class="mt-3"
-          >
+         
+          >   <template v-slot:cell(createdDate)="data">
+                            <div class="table-row">{{ getDate(data.item.createdDate) }}</div>
+                        </template>
    
              <template v-slot:cell(actions)="data">
               <router-link :to="{ name: 'Viewrole', params: data.item }">
@@ -184,6 +204,13 @@ export default {
             <span class="mr-3" @click="deleteReq(data)">
               <i class="fa fa-times edit"></i>
             </span>
+             <!-- <router-link :to="{ name: 'Editrole', params: data.item }">
+              <button
+                     class="btn btn-custome float-right btn-secondary mb-3"
+                    type="submit"
+              
+                  >Add Permission To Role</button>
+             </router-link> -->
            </template>
           
           </b-table>
@@ -193,7 +220,7 @@ export default {
             <b-pagination
               v-model="currentPage"
               :per-page="perPage"
-              :total-rows="permissions"
+              :total-rows="rows"
               aria-controls="my-table"
               hide-goto-end-buttons
             ></b-pagination>
@@ -204,6 +231,13 @@ export default {
     <!-- end row -->
   </Layout>
 </template> 
+<style scoped>
+.table thead th {
+    outline: none !important;
+    color: black;
+}
+
+</style>
 <style lang="sass" scoped>
 .edit
   color: #a7a7a7 !important

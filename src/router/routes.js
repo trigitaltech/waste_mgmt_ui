@@ -187,10 +187,47 @@ const inviewRoutes = [
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
+      {
+        path: 'ClassMaster',
+        name: 'Class Master',
+        
+        icon: 'clipboard',
+        component: () => lazyLoadView(import('@views/pages/inview/class')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+      {
+        path: 'TypeMaster',
+        name: 'Type Master',
+        
+        icon: 'arrow-up',
+        component: () => lazyLoadView(import('@views/pages/inview/type')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+      {
+        path: 'DaysMaster',
+        name: 'Days Master',
+        
+        icon: 'file',
+        component: () => lazyLoadView(import('@views/pages/inview/days')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+     
+      {
+        path: 'AddressMaster',
+        name: 'Address Master',
+        
+        icon: 'check-square',
+        component: () => lazyLoadView(import('@views/pages/inview/address')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
      
       {
         path: 'AreaMaster',
-        name: 'Area Master',
+        name: 'Baranggay Master',
         
         icon: 'loader',
         component: () => lazyLoadView(import('@views/pages/inview/Areamaster')),
@@ -206,6 +243,7 @@ const inviewRoutes = [
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
+     
       // {
       //   path: 'City',
       //   name: 'City',
@@ -252,15 +290,15 @@ const inviewRoutes = [
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
      
-      {
-        path: 'Notification Template',
-        name: 'Notification Template',
+      // {
+      //   path: 'Notification Template',
+      //   name: 'Notification Template',
         
-        icon: 'bell',
-        component: () => lazyLoadView(import('@views/pages/inview/Notificationtemplate')),
-        meta: { authRequired: true },
-        props: (route) => ({ user: store.state.auth.currentUser || {} }),
-      },
+      //   icon: 'bell',
+      //   component: () => lazyLoadView(import('@views/pages/inview/Notificationtemplate')),
+      //   meta: { authRequired: true },
+      //   props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      // },
 
 
 
@@ -298,6 +336,15 @@ const inviewRoutes = [
     meta: { label: 'Users' },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
+  // {
+  //   path: '/Employee',
+  //   name: 'Employee',
+    
+  //   icon: 'users',
+  //   component: () => lazyLoadView(import('@views/pages/inview/employement')),
+  //   meta: { label: 'Users' },
+  //   props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  // },
   {
 
     path: '/Employee',
@@ -325,27 +372,85 @@ const inviewRoutes = [
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
+      // {
+      //   path: 'Tripdetails',
+      //   name: 'Trip Details',
+      //   icon: 'file-plus',
+      //   component: () => lazyLoadView(import('@views/pages/employee/Tripdetail')),
+      //   meta: { authRequired: true },
+      //   props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      // },
+      // {
+      //   path: 'Servicerequest',
+      //   name: 'Service Request',
+      //   icon: 'alert-circle',
+      //   component: () => lazyLoadView(import('@views/pages/employee/servicerequest')),
+      //   meta: { authRequired: true },
+      //   props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      // },
+    ]
+  },
+  
+  {
+
+    path: '/LGU',
+    name: 'LGU',
+    
+    icon: 'user-plus',
+    meta: { label: 'LGU' },
+    component: {
+      render(c) { return c('router-view') }
+    },
+    children: [
       {
-        path: 'Tripdetails',
-        name: 'Trip Details',
-        icon: 'file-plus',
-        component: () => lazyLoadView(import('@views/pages/employee/Tripdetail')),
+        path: 'Lgu',
+        name: 'Lgu',
+        icon: 'user',
+        component: () => lazyLoadView(import('@views/pages/inview/lgu')),
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
       {
-        path: 'Servicerequest',
-        name: 'Service Request',
-        icon: 'alert-circle',
-        component: () => lazyLoadView(import('@views/pages/employee/servicerequest')),
+        path: 'LguEmployee',
+        name: 'LguEmployee',
+        icon: 'users',
+        component: () => lazyLoadView(import('@views/pages/inview/lguemployee')),
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
       },
     ]
   },
+  {
+
+    path: '/Hauler',
+    name: 'HAULERS',
+    
+    icon: 'user-check',
+    meta: { label: 'Hauler' },
+    component: {
+      render(c) { return c('router-view') }
+    },
+    children: [
+      {
+        path: 'Haulers',
+        name: 'Haulers',
+        icon: 'user',
+        component: () => lazyLoadView(import('@views/pages/inview/haulers')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+      {
+        path: 'HaulerEmployees',
+        name: 'HaulerEmployees',
+        icon: 'users',
+        component: () => lazyLoadView(import('@views/pages/inview/hauleremployee')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+     
   
   {
-    path: '/Equipment',
+    path: 'Equipment',
     name: 'Equipment',
     
     icon: 'layout',
@@ -356,13 +461,15 @@ const inviewRoutes = [
   
 
   {
-    path: '/Vehicle',
+    path: 'Vehicle',
     name: 'Vehicles',
     
     icon: 'truck',
     component: () => lazyLoadView(import('@views/pages/inview/vehicle')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  }
+    ]
   },
   {
     path: '/Payroll ',
@@ -377,8 +484,8 @@ const inviewRoutes = [
     children: [
 
       {
-        path: 'Redcard',
-        name: 'Payroll red card',
+        path: 'Ratecard',
+        name: 'Rate card',
         icon: 'check-square',
         component: () => lazyLoadView(import('@views/pages/Payrol/redcard')),
         meta: { authRequired: true },
@@ -387,7 +494,7 @@ const inviewRoutes = [
 
       {
         path: 'Billing',
-        name: 'Payroll billing',
+        name: 'Billing',
         icon: 'check-square',
         component: () => lazyLoadView(import('@views/pages/Payrol/billing')),
         meta: { authRequired: true },
@@ -395,7 +502,7 @@ const inviewRoutes = [
       },
       {
         path: 'Settlement',
-        name: 'Payroll settlement',
+        name: 'Settlement',
         icon: 'check-square',
         component: () => lazyLoadView(import('@views/pages/Payrol/settlement')),
         meta: { authRequired: true },
@@ -406,20 +513,68 @@ const inviewRoutes = [
   {
     path: '/Trips',
     name: 'Trips',
+    header: 'Apps',
+    icon: 'credit-card',
+    meta: { label: 'Permissions' },
+    component: {
+      render(c) { return c('router-view') }
+    },
+
+    children: [
+
+      {
+        path: 'IncomingTrips',
+        name: 'Incoming Trips',
+        icon: 'check-square',
+        component: () => lazyLoadView(import('@views/pages/inview/Incomingtrip.vue')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+
+      {
+        path: 'OutgoingTrips',
+        name: 'Outgoing Trips',
+        icon: 'check-square',
+        component: () => lazyLoadView(import('@views/pages/inview/Outgoingtrip.vue')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+      },
+      {
+          path: 'DirectTrips',
+          name: 'DirectTrips',
+          icon: 'check-square',
+          component: () => lazyLoadView(import('@views/pages/inview/Tripdetails.vue')),
+          meta: { authRequired: true },
+          props: (route) => ({ user: store.state.auth.currentUser || {} }),
+        },
+    ]
+  },
+  {
+    path: '/Servicerequest',
+    name: 'ServiceRequest',
     
     icon: 'folder',
-    component: () => lazyLoadView(import('@views/pages/inview/Tripdetails.vue')),
+    meta: { label: 'Servicerequests' },
+    component: {
+      render(c) { return c('router-view') }
+    },
+
+    children: [
+  {
+    path: 'Truck',
+    name: 'Truck',
+    component: () => lazyLoadView(import('@views/pages/inview/servicerequesttruck')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
-    path: '/Service request details',
-    name: 'ServiceRequest',
-    
-    icon: 'folder',
-    component: () => lazyLoadView(import('@views/pages/inview/Servicerequestdetails.vue')),
+    path: 'Equipment',
+    name: 'Equipment',
+    component: () => lazyLoadView(import('@views/pages/inview/srequipment')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+],
   },
   {
     path: '/Reports',
@@ -456,6 +611,143 @@ const inviewRoutes = [
 // pageRoute
 const pagesRoutes = [
   {
+    path: '/Encoder',
+    name: 'Encoder',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/encoder/encoder')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Controlchecker',
+    name: 'Controlchecker',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/controlchecker/controlchecker')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Volumechecker',
+    name: 'Volumechecker',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/volumechecker/volumechecker')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/EditVolumechecker',
+    name: 'EditVolumechecker',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/volumechecker/editvolumechecker')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Billingperson',
+    name: 'Billingperson',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/billingperson/billingperson')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/UpdateBillingperson',
+    name: 'UpdateBillingperson',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/billingperson/updatebilling')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Treeview',
+    name: 'Treeview',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/inview/tree')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Createaddress',
+    name: 'Createaddress',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/Createaddress')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/CreateSRTruck',
+    name: 'CreateSRTruck',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/createsrtruck')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  
+  {
+    path: '/CreateClass',
+    name: 'CreateClass',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/Createclass')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/CreateDays',
+    name: 'CreateDays',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/Createdays')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/CreateType',
+    name: 'CreateType',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/Createtype')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/CreateSREquipment',
+    name: 'CreateSREquipment',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/createSRequipment')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+        path: '/CreateLgu',
+        name: 'CreateLgu',
+        icon: 'users',
+        component: () => lazyLoadView(import('@views/pages/account/Createlgu')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Createservicerequest',
+    name: 'Createservicerequest',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/servicerequest/createservicerequest')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Servicerequestmmda',
+    name: 'Servicerequestmmda',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/servicerequest/mmdasr')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Servicerequestbilling',
+    name: 'Servicerequestbilling',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/servicerequest/billingsr')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
     path: '/Createattendance',
     name: 'Createattendance',
     icon: 'check-square',
@@ -464,10 +756,34 @@ const pagesRoutes = [
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
+    path: '/Createhauler',
+    name: 'Createhauler',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/Createhauler')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Createhauleremployee',
+    name: 'Createhauleremployee',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/Createhauleremployee')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
     path: '/Createemployee',
     name: 'Createemployee',
     icon: 'check-square',
     component: () => lazyLoadView(import('@views/pages/account/Createemployee')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Createlguemployee',
+    name: 'Createlguemployee',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/Createlguemployee')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
@@ -543,7 +859,30 @@ const pagesRoutes = [
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
-  
+  {
+    path: '/CreateIncomingTrip',
+    name: 'CreateIncomingTrip',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/CreateIncomingTrip')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/CreateOutgoingTrip',
+    name: 'CreateOutgoingTrip',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/CreateOutgoingTrip')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/CreateLandfillTrip',
+    name: 'CreateLandfillTrip',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/account/CreateLandfillTrip')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
   {
     path: '/profile',
     name: 'Profile',
@@ -551,12 +890,115 @@ const pagesRoutes = [
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
-
+  {
+    path: '/Edithauleremployee',
+    name: 'Edithauleremployee',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/edithauleremployee')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/EditClass',
+    name: 'Editclass',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/editclass')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/EditType',
+    name: 'EditType',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/edittype')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/EditSRTruck',
+    name: 'EditSRTruck',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/editsrtruck')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/EditDays',
+    name: 'EditDays',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/editdays')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Editlguemployee',
+    name: 'Editlguemployee',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/editlguemployee')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Edithauler',
+    name: 'Edithauler',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/edithauler')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
   {
     path: '/Editpermission',
     name: 'Editpermission',
     icon: 'check-square',
     component: () => lazyLoadView(import('@views/pages/edit/editpermission')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/EditincomingtripByChecker',
+    name: 'EditIncomingTrip',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/volumechecker/editincomingtrip')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/EditincomingtripByBilling',
+    name: 'EditIncomingTrip',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/billingperson/editincomingtrip')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/EditoutgoingtripByVolumeChecker',
+    name: 'EditoutgoingtripByVolumeChecker',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/volumechecker/editOutgoingTripByVolumeChecker')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/EditlandfilltripByVolumeChecker',
+    name: 'EditlandfilltripByVolumeChecker',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/volumechecker/editLandfillTripByVolumeChecker')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/EditoutgoingtripByControlChecker',
+    name: 'EditoutgoingtripByControlChecker',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/controlchecker/editOutgoingTripByControlChecker')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/EditoutgoingtripByBilling',
+    name: 'EditoutgoingtripByBilling',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/billingperson/EditOutgoingTrip')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
@@ -612,10 +1054,26 @@ const pagesRoutes = [
   },
 
   {
+    path: '/Editservicerequest',
+    name: 'Editservicerequest',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/editservicerequest')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
     path: '/Editattendance',
     name: 'Editattendance',
     icon: 'check-square',
     component: () => lazyLoadView(import('@views/pages/edit/editattendance')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Reviewattendance',
+    name: 'Reviewattendance',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/reviewAttendance')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
@@ -636,6 +1094,14 @@ const pagesRoutes = [
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
+    path: '/Editlgu',
+    name: 'Editlgu',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/editlgu')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
     path: '/Editequipment',
     name: 'Editequipment',
     icon: 'check-square',
@@ -651,10 +1117,70 @@ const pagesRoutes = [
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
-
-
-
-
+  {
+    path: '/EditSRTruck',
+    name: 'EditSRTruck',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/editsrtruck')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/EditSREquipment',
+    name: 'EditSREquipment',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/editsrequipment')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Viewhauleremployee',
+    name: 'Viewhauleremployee',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewhauleremployee')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Viewservicerequest',
+    name: 'Viewservicerequest',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewservicerequest')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/ViewserviceTruck',
+    name: 'ViewserviceTruck',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewsrtruck')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Viewtripincoming',
+    name: 'Viewtripincoming',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewtripincoming')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Viewtripoutgoing',
+    name: 'Viewtripoutgoing',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewtripoutgoing')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Viewdirecttrip',
+    name: 'Viewdirecttrip',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewdirecttrip')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
   {
     path: '/Viewattendance',
     name: 'Viewattendance',
@@ -664,10 +1190,58 @@ const pagesRoutes = [
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
+    path: '/Viewclass',
+    name: 'Viewclass',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewclass')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Viewtype',
+    name: 'Viewtype',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewtype')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Viewhauler',
+    name: 'Viewhauler',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewhauler')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Viewdays',
+    name: 'Viewdays',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewdays')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
     path: '/Viewuser',
     name: 'Viewuser',
     icon: 'check-square',
     component: () => lazyLoadView(import('@views/pages/views/viewuser')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Viewlgu',
+    name: 'Viewlgu',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewlgu')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/Viewlguemployee',
+    name: 'Viewlguemployee',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/views/viewlguemployee')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
@@ -743,6 +1317,14 @@ const pagesRoutes = [
     name: 'Viewemployee',
     icon: 'check-square',
     component: () => lazyLoadView(import('@views/pages/views/viewemployee')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/ViewOutgoingTrip',
+    name: 'ViewOutgoingTrip',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/encoder/ViewOutgoingTrip')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },

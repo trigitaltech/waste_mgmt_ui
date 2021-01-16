@@ -5,6 +5,7 @@ import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
 import NProgress from 'nprogress/nprogress'
+import moment from "moment";
 import {
   ValidationProvider,
   ValidationObserver,
@@ -26,6 +27,18 @@ export default {
     ValidationObserver,
     ModelSelect,
   },
+  filters: {
+    formatdatetime: function(value) {
+      if (value) {
+        return moment(String(value)).format("hh:mm A DD/MM/YYYY");
+      }
+    },
+    formatdate: function(value) {
+      if (value) {
+        return moment(String(value)).format("DD/MM/YYYY");
+      }
+    }
+  },
   data() {
     return {
       plandata: '',
@@ -46,7 +59,7 @@ export default {
       AttendanceColumns: [
        
         {
-          key: 'employeeId',
+          key: 'employeeId.id',
           label: 'Emp Id',
         },
         {
@@ -100,6 +113,9 @@ export default {
     }
   },
   computed: {
+     rows(){
+     return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -187,16 +203,25 @@ export default {
             :items="item"
             class="mt-3"
           >
+            <template v-slot:cell(time_in)="data">
+              <div>{{ data.item.time_in | formatdatetime }}</div>
+            </template>
+            <template v-slot:cell(time_out)="data">
+              <div>{{ data.item.time_out | formatdatetime }}</div>
+            </template>
+            <template v-slot:cell(recordDate)="data">
+              <div>{{ data.item.recordDate | formatdate }}</div>
+            </template>
            <template v-slot:cell(actions)="data">
               <router-link :to="{ name: 'Viewattendance', params: data.item }">
               <span class="mr-2" >
                  <i class="fa fa-eye edit"></i>
                 </span>
               </router-link>
-            <router-link :to="{ name: 'Editattendance', params: data.item }">
-                <span class="mr-2">
+            <router-link :to="{ name: data.item.status=='CHECK_IN'?'Editattendance':'Reviewattendance', params: data.item }">
+                <b-button size="sm" class="mr-2" variant="primary"  :hidden="data.item.status === 'APPROVED' || data.item.status === 'REJECTED' ">
                   <i class="fas fa-pencil-alt edit"></i>
-                </span>
+                </b-button>
               </router-link>
             <span @click="deleteReq(data)">
               <i class="fa fa-times edit"></i>
@@ -251,7 +276,7 @@ export default {
             <b-pagination
               v-model="currentPage"
               :per-page="perPage"
-              :total-rows="Attendance"
+              :total-rows="rows"
               aria-controls="my-table"
               hide-goto-end-buttons
             ></b-pagination>

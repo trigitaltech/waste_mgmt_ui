@@ -64,12 +64,17 @@ export default {
       serviceoffice:"",
       personalidno:"",
       items: [
-        {
+         {
           text: 'Home',
           href: '/',
         },
+        
+         {
+          text: 'Employees',
+          href: '#/Employee/Employees',
+        },
         {
-          text: 'Employees/ Create Employee',
+          text: 'Create Employee',
           active: true,
         },
       ],
@@ -79,16 +84,19 @@ export default {
       clientId: '',
       options: ['DAF'],
       item:[ { value: 'INTERNAL', text: 'INTERNAL' },
-        { value: 'DRIVER', text: 'DRIVER' },
-          { value: 'CONTRACTOR', text: 'CONTRACTOR' },
-          { value: 'HELPER', text: 'HELPER' },
-          { value: 'OPERATOR', text: 'OPERATOR' },
-          { value: 'PALERO', text: 'PALERO' }],
+      
+          { value: 'OFFICE_ENCODER', text: 'OFFICE_ENCODER' },
+         
+          { value: 'PAYROLL', text: 'PAYROLL' },
+          { value: 'PALERO', text: 'PALERO' },
+           { value: 'BILLING', text: 'BILLING' }],
       file:"",
       item2:[],
       sid:"",
      form: {
+        baranggayCode:"",
         personalTitle: '',
+        code:'',
         firstName: '',
         middleName: '',
         lastName: '',
@@ -97,8 +105,8 @@ export default {
         email: '',
         number: '',
         address: '',
-        city: '',
-        area:'',
+        baranggay: '',
+        district:'',
         address2:'',
         state: '',
         country: '',
@@ -109,6 +117,7 @@ export default {
         voucherNo: '',
       },
       areas:[],
+      servingAreas:[],
       titles: ['Mr.', 'Sri.', 'Mrs'],
       item1:[],
       vouchernumber: '',
@@ -118,6 +127,7 @@ export default {
       createddate: new Date(),
       modifydate: new Date(),
       modifyby:"",
+     file:"",
       bouquetsOpt: [
         { value: null, text: 'Please select an option' },
         'FTA  AND STARTER',
@@ -133,10 +143,25 @@ export default {
   mounted() {
     // this.getClientDetails()
     this.getplans()
+    this.getareas()
       this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
   },
   methods: {
+    async getareas() {
+      try {
+        const result = await Areamasters();
+        this.areas = result.data.response.areaMaster
+        this.areas.map(e=>{
+            if(e.areaName!=null)
+              this.servingAreas.push(e.areaName);
+        })
+        console.log(this.servingAreas)
+      } catch (error) { 
+        console.log(error);
+      }
+      console.log(this.servingAreas);
+    },
     getid(){
         // console.log("haiiiiii",this.item2)
         this.areas.map(e=>{
@@ -180,6 +205,7 @@ export default {
                 userName: this.form.userName,
                 password: this.form.password,
                 passwordStatus: 1,
+                code: this.form.code,
                 email: this.form.email,
                 phone: this.form.number,
                 salutation: this.form.personalTitle,
@@ -188,20 +214,16 @@ export default {
                 lastName: this.form.lastName,
                 addressLine1: this.address,
                 addressLine2: this.address2,
-                area: this.form.area,
-                city: this.form.city,
+                baranggayId: this.form.baranggayCode,
+                district: this.form.district,
                 state: this.form.state,
                 country: this.form.country,
                 pin: this.form.postCode,
                 isDeleted: false,
                 status: 200,
-                createdDate: this.createddate,
-                modifiedDate: this.modifydate,
-                createdBy: this.createdby,
-                modifiedBy: this.modifyby,
-                personal_ID_NO: this.personalidno,
-                id_PROOF_DOC_URL:this.file,
-                service_OFFICE: this.sid,
+                personalIdNo: this.personalidno,
+                idProofDocURL:this.file,
+                serviceOffice: this.sid,
                 type:this.employeetype
             }
         let result = await createemployee(payload)
@@ -220,7 +242,17 @@ export default {
         })
       }
     },
- 
+    getdistricts(){
+      this.areas.map( e => {
+        if(e.areaName == this.form.baranggay){
+          this.form.baranggayCode = e.id
+          console.log("haii",e.districtId)
+          this.form.district = e.districtName
+          this.form.state = e.state
+          this.form.country = e.country
+        }
+      })
+    },
     async refresh() {
       setTimeout(function () {
         location.reload()
@@ -264,15 +296,16 @@ export default {
                             </div>
                           </div>
                           <!-- <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Gender</label>
-                                <multiselect
-                                  v-model.trim="form.gender"
-                                  placeholder="Select Gender"
-                                  :options="genderOpt"
-                                ></multiselect>
-                              </div>
-                            </div>-->
+                            <div class="form-group mt-3 mt-sm-0">
+                              <label for="default">Code</label>
+                              <input
+                                class="form-control"
+                                v-model="form.code"
+                                placeholder="Enter Code"
+                                required
+                              />
+                            </div>
+                          </div> -->
                              <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">User Name</label>
@@ -517,20 +550,8 @@ export default {
                                 required
                               />
                             </div>
-                            </div> 
-                          <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Area</label>
-                                <input
-                                  v-model.trim="form.area"
-                                  class="form-control"
-                                  type="text"
-                                  placeholder="Enter Area"
-                                
-                                />
-                              </div>
                             </div>
-                          <div class="col-md-4">
+                            <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Post Code</label>
                               <input
@@ -540,16 +561,29 @@ export default {
                                 type="number"
                               />
                             </div>
-                          </div>
-
+                          </div> 
+                          <div class="col-md-4">
+                              <div class="form-group mt-3 mt-sm-0">
+                                <label for="default">Baranggay</label>
+                                <multiselect
+                                required
+                                v-model="form.baranggay"
+                                placeholder="Select Baranggay"
+                                :options="servingAreas"
+                                @input="getdistricts"
+                              ></multiselect>
+                              </div>
+                            </div>
                            <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">City</label>
+                                <label for="default">District</label>
                                <input
-                                v-model.trim="form.city"
+                                v-model.trim="form.district"
                                 placeholder="Enter city"
                                 class="form-control"
                                 type="text"
+                                readonly
+                                disabled
                               />
                               </div>
                             </div>
@@ -561,7 +595,8 @@ export default {
                                   class="form-control"
                                   type="text"
                                   placeholder="Enter State"
-                               
+                                  readonly
+                                  disabled
                                 />
                               </div>
                             </div>
@@ -573,11 +608,12 @@ export default {
                                   class="form-control"
                                   type="text"
                                   placeholder="Enter Country"
-                                
+                                  readonly
+                                  disabled
                                 />
                               </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Employee Type</label>
                                  
@@ -589,7 +625,7 @@ export default {
                                            ></b-form-select>
                                     </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4" v-if="employeetype !== 'PALERO' && employeetype !== 'null'">
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Service office</label>
                                  
@@ -604,7 +640,7 @@ export default {
                            
                            
                             </div>
-                              <div class="col-md-3">
+                              <div class="col-md-4">
                             
                            
                         
@@ -621,8 +657,8 @@ export default {
                            
                            
                             </div>
-                             <div class="col-md-3">
-                              <div class="form-group mt-3 mt-sm-0">
+                             <div class="col-md-4">
+                             <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">ID Proof</label>
                                  
                                 <b-form-file
@@ -632,107 +668,16 @@ export default {
                                 @change="readAgreement"
                                 ></b-form-file>
                                     </div>
-                            </div>
-                            
+                             </div>
+                           
+                                                         
                           </div>
+                          
                           
                         </fieldset>
                         
                       </div>
 
-                    <!-- <div class="col-md-12">
-                        <fieldset class="border p-2">
-                          <legend class="w-auto">
-                            <h4 class="header-title mt-0 mb-1">Service Info</h4>
-                          </legend>
-                          <div class="row">
-                            <div class="col-md-3">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Box ID</label>
-                                <input
-                                  v-model.trim="form.stbNumber"
-                                  placeholder="Enter Box ID"
-                                  class="form-control"
-                                  type="text"
-                                />
-                              </div>
-                            </div>  -->
-
-                          <!-- <div class="col-md-3">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Voucher No</label>
-                                <input
-                                  v-model.trim="form.voucherNo"
-                                  class="form-control"
-                                  placeholder="Enter Voucher No"
-                                  type="number"
-                                />
-                              </div>
-                            </div>-->
-
-                          <!-- <div class="col-md-6">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Plan</label> -->
-                          <!-- <b-form-select v-model="selected" :options="options"  v-on:change="getplanprice()"></b-form-select> -->
-                          <!-- <model-select :options="options"
-                                v-model="item"
-                                placeholder="select item">
-                                </model-select>-->
-                          <!-- <b-form-select
-                                    oninvalid="this.setCustomValidity('Plan is required ')"
-                                  oninput="setCustomValidity('')"
-                                  required
-                                  v-model.trim="form.bouquets"
-                                  placeholder="Select Bouquets"
-                                  :options="bouquetsOpt"
-                                  @change="getplanprices()"
-                                ></b-form-select>
-                              </div>
-                            </div>
-
-                            <div class="col-md-3">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Amount</label>
-                                <input
-                                  v-model.trim="amount"
-                                  class="form-control"
-                                  type="number"
-                                  disabled
-                                  placeholder="Amount"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </fieldset>
-                      </div>
-                      <div class="col-md-12">
-                        <fieldset class="border p-2">
-                          <legend class="w-auto">
-                            <h4 class="header-title mt-0 mb-1">Voucher Info</h4>
-                          </legend>
-                          <div class="row">
-                            <div class="col-md-3">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">Voucher ID</label>
-                                <input
-                                  oninvalid="this.setCustomValidity('Voucher Id is required ')"
-                                  oninput="setCustomValidity('')"
-                                  required
-                                  v-model.trim="vouchernumber"
-                                  placeholder="Enter Voucher ID"
-                                  class="form-control"
-                                  type="text"
-                                  @input="myFunction"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </fieldset>
-                      </div>
-                    </div> -->
-                        <!-- </div>
-                      </fieldset> -->
-                    <!-- </div> -->
                   </div>
                   <div class="row mt-2 justify-content-center">
                     <div class="col-md-12">
@@ -745,7 +690,7 @@ export default {
                           > -->
                         <button
                           type="submit"
-                          class="btn btn-primary d-inline-flex align-items-center"
+                         class="btn btn-custome float-right btn-secondary mb-3"
                           >Submit</button
                         >
                       </div>

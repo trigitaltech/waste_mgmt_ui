@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- createdumping,users
+ createdumping,users,Areamasters
 } from '../../../../services/auth'
 
 export default {
@@ -42,14 +42,19 @@ export default {
       workinghours:"",
       message:"",
       stagingtype:null,
+      code:"",
+      areas:[],
+      servingAreas:[],
       createdby: "",
       createddate: new Date(),
       modifydate: new Date(),
+      baranggay:"",
+      district:"",
       modifyby:"",
        option: [
-        { value: null, text: 'Please select an option' },
+          { value: 'default', text: 'Default' },
         { value: 'solidwaste', text: 'Solidwaste' },
-        { value: 'organicewaste', text: 'Organicwaste)' },
+        { value: 'organicewaste', text: 'Organicwaste' },
       ],
       title: 'Register',
      item:[{ value: null, text: 'Please select an user' }],
@@ -58,12 +63,20 @@ export default {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Dumping Location',
+          href: '#/Setup/DumpingLocation',
+        },
         {
-          text: 'Dumping Location / Create Dumping',
+          text: 'Create Dumping',
           active: true,
         },
       ],
-   
+    inputs: [
+        {
+         dumpingPointName:'',
+        },
+      ],
     
     }
   },
@@ -78,8 +91,33 @@ export default {
        this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     this.userdata()
+    this.getareas()
   },
   methods: {
+     add() {
+      this.inputs.push({
+     dumpingPointName:'',
+      })
+      console.log(this.inputs)
+    },
+
+    remove(index) {
+      this.inputs.splice(index, 1)
+    },
+     async getareas() {
+      try {
+        const result = await Areamasters();
+        this.areas = result.data.response.areaMaster
+        this.areas.map(e=>{
+            if(e.areaName!=null)
+              this.servingAreas.push(e.areaName);
+        })
+        console.log(this.servingAreas)
+      } catch (error) { 
+        console.log(error);
+      }
+      console.log(this.servingAreas);
+    },
      async userdata() {
        try {
       
@@ -99,21 +137,35 @@ export default {
      
       } catch (error) {}
      },
+      getdistricts(){
+      this.areas.map( e => {
+        if(e.areaName == this.baranggay){
+          this.baranggayCode = e.code
+          console.log("haii",e.districtId)
+          this.district = e.districtName
+          this.state = e.state
+          this.country = e.country
+        }
+      })
+    },
     async create() {
       try {
         const payload = {
-            dumpingAreaName: this.dumpname,
+          code:this.code,
+         
+        dumpingAreaName: this.dumpname,
+  
             dumpingType: this.dumptype,
              supervisor: this.supervisor,
                 working_hrs:this.workinghours,
                 geoLat: this.geoLat,
                 geoLong: this.geoLong,
-            "isDeleted": true,
-            "status": 404,
-             createdDate: this.createddate,
-          createdBy: this.createdby,
-          modifiedDate: this.modifydate,
-          modifiedBy: this.modifyby,
+            "isDeleted": false,
+          
+                createdDate: this.createddate,
+              createdBy: this.createdby,
+              modifiedDate: this.modifydate,
+              modifiedBy: this.modifyby,
                 address: this.address,
                 state: this.state,
                 country: this.country,
@@ -121,7 +173,8 @@ export default {
                 holiday_message: this.message,
                 zip: this.zip,
                 city: this.city,
-                area: this.area
+                area: this.baranggay,
+                dumpingPoint:this.inputs
         }
         let result = await createdumping(payload)
         if (result) {
@@ -175,7 +228,7 @@ export default {
         <div class="mt-3">
               <!-- Default form subscription -->
               <form @submit.prevent="create">
-                <b-row class="mb-3">
+               <b-row>
                   <b-col>
                     <!-- Default input name -->
                     <label
@@ -212,14 +265,29 @@ export default {
                     ></b-form-select>
                     </b-col>
                 </b-row>
-                <b-row class="mb-3">
-                  <b-col>
+               <b-row class="mb-3">
+                   <!-- <b-col> -->
+                    <!-- Default input text -->
+                     <!-- <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Baranggay</label
+                    >
+                   <multiselect
+                                required
+                                v-model="baranggay"
+                                placeholder="Select Baranggay"
+                                :options="servingAreas"
+                                @input="getdistricts"
+                              ></multiselect>
+                  </b-col>          -->
+                 <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Address</label
                     >
-                    <input
+                    <b-textarea
                       id="defaultFormCardtextEx"
                       v-model="address"
                       type="text"
@@ -229,106 +297,6 @@ export default {
                                
                               placeholder="Enter Address"
                                 required
-                    />
-                  </b-col>
-                  <b-col>
-                    <!-- Default input name -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >State</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="state"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter state"
-                    />
-                  </b-col>
-                </b-row>
-                  <b-row class="mb-3">
-                    <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Supervisor</label
-                    >
-                   <b-form-select
-                  v-model.trim="supervisor"
-                  placeholder="Select Supervisor"
-                  label="value"
-                  :options="item"
-                   oninvalid="this.setCustomValidity('Supervisor is required ')"
-                                oninput="setCustomValidity('')"
-                               
-                                class="form-control"
-                                required
-                ></b-form-select>
-                  </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Working Hours</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="workinghours"
-                      type="text"
-                      class="form-control"
-                       oninvalid="this.setCustomValidity('Working Hours is required ')"
-                                oninput="setCustomValidity('')"
-                               placeholder="Enter working hours"
-                                required
-                    />
-                  </b-col>
-                  </b-row>
-                  <b-row class="mb-3">
-                  <b-col>
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >City</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="city"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter city"
-                    />
-                  </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Country</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="country"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter country"
-                    />
-                  </b-col>
-                </b-row>
-                <b-row class="mb-3">
-                  <b-col>
-                     <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Holiday Message</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="message"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter holidaymessage"
                     />
                   </b-col>
                   <b-col>
@@ -347,22 +315,11 @@ export default {
                     />
                   </b-col>
                 </b-row>
-                <b-row class="mb-3">
-                     <b-col>
-                     <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Location</label
-                    >
-                        <GmapAutocomplete
-                          :placeholder="'Select Target Location'"
-                          class="form-control"
-                          @place_changed="setPlace"
-                        ></GmapAutocomplete>
-                      </b-col>   
-                      <b-col>
+                  <b-row class="mb-3">
+                    
+                    <b-col>
                     <!-- Default input text -->
-                    <label
+                    <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Zip</label
@@ -373,25 +330,138 @@ export default {
                       type="text"
                       class="form-control"
                       placeholder="Enter zip"
-                    />
+                    /> -->
                   </b-col>
-                   <b-col>
+                  
+                  
+                  </b-row>
+                  <!-- <b-row class="mb-3">
+                  <b-col> -->
                     <!-- Default input text -->
-                     <label
+                    <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Area</label
+                      >District</label
                     >
                     <input
                       id="defaultFormCardtextEx"
-                      v-model="area"
+                      v-model="district"
                       type="text"
                       class="form-control"
-                      placeholder="Enter area"
+                      placeholder="Enter district"
+                      disabled
                     />
-                  </b-col>         
+                  </b-col> -->
+                
+                   <!-- <b-col> -->
+                    <!-- Default input name -->
+                    <!-- <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >State</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="state"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter state"
+                      disabled
+                    />
+                  </b-col>
+                    <b-col> 
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Country</label
+                    >
+                     <input
+                      id="defaultFormCardtextEx"
+                      v-model="country"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter country"
+                      disabled
+                    />
+                  </b-col>
                 </b-row>
+               
+                <b-row class="mb-3">
+                    
+                    
+                </b-row> -->
+                <!-- <b-row>
+                <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Working Hours</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="workinghours"
+                      type="text"
+                      class="form-control"
+                       oninvalid="this.setCustomValidity('Working Hours is required ')"
+                                oninput="setCustomValidity('')"
+                               placeholder="Enter working hours"
+                                required
+                    />
+                  </b-col>
+                  <b-col>
+                     <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Holiday Message</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="message"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter holidaymessage"
+                    />
+                  </b-col>
+                  </b-row> -->
+
+                    <br />
+                   <b-row v-for="(input, k) in inputs" :key="k">
+                 
+                  <b-col md="6">
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                    >
+                      Dumping Point Name</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      type="text"
+                      class="form-control"
+                      v-model="input.dumpingPointName"
+                      placeholder="Enter Dumping Point Name"
+                    />
+                  </b-col>
+                    <b-col>
+                    <span>
+                       <i
+                    class="fas fa-minus-circle"
+                    @click="remove(k)"
+                    v-show="k || (!k && inputs.length > 1)"
+                    >Remove</i
+                  >
+                  <i
+                    class="fas fa-plus-circle"
+                    @click="add(k)"
+                    v-show="k == inputs.length - 1"
+                    >Add Dumping Point</i
+                  >
+                
+                    </span>
+                  </b-col>
+                   </b-row>
                 <br />
+
                <button
                           type="submit"
                          class="btn btn-custome float-right btn-secondary mb-3"

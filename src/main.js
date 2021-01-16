@@ -7,11 +7,14 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import BootstrapVue from 'bootstrap-vue'
 import VueApexCharts from 'vue-apexcharts'
 import Vuelidate from 'vuelidate'
+import Antd from 'ant-design-vue'
 import VueMask from 'v-mask'
 import vco from 'v-click-outside'
 import VueRouter from 'vue-router'
 import VueFeather from 'vue-feather'
 import flatPickr from 'vue-flatpickr-component'
+import VueTimepicker from 'vue2-timepicker'
+import 'vue2-timepicker/dist/VueTimepicker.css'
 import 'vue-search-select/dist/VueSearchSelect.css'
 import Notifications from 'vue-notification'
 // import '../vee-validate.js'
@@ -20,7 +23,20 @@ import Toasted from 'vue-toasted';
 import { Datetime } from 'vue-datetime';
  
 import 'vue-datetime/dist/vue-datetime.css'
- 
+import 'ant-design-vue/dist/antd.css'
+import VueTreeList from 'vue-tree-list'
+import IdleVue from "idle-vue";
+
+const eventsHub = new Vue();
+Vue.use(IdleVue, {
+  eventEmitter: eventsHub,
+  store,
+  idleTime: 300000, // 60 seconds
+  startAtIdle: false
+});
+
+Vue.use(Antd)
+Vue.use(VueTreeList)
 Vue.use(Datetime)
 Vue.use(Notifications)
 Vue.use(VueFeather)
@@ -49,6 +65,8 @@ Vue.use(BootstrapVue)
 Vue.use(Vuelidate)
 Vue.use(VueMask)
 
+import Multiselect from 'vue-multiselect'
+Vue.component('multiselect', Multiselect)
 Vue.component('apexchart', VueApexCharts)
 
 // Uncomment this if you are having api served through other url or do not want to use fake backend

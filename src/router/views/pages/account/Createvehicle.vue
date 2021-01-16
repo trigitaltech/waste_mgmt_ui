@@ -8,11 +8,13 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import {routemaster,Areamasters,employees,createvehicle}from '../../../../services/auth'
+import {
+  routemaster,Areamasters,employees,createvehicle,vehicleTypes,haulers
+}from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Create Equipment',
+    title: 'Create Vehicle',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -37,6 +39,7 @@ export default {
      totalkmsserved:"",
      totalhoursserved:"",
       createdby: "",
+      volumecapacity:"",
       createddate: new Date(),
       modifydate: new Date(),
       modifyby:"",
@@ -46,19 +49,31 @@ export default {
         { value: 'Centralstaging', text: 'Central Staging' },
       ],
       item:[ ],
+      haulername:"",
+      warrantystatus:"",
       items: [
         {
-          text: 'Home',
+          text: 'Haulers',
           href: '/',
         },
+         {
+          text: 'HaulerVehicles',
+          href: '#/Hauler/Vehicle',
+        },
         {
-          text: 'Vehicle / Create Vehicle',
+          text: 'Create Vehicle',
           active: true,
         },
       ],
+      haulers:"",
+      haulerdata:[],
+      haulernames:[],
    owners:[],
+   code:"",
    emp:[],
    routes:[],
+   vehicleTypes:[],
+   vehicleTypesNames:[]
     
     }
   },
@@ -75,8 +90,39 @@ export default {
     this.areadata()
     this.employeedata()
     this.routedata()
+    this.getVehicleTypes()
+    this.getemployees()
   },
   methods: {
+     async getemployees() {
+       try {
+       
+      const result = await haulers()
+      this.haulerdata  = result.data.response.HaulerMaster
+      this.haulerdata.map(e=>{
+        this.haulernames.push(e.haulerName)
+      })
+
+      
+      } catch (error) {}
+   
+    },
+    gethauler(){
+this.haulerdata.map(e=>{
+  if(this.haulername === e.haulerName){
+    this.haulers =  e.id
+  }
+})
+
+
+    },
+    async getVehicleTypes() {
+      var result = await vehicleTypes()
+      this.vehicleTypes = result.data.response.VehiclesUpdated
+      this.vehicleTypes.map( e => {
+        this.vehicleTypesNames.push(e.truckType)
+      })
+    },
        getid(){
         console.log("haiiiiii",)
         this.emp.map(e=>{
@@ -136,35 +182,45 @@ export default {
 
       this.emp.map(e=>{
       this.owners.push(e.userName)
-      console.log("user",e)
       })
-       console.log("users",this.item)
-     
+        console.log(this.owners)
       } catch (error) {}
      },
     async create() {
+      var vehicletype = [];
+      this.vehicleTypes.map( e => {
+        if(e.truckType == this.vehicletype)
+          vehicletype.push(e)
+      })
+      console.log(vehicletype)
       try {
         const payload = {
-            vehicleType: this.vehicletype,
-            vehicleNo: this.vehicleno,
-            plateNo: this.plateno,
-            ownerName: this.ownername,
-            ownerId: this.ownerid,
-            equipmentId: this.equipmentid,
-            servingArea: this.servingarea,
-            servingRoute: this.servingroute,
-            manufactureDate: this.manufacturedate,
-            warrantyStatus: "NOT EXPIRED",
-            totalKmServed: this.totalkmsserved,
-            totalHourServed:this.totalhoursserved,
-            description:this.description,
-            isDeleted: false,
-            status: 22,
-            createdDate: this.createddate,
-            createdBy: this.createdby,
-            modifiedDate: this.modifydate,
-            modifiedBy: this.modifyby
-        }
+          "vehicleType": {
+            "id":vehicletype[0].id,
+            "code":vehicletype[0].code,
+            "createdBy":vehicletype[0].createdBy,
+            "modifiedBy":vehicletype[0].modifiedBy,
+            "createdDate":vehicletype[0].createdDate,
+            "modifiedDate":vehicletype[0].modifiedDate,
+            "isDeleted":null,
+            "truckType":vehicletype[0].truckType
+          },
+          "vehicleNo": this.vehicleno,
+          "plateNo": this.plateno,
+          code:this.code,
+          haulerId:this.haulers,
+          volumeCapacity:this.volumecapacity,
+          "ownerName": this.ownername,
+          "ownerId": null,
+          "servingArea": null,
+          "servingRoute": null,
+          "warrantyStatus": this.warrantystatus,
+          "totalKmServed": this.totalkmsserved,
+          "totalHourServed": this.totalhoursserved,
+          "description": this.description,
+          "isDeleted": false,
+          "createdBy": this.createdby,
+          }
         let result = await createvehicle(payload)
         if (result) {
           this.$swal({
@@ -174,7 +230,7 @@ export default {
             duration: 5000,
           })
          
-           this.$router.push({path:'/Vehicle'})
+           this.$router.push({path:'/Hauler/Vehicle'})
             
         }
       } catch (e) {
@@ -205,7 +261,7 @@ export default {
       >
         <div class="mt-3">
               <!-- Default form subscription -->
-              <form>
+              <form @submit.prevent="create">
                 <b-row class="mb-3">
                   <b-col>
                     <!-- Default input name -->
@@ -218,6 +274,7 @@ export default {
                     <input
                       id="defaultFormCardNameEx"
                       v-model="vehicleno"
+                      placeholder="Enter Vehicle No"
                       type="text"
                       class="form-control"
                     />
@@ -228,12 +285,13 @@ export default {
                       class="grey-text font-weight-dark"
                       >Vehicle Type</label
                     >
-                    <input
-                      id="defaultFormCardNameEx"
-                      v-model="vehicletype"
-                      type="text"
+                    <b-form-select
+                      v-model.trim="vehicletype"
+                      placeholder="Select Vehicle Type"
+                      label="value"
                       class="form-control"
-                    />
+                      :options="vehicleTypesNames"
+                    ></b-form-select>
                   </b-col>
                 </b-row>
                 <b-row class="mb-3">
@@ -241,16 +299,23 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Owner Name</label
+                      >Code</label
                     >
-                     <b-form-select
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="code"
+                       placeholder="Enter Code"
+                      type="text"
+                      class="form-control"
+                    />
+                     <!--<b-form-select
                   v-model.trim="ownername"
                   placeholder="Select Supervisor"
                   label="value"
                   class="form-control"
                 :options="owners"
                   @change="getid"
-                ></b-form-select>
+                ></b-form-select>-->
 
                     <!-- Default input name --> 
                   </b-col>
@@ -263,15 +328,16 @@ export default {
                     <input
                       id="defaultFormCardtextEx"
                       v-model="plateno"
+                       placeholder="Enter Plate No"
                       type="text"
                       class="form-control"
                     />
                   </b-col>
                 </b-row>
-                  <b-row class="mb-3">
+                  <!--<b-row class="mb-3">
                     
                       <b-col>
-                    <!-- Default input text -->
+                    <!- Default input text 
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -299,7 +365,7 @@ export default {
                   :options="routes"
                 ></b-form-select>
                </b-col>
-                  </b-row>
+                  </b-row>-->
                <b-row class="mb-3">
                  <b-col>
                     <!-- Default input text -->
@@ -311,6 +377,7 @@ export default {
                     <input
                       id="defaultFormCardtextEx"
                       v-model="totalkmsserved"
+                       placeholder="Enter Total Kms Served"
                       type="text"
                       class="form-control"
                     />
@@ -324,6 +391,7 @@ export default {
                     <input
                       id="defaultFormCardtextEx"
                       v-model="totalhoursserved"
+                       placeholder="Enter Total Hours Served"
                       type="text"
                       class="form-control"
                     />
@@ -335,52 +403,70 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >ManufactureDate</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="manufacturedate"
-                      type="text"
-                      class="form-control"
-                    />
-                     </b-col>
-                     <b-col>
-                     <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Equipment Id</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="equipmentid"
-                      type="text"
-                      class="form-control"
-                    />
-
-                     </b-col>
-                </b-row>
-                 <b-row class="mb-3">
-                   <b-col cols="12">
-                    <!-- Default input text -->
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
                       >Description</label
                     >
                     <input
                       id="defaultFormCardtextEx"
                       v-model="description"
+                       placeholder="Enter Description"
                       type="text"
                       class="form-control"
                     />
                      </b-col>
+                 <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >WarrantyStatus</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="warrantystatus"
+                      type="text"
+                       placeholder="Enter Warranty Status"
+                      class="form-control"
+                    />
+
+                 </b-col>
+                 
+                     <!-- </b-col> -->
                 </b-row>
-                <b-button
-                  class="btn btn-custome float-right btn-secondary mb-3"
-                  text="Create Tenant"
-                  @click="create"
-                  >Create</b-button
-                >
+                 <b-row class="mb-3">
+                  <b-col md="6">
+                    <!-- Default input text -->
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Hauler</label
+                    >
+                    <multiselect
+                                v-model="haulername"
+                                placeholder="Select Hauler"
+                                :options="haulernames"
+                                @input="gethauler"
+                              ></multiselect>
+                     </b-col>
+                <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Volume Capacity</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="volumecapacity"
+                       placeholder="Enter Volume Capacity"
+                      type="text"
+                      class="form-control"
+                    />
+                 </b-col>
+                 
+                     <!-- </b-col> -->
+                </b-row>
+                <button
+                          type="submit"
+                         class="btn btn-custome float-right btn-secondary mb-3"
+                          >Create</button>
               </form>
               <!-- Default form subscription -->
         </div>

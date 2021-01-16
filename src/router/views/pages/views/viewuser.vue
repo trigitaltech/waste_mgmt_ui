@@ -66,8 +66,13 @@ export default {
           text: 'Home',
           href: '/',
         },
+        
+         {
+          text: 'Users',
+          href: '#/Users',
+        },
         {
-          text: 'Users / View User',
+          text: 'View User',
           active: true,
         },
       ],
@@ -75,7 +80,7 @@ export default {
       selected: null,
       clientId: '',
       options: ['DAF'],
-      servieoffice:this.$route.params.service_Office,
+      serviceoffice:this.$route.params.service_Office,
       file:"",
       personalidno:this.$route.params.personalIdNo,
       item: {
@@ -179,11 +184,7 @@ export default {
                 role: this.rolename,
                 isDeleted: false,
                 status: 200,
-                createdDate: this.createddate,
-                modifiedDate: this.modifydate,
-                createdBy: this.createdby,
-                modifiedBy: this.modifyby,
-                service_Office: this.servieoffice
+                service_Office: this.serviceoffice
             
         }
         let result = await Edituser(payload ,this.$route.params.id)
@@ -300,7 +301,7 @@ export default {
                               <input
                                 v-model.trim="form.password"
                                 for="firstname"
-                                type="text"
+                                type="password"
                                 oninvalid="this.setCustomValidity('Password is required ')"
                                 oninput="setCustomValidity('')"
                                 placeholder="Enter Password"

@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- Edituser,roles
+ Edituser,roles,Areamasters
 } from '../../../../services/auth'
 
 export default {
@@ -40,6 +40,8 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
+      roledata1:[],
+      rolesarray:[],
        item: 
            {key:'resource',value
            :'Frozen Yogurt', name: '159'},
@@ -62,27 +64,35 @@ export default {
         },
       ],
       items: [
-        {
+         {
           text: 'Home',
           href: '/',
         },
+        
+         {
+          text: 'Users',
+          href: '#/Users',
+        },
         {
-          text: 'Users / Edit User',
+          text: 'Edit User',
           active: true,
         },
       ],
       finalModel: {},
+      file:"",
       selected: null,
       clientId: '',
+        role:[],
       options: ['DAF'],
-      servieoffice:this.$route.params.service_Office,
+      serviceoffice:this.$route.params.service_Office,
       file:"",
-      personalidno:this.$route.params.personalIdNo,
+    
       item: {
         value: '',
         text: '',
       },
      form: {
+         personalidno:this.$route.params.personalIdNo,
         personalTitle:this.$route.params.salutation,
         firstName: this.$route.params.firstName,
         middleName: this.$route.params.middleName,
@@ -111,6 +121,8 @@ export default {
       cityOpt: [],
        createdby: "",
       createddate: new Date(),
+      sid:"",
+      item2:[],
       modifydate: new Date(),
       modifyby:"",
       bouquetsOpt: [
@@ -131,24 +143,75 @@ export default {
      this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     this.roledata()
+    this.getplans()
     console.log(this.$route.params)
   },
   methods: {
+     readAgreement(e) {
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      this.file = reader.result;
+    };
+    reader.onerror = err => {
+      console.error("reader : ", err);
+    };
+  },
+     getid(){
+        // console.log("haiiiiii",this.item2)
+        this.areas.map(e=>{
+            if(this.serviceoffice === e.areaName){
+                this.sid = e.id    
+                       }
+                        //  console.log("haiiiiii",this.sid)
+        })
+      },
+     async getplans() {
+       try {
+        const result = await Areamasters()
+      this.areas = result.data.response.areaMaster
+    //   console.log("users",data[0].userName)
+      // JSON.parse(JSON.stringify(result))
+      // for(i=0;i<data.length;i++){
+      //   this.item[i]=data[i].userName
+      // }
+
+      this.areas.map(e=>{
+      this.item2.push(e.areaName)
+      console.log("user",e)
+      })
+       console.log("users",this.item)
+     
+      } catch (error) {}
+     },
+       getroles(){
+        this.roledata1.map(e=>{
+          if(this.rolename === e.name){
+            this.rolesarray = e.code
+          }
+        })
+    },
      async roledata() {
        try {
       
       const result = await roles()
-      var data = result.data.response.RoleMaster
+      this.roledata1 = result.data.response.RoleMaster
+      this.roledata1.map(e=>{
+          if(e.code === 'ADMIN'){
+        this.role.push(e.code)
+        }
+       
+      })
       // console.log("users",data[0].userName)
       // JSON.parse(JSON.stringify(result))
       // for(i=0;i<data.length;i++){
       //   this.item[i]=data[i].userName
       // }
 
-      data.map(e=>{
-      this.roles.push(e.name)
+      // this.roledata1.map(e=>{
+      // this.roles.push(e.name)
       // console.log("user",e)
-      })
+      // })
       //  console.log("users",this.item)
      
       } catch (error) {}
@@ -175,15 +238,17 @@ export default {
                 pin: this.form.postCode,
                 personalIdNo: this.form.personalidno,
                 idProofDocURL: this.file,
-                type: null,
-                role: this.rolename,
+                type: this.rolename,
+                
+                roles:[
+                      {
+                          code: this.rolesarray,
+                      }
+                  ],
                 isDeleted: false,
                 status: 200,
-                createdDate: this.createddate,
-                modifiedDate: this.modifydate,
-                createdBy: this.createdby,
-                modifiedBy: this.modifyby,
-                service_Office: this.servieoffice
+               
+                service_Office: this.sid
             
         }
         let result = await Edituser(payload ,this.$route.params.id)
@@ -294,12 +359,10 @@ export default {
                               <input
                                 v-model.trim="form.password"
                                 for="firstname"
-                                type="text"
-                                oninvalid="this.setCustomValidity('Password is required ')"
-                                oninput="setCustomValidity('')"
-                                placeholder="Enter Password"
+                                type="password"
+                            
                                 class="form-control"
-                                required
+                              disabled
                               />
                               <!-- <input
                                     v-model.trim="form.firstName"
@@ -507,7 +570,7 @@ export default {
                                   v-model.trim="form.area"
                                   class="form-control"
                                   type="text"
-                                  placeholder="Enter Country"
+                                  placeholder="Enter Area"
                                 
                                 />
                               </div>
@@ -567,12 +630,12 @@ export default {
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Service office</label>
                                  
-                              <input
-                                v-model.trim="serviceoffice"
-                                placeholder="Enter Service office"
-                                class="form-control"
-                                type="number"
-                              />
+                               <b-form-select
+                                           v-model.trim="serviceoffice"
+                                            :options="item2"
+                                           class="form-control"
+                                              @change="getid"
+                                ></b-form-select>
                                     </div>
                            
                            
@@ -602,7 +665,7 @@ export default {
                                    <label for="default">Personal ID No</label>
                                  
                               <input
-                                v-model.trim="personalidno"
+                                v-model.trim="form.personalidno"
                                 placeholder="Enter Personal ID"
                                 class="form-control"
                                 type="number"
@@ -619,14 +682,15 @@ export default {
                                       <label
                               for="defaultFormCardEmailEx"
                               class="grey-text font-weight-dark"
-                              >Role</label
+                              >Type</label
                             >
                             <b-form-select
                           v-model.trim="rolename"
                           placeholder="Select Supervisor"
                           label="value"
                           class="form-control"
-                          :options="roles"
+                          @change="getroles"
+                          :options="role"
                         ></b-form-select>
                               </div>
                              </div>

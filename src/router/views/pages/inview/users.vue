@@ -5,6 +5,7 @@ import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
 import NProgress from 'nprogress/nprogress'
+import moment from 'moment'
 import {
   ValidationProvider,
   ValidationObserver,
@@ -43,7 +44,7 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-      item: { },
+      item: [],
 
       permissionColumns: [
         {
@@ -71,10 +72,7 @@ export default {
           key: 'addressLine1',
           label: 'addressLine1',
         },
-         {
-          key: 'city',
-          label: 'city',
-        },
+        
          {
           key: 'state',
           label: 'state',
@@ -107,11 +105,14 @@ export default {
       selected: null,
       clientId: '',
       options: ['DAF'],
-      item: {},
+      item: [],
       
     }
   },
   computed: {
+     rows(){
+     return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -120,6 +121,15 @@ export default {
   this.userdata()
   },
   methods: {
+      getDate(timeStamp) {
+    // debugger
+      //  console.log(timeStamp)
+      let date
+      // if (timeStamp !== undefined){
+        // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
+    return moment(timeStamp).format('DD/MM/YYYY')
+      // }
+    },
     async deleteReq(data) {
        console.log("data",data.item.id)
        var id = data.item.id
@@ -206,10 +216,12 @@ export default {
             :items="item"
             class="mt-3"
              
-                :filter-included-fields="filterOn"
-                @filtered="onFiltered"
-          >
+              
+          > <template v-slot:cell(createdDate)="data">
+                            <div class="table-row">{{ getDate(data.item.createdDate) }}</div>
+                        </template>
               <template v-slot:cell(actions)="data">
+                
              <router-link :to="{ name: 'Viewuser', params: data.item }">
                 <span class="mr-2" >
                  <i class="fa fa-eye edit"></i>
@@ -229,7 +241,7 @@ export default {
             <b-pagination
               v-model="currentPage"
               :per-page="perPage"
-              :total-rows="item"
+              :total-rows="rows"
               aria-controls="my-table"
               hide-goto-end-buttons
             ></b-pagination>
@@ -240,6 +252,7 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
+
 <style lang="sass" scoped>
 .edit
   color: #a7a7a7 !important
@@ -253,4 +266,11 @@ export default {
   box-shadow: 0 0 10px #ccc
   .role-details
     margin: 10px
+</style>
+<style scoped>
+.table thead th {
+    outline: none !important;
+    color: black;
+}
+
 </style>

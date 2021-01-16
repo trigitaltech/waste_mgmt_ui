@@ -56,12 +56,17 @@ export default {
         
       ],
       items: [
-        {
-          text: 'Setup',
+         {
+          text: 'Home',
           href: '/',
         },
+        
+         {
+          text: 'Attendances',
+          href: ' #/Employee/Attendance',
+        },
         {
-          text: 'Attendance / CHECK OUT',
+          text: 'CHECK OUT',
           active: true,
         },
       ],
@@ -184,7 +189,16 @@ this.employeedata()
                     >
                    <datetime 
                       v-model="timeout"
-                     
+                      :format="{
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        milisecond: '2-digit'
+                      }"
+                      type="datetime"
                       placeholder="SELECT TIME OUT"
                       name="startdate"
                  ></datetime>
@@ -207,9 +221,6 @@ this.employeedata()
                       placeholder="Enter Description"
                       name="startdate"
                     />
-
-                    <!-- Default input name -->
-                  
                   </b-col>
               
                   <br />

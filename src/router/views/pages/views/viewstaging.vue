@@ -33,6 +33,8 @@ export default {
       state:this.$route.params.state,
       country:this.$route.params.country,
       zip:this.$route.params.zip,
+      dumpingAreaName:this.$route.params.dumpingArea.dumpingAreaName,
+      lguName:this.$route.params.lguName.lguName,
       geoLat:this.$route.params.geoLat,
       geoLong:this.$route.params.geoLong,
       area:this.$route.params.area,
@@ -50,12 +52,16 @@ export default {
       ],
       item:[ ],
       items: [
-        {
+         {
           text: 'Setup',
           href: '/',
         },
+         {
+          text: 'Staging Area',
+          href: '#/Setup/StagingArea',
+        },
         {
-          text: 'Staging Area / View Staging',
+          text: ' View Staging',
           active: true,
         },
       ],
@@ -124,7 +130,7 @@ export default {
                 modifiedBy: this.modifyby,
                 address: this.address,
                 state:this.state,
-                country: this.country,
+                country: this.country,dumpingAreaName,
                 description: this.description,
                 holiday_message:this.message,
                 zip: this.zip,
@@ -175,6 +181,19 @@ export default {
                 <b-row>
                   <b-col>
                     <!-- Default input name -->
+                     <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                    >
+                     Dumping Area</label
+                    >
+                    <input
+                    id="defaultFormCardNameEx"
+                      v-model="dumpingAreaName"
+                      disabled
+                      type="text"
+                      class="form-control"
+                    />
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
@@ -188,19 +207,19 @@ export default {
                       type="text"
                       class="form-control"
                     />
-
-                   <label
+                    <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Staging Type</label
+                      >LGU</label
                     >
                      <input
                     id="defaultFormCardNameEx"
-                      v-model="stagingtype"
+                      v-model="lguName"
                       disabled
                       type="text"
                       class="form-control"
                     />
+
                     <!-- <b-form-select
                       v-model="stagingtype"
                       :options="option"
@@ -212,7 +231,19 @@ export default {
 
                     <!-- Default input email -->
                   </b-col>
-                  <b-col>
+                    <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >Staging Type</label
+                    >
+                     <input
+                    id="defaultFormCardNameEx"
+                      v-model="stagingtype"
+                      disabled
+                      type="text"
+                      class="form-control"
+                    />
                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
@@ -227,83 +258,9 @@ export default {
                     />
 
                     <!-- Default input name -->
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >State</label
-                    >
-                    <input
-                    id="defaultFormCardEmailEx"
-                      v-model="state"
-                      disabled
-                      type="email"
-                      class="form-control"
-                    />
                   </b-col>
+                  </b-row>
                   <br />
-                </b-row>
-                  <b-row>
-                    
-                      <b-col>
-                    <!-- Default input email -->
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Supervisor</label
-                    >
-                    <input
-                    id="defaultFormCardEmailEx"
-                      v-model="supervisor"
-                      disabled
-                      type="email"
-                      class="form-control"
-                    />
-
-
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Working Hours</label
-                    >
-                    <input
-                    id="defaultFormCardEmailEx"
-                      v-model="workinghours"
-                      disabled
-                      type="email"
-                      class="form-control"
-                    />
-                  </b-col>
-               
-                 <b-col>
-                    <!-- Default input email -->
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >City</label
-                    >
-                    <input
-                    id="defaultFormCardEmailEx"
-                      v-model="city"
-                      disabled
-                      type="email"
-                      class="form-control"
-                    />
-
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Country</label
-                    >
-                    <input
-                    id="defaultFormCardEmailEx"
-                      v-model="country"
-                      disabled
-                      type="email"
-                      class="form-control"
-                    />
-                  </b-col>
-                  
-                </b-row>
                 <b-row>
                   <!-- <b-col md="3">
                      <p class="head">Location</p>
@@ -328,18 +285,6 @@ export default {
                       class="form-control"
                     />
 
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Holiday Message</label
-                    >
-                    <input
-                    id="defaultFormCardEmailEx"
-                      v-model="message"
-                      disabled
-                      type="email"
-                      class="form-control"
-                    />
                   </b-col>
                    <!-- <b-col> -->
                     <!-- Default input email -->
@@ -376,9 +321,9 @@ export default {
                   
                 </b-row>
                 <b-row>
-                <b-col>
+                <!-- <b-col> -->
                     <!-- Default input email -->
-                    <label
+                    <!-- <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
                       >Zip</label
@@ -392,8 +337,8 @@ export default {
                     />
 
                   
-                  </b-col>
-                  <b-col>
+                  </b-col> -->
+                  <!-- <b-col>
                       <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
@@ -406,7 +351,7 @@ export default {
                       type="email"
                       class="form-control"
                     />
-                  </b-col>
+                  </b-col> -->
                   
                 </b-row>
                 <br />

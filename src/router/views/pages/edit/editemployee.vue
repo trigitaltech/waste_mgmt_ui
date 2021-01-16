@@ -64,12 +64,17 @@ export default {
       serviceoffice:this.$route.params.service_OFFICE,
       personalidno:this.$route.params.personal_ID_NO,
       items: [
-        {
+         {
           text: 'Home',
           href: '/',
         },
+        
+         {
+          text: 'Employees',
+          href: '#/Employee/Employees',
+        },
         {
-          text: 'Employees/ Edit Employee',
+          text: 'Edit Employee',
           active: true,
         },
       ],
@@ -78,12 +83,13 @@ export default {
       selected: null,
       clientId: '',
       options: ['DAF'],
-      item:[ { value: 'INTERNAL', text: 'INTERNAL' },
-        { value: 'DRIVER', text: 'DRIVER' },
-          { value: 'CONTRACTOR', text: 'CONTRACTOR' },
-          { value: 'HELPER', text: 'HELPER' },
-          { value: 'OPERATOR', text: 'OPERATOR' },
-          { value: 'PALERO', text: 'PALERO' }],
+      item:[{ value: 'INTERNAL', text: 'INTERNAL' },
+      
+          { value: 'OFFICE_ENCODER', text: 'OFFICE_ENCODER' },
+         
+          { value: 'PAYROLL', text: 'PAYROLL' },
+          { value: 'PALERO', text: 'PALERO' },
+           { value: 'BILLING', text: 'BILLING' }],
       file:"",
       item2:[],
       sid:"",
@@ -315,12 +321,11 @@ export default {
                               <input
                                 v-model.trim="form.password"
                                 for="firstname"
-                                type="text"
-                                oninvalid="this.setCustomValidity('Password is required ')"
-                                oninput="setCustomValidity('')"
+                                type="password"
+                              
                                 placeholder="Enter Password"
                                 class="form-control"
-                                required
+                               
                               />
                               <!-- <input
                                     v-model.trim="form.firstName"
@@ -592,7 +597,7 @@ export default {
                                            ></b-form-select>
                                     </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4" v-if="employeetype !== 'PALERO' && employeetype !== 'null'">
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Service office</label>
                                  
@@ -748,7 +753,7 @@ export default {
                           > -->
                         <button
                           type="submit"
-                          class="btn btn-primary d-inline-flex align-items-center"
+                           class="btn btn-custome float-right btn-secondary mb-3"
                           >Submit</button
                         >
                       </div>

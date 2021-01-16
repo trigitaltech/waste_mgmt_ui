@@ -4,19 +4,13 @@ import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
+import moment from 'moment'
 import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  registerTemplete,
-  ServicerequestdetailsTemplete,
-  simpleactivation,
-  editcustomer,
-  plans,
-  planprice,
-  searchvoucher,
-  redeem,
+ servicerequests,deleteservicerequest
 } from '../../../../services/auth'
 
 export default {
@@ -34,6 +28,7 @@ export default {
   },
   data() {
     return {
+      item:[],
       plandata: '',
       striped: false,
       bordered: true,
@@ -51,18 +46,50 @@ export default {
 
       ServicerequestdetailsColumns: [
         {
-          key: 'resource',
+          key: 'id',
 
-          label: 'Resource',
+          label: 'ID',
         },
         {
-          key: 'name',
-          label: 'Servicerequestdetails',
+          key: 'serviceNo',
+          label: 'serviceNo',
         },
 
+        {
+          key: 'requestType',
+           label: 'requestType',
+        },
+         {
+          key: 'jobStartTime',
+           label: 'JobStartTime',
+        },
+          {
+          key: 'dumpingArea',
+           label: 'dumpingArea',
+        },
+          {
+          key: 'driverName',
+           label: 'driverName',
+        },
+          {
+          key: 'equipmentId',
+           label: 'equipmentId',
+        },
+         {
+          key: 'controlChekerName',
+           label: 'controlCheckerName',
+        },
+         {
+          key: 'tripDate',
+           label: 'TripDate',
+        },
+         {
+          key: 'status',
+           label: 'status',
+        },
         {
           key: 'actions',
-          sortable: true,
+           label: 'actions',
         },
       ],
       items: [
@@ -113,15 +140,57 @@ export default {
     }
   },
   computed: {
+     rows(){
+     return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
   },
   mounted() {
-  
+  this.servicerequest()
   },
   methods: {
-    
+      getDate(timeStamp) {
+    // debugger
+      //  console.log(timeStamp)
+      let date
+      // if (timeStamp !== undefined){
+        // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
+      return moment(timeStamp).format('DD/MM/YYYY')
+      // }
+    },
+    async deleteReq(data) {
+       console.log("data",data.item.id)
+       var id = data.item.id
+     try{
+          
+        const result = await deleteservicerequest(data.item.id)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `You Deleted Servicerequest Successfully`,
+            duration: 5000,
+          })
+        //  this.refresh()
+        }
+      } catch (e) {
+         this.$toasted.error(e.message.error, {
+          duration: 7000,
+        })
+      }
+     
+    },
+     async servicerequest() {
+       try {
+      
+      const result = await  servicerequests()
+      this.item = result.data.response.ServiceTicket
+  
+      } catch (error) {}
+   
+    },
     async refresh() {
       setTimeout(function () {
         location.reload()
@@ -130,25 +199,35 @@ export default {
   },
 }
 </script>
-
 <template>
   <Layout>
     <PageHeader :items="items" />
 
     <div class="animated fadeIn">
       <b-card
-        header="Servicerequestdetailss"
-
+        header="ServiceRequests"
         class="mt-10 ml-10 mr-10 mx-auto"
       >
-        <b-col md="12">
+      <b-row>
+        <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+        <b-col md="9">
           <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({ path: '/create' })"
-            >Create Servicerequestdetails</b-button
+            @click="$router.push({ name: 'Createservicerequest' })" 
+            >Create servicerequest</b-button
           >
         </b-col>
+      </b-row>
         <div class="mt-3">
           <b-table
             id="my-table"
@@ -161,43 +240,44 @@ export default {
             :responsive="true"
             :current-page="currentPage"
             :per-page="perPage"
-            thead-class="header"
             :small="small"
             :fixed="fixed"
             :fields="ServicerequestdetailsColumns"
             :items="item"
             class="mt-3"
-          >
-            <template slot="actions" slot-scope="data">
-              <b-button
-                size="sm"
-                class="mr-2"
-                variant="primary"
-                @click="editServicerequestdetails(data)"
-              >
-                <i class="fas fa-pencil-alt edit"></i>
-              </b-button>
-              <b-button
-                size="sm"
-                class="mr-2"
-                variant="danger"
-                @click="deleteServicerequestdetails(data)"
-              >
-                <i class="fa fa-times bin"></i>
-              </b-button>
-              <!-- <b-button size="sm" class="mr-2" variant="html5 icon" @click="deleteServicerequestdetails(data)">
-              <i class="fa fa-times"></i>
-            </b-button>
-            <b-button size="sm" class="mr-2" variant="facebook" @click="editServicerequestdetails(data)">
-              <i class="fa fa-pencil"></i>
-            </b-button>-->
-            </template>
+          
+             
+                :filter-included-fields="filterOn"
+                @filtered="onFiltered"
+           ><template v-slot:cell(jobStartTime)="data">
+                            <div class="table-row">{{ getDate(data.item.jobStartTime) }}</div>
+                        </template>
+                        <template v-slot:cell(tripDate)="data">
+                            <div class="table-row">{{ getDate(data.item.tripDate) }}</div>
+                        </template>
+          
+              <template v-slot:cell(actions)="data">
+                
+             <router-link :to="{ name: 'Viewservicerequest', params: data.item }">
+                <span class="mr-2" >
+                 <i class="fa fa-eye edit"></i>
+                </span>
+              </router-link>
+             <router-link :to="{ name: 'Editservicerequest', params: data.item }">
+                <span class="mr-2">
+                  <i class="fas fa-pencil-alt edit"></i>
+                </span>
+              </router-link>
+            <span @click="deleteReq(data)">
+              <i class="fa fa-times edit"></i>
+            </span>
+           </template>
           </b-table>
           <div style="float: right">
             <b-pagination
               v-model="currentPage"
               :per-page="perPage"
-              :total-rows="Servicerequestdetails"
+              :total-rows="rows"
               aria-controls="my-table"
               hide-goto-end-buttons
             ></b-pagination>
@@ -208,6 +288,8 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
+
+
 <style lang="sass" scoped>
 .edit
   color: #a7a7a7 !important
@@ -221,4 +303,11 @@ export default {
   box-shadow: 0 0 10px #ccc
   .role-details
     margin: 10px
+</style>
+<style scoped>
+.table thead th {
+    outline: none !important;
+    color: black;
+}
+
 </style>

@@ -19,12 +19,31 @@ export default {
     },
   },
   data() {
-    return {}
+    return {
+      userData:{}
+    }
   },
   computed: {
     ...authComputed,
   },
   methods: {
+    goToHomePage() {
+      this.userData = JSON.parse(localStorage.getItem('auth.currentUser'))
+      console.log(this.userData)
+      const role = this.userData.user.roles[0].code
+      if(role == 'ENCODER') {
+        console.log('1')
+        this.$router.push('/Encoder')
+      }
+      if(role == 'VOLUME_CHECKER') {
+        console.log('2')
+        this.$router.push('/Volumechecker')
+      }
+      if(role == 'ADMIN') {
+        console.log('3')
+        this.$router.push('/')
+      }
+    },
     toggleMenu() {
       this.$parent.toggleMenu()
     },
@@ -43,19 +62,19 @@ export default {
   <!-- Topbar Start -->
   <div class="navbar navbar-expand flex-column flex-md-row navbar-custom">
     <div class="container-fluid">
-      <!-- LOGO -->
-      <a href="/" class="navbar-brand mr-0 mr-md-2 logo">
+      <!--<a @click="goToHomePage" class="navbar-brand mr-0 mr-md-2 logo">
         <span class="logo-lg">
-          <!-- <img src="@assets/images/tstvlogo.png" alt height="90"/> -->
           <span class="d-inline h5 text-logo" style="color: #4b4b5a;"
             >Waste Management</span
           >
         </span>
-        <!-- <span class="logo-sm">
-					<img src="@assets/images/logo.png" alt height="24" />
-				</span> -->
-      </a>
-
+      </a>-->
+        <!-- @click="goToHomePage" -->
+      <button class="navbar-brand logo ml-0 mr-md-2 h3 w-25 btn btn-primary-outline" 
+        
+          style="color:#4b4b5a;font-size:20px">
+        WASTE MANAGEMENT
+      </button>
       <ul
         class="navbar-nav bd-navbar-nav flex-row list-unstyled menu-left mb-0"
         style="background-color: #26a69a; color: white"
@@ -76,7 +95,7 @@ export default {
         class="navbar-nav flex-row ml-auto d-flex list-unstyled topnav-menu float-right mb-0"
       >
         <li class="d-none d-sm-block">
-					<div class="app-search">
+					<!-- <div class="app-search">
 						<form>
 							<div class="input-group">
 								<input
@@ -87,7 +106,7 @@ export default {
 								<feather type="search" class="align-middle"></feather>
 							</div>
 						</form>
-					</div>
+					</div> -->
 				</li>
         <b-nav-item-dropdown
           right
@@ -103,11 +122,11 @@ export default {
 							/>
               <div class="media-body text-left">
                 <h6 class="pro-user-name ml-2 my-0">
-                  <span>{{ user.user.username }}</span>
+                  <span>{{ user.user.userName }}</span>
                   <h5
                     class="pro-user-desc text-muted d-block mt-1"
                     style="color: white"
-                    >Administrator</h5
+                    >{{ user.user.roles[0].code }}</h5
                   >
                 </h6>
               </div>
@@ -117,10 +136,10 @@ export default {
               ></feather>
             </div>
           </template>
-          <b-dropdown-item href="#/profile" class="notify-item p-0">
+          <!-- <b-dropdown-item href="#/profile" class="notify-item p-0">
             <feather type="user" class="icon-dual icon-xs mr-2"></feather>
             <span>My Account</span>
-          </b-dropdown-item>
+          </b-dropdown-item> -->
 
           <!-- <b-dropdown-divider></b-dropdown-divider> -->
 

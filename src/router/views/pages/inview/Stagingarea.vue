@@ -41,7 +41,7 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
-      item: {  },
+      item: [],
 
       StagingAreaColumns: [
         {
@@ -49,10 +49,7 @@ export default {
 
           label: 'Id',
         },
-         {
-          key: 'createdBy',
-          label: 'CreatedBy',
-        },
+        
         
         {
           key: 'stagingAreaName',
@@ -67,23 +64,17 @@ export default {
           key: 'address',
           label: 'Address',
         },
-       {
-          key: 'area',
-          label: 'Area',
-        },
-         {
-          key: 'city',
-          label: 'City',
-        },
-         {
-          key: 'state',
-          label: 'State',
-        },
-         {
-          key: 'country',
-          label: 'Country',
-        },
-
+    
+       
+        //  {
+        //   key: 'state',
+        //   label: 'State',
+        // },
+        //  {
+        //   key: 'country',
+        //   label: 'Country',
+        // },
+       
         {
           key: 'actions',
           sortable: true,
@@ -103,6 +94,9 @@ export default {
     }
   },
   computed: {
+     rows(){
+     return this.item.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -164,13 +158,25 @@ export default {
 
         class="mt-10 ml-10 mr-10 mx-auto"
       >
-        <b-col md="12">
+       <b-row>
+        <b-col md="3">
+           
+                    <b-form-input
+                      v-model="filter"
+                      type="search"
+                      placeholder="Search..."
+                      class="form-control ml-2"
+                    ></b-form-input>
+           
+        </b-col>
+        <b-col md="9">
             <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
             @click="$router.push({ path: '/CreateStaging' })"
-          >Create StagingArea</b-button>
+          >Create Staging Area</b-button>
         </b-col>
+       </b-row>
         <div class="mt-3">
           <b-table
             id="my-table"
@@ -209,7 +215,7 @@ export default {
             <b-pagination
               v-model="currentPage"
               :per-page="perPage"
-              :total-rows="Area"
+              :total-rows="rows"
               aria-controls="my-table"
               hide-goto-end-buttons
             ></b-pagination>
@@ -233,4 +239,11 @@ export default {
   box-shadow: 0 0 10px #ccc
   .role-details
     margin: 10px
+</style>
+<style scoped>
+.table thead th {
+    outline: none !important;
+    color: black;
+}
+
 </style>

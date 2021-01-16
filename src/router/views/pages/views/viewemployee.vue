@@ -68,8 +68,13 @@ export default {
           text: 'Home',
           href: '/',
         },
+        
+         {
+          text: 'Employees',
+          href: '#/Employee/Employees',
+        },
         {
-          text: 'Employees/ View Employee',
+          text: 'View Employee',
           active: true,
         },
       ],

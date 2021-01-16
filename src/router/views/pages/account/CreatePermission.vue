@@ -34,12 +34,16 @@ export default {
       modifydate: new Date(),
       modifyby:"",
       items: [
-        {
+         {
           text: 'Setup',
           href: '/',
         },
         {
-          text: 'permissions / Create Permission',
+          text: 'Permissions',
+          href: '#/Setup/Permissions',
+        },
+        {
+          text: ' Create Permission',
           active: true,
         },
       ],
@@ -210,10 +214,10 @@ export default {
                 </b-col> -->
                 </b-row>
                
-                <v-button
+                <b-button
                           type="submit"
                          class="btn btn-custome float-right btn-secondary mb-3"
-                          >Submit</v-button
+                          >Submit</b-button
                         >
               </form>
               <!-- Default form subscription -->

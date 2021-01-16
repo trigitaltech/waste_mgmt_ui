@@ -6,7 +6,9 @@ import Horizontal from '@router/layouts/horizontal'
 export default {
   components: { Vertical, Horizontal },
   data() {
-    return {}
+    return {
+      
+    }
   },
   computed: {
     ...layoutComputed,
