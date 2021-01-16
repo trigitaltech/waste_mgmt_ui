@@ -36,6 +36,10 @@ export default {
           key:'code'
 
         },
+        {
+          key:'baranggayId',
+          label:'Baranggay'
+        },
          {
           key:'routeName'
           
