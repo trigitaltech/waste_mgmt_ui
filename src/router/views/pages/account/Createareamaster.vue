@@ -8,7 +8,13 @@ import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
-import { createarea, users ,address,lgus,statebylgu} from '../../../../services/auth'
+import {
+  createarea,
+  users,
+  address,
+  lgus,
+  statebylgu,
+} from '../../../../services/auth'
 
 export default {
   page: {
@@ -25,8 +31,8 @@ export default {
   },
   data() {
     return {
-      districtcode:"",
-        cityOpt: [],
+      districtcode: '',
+      cityOpt: [],
       description: '',
       supervisor: null,
       city: '',
@@ -45,7 +51,7 @@ export default {
       modifydate: new Date(),
       modifyby: '',
       code: '',
-      district:"",
+      district: '',
       item: [{ value: null, text: 'Please select an user' }],
       ite: [],
       option: [
@@ -67,13 +73,14 @@ export default {
         { value: 'FRIDAY', text: 'FRIDAY' },
         { value: 'SATURDAY', text: 'SATURDAY' },
       ],
-      distopt:[],
+      distopt: [],
+      districtList:[],
       items: [
         {
           text: 'Setup',
           href: '/',
         },
-         {
+        {
           text: 'Baranggay',
           href: '#/Setup/AreaMaster',
         },
@@ -82,12 +89,12 @@ export default {
           active: true,
         },
       ],
-      addres:[],
-      lgus:[],
-      lgumaster:[],
-      lgudata:[],
-      lguid:"",
-      lgu:"",
+      addres: [],
+      lgus: [],
+      lgumaster: [],
+      lgudata: [],
+      lguid: '',
+      lgu: '',
     }
   },
   computed: {
@@ -100,81 +107,77 @@ export default {
     this.modifyby = this.getUserDetails.user.username
     // this.getClientDetails()
     // this.getplans()
-    console.log("hiiiii",this.distopt)
+    console.log('hiiiii', this.distopt)
     this.userdata()
-    this.getaddresss()
+    // this.getaddresss()
+    this.getlgus()
     // this.getlgus()
   },
   methods: {
-    //   async getlgus() {
-    //    try {
-        
-    //     const result = await  lgus()
-    //     this.lgumaster  = result.data.response.result
-    //     console.log(this.lgumaster)
-    //     this.lgumaster.map(e=>{
+
+      async getlgus() {
+       try {
+        const result = await  lgus()
+        this.lgumaster  = result.data.response.result
+        console.log(this.lgumaster)
+        this.lgumaster.map(e=>{
+          // debugger
+          this.lgus.push(e.lguName)
+          console.log(this.lgus)
+        })
+
+      } catch (error) {}
+    },
+    async getcity() {
+      // console.log('ahahahahha')
+      for (var i = 0; i < this.addres.length; i++) {
+        if (this.district === this.addres[i].districtName) {
+          // this.districtcode = e.districtCode
+          this.state = this.addres[i].stateCode.stateName
+          this.countrys = this.addres[i].stateCode.countryCode.countryName
+
+          const result = await statebylgu(this.state)
+          // this.lgus = []
+          // this.lgudata = result.data.response.result
+          // console.log(this.lgudata)
+          //  this.lgudata.map( e => {
+
+          // this.lgus.push(this.lgudata.lguName)
+          // })
+        }
+      }
+    },
+    // async getaddresss() {
+    //   try {
+    //     const result = await address()
+    //     this.addres = result.data.response.result
+    //     // console.log("address",this.addres)
+    //     this.addres.map((e) => {
     //       // debugger
-    //       this.lgus.push(e.lguName)
-    //       console.log(this.lgus)
+    //       this.distopt.push(e.districtName)
     //     })
-       
+    //     // console.log(this.distopt,"himanchal")
     //   } catch (error) {}
     // },
-
-   async getcity(){
-// console.log('ahahahahha')
-for(var i = 0 ; i<this.addres.length ;i++){
-  if(this.district === this.addres[i].districtName){
-    // this.districtcode = e.districtCode
-    this.state = this.addres[i].stateCode.stateName
-    this.countrys = this.addres[i].stateCode.countryCode.countryName
-    
-      const result = await  statebylgu(this.state)
-         this.lgus=[]
-      this.lgudata = result.data.response.result
-      console.log(this.lgudata)
-      //  this.lgudata.map( e => {
-        
-            this.lgus.push(this.lgudata.lguName)
-        // })
-      
-  }
-  
-}
-
-    },
-     async getaddresss() {
-       try {
-      
-      const result = await  address()
-      this.addres = result.data.response.result
-      // console.log("address",this.addres)
-    this.addres.map(e=>{
-      // debugger
-      this.distopt.push(e.districtName)
-    })
-      
-      } catch (error) {}
-   
-    },
     async create() {
       try {
         const payload = {
-          code:this.code,
+          // code: this.code,
           areaName: this.areaname,
           areaType: this.areatype,
           classType: this.classtype,
-          dayType:"",
+          // dayType: '',
           supervisor: this.supervisor,
           areaSqKm: this.areasqkm,
           isDeleted: false,
           state: this.state,
           country: this.countrys,
           description: this.description,
-          city: "",
-          zip:this.zip,
+          // city: '',
+          zip: this.zip,
           districtName: this.district,
-          lguId: this.lguid
+          lguId: this.lguid,
+          lguName:this.lguName,
         }
         let result = await createarea(payload)
         if (result) {
@@ -193,15 +196,26 @@ for(var i = 0 ; i<this.addres.length ;i++){
         })
       }
     },
-     getlgudata(){
-     
-         if(this.lgu ===  this.lgudata.lguName ){
-          // debugger
-          this.lguid =  this.lgudata.id
-          // console.log(this.lgus)
-         }
-      
-    
+    async getlgudata() {
+      this.distopt = []
+      this.districtList = []
+      this.lgumaster.map(async e => {
+        if(this.lgu == e.lguName) {
+           this.lguName=this.lguName
+          this.state = e.state
+          this.lguid = e.id
+          this.countrys = e.country
+          const result = await address()
+          const data = result.data.response.result
+          data.map(e => {
+            if(e.stateCode.stateName == this.state){
+              this.districtList.push(e)
+              this.distopt.push(e.districtName)
+            }
+          })
+
+        }
+      })
     },
     async userdata() {
       try {
@@ -221,7 +235,7 @@ for(var i = 0 ; i<this.addres.length ;i++){
       } catch (error) {}
     },
     async refresh() {
-      setTimeout(function () {
+      setTimeout(function() {
         location.reload()
       }, 200)
     },
@@ -238,9 +252,8 @@ for(var i = 0 ; i<this.addres.length ;i++){
         <div class="mt-3">
           <!-- Default form subscription -->
           <form @submit.prevent="create">
-          
             <b-row>
-               <b-col>
+              <b-col>
                 <!-- Default input name -->
                 <label
                   for="defaultFormCardNameEx"
@@ -279,7 +292,7 @@ for(var i = 0 ; i<this.addres.length ;i++){
 
                 <!-- Default input name -->
               </b-col>
-            <b-col>
+              <b-col>
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
@@ -301,7 +314,6 @@ for(var i = 0 ; i<this.addres.length ;i++){
             <br />
 
             <b-row>
-             
               <b-col>
                 <label
                   for="defaultFormCardtextEx"
@@ -318,7 +330,7 @@ for(var i = 0 ; i<this.addres.length ;i++){
                   required
                 />
               </b-col>
-               <b-col>
+              <b-col>
                 <!-- Default input text -->
                 <label
                   for="defaultFormCardtextEx"
@@ -338,91 +350,13 @@ for(var i = 0 ; i<this.addres.length ;i++){
             </b-row>
             <br />
             <b-row>
-             
               <b-col>
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >District</label
-                >
-                 <multiselect
-               
-                  v-model.trim="district"
-                   placeholder="Select distict"
-                   :options="distopt"
-                   @input ="getcity"
-                   ></multiselect>
-              </b-col>
-                <b-col>
-                <!-- Default input text -->
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >State</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="state"
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter state"
-                  disabled
-                />
-                <br />
-              </b-col>
-            </b-row>
-            <br />
-
-            <b-row>
-            
-
-              <br />
-
-              <b-col>
-                <!-- Default input text -->
-
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Country</label
-                >
-                <input
-                disabled
-                  id="defaultFormCardtextEx"
-                  v-model="countrys"
-                  placeholder="Enter country"
-                  type="text"
-                  class="form-control"
-                />
-              </b-col>
-
-              <b-col>
-                <!-- Default input text -->
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >Zip</label
-                >
-                <input
-                  id="defaultFormCardtextEx"
-                  v-model="zip"
-                  placeholder="Enter Zip"
-                  type="text"
-                  class="form-control"
-                />
-              </b-col>
-            </b-row>
-            <br />
-
-            <b-row>
-                <b-col>
-                <!-- Default input text -->
                 <label
                   for="defaultFormCardtextEx"
                   class="grey-text font-weight-dark"
                   >LGU</label
                 >
-                  <!-- <input
+                <!-- <input
                   id="defaultFormCardtextEx"
                   v-model="lgus"
                   placeholder="Enter Lgu"
@@ -443,16 +377,78 @@ for(var i = 0 ; i<this.addres.length ;i++){
                 ></b-form-select>
               </b-col>
               <b-col>
-             
-             
-             
-              
-
-            
-             </b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >State</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="state"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter state"
+                  disabled
+                />
+                <br />
+              </b-col>
             </b-row>
-            
+            <br />
+            <b-row>
+              <br />
+              <b-col>
+                <!-- Default input text -->
 
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Country</label
+                >
+                <input
+                  disabled
+                  id="defaultFormCardtextEx"
+                  v-model="countrys"
+                  placeholder="Enter country"
+                  type="text"
+                  class="form-control"
+                />
+              </b-col>
+              <b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >District</label
+                >
+                <multiselect
+                  v-model.trim="district"
+                  placeholder="Select distict"
+                  :options="distopt"
+                  @input="getcity"
+                ></multiselect>
+              </b-col>
+            </b-row>
+            <br />
+
+            <b-row>
+              <b-col>
+                <!-- Default input text -->
+                <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >Zip</label
+                >
+                <input
+                  id="defaultFormCardtextEx"
+                  v-model="zip"
+                  placeholder="Enter Zip"
+                  type="text"
+                  class="form-control"
+                />
+              </b-col>
+              <b-col> </b-col>
+            </b-row>
             <br />
             <button
               type="submit"
@@ -467,8 +463,7 @@ for(var i = 0 ; i<this.addres.length ;i++){
     <!-- end row -->
   </Layout>
 </template>
-<style lang="scss">
-</style>
+<style lang="scss"></style>
 <style lang="sass" scoped>
 .edit
   color: #a7a7a7 !important
