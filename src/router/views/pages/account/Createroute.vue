@@ -53,7 +53,7 @@ export default {
           baranggayId: '',
           code: '',
           roadName: '',
-          routeName: '',
+          routeName: this.routename,
         },
       ],
       option: [
@@ -78,6 +78,7 @@ export default {
           active: true,
         },
       ],
+      selectedBaranggays:[],
       areasid: [],
       daysdata: [],
       baranggays: [],
@@ -104,7 +105,7 @@ export default {
       this.inputs.push({
         code: '',
         roadName: '',
-        routeName: '',
+        routeName: this.routename,
         baranggayId: '',
       })
       console.log(this.inputs)
@@ -119,10 +120,14 @@ export default {
         this.areas.map((e) => {
           if (this.areaname[i] === e.areaName) {
             this.baranggays.push(e)
+            this.selectedBaranggays.push(e.areaName)
             console.log('routedata', this.baranggays)
           }
         })
       }
+      this.selectedBaranggays = this.selectedBaranggays.filter( function(item,index,inputArray) {
+        return inputArray.indexOf(item) == index;
+      })
       // console.log("haiiiiii",this.item2)
     },
     getbaranggayid() {
@@ -165,6 +170,10 @@ export default {
         })
         console.log('users', this.item)
       } catch (error) {}
+    },
+    getRouteName() {
+      this.inputs[0].routeName = this.routename
+      console.log(this.inputs.routeName)
     },
     async userdata() {
       try {
@@ -264,6 +273,7 @@ export default {
                   type="text"
                   oninvalid="this.setCustomValidity('Route Name is required ')"
                   oninput="setCustomValidity('')"
+                  @change="getRouteName"
                   placeholder="Enter Routename"
                   class="form-control"
                   required
@@ -487,7 +497,7 @@ export default {
                 >
                 <b-form-select
                   v-model="input.baranggayId"
-                  :options="item2"
+                  :options="selectedBaranggays"
                   class="form-control"
                 >
                 </b-form-select>
