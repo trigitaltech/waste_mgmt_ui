@@ -66,10 +66,10 @@ export default {
         // },
        
         
-         {
-          key: 'routeType',
-          label: 'Route Type',
-        },
+        //  {
+        //   key: 'routeType',
+        //   label: 'Route Type',
+        // },
 
          {
           key: 'routeDistance',

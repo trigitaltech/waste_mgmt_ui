@@ -52,8 +52,8 @@ export default {
         {
           baranggayId: '',
           code: '',
-          roadname: '',
-          routename: '',
+          roadName: '',
+          routeName: '',
         },
       ],
       option: [
@@ -103,8 +103,8 @@ export default {
     add() {
       this.inputs.push({
         code: '',
-        roadname: '',
-        routename: '',
+        roadName: '',
+        routeName: '',
         baranggayId: '',
       })
       console.log(this.inputs)
@@ -521,7 +521,7 @@ export default {
                   id="defaultFormCardtextEx"
                   type="text"
                   class="form-control"
-                  v-model="input.roadname"
+                  v-model="input.roadName"
                   placeholder="Enter roadname"
                 />
               </b-col>
@@ -536,7 +536,7 @@ export default {
                   id="defaultFormCardtextEx"
                   type="text"
                   class="form-control"
-                  v-model="input.routename"
+                  v-model="input.routeName"
                   placeholder="Enter routename"
                 />
               </b-col>
