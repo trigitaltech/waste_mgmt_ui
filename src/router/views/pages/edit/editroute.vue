@@ -20,7 +20,7 @@ export default {
   components: {
     Layout,
     PageHeader,
-    Multiselect,
+    multiselect: Multiselect,
     ValidationProvider,
     ValidationObserver,
     ModelSelect,
@@ -59,7 +59,7 @@ export default {
       dark: false,
       fixed: false,
     days: [],
-      Days: [{ day: 'SUNDAY'},{ day: 'MONDAY'},{ day: 'TUESDAY'},{ day: 'WEDNESDAY'},{ day: 'THURSDAY'},{ day: 'FRIDAY'},{ day: 'SATURDAY'}],
+      Days: ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'],
       roads:this.$route.params.routeRoads,
       areaname:[],
       code:this.$route.params.code,
@@ -79,7 +79,6 @@ export default {
     // roads:this.$route.params.routeRoads,
        inputs: [
         {
-          id:this.$route.params.id,
           baranggayId:'',
           code: '',
           roadName:'',
@@ -114,9 +113,9 @@ export default {
     }
   },
   computed: {
-    // rows(){
-    //   return this.roads.length
-    // },
+    rows(){
+       return this.$route.params.routeRoads.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -128,6 +127,10 @@ export default {
     // this.getplans()
     // this.roadsdata = this.$route.params.routeRoads
     console.log("roads",this.$route.params)
+    this.$route.params.days.map(e => {
+      this.days.push(e.day)
+    })
+    console.log(this.$route.params.routeRoads)
     this.userdata()
      this.getplans()
     //  if(this.$route.params.baranggay.length > 0){
@@ -208,7 +211,6 @@ export default {
      },
       add() {
       this.inputs.push({
-       id:this.$route.params.id,
         baranggayId:'',
         code: '',
         roadName:'',
@@ -223,6 +225,9 @@ export default {
     },
     async create() {
       try {
+        this.inputs.map(e => {
+          this.$route.params.routeRoads.push(e)
+        })
         const payload = {
            id:this.$route.params.id,
               code: this.code,
@@ -232,7 +237,7 @@ export default {
           routeDistance: this.routedistance,
           description: this.description,
           baranggay: this.baranggays,
-          routeRoads: this.inputs,
+          routeRoads: this.$route.params.routeRoads,
            days: this.days
         }
         let result = await editroute(payload)
@@ -253,7 +258,9 @@ export default {
         })
       }
     },
- 
+    getdaysdata(){
+
+    },
     async refresh() {
       setTimeout(function () {
         location.reload()
@@ -328,15 +335,8 @@ export default {
                 >
                 <multiselect
                   v-model="days"
-                  placeholder="Select Days"
                   :options="Days"
                   :multiple="true"
-                  :close-on-select="false"
-                  :clear-on-select="false"
-                  :preserve-search="true"
-                  label="day"
-                  track-by="day"
-                 
                   @input="getdaysdata"
                 ></multiselect>
 

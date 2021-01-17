@@ -20,7 +20,7 @@ export default {
   components: {
     Layout,
     PageHeader,
-    Multiselect,
+    multiselect: Multiselect,
     ValidationProvider,
     ValidationObserver,
     ModelSelect,
@@ -31,6 +31,7 @@ export default {
       classtype:this.$route.params.classType,
       roads:this.$route.params.routeRoads,
       areaid:this.$route.params.id,
+      days:[],
       supervisor:this.$route.params.supervisor,
      routename:this.$route.params.routeName,
      routetype:this.$route.params.routeType,
@@ -108,6 +109,9 @@ export default {
     this.modifyby = this.getUserDetails.user.username
     // this.getClientDetails()
     // this.getplans()
+    this.$route.params.days.map(e => {
+      this.days.push(e.day)
+    })
     console.log(this.$route.params)
     // this.userdata()
   },
@@ -212,26 +216,6 @@ export default {
                   
                     <!-- Default input email -->
                   </b-col>
-                  
-                  <b-col>
-                     <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Class Type</label
-                    >
-                    <input
-                    id="defaultFormCardNameEx"
-                      v-model="classtype"
-                      disabled
-                      type="text"
-                      class="form-control"
-                    />
-
-                    <!-- Default input name -->
-                  
-                  </b-col>
-              </b-row>
-                <b-row>
                   <b-col>
                     <!-- Default input name -->
                     <label
@@ -247,85 +231,8 @@ export default {
                       type="text"
                       class="form-control"
                     />
-
-                
-
-                  
-                    <!-- Default input email -->
                   </b-col>
-                  
-                  <b-col>
-                     <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Route Type</label
-                    >
-                    <input
-                    id="defaultFormCardNameEx"
-                      v-model="routetype"
-                      disabled
-                      type="text"
-                      class="form-control"
-                    />
-
-                    <!-- Default input name -->
-                  
-                  </b-col>
-              
-                  <br />
-                
-                
-                  
-               
-                </b-row>
-                 <br/>
-                  <b-row>
-                  <b-col>
-                    <!-- Default input name -->
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                    >
-                     Area ID</label
-                    >
-                    <input
-                    id="defaultFormCardNameEx"
-                      v-model="areaid"
-                      disabled
-                      type="text"
-                      class="form-control"
-                    />
-
-                
-
-                  
-                    <!-- Default input email -->
-                  </b-col>
-                  
-                  <b-col>
-                     <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                    >
-                     Area Name</label
-                    >
-                    <input
-                    id="defaultFormCardNameEx"
-                      v-model="areaname"
-                      disabled
-                      type="text"
-                      class="form-control"
-                    />
-                    <!-- Default input name -->
-                  
-                  </b-col>
-              
-                  <br />
-                
-                
-                  
-               
-                </b-row>
+              </b-row>
                 <br/>
                   <b-row>
                     
@@ -365,85 +272,24 @@ export default {
                   </b-col>
                   
                 </b-row>
-                
-                 <br/>
-
-  
-                
+                  <br />
                 <b-row>
-                  
-                  
-                   <!-- <b-col> -->
-                    <!-- Default input email -->
-                    <!-- <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Created Date</label
-                    >
-                    <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
-                      v-model="createddate"
-                    />
- <br/>
+                  <b-col>
                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
-                      >Modify Date</label
+                      >Days</label
                     >
-                    <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
-                      v-model="modifydate"
+                    <multiselect
+                      :options="days"
+                      v-model="days"
+                      readonly
+                      :multiple="true"
+                      :disabled="true"
                     />
-                  </b-col> -->
-
-                  <!-- <br/>
-
-                   <b-col> -->
-                    <!-- Default input email -->
-                    <!-- <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Created By</label
-                    >
-                    <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
-                      v-model="createdby"
-                    />
- <br/>
-                    <label
-                      for="defaultFormCardEmailEx"
-                      class="grey-text font-weight-dark"
-                      >Modify By</label
-                    >
-                    <input
-                    disabled
-                      type="email"
-                      id="defaultFormCardEmailEx"
-                      class="form-control"
-                      v-model="modifyby"
-                    />
-                  </b-col> -->
+                  </b-col>
+                  <b-col></b-col>
                 </b-row>
-              
-              
-                <br />
-                <!-- <b-button
-                  style="
-                    background-image: linear-gradient(109.6deg,rgba(48, 207, 208, 1) 11.2%,rgba(51, 8, 103, 1) 92.5%);"
-                  class="btn btn-custome float-right mr-2"
-                  text="Create Tenant"
-                  @click="create"
-                  >Create</b-button
-                > -->
               </form>
               <!-- Default form subscription -->
         </div>
