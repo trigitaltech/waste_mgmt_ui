@@ -90,19 +90,44 @@ export default {
     // this.getClientDetails()
     // this.getplans()
     this.userdata()
-    this.getaddresss()
+    // this.getaddresss()
+    this.getlgus()
     // this.getlgus()
   },
   methods: {
-      getlgudata(){
-     
-         if(this.lgu ===  this.lgudata.lguName ){
+    async getlgus() {
+       try {
+        const result = await  lgus()
+        this.lgumaster  = result.data.response.result
+        console.log(this.lgumaster)
+        this.lgumaster.map(e=>{
           // debugger
-          this.lguid =  this.lgudata.id
-          // console.log(this.lgus)
-         }
-      
-    
+          this.lgus.push(e.lguName)
+          console.log(this.lgus)
+        })
+
+      } catch (error) {}
+    },
+      async getlgudata() {
+      this.distopt = []
+      this.districtList = []
+      this.lgumaster.map(async e => {
+        if(this.lgu == e.lguName) {
+           this.lguName=this.lguName
+          this.state = e.state
+          this.lguid = e.id
+          this.countrys = e.country
+          const result = await address()
+          const data = result.data.response.result
+          data.map(e => {
+            if(e.stateCode.stateName == this.state){
+              this.districtList.push(e)
+              this.distopt.push(e.districtName)
+            }
+          })
+
+        }
+      })
     },
     //   async getlgus() {
     //    try {
@@ -118,27 +143,24 @@ export default {
        
     //   } catch (error) {}
     // },
-  async getcity(){
-// console.log('ahahahahha')
-for(var i = 0 ; i<this.addres.length ;i++){
-  if(this.district === this.addres[i].districtName){
-    // this.districtcode = e.districtCode
-    this.state = this.addres[i].stateCode.stateName
-    this.countrys = this.addres[i].stateCode.countryCode.countryName
-    
-      const result = await  statebylgu(this.state)
-        this.lgus=[]
-      this.lgudata = result.data.response.result
-      console.log(this.lgudata)
-      //  this.lgudata.map( e => {
-      
-            this.lgus.push(this.lgudata.lguName)
-        // })
-      
-  }
-  
-}
+  async getcity() {
+      // console.log('ahahahahha')
+      for (var i = 0; i < this.addres.length; i++) {
+        if (this.district === this.addres[i].districtName) {
+          // this.districtcode = e.districtCode
+          this.state = this.addres[i].stateCode.stateName
+          this.countrys = this.addres[i].stateCode.countryCode.countryName
 
+          const result = await statebylgu(this.state)
+          // this.lgus = []
+          // this.lgudata = result.data.response.result
+          // console.log(this.lgudata)
+          //  this.lgudata.map( e => {
+
+          // this.lgus.push(this.lgudata.lguName)
+          // })
+        }
+      }
     },
      async getaddresss() {
        try {
@@ -332,6 +354,33 @@ for(var i = 0 ; i<this.addres.length ;i++){
             <b-row>
              
               <b-col>
+                 <label
+                  for="defaultFormCardtextEx"
+                  class="grey-text font-weight-dark"
+                  >LGU</label
+                >
+                <!-- <input
+                  id="defaultFormCardtextEx"
+                  v-model="lgus"
+                  placeholder="Enter Lgu"
+                  type="text"
+                  disabled
+                  class="form-control"
+                /> -->
+                <b-form-select
+                  v-model.trim="lgu"
+                  placeholder="Select LGU"
+                  @change="getlgudata"
+                  label="value"
+                  :options="lgus"
+                  oninvalid="this.setCustomValidity('lgu is required ')"
+                  oninput="setCustomValidity('')"
+                  class="form-control"
+                  required
+                ></b-form-select>
+              </b-col>
+                <b-col>
+                <!-- Default input text -->
                 <label
                   for="defaultFormCardtextEx"
                   class="grey-text font-weight-dark"
@@ -344,8 +393,18 @@ for(var i = 0 ; i<this.addres.length ;i++){
                    :options="distopt"
                    @input ="getcity"
                    ></multiselect>
+                
+                <br />
               </b-col>
-                <b-col>
+            </b-row>
+            <br />
+
+            <b-row>
+            
+
+              <br />
+
+              <b-col>
                 <!-- Default input text -->
                 <label
                   for="defaultFormCardtextEx"
@@ -360,18 +419,6 @@ for(var i = 0 ; i<this.addres.length ;i++){
                   placeholder="Enter state"
                   disabled
                 />
-                <br />
-              </b-col>
-            </b-row>
-            <br />
-
-            <b-row>
-            
-
-              <br />
-
-              <b-col>
-                <!-- Default input text -->
 
                 <label
                   for="defaultFormCardtextEx"
@@ -409,22 +456,6 @@ for(var i = 0 ; i<this.addres.length ;i++){
             <b-row>
                 <b-col>
                 <!-- Default input text -->
-                <label
-                  for="defaultFormCardtextEx"
-                  class="grey-text font-weight-dark"
-                  >LGU</label
-                >
-                <b-form-select
-                  v-model.trim="lgu"
-                  placeholder="Select LGU"
-                  @change="getlgudata"
-                  label="value"
-                  :options="lgus"
-                  oninvalid="this.setCustomValidity('lgu is required ')"
-                  oninput="setCustomValidity('')"
-                  class="form-control"
-                  required
-                ></b-form-select>
               </b-col>
              <b-col>
              </b-col>

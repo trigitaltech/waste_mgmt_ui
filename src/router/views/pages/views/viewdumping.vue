@@ -28,6 +28,7 @@ export default {
       address: this.$route.params.address,
       dumpname: this.$route.params.dumpingAreaName,
       dumptype: this.$route.params.dumpingType,
+      dumpingPoints:this.$route.params.dumpingPoint,
       description: this.$route.params.description,
       supervisor: this.$route.params.supervisor,
       city: this.$route.params.city,
@@ -65,7 +66,7 @@ export default {
         },
       ],
     }
-  },
+  }, // dumpingPoint:this.$route.params.dumpingPoint,
   computed: {
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
@@ -215,9 +216,23 @@ export default {
                   type="email"
                   class="form-control"
                 />
+                <label
+                  for="defaultFormCardEmailEx"
+                  class="grey-text font-weight-dark"
+                  >Dumping Point Name</label
+                >
+                <input
+                v-for="(d, x) in dumpingPoints"
+                  :key="x"
+                  :id="x"
+                  :value="d.dumpingPointName"
+                  disabled
+                  type="text"
+                  class="form-control"
+                />
 
                 <!-- Default input name -->
-                <label
+                <!-- <label
                   for="defaultFormCardEmailEx"
                   class="grey-text font-weight-dark"
                   >State</label
@@ -228,7 +243,7 @@ export default {
                   disabled
                   type="email"
                   class="form-control"
-                />
+                /> -->
               </b-col>
 
               <br />
@@ -237,7 +252,7 @@ export default {
               <b-col>
                 <!-- Default input email -->
 
-                <label
+                <!-- <label
                   for="defaultFormCardEmailEx"
                   class="grey-text font-weight-dark"
                   >Working Hours</label
@@ -248,13 +263,13 @@ export default {
                   disabled
                   type="email"
                   class="form-control"
-                />
+                /> -->
               </b-col>
 
               <b-col>
                 <!-- Default input email -->
 
-                <label
+                <!-- <label
                   for="defaultFormCardEmailEx"
                   class="grey-text font-weight-dark"
                   >Country</label
@@ -265,7 +280,7 @@ export default {
                   disabled
                   type="email"
                   class="form-control"
-                />
+                /> -->
               </b-col>
             </b-row>
             <b-row>
@@ -294,7 +309,7 @@ export default {
                 />
               </b-col>
               <b-col>
-                <label
+                <!-- <label
                   for="defaultFormCardEmailEx"
                   class="grey-text font-weight-dark"
                   >Holiday Message</label
@@ -305,14 +320,14 @@ export default {
                   disabled
                   type="email"
                   class="form-control"
-                />
+                /> -->
               </b-col>
             </b-row>
 
             <b-row>
               <b-col>
                 <!-- Default input email -->
-                <label
+                <!-- <label
                   for="defaultFormCardEmailEx"
                   class="grey-text font-weight-dark"
                   >Zip</label
@@ -323,7 +338,7 @@ export default {
                   disabled
                   type="email"
                   class="form-control"
-                />
+                /> -->
               </b-col>
               <b-col>
                 <!-- Default input email -->
