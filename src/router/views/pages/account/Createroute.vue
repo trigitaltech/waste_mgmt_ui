@@ -251,6 +251,7 @@ export default {
                 >
                 <multiselect
                   v-model="areaname"
+                  :close-on-select="false"
                   :multiple="true"
                   :options="item2"
                   @input="getid"

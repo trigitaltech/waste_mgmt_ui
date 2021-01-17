@@ -37,6 +37,7 @@ export default {
     areasqkm: this.$route.params.areaSqKm,
     country: this.$route.params.country,
     state: this.$route.params.state,
+    lguName:this.$route.params.lguName,
     zip: this.$route.params.zip,
       message:"",
       areatype:this.$route.params.areaType,
@@ -103,11 +104,8 @@ export default {
             country: this.country,
             description: this.description,
             city: this.city,
-            zip: this.zip
-      
-
-        
-
+            zip: this.zip,
+            lguName: this.lguName
         }
         let result = await Edituser(payload)
         if (result) {
@@ -176,7 +174,7 @@ export default {
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
                     >
-                     Area Name</label
+                     Baranggay Name</label
                     >
                     <input
                     id="defaultFormCardNameEx"
@@ -185,10 +183,6 @@ export default {
                       type="text"
                       class="form-control"
                     />
-
-                
-
-                  
                     <!-- Default input email -->
                   </b-col>
                   
@@ -221,7 +215,7 @@ export default {
                     <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
-                      >Area SqKm</label
+                      >Baranggay SqKm</label
                     >
                     <input
                     id="defaultFormCardEmailEx"
@@ -264,6 +258,20 @@ export default {
                       class="form-control"
                     />
                  </b-col>
+                 <!-- <b-col>
+                    <label
+                      for="defaultFormCardEmailEx"
+                      class="grey-text font-weight-dark"
+                      >LGU Name</label
+                    >
+                    <input
+                    id="defaultFormCardEmailEx"
+                      v-model="lguName"
+                      disabled
+                      type="text"
+                      class="form-control"
+                    />
+                  </b-col> -->
                  <b-col>
                     <label
                       for="defaultFormCardEmailEx"
