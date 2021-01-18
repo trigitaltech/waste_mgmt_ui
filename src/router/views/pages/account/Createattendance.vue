@@ -282,12 +282,25 @@ this.employeedata()
                       class="grey-text font-weight-dark"
                       >Record Date</label
                     >
-                    <flat-pickr
+                      <datetime 
+                      v-model="recordDate"
+                      :format="{
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                    
+                      }"
+                      type="datetime"
+                      placeholder="SELECT RECORD DATE"
+                      name="startdate"
+                 ></datetime>
+
+                    <!-- <flat-pickr
                       v-model="recordDate"
                       class="form-control"
                       placeholder="SELECT RECORD DATE"
                       name="startdate"
-                    ></flat-pickr>
+                    ></flat-pickr> -->
                  </b-col>
                  <b-col md="9">
                     <label
