@@ -226,7 +226,10 @@ export default {
                       class="form-control"
                       id="defaultFormCardEmailEx"
                     ></b-form-select> -->
-
+ <!-- <b-col> -->
+                    <!-- Default input email -->
+                 
+                  <!-- </b-col> -->
                     <br />
 
                     <!-- Default input email -->
@@ -256,23 +259,7 @@ export default {
                       type="email"
                       class="form-control"
                     />
-
-                    <!-- Default input name -->
-                  </b-col>
-                  </b-row>
-                  <br />
-                <b-row>
-                  <!-- <b-col md="3">
-                     <p class="head">Location</p>
-                        <GmapAutocomplete
-                          @place_changed="setPlace"
-                          :placeholder="'Select Target Location'"
-                          class="form-control"
-                        ></GmapAutocomplete>
-                      </b-col> -->
-                   <b-col>
-                    <!-- Default input email -->
-                    <label
+                  <label
                       for="defaultFormCardEmailEx"
                       class="grey-text font-weight-dark"
                       >Description</label
@@ -285,7 +272,21 @@ export default {
                       class="form-control"
                     />
 
+                    <!-- Default input name -->
                   </b-col>
+                  
+                  </b-row>
+                  <br />
+                <b-row>
+                  <!-- <b-col md="3">
+                     <p class="head">Location</p>
+                        <GmapAutocomplete
+                          @place_changed="setPlace"
+                          :placeholder="'Select Target Location'"
+                          class="form-control"
+                        ></GmapAutocomplete>
+                      </b-col> -->
+                  
                    <!-- <b-col> -->
                     <!-- Default input email -->
                     <!-- <label

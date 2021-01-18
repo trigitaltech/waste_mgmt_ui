@@ -651,7 +651,7 @@ export default {
                   placeholder="Enter roadname"
                 />
               </b-col>
-              <b-col >
+              <!-- <b-col >
                 <label
                   for="defaultFormCardNameEx"
                   class="grey-text font-weight-dark"
@@ -665,7 +665,7 @@ export default {
                   v-model="input.routeName"
                   placeholder="Enter routename"
                 />
-              </b-col>
+              </b-col> -->
               <b-col>
                 <span>
                   <i

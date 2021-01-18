@@ -209,7 +209,7 @@ export default {
                 firstName: this.form.firstName,
                 middleName: this.form.middleName,
                 lastName: this.form.lastName,
-                addressLine1: this.address,
+                addressLine1: this.form.address,
                 addressLine2: this.address2,
                distict:this.form.district,
                 state: this.form.state,
@@ -404,9 +404,9 @@ export default {
                                   v-model.trim="form.middleName"
                                   for="lastname"
                                   type="text"
-                                  oninvalid="this.setCustomValidity('last name is required ')"
+                                  oninvalid="this.setCustomValidity('Middle name is required ')"
                                   oninput="setCustomValidity('')"
-                                  placeholder="Enter LastName"
+                                  placeholder="Enter MidlleName"
                                   class="form-control"
                                   required
                                 />
