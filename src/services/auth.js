@@ -342,3 +342,7 @@ export const CreateDirectTrip = (payload) => serviceMaker(`/routetolandfilling/a
 export const getAllDirectTrips = () => serviceMaker(`/routetolandfilling/all`,methods.GET,api.NGB)
 
 export const getBrgysByRoute = (id) => serviceMaker(`/routemaster/getBrgysByRoute/${id}`,methods.GET,api.NGB)
+
+export const deleteRoad = (id) => serviceMaker(`/routemaster/roads/${id}`,methods.DELETE,api.NGB)
+
+export const editRoads = (payload) => serviceMaker('/routemaster/roads/update',methods.PUT,api.NGB,payload)

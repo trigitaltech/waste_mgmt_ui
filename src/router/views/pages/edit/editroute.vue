@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- editroute,users,Areamasters, getBrgysByRoute
+ editroute,users,Areamasters, getBrgysByRoute, deleteRoad, editRoads
 } from '../../../../services/auth'
 
 export default {
@@ -42,11 +42,12 @@ export default {
         },
          {
           key:'routeName'
-          
         },
          {
-          key:'roadName'
-          
+          key:'roadName' 
+        },
+        {
+          key: 'action'
         }
       ],
          striped: false,
@@ -59,6 +60,7 @@ export default {
       dark: false,
       fixed: false,
     days: [],
+    bId:null,
       Days: ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'],
       roads:this.$route.params.routeRoads,
       areaname:[],
@@ -113,6 +115,14 @@ export default {
    item2:[],
      areasid: [],
       baranggays:[],
+      hideHeader: false,
+      hideFooter: true,
+      showModal: false,
+      editId: '',
+      editCode: '',
+      editRouteName: '',
+      editRoadName: '',
+      editBaranggay: ''
     }
   },
   computed: {
@@ -147,6 +157,14 @@ export default {
     this.getBaranggaysByRouteId()
   },
   methods: {
+    openModal(data) {
+      this.editId = data.item.id
+      this.editCode = data.item.code
+      this.editRoadName = data.item.roadName
+      this.editRouteName = data.item.routeName
+      this.editBaranggay = data.item.baranggayId
+      this.showModal = true
+    },
     async getBaranggaysByRouteId() {
       try {
         console.log('1')
@@ -232,7 +250,9 @@ export default {
           routeRoads: this.selectedRoads,
            days: this.selectedDays
         }
+        console.log('1')
         let result = await editroute(payload)
+        console.log('2')
         if (result) {
           this.$swal({
             group: 'alert',
@@ -264,6 +284,57 @@ export default {
       }
       console.log(this.selectedDays)
     },
+    async deleteRoads(data) {
+      try {
+        const result = await deleteRoad(data.item.id)
+        if (result) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `Road Deleted Successfully`,
+            duration: 5000
+          })
+        }
+        this.$router.push('/Setup/RouteMaster')
+      } catch(error) {
+        console.log(error)
+      }
+    },
+    async editRoad() {
+      try {
+        this.selectedBaranggays.map(e => {
+          if(this.editBaranggay == e.areaName){
+            this.bId = e.id
+          }
+        })
+        console.log(this.bId)
+        const payload = {
+          "id": this.editId,
+          "code": this.editCode,
+          "baranggayId": this.bId,
+          "routeName": this.editRouteName,
+          "roadName": this.editRoadName,
+          "isDeleted": false,
+          "status": null,
+          "createdDate": "2021-01-07T08:47:26.000+00:00",
+          "createdBy": null,
+          "modifiedDate": "2021-01-07T08:47:26.000+00:00",
+          "modifiedBy": null
+        }
+        const res = await editRoads(payload)
+        if(res) {
+          this.$swal({
+            group: 'alert',
+            type: 'success',
+            text: `Road updated Successfully`,
+            duration: 5000
+          })
+        }
+        this.$router.push('/Setup/RouteMaster')
+      } catch(error) {
+        console.log(error)
+      }
+    },
     async refresh() {
       setTimeout(function () {
         location.reload()
@@ -276,6 +347,54 @@ export default {
 <template>
   <Layout>
     <PageHeader :items="items" />
+    <b-modal v-model="showModal" title="Edit Road" size="md" :hide-header="hideHeader" :hide-footer="hideFooter">
+      <form @submit.prevent="editRoad">
+        <label
+          for="defaultFormCardNameEx"
+          class="grey-text font-weight-dark"
+        >Code</label>
+        <input
+          v-model="editCode"
+          type="text"
+          class="form-control"
+          required
+        />
+        <label
+          for="defaultFormCardNameEx"
+          class="grey-text font-weight-dark mt-2"
+        >Road Name</label>
+        <input
+          v-model="editRoadName"
+          type="text"
+          class="form-control"
+          required
+        />
+        <label
+          for="defaultFormCardNameEx"
+          class="grey-text font-weight-dark mt-2"
+        >Route Name</label>
+        <input
+          v-model="editRouteName"
+          type="text"
+          class="form-control"
+          required
+        />
+        <label
+          for="defaultFormCardNameEx"
+          class="grey-text font-weight-dark mt-2"
+        >Baranggay</label>
+        <b-form-select
+          v-model="editBaranggay"
+          :options="areaname"
+          class="form-control"
+        >
+        </b-form-select>
+        <button
+          type="submit"
+          class="btn text-center btn-secondary mt-4"
+        >Submit</button>
+      </form>
+    </b-modal>
 
     <div class="animated fadeIn">
       <b-card
@@ -612,10 +731,17 @@ export default {
             :items="roads"
             class="mt-3"
          
-          >    </b-table>
-
-        
-          <div style="float: right">
+          >    
+          <template v-slot:cell(action)="data">
+            <span class="mr-3" @click="openModal(data)">
+              <i class="fas fa-pencil-alt edit"></i>
+            </span>
+            <span class="mr-3" @click="deleteRoads(data)">
+              <i class="fa fa-times edit"></i>
+            </span>
+          </template>
+        </b-table>
+        <div style="float: right">
             <b-pagination
               v-model="currentPage"
               :per-page="perPage"
