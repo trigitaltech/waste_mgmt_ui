@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- editroute,users,Areamasters
+ editroute,users,Areamasters, getBrgysByRoute
 } from '../../../../services/auth'
 
 export default {
@@ -67,7 +67,6 @@ export default {
       supervisor:this.$route.params.supervisor,
      routename:this.$route.params.routeName,
      routetype:this.$route.params.routeType,
-     areaname:this.$route.params.areaName,
      routedistance:this.$route.params.routeDistance,
      description:this.$route.params.description,
      city:this.$route.params.city,
@@ -82,7 +81,7 @@ export default {
           baranggayId:'',
           code: '',
           roadName:'',
-        routeName:'',
+        routeName:this.routename,
         },
       ],
       option: [
@@ -107,6 +106,10 @@ export default {
         },
       ],
    areas:[],
+   selectedDays:[],
+   selectedBaranggays:[],
+   selectedRoads:[],
+   data2:[],
    item2:[],
      areasid: [],
       baranggays:[],
@@ -121,86 +124,76 @@ export default {
     },
   },
   mounted() {
-      //  this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
-    // this.getClientDetails()
-    // this.getplans()
-    // this.roadsdata = this.$route.params.routeRoads
     console.log("roads",this.$route.params)
+    this.selectedRoads = this.$route.params.routeRoads
     this.$route.params.days.map(e => {
       this.days.push(e.day)
     })
-    console.log(this.$route.params.routeRoads)
+    for(var i=0;i<this.days.length;i++){
+      this.Days.map((e,j) => {
+        if(e == this.days[i]){
+          this.selectedDays.push({
+            id: j+1,
+            day: e
+          })
+        }
+      })
+    }
+    this.inputs[0].routeName = this.routename
+    console.log(this.$route.params.days)
     this.userdata()
-     this.getplans()
-    //  if(this.$route.params.baranggay.length > 0){
-    
-    //     for(var i = 0 ; i<this.$route.params.baranggay.length ;i++){
-     
-          // debugger
-        //   this.areaname.push([i].areaName)
-        // }
-    //  }
+    this.getplans()
+    this.getBaranggaysByRouteId()
   },
   methods: {
+    async getBaranggaysByRouteId() {
+      try {
+        console.log('1')
+        const result1 = await getBrgysByRoute(this.$route.params.id)
+        const data1 = result1.data.response.result
+        const result2 = await Areamasters()
+        this.data2 = result2.data.response.areaMaster
+        data1.map(e => {
+          this.data2.map(f => {
+            if(e == f.id){
+              this.areaname.push(f.areaName)
+              this.selectedBaranggays.push(f)
+            }
+          })
+        })
+        console.log(this.selectedBaranggays)
+      } catch(error){
+        console.log(error)
+      }
+    },
     getid() {
-       this.baranggays=[]
-       for(var i = 0 ; i<this.areaname.length ;i++){
-       
-         this.areas.map(e=>{
-        if(this.areaname[i] === e.areaName){
-             
-          this.baranggays.push(e)
-          // console.log("routedata",this.baranggays)
-       
-        }
-         })
-      
-       }
-      // console.log("haiiiiii",this.item2)
-     
+      this.selectedBaranggays = []
+      for(var i=0;i<this.areaname.length;i++){
+        this.data2.map(e => {
+          if(e.areaName == this.areaname[i]){
+            this.selectedBaranggays.push(e)
+          }
+        })
+      }
     },
     async getplans() {
        try {
         const result = await Areamasters()
       this.areas = result.data.response.areaMaster
-    //   console.log("users",data[0].userName)
-      // JSON.parse(JSON.stringify(result))
-      // for(i=0;i<data.length;i++){
-      //   this.item[i]=data[i].userName
-      // }
-
+      console.log(this.areas)
       this.areas.map(e=>{
       this.item2.push(e.areaName)
-     
-      //  if(this.$route.params.)
-     
-      // console.log("user",e)
-      })
+    })
       //  console.log("users",this.item)
      
       } catch (error) {}
      },
-    //  getid(){
-    //     // console.log("haiiiiii",this.item2)
-    //     this.areas.map(e=>{
-    //         if(this.areaname === e.areaName){
-    //             this.areaid = e.id    
-    //                    }
-    //                     //  console.log("haiiiiii",this.sid)
-    //     })
-    //   },
      async userdata() {
        try {
       
       const result = await users()
       var data = result.data.response.Users
-      // console.log("users",data[0].userName)
-      // JSON.parse(JSON.stringify(result))
-      // for(i=0;i<data.length;i++){
-      //   this.item[i]=data[i].userName
-      // }
-
       data.map(e=>{
       this.item.push(e.userName)
       // console.log("user",e)
@@ -214,7 +207,7 @@ export default {
         baranggayId:'',
         code: '',
         roadName:'',
-        routeName:'',
+        routeName: this.routename,
       
       })
       console.log(this.inputs)
@@ -226,19 +219,18 @@ export default {
     async create() {
       try {
         this.inputs.map(e => {
-          this.$route.params.routeRoads.push(e)
+          if(e.roadName != "")
+            this.selectedRoads.push(e)
         })
         const payload = {
-           id:this.$route.params.id,
-              code: this.code,
+          id:this.$route.params.id,
+          code: this.code,
           routeName: this.routename,
-          routeType: this.routetype,
-          supervisor: this.supervisor,
           routeDistance: this.routedistance,
           description: this.description,
-          baranggay: this.baranggays,
-          routeRoads: this.$route.params.routeRoads,
-           days: this.days
+          baranggay: this.selectedBaranggays,
+          routeRoads: this.selectedRoads,
+           days: this.selectedDays
         }
         let result = await editroute(payload)
         if (result) {
@@ -259,7 +251,18 @@ export default {
       }
     },
     getdaysdata(){
-
+      this.selectedDays = []
+      for(var i=0;i<this.days.length;i++){
+        this.Days.map((e,j) => {
+          if(e == this.days[i]) {
+            this.selectedDays.push({
+              id: j+1,
+              day: e
+            })
+          }
+        })
+      }
+      console.log(this.selectedDays)
     },
     async refresh() {
       setTimeout(function () {
@@ -491,7 +494,7 @@ export default {
                 <b-form-select
                   v-model="input.baranggayId"
                 
-                  :options="item2"
+                  :options="areaname"
                  class="form-control"
                 >
                 </b-form-select>

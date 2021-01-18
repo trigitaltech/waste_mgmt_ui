@@ -340,3 +340,5 @@ export const getLguById = (id) => serviceMaker(`/LGU/${id}`,methods.GET,api.NGB)
 export const CreateDirectTrip = (payload) => serviceMaker(`/routetolandfilling/admin/create`,methods.POST,api.NGB,payload)
 
 export const getAllDirectTrips = () => serviceMaker(`/routetolandfilling/all`,methods.GET,api.NGB)
+
+export const getBrgysByRoute = (id) => serviceMaker(`/routemaster/getBrgysByRoute/${id}`,methods.GET,api.NGB)
