@@ -154,7 +154,9 @@ export default {
     },
     async getaddresss() {
       try {
-        const result = await districtsbylgu(this.$store.getters['auth/loggedInDetails'].lgu.id)
+      var id =  this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "LGU" ? this.$store.getters['auth/loggedInDetails'].lgu.id : this.$store.getters['auth/loggedInDetails'].user.id
+        // const result = await districtsbylgu()
+        const result = await districtsbylgu(id)
         this.addres = result.data.response.result
         console.log('address', this.addres)
         this.addres.map((e) => {
@@ -230,7 +232,7 @@ export default {
           this.lgusdata = e.id
             this.form.state = e.state
           this.form.country = e.country
-
+// this.form.district === e.districtName
         }
       })
     },

@@ -43,6 +43,16 @@ export const roles = () => serviceMaker(`/roles/admin/all`, methods.GET, api.NGB
 
 export const users = () => serviceMaker(`/users/admin/readAll`, methods.GET, api.NGB)
 
+export const payrollequipment = () => serviceMaker(`/payroll/rate/equipment/all`, methods.GET, api.NGB)
+
+export const payrollSoilTruck = () => serviceMaker(`/payroll/rate/soiltruck/all`, methods.GET, api.NGB)
+
+export const payrollpalero = () => serviceMaker(`/payroll/rate/palero/all`, methods.GET, api.NGB)
+
+export const payrolldriver = () => serviceMaker(`/payroll/rate/driver/all`, methods.GET, api.NGB)
+
+export const payrollhelper = () => serviceMaker(`/payroll/rate/helper/all`, methods.GET, api.NGB)
+
 export const routemaster = () => serviceMaker(`/routemaster/all `, methods.GET, api.NGB)
 
 export const servicerequests = () => serviceMaker(`/serviceticket/system/all `, methods.GET, api.NGB)
@@ -73,6 +83,15 @@ export const dashboardsrequipment = () => serviceMaker('/dashboard/srequipment/c
 export const dashboardsrtruck = () => serviceMaker('/dashboard/srtruck/count',methods.GET,api.NGB)
 export const dashboarddumping = () => serviceMaker('/dashboard/dumping/count',methods.GET,api.NGB)
 
+export const deletepayrollsoiltruck = (id) => serviceMaker(`/payroll/rate/soiltruck/delete/${id}`, methods.DELETE, api.NGB)
+
+export const deletepayrollequipment = (id) => serviceMaker(`/payroll/rate/equipment/delete/${id}`, methods.DELETE, api.NGB)
+
+export const deletepayrollpalero = (id) => serviceMaker(`/payroll/rate/palero/delete/${id}`, methods.DELETE, api.NGB)
+
+export const deletepayrollhelper = (id) => serviceMaker(`/payroll/rate/helper/delete/${id}`, methods.DELETE, api.NGB)
+
+export const deletepayrolldriver = (id) => serviceMaker(`/payroll/rate/driver/delete/${id}`, methods.DELETE, api.NGB)
 
 export const deletedistrict = (id) => serviceMaker(`/location/district/${id}`, methods.DELETE, api.NGB)
 
@@ -120,6 +139,16 @@ export const deleteservicerequest = (id) => serviceMaker(`/serviceticket/encoder
 
 export const deleterole = (id) => serviceMaker(`/roles/admin/${id}`, methods.DELETE, api.NGB)
 
+export const Createpayrollequipment = (payload) => serviceMaker(`/payroll/rate/equipment/create`, methods.POST, api.NGB, payload)
+
+export const Createpayrollsoiltruck= (payload) => serviceMaker(`/payroll/rate/soiltruck/create`, methods.POST, api.NGB, payload)
+
+export const Createpayrollpalero= (payload) => serviceMaker(`/payroll/rate/palero/create`, methods.POST, api.NGB, payload)
+
+export const Createpayrollhelper= (payload) => serviceMaker(`/payroll/rate/helper/create`, methods.POST, api.NGB, payload)
+
+export const Createpayrolldriver= (payload) => serviceMaker(`/payroll/rate/driver/create`, methods.POST, api.NGB, payload)
+
 export const createpermission = (payload) => serviceMaker(`/permissions/admin`, methods.POST, api.NGB, payload)
 
 export const createroute = (payload) => serviceMaker(`/routemaster/admin/create`, methods.POST, api.NGB, payload)
@@ -136,6 +165,18 @@ export const createuser = (payload) => serviceMaker(`/users/admin/create`, metho
 
  export const createservicerequest = (payload) => serviceMaker(`/serviceticket/encoder/admin`, methods.POST, api.NGB, payload)
 
+ export const editpayrollequipment = (payload) => serviceMaker(`/payroll/rate/equipment/update`, methods.PUT, api.NGB, payload)
+ 
+
+ export const editpayrollpalero = (payload) => serviceMaker(`/payroll/rate/palero/update`, methods.PUT, api.NGB, payload)
+
+ export const  editpayrollsoiltruck = (payload) => serviceMaker(`/payroll/rate/soiltruck/update`, methods.PUT, api.NGB, payload)
+
+
+ export const editpayrollhelper = (payload) => serviceMaker(`/payroll/rate/helper/update`, methods.PUT, api.NGB, payload)
+
+ export const editpayrolldriver = (payload) => serviceMaker(`/payroll/rate/driver/update`, methods.PUT, api.NGB, payload)
+
  export const checkout = (payload) => serviceMaker(`/attendence/checker/admin/checkout/`, methods.PUT, api.NGB, payload)
 
 export const createrole = (payload) => serviceMaker(`/roles/admin`, methods.POST, api.NGB, payload)
@@ -145,8 +186,6 @@ export const createemployee = (payload) => serviceMaker(`/employees/admin/create
 export const createhauler = (payload) => serviceMaker(`/haulermaster/admin`, methods.POST, api.NGB, payload)
 
 export const createLGU = (payload) => serviceMaker(`/LGU/create`, methods.POST, api.NGB, payload)
-
-
 
 export const createhauleremployee = (payload) => serviceMaker(`/haulermaster/employees/admin`, methods.POST, api.NGB, payload)
 

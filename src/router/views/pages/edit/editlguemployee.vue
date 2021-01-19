@@ -154,8 +154,12 @@ export default {
       })
     },
     async getaddresss() {
+      console.log("hello")
       try {
-        const result = await districtsbylgu(this.$store.getters['auth/loggedInDetails'].lgu.id)
+        // debugger
+      var id =  this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "LGU" ? this.$store.getters['auth/loggedInDetails'].lgu.id : this.$store.getters['auth/loggedInDetails'].user.id
+        // const result = await districtsbylgu()
+        const result = await districtsbylgu(id)
         this.addres = result.data.response.result
         console.log('address', this.addres)
         this.addres.map((e) => {
@@ -230,6 +234,8 @@ export default {
        
         if (this.lguname === e.lguName) {
           this.lgusdata = e.id
+            this.form.state = e.state
+          this.form.country = e.country
         }
       })
     },
@@ -450,6 +456,37 @@ export default {
                                 />-->
                                 <!-- <span class="text-danger">{{ errors[0] }}</span>
                                 </ValidationProvider>-->
+                              </div>
+                            </div>
+                             <div class="col-md-4">
+                              <div class="form-group mt-3 mt-sm-0">
+                                <label
+                                  for="defaultFormCardEmailEx"
+                                  class="grey-text font-weight-dark"
+                                  >Type</label
+                                >
+                                <b-form-select
+                                  v-model.trim="rolename"
+                                  placeholder="Select Supervisor"
+                                  label="value"
+                                  class="form-control"
+                                  :options="roles"
+                                  @change="getroles"
+                                ></b-form-select>
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group mt-3 mt-sm-0">
+                                <label for="default">LGU</label>
+                                  <b-form-select
+                                  v-model.trim="lguname"
+                                      placeholder="Select LGU"
+                                  label="value"
+                                  class="form-control"
+                                  :options="lgus"
+                                  @change="getlgu"
+                                ></b-form-select>
+                              
                               </div>
                             </div>
                             <div class="col-md-4">
@@ -716,37 +753,7 @@ export default {
                                 />
                               </div>
                             </div>
-                            <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label
-                                  for="defaultFormCardEmailEx"
-                                  class="grey-text font-weight-dark"
-                                  >Type</label
-                                >
-                                <b-form-select
-                                  v-model.trim="rolename"
-                                  placeholder="Select Supervisor"
-                                  label="value"
-                                  class="form-control"
-                                  :options="roles"
-                                  @change="getroles"
-                                ></b-form-select>
-                              </div>
-                            </div>
-                            <div class="col-md-4">
-                              <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">LGU</label>
-                                  <b-form-select
-                                  v-model.trim="lguname"
-                                      placeholder="Select LGU"
-                                  label="value"
-                                  class="form-control"
-                                  :options="lgus"
-                                  @change="getlgu"
-                                ></b-form-select>
-                              
-                              </div>
-                            </div>
+                           
                              <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">ID Proof</label>

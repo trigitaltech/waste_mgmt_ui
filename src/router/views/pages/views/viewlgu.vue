@@ -272,7 +272,7 @@ export default {
 
                         <div class="row">
                           
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                             
                            
                         
@@ -289,7 +289,7 @@ export default {
                                     </div>
                            
                            
-                            </div>
+                            </div> -->
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Personal Title</label>

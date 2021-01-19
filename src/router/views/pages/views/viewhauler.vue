@@ -249,15 +249,15 @@ export default {
                         </legend>
 
                         <div class="row">
-                          <div class="col-md-4">
+                          <!-- <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">Code</label>
+                              <label for="default">Code</label> -->
                               <!-- <ValidationProvider
                                   v-slot="{ errors }"
                                   name="Last Name"
                                   rules="required"
                                 >-->
-                              <input
+                              <!-- <input
                                 v-model.trim="form.code"
                                 for="lastname"
                                 type="text"
@@ -265,7 +265,7 @@ export default {
                                 class="form-control"
                                 required
                                 disabled
-                              />
+                              /> -->
                               <!-- <input
                                     v-model.trim="form.lastName"
                                     class="form-control"
@@ -274,8 +274,8 @@ export default {
                                   />
                                   <span class="text-danger">{{ errors[0] }}</span>
                                 </ValidationProvider>-->
-                            </div>
-                          </div>
+                            <!-- </div>
+                          </div> -->
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Personal Title</label>
