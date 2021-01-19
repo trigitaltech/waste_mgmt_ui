@@ -4,19 +4,18 @@ import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
-import NProgress from 'nprogress/nprogress'
-import moment from 'moment'
 import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- users,deleteuser
+  payrollequipment,deletepayrollsoiltruck, deletepayrollequipment
 } from '../../../../services/auth'
-
+import NProgress from 'nprogress/nprogress'
+import Createstaging from '../account/Createstaging.vue'
 export default {
   page: {
-    title: 'Users',
+    title: 'Payroll Equipment',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   components: {
@@ -26,6 +25,7 @@ export default {
     ValidationProvider,
     ValidationObserver,
     ModelSelect,
+    Createstaging,
   },
   data() {
     return {
@@ -46,46 +46,54 @@ export default {
       title: 'Register',
       item: [],
 
-      permissionColumns: [
-        {
-          key: 'id',
-
-          label: 'ID',
-        },
-        {
-          key: 'userName',
-          label: 'userName',
-        },
-         {
-          key: 'firstName',
-          label: 'firstName',
-        },
-         {
-          key: 'email',
-          label: 'email',
-        },
-        {
-          key: 'phone',
-          label: 'Phone',
-        },
-         {
-          key: 'addressLine1',
-          label: 'Address',
-        },
-        
-         {
-          key: 'state',
-          label: 'state',
-        },
-         {
-          key: 'country',
-          label: 'country',
-        },
+      RootmasterColumns: [
           {
-          key: 'createdDate',
-          label: 'createdDate',
+          key: 'lguId',
+          label: 'Lgu ID',
         },
+           {
+          key: 'operatorHourlyRate',
+          label: 'operatorHourlyRate',
+        },
+         {
+          key: 'equipmentDailyRate',
+          label: 'equipmentDailyRate',
+        },
+         {
+          key: 'equipmentType',
+          label: 'equipmentType',
+        },
+        // {
+        //   key: 'truckType',
+        //   label: 'Truck Type',
+        // },
+        //  {
+        //   key: 'areaName.areaName',
 
+        //   label: 'Area Name',
+        // },
+       
+        
+        //  {
+        //   key: 'routeType',
+        //   label: 'Route Type',
+        // },
+
+        //  {
+        //   key: 'rate',
+        //   label: 'Rate',
+        // },
+         {
+          key: 'effectiveStartDate',
+          label: 'Start Date',
+        },
+         {
+          key: 'effectiveEndDate',
+          label: 'End Date',
+        },
+      
+      
+        
         {
           key: 'actions',
           sortable: true,
@@ -93,20 +101,15 @@ export default {
       ],
       items: [
         {
-          text: 'Home',
+          text: 'Payroll',
           href: '/',
         },
         {
-          text: 'Users',
+          text: 'Payroll Equipment',
           active: true,
         },
       ],
-      finalModel: {},
-      selected: null,
-      clientId: '',
-      options: ['DAF'],
-      item: [],
-      
+    
     }
   },
   computed: {
@@ -118,29 +121,21 @@ export default {
     },
   },
   mounted() {
-  this.userdata()
+    // this.getClientDetails()
+    this.getroutes()
   },
   methods: {
-      getDate(timeStamp) {
-    // debugger
-      //  console.log(timeStamp)
-      let date
-      // if (timeStamp !== undefined){
-        // date = timeStamp[0] + '-' + timeStamp[1] + '-' + timeStamp[2]
-    return moment(timeStamp).format('DD/MM/YYYY')
-      // }
-    },
-    async deleteReq(data) {
+ async deleteReq(data) {
        console.log("data",data.item.id)
        var id = data.item.id
      try{
           
-        const result = await deleteuser(data.item.id)
+        const result = await deletepayrollequipment(data.item.id)
         if (result) {
           this.$swal({
             group: 'alert',
             type: 'success',
-            text: `You Deleted User Successfully`,
+            text: `You Deleted Payroll Equipment  Successfully`,
             duration: 5000,
           })
          this.refresh()
@@ -152,14 +147,20 @@ export default {
       }
      
     },
-     async userdata() {
+
+    async getroutes() {
        try {
         NProgress.start()
-      const result = await users()
-      this.item = result.data.response.Users
+      const result = await  payrollequipment()
+      this.item = result.data.response.result
        NProgress.done()
-      } catch (error) {}
-     },
+      } catch (error) {
+        this.$toasted.error(error.error, {
+          duration: 7000,
+        })
+      }
+   
+    },
     async refresh() {
       setTimeout(function () {
         location.reload()
@@ -175,11 +176,11 @@ export default {
 
     <div class="animated fadeIn">
       <b-card
-        header="Users"
+        header="Payroll Equipment"
+
         class="mt-10 ml-10 mr-10 mx-auto"
-      >
-      <b-row>
-        <b-col md="3">
+      ><b-row>
+         <b-col md="3">
            
                     <b-form-input
                       v-model="filter"
@@ -189,15 +190,15 @@ export default {
                     ></b-form-input>
            
         </b-col>
-        <b-col md="9">
-          <b-button
+        <b-col >
+        
+            <b-button
             class="btn btn-custome float-right btn-secondary mb-3"
             text="Create Tenant"
-            @click="$router.push({ name: 'CreateUser' })" 
-            >Create User</b-button
-          >
+            @click="$router.push({ path: '/CreatePayrollEquipment' })"
+          >Create Payroll Equipment</b-button>
         </b-col>
-      </b-row>
+        </b-row>
         <div class="mt-3">
           <b-table
             id="my-table"
@@ -212,27 +213,23 @@ export default {
             :per-page="perPage"
             :small="small"
             :fixed="fixed"
-            :fields="permissionColumns"
+            :fields="RootmasterColumns"
             :items="item"
             class="mt-3"
              
-              
-          > <template v-slot:cell(createdDate)="data">
-                            <div class="table-row">{{ getDate(data.item.createdDate) }}</div>
-                        </template>
-              <template v-slot:cell(actions)="data">
-                
-             <router-link :to="{ name: 'Viewuser', params: data.item }">
-                <span class="mr-2" >
+          >
+           <template v-slot:cell(actions)="data">
+            <router-link :to="{ name: 'ViewpayrollEquipment', params: data.item }">
+                <span class="mr-3" >
                  <i class="fa fa-eye edit"></i>
                 </span>
               </router-link>
-             <router-link :to="{ name: 'Edituser', params: data.item }">
-                <span class="mr-2">
+           <router-link :to="{ name: 'EditpayrollEquipment', params: data.item }">
+               <span class="mr-3">
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>
               </router-link>
-            <span @click="deleteReq(data)">
+             <span class="mr-3" @click="deleteReq(data)">
               <i class="fa fa-times edit"></i>
             </span>
            </template>
@@ -252,7 +249,6 @@ export default {
     <!-- end row -->
   </Layout>
 </template>
-
 <style lang="sass" scoped>
 .edit
   color: #a7a7a7 !important

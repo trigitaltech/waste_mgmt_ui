@@ -164,7 +164,7 @@ this.haulerdata.map(e=>{
      },
       async getVehicleTypes() {
       var result = await vehicleTypes()
-      this.vehicleTypes = result.data.response.VehiclesUpdated
+      this.vehicleTypes = result.data.response.result
       this.vehicleTypes.map( e => {
         this.vehicleTypesNames.push(e.truckType)
       })

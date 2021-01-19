@@ -497,7 +497,7 @@ export default {
 
                           <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">Address lane 1</label>
+                              <label for="default">Address</label>
                               <!-- <ValidationProvider
                                   v-slot="{ errors }"
                                   name="Address"
@@ -524,15 +524,15 @@ export default {
                                 </ValidationProvider>-->
                             </div>
                           </div>
-                         <div class="col-md-4">
+                         <!-- <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
-                              <label for="default">Address lane 2</label>
+                              <label for="default">Address lane 2</label> -->
                               <!-- <ValidationProvider
                                   v-slot="{ errors }"
                                   name="Address"
                                   rules="required"
                                 >-->
-                              <input
+                              <!-- <input
                               v-model.trim="form.address2"
                                 disabled
                                 for="address"
@@ -544,7 +544,7 @@ export default {
                                 required
                               />
                             </div>
-                            </div> 
+                            </div>  -->
                           <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">Area</label>

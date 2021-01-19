@@ -193,11 +193,18 @@ this.menuItems = []
           
         >
        
-          <a
+          <!-- <a
             v-if="hasItems(subitem)"
             href="javascript:void(0);"
             class="side-nav-link-a-ref"
-          >
+            
+          > -->
+           <a v-if="hasItems(subitem)" href="javascript:void(0);" class="side-nav-link">
+        <feather v-if="item.icon" :type="item.icon"></feather>
+        <span>{{ item.name }}</span>
+        <span class="menu-arrow"></span>
+      <!-- </a> -->
+
           
            
             {{ subitem.name }}
