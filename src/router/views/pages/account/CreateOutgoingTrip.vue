@@ -317,6 +317,9 @@ export default {
                       class="form-control"        
                       :options="stagingAreaNames"
                       @change="getDumpingLocation" 
+                          oninvalid="this.setCustomValidity('Staging Area is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                     >
                     </b-form-select>
                   </b-col>
@@ -329,6 +332,9 @@ export default {
                       <b-form-select
                         v-model="dumping"     
                         :options="dumpingLocations"
+                            oninvalid="this.setCustomValidity('Dumping Location is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                       >
                       </b-form-select>
                     </b-col>
@@ -407,6 +413,9 @@ export default {
                       v-model="checker"
                       class="form-control"        
                       :options="checkerListNames"
+                          oninvalid="this.setCustomValidity('Volume Checker is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                     >
                     </b-form-select>
                   </b-col>
@@ -420,6 +429,9 @@ export default {
                       v-model.trim="control"
                       class="form-control"        
                       :options="controlListNames"
+                          oninvalid="this.setCustomValidity('Control Checker is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                     >
                     </b-form-select>
                   </b-col>
@@ -436,6 +448,9 @@ export default {
                       class="form-control"        
                       :options="haulerListNames"
                       @change="getVehiclesDriversHelpers"
+                          oninvalid="this.setCustomValidity('Hauler is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                     >
                     </b-form-select>
                   </b-col>
@@ -450,6 +465,9 @@ export default {
                       :options="plates"
                       class="form-control"
                       @change="getTruckType"
+                          oninvalid="this.setCustomValidity('Plate No is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                     >
                     </b-form-select>
                   </b-col>
@@ -465,6 +483,7 @@ export default {
                       v-model="body"
                       class="form-control"
                       name="body"
+
                     />
                   </b-col>
                   <b-col>
@@ -492,6 +511,9 @@ export default {
                       v-model.trim="driver"
                       class="form-control"        
                       :options="driverNames"
+                          oninvalid="this.setCustomValidity('Driver Name is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                     >
                     </b-form-select>
                   </b-col>
@@ -505,6 +527,9 @@ export default {
                       v-model.trim="helper"
                       class="form-control"        
                       :options="helperNames"
+                          oninvalid="this.setCustomValidity('Helper is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                     >
                     </b-form-select>
                   </b-col>

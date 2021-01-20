@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-         haulers:[],
+         haulers:"",
       haulerdata:[],
       haulernames:[],
       haulername:"",
@@ -111,7 +111,7 @@ export default {
     gethauler(){
 this.haulerdata.map(e=>{
   if(this.haulername === e.haulerName){
-    this.haulers =  e
+    this.haulers =  e.id
   }
 })
 
@@ -175,7 +175,7 @@ this.haulerdata.map(e=>{
             totalKmServed: parseInt(this.totalkmsserved),
             totalHourServed: parseInt(this.totalhoursserved),
             description:this.description,
-              hauler:this.haulers,
+              haulerId:this.haulers,
             isDeleted: false,
             model:this.models,
             status:"WORKING",

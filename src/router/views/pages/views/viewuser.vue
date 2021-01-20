@@ -92,8 +92,8 @@ export default {
         firstName:this.$route.params.firstName,
         middleName: this.$route.params.middleName,
         lastName: this.$route.params.lastName,
-        userName:'',
-        password:'',
+        userName:this.$route.params.userName,
+        password:this.$route.params.password,
         email:this.$route.params.email,
         number: this.$route.params.phone,
         address: this.$route.params.addressLine1,
@@ -522,7 +522,7 @@ export default {
                                   v-model.trim="form.area"
                                   class="form-control"
                                   type="text"
-                                  placeholder="Enter Country"
+                                  placeholder="Enter Area"
                                 disabled
                                 />
                               </div>

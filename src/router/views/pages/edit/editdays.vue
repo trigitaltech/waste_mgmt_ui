@@ -52,6 +52,8 @@ export default {
         { value: 'BIO', text: 'BIO' },
         { value: 'NON-BIO', text: 'NON-BIO' },
       ],
+       classdata:[],
+       classid:"",
       code:this.$route.params.code,
       triptype:this.$route.params.tripType,
       tripclass:this.$route.params.tripClass,
@@ -73,12 +75,21 @@ export default {
     console.log(this.$route.params)
   },
   methods: {
+    getid(){
+this.classdata.map(e=>{
+if(this.tripclass === e.name){
+  this.classid = e.id
+}
+})
+
+
+    },
      async getclass() {
        try {
        
       const result = await  classmaster()
-      var data = result.data.response.TripClass
-      data.map(e=>{
+     this.classdata = result.data.response.TripClass
+    this.classdata.map(e=>{
         this.TripClass.push(e.name)
       })
        
@@ -89,9 +100,8 @@ export default {
       try {
         const payload = {
             id:this.$route.params.id,
-          "code":this.code,
-            "tripType":this.triptype,
-            "tripClass":this.tripclass,
+          "tripType":this.triptype,
+            "tripClass":this.classid,
             "day":this.day,
             "status":1
         }
@@ -195,6 +205,7 @@ export default {
                 
                   placeholder="Enter Trip Type"
                   :options="TripClass"
+                    @change="getid"
                   class="form-control"
                   required
                 />

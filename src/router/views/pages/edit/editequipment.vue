@@ -25,10 +25,10 @@ export default {
   },
   data() {
     return {
-            haulers:[],
+            haulers:"",
       haulerdata:[],
       haulernames:[],
-      haulername:"",
+      haulername:this.$route.params.haulerId,
       models:this.$route.params.model,
      equipmentno:this.$route.params.equipmentNo,
      equipmenttype:this.$route.params.equipmentType,
@@ -100,6 +100,9 @@ export default {
       this.haulerdata  = result.data.response.HaulerMaster
       this.haulerdata.map(e=>{
         this.haulernames.push(e.haulerName)
+         if(this.$route.params.haulerId === e.haulerName ){
+        this.haulers=e.id
+      }
       })
 
       
@@ -179,7 +182,7 @@ this.haulerdata.map(e=>{
             status: "WORKING",
             createdDate: this.createddate,
             createdBy: this.createdby,
-              hauler:this.haulers,
+              haulerId:this.haulers,
             modifiedDate: this.modifydate,
             modifiedBy: this.modifyby,
             model:this.models

@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- employees,deletedays,days
+ employees,deletedays,days,classmaster
 } from '../../../../services/auth'
 
 export default {
@@ -93,8 +93,9 @@ export default {
     },
   },
   mounted() {
-  
+ 
     this.getdays()
+     this.getclass()
   },
   methods: {
     async deleteReq(data) {
@@ -118,6 +119,28 @@ export default {
         })
       }
      
+    },
+    async getclass() {
+       try {
+       
+      const result = await  classmaster()
+      var data = result.data.response.TripClass
+        // this.lgudata = result.data.response.result
+         for (var i = 0; i < this.item.length; i++) {
+  for (var j = 0; j < data.length; j++) {
+if(data[j].id === this.item[i].tripClass ){
+  this.item[i].tripClass = data[j].name
+  break
+}
+
+  }
+         }
+      // data.map(e=>{
+      //   this.TripClass.push(e.name)
+      // })
+       
+      } catch (error) {}
+   
     },
     async getdays() {
        try {

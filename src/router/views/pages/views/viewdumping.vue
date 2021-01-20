@@ -198,7 +198,24 @@ export default {
                   type="email"
                   class="form-control"
                 />
+    <!-- <b-col> -->
+                <!-- Default input email -->
+                <label
+                  for="defaultFormCardEmailEx"
+                  class="grey-text font-weight-dark"
+                  >Dumping Point Name</label
+                >
+                <input
+                v-for="(d, x) in dumpingPoints"
+                  :key="x"
+                  :id="x"
+                  :value="d.dumpingPointName"
+                  disabled
+                  type="text"
+                  class="form-control"
+                />
 
+              <!-- </b-col> -->
                 <br />
 
                 <!-- Default input email -->
@@ -216,21 +233,20 @@ export default {
                   type="email"
                   class="form-control"
                 />
-                <label
+
+                 <label
                   for="defaultFormCardEmailEx"
                   class="grey-text font-weight-dark"
-                  >Dumping Point Name</label
+                  >Description</label
                 >
                 <input
-                v-for="(d, x) in dumpingPoints"
-                  :key="x"
-                  :id="x"
-                  :value="d.dumpingPointName"
+                  id="defaultFormCardEmailEx"
+                  v-model="description"
                   disabled
-                  type="text"
+                  type="email"
                   class="form-control"
                 />
-
+               
                 <!-- Default input name -->
                 <!-- <label
                   for="defaultFormCardEmailEx"
@@ -293,21 +309,7 @@ export default {
                         ></GmapAutocomplete>
                       </b-col> -->
 
-              <b-col>
-                <!-- Default input email -->
-                <label
-                  for="defaultFormCardEmailEx"
-                  class="grey-text font-weight-dark"
-                  >Description</label
-                >
-                <input
-                  id="defaultFormCardEmailEx"
-                  v-model="description"
-                  disabled
-                  type="email"
-                  class="form-control"
-                />
-              </b-col>
+          
               <b-col>
                 <!-- <label
                   for="defaultFormCardEmailEx"

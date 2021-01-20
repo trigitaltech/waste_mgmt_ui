@@ -74,7 +74,7 @@ export default {
        lgus:[],
       lgudata:[],
       lguid:"",
-      lgu:"",
+      lgu:this.$route.params.lguId,
       district:this.$route.params.districtName
     }
   },
@@ -371,7 +371,7 @@ export default {
                   v-model.trim="lgu"
                   placeholder="Select LGU"
                   @change="getlgudata"
-                  label="value"
+               
                   :options="lgus"
                   oninvalid="this.setCustomValidity('lgu is required ')"
                   oninput="setCustomValidity('')"

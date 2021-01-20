@@ -27,11 +27,11 @@ export default {
     return {
      equipmentno:this.$route.params.equipmentNo,
      equipmenttype:this.$route.params.equipmentType,
-     ownername:this.$route.params.ownerName,
+     ownername:this.$route.params.haulerId,
      equipmentid:this.$route.params.equipmentId,
      ownerid:this.$route.params.ownerId,
      description:this.$route.params.description,
-     servingarea:this.$route.params.servingArea,
+     servingarea:this.$route.params.model,
      manufacturedate:this.$route.params.manufactureDate,
      totalkmsserved:this.$route.params.totalKmServed,
      totalhoursserved:this.$route.params.totalHourServed,
@@ -229,7 +229,7 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Owner Name</label
+                      >Hauler Name</label
                     >
                      <input
                     id="defaultFormCardtextEx"
@@ -262,7 +262,7 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Serving Area</label
+                      >Model</label
                     >
                     <input
                     id="defaultFormCardtextEx"

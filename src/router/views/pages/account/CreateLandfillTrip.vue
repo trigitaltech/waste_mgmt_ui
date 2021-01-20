@@ -83,7 +83,9 @@ export default {
       garbageCollectors:[],
       brgy:{},
       routeCodes:[],
-      loginDetails:{},
+      loginDetails:{
+        name:''
+      },
       baranggayId:null,
       totalCapacity: null,
       stagingAreaId:null,
@@ -477,6 +479,9 @@ export default {
                       class="form-control"        
                       :options="servingAreas"
                       @change="getRoutes" 
+                        oninvalid="this.setCustomValidity('Baranggay is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                     >
                     </b-form-select>
                   </b-col>
@@ -493,6 +498,9 @@ export default {
                         :multiple="true"       
                         :options="servingRoutes"
                         @change="getRouteCode"
+                          oninvalid="this.setCustomValidity('Serving Route is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                       >
                       </multiselect>
                     </b-col>
@@ -580,6 +588,9 @@ export default {
                       class="form-control"        
                       :options="haulerListNames"
                       @change="getVehiclesDriversHelpers"
+                        oninvalid="this.setCustomValidity('Hauler is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                     >
                     </b-form-select>
                   </b-col>
@@ -598,6 +609,9 @@ export default {
                       :options="plates"
                       class="form-control"
                       @change="getTruckType"
+                        oninvalid="this.setCustomValidity('Plate No is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                     >
                     </b-form-select>
                   </b-col>
@@ -640,6 +654,9 @@ export default {
                       class="form-control"        
                       :options="drivers"
                       @change="getid" 
+                        oninvalid="this.setCustomValidity('Driver is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                     >
                     </b-form-select>
                   </b-col>
@@ -656,6 +673,9 @@ export default {
                       class="form-control"        
                       :options="helpers"
                       @change="gethelperid" 
+                        oninvalid="this.setCustomValidity('Helper is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                     >
                     </b-form-select>
                   </b-col>
@@ -685,6 +705,9 @@ export default {
                       class="form-control"        
                       :options="checkerListNames"
                       @change="getCheckerId" 
+                        oninvalid="this.setCustomValidity('Volume Checker is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                     >
                     </b-form-select>
                   </b-col>
@@ -699,6 +722,9 @@ export default {
                       class="form-control"        
                       :options="controlListNames"
                       @change="getControlId"
+                        oninvalid="this.setCustomValidity('Control Checker is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                     >
                     </b-form-select>
                   </b-col>
@@ -715,6 +741,9 @@ export default {
                       class="form-control"        
                       :options="stagingAreaNames"
                       @change="getDumpingLocation" 
+                        oninvalid="this.setCustomValidity('Staging Area is required ')"
+                  oninput="setCustomValidity('')"
+                  required
                     >
                     </b-form-select>
                   </b-col>
