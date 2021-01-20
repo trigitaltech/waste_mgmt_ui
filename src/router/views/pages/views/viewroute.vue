@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- editroute,users
+ editroute,users,getBrgysByRoute,Areamasters
 } from '../../../../services/auth'
 
 export default {
@@ -75,6 +75,10 @@ export default {
 
         },
          {
+          key:'baranggayId',
+          label:'Baranggay Name'
+        },
+         {
           key:'routeName'
           
         },
@@ -114,8 +118,35 @@ export default {
     })
     console.log(this.$route.params)
     // this.userdata()
+    this.getBaranggaysByRouteId()
   },
   methods: {
+     async getBaranggaysByRouteId() {
+      try {
+        console.log('1')
+     
+        const result2 = await Areamasters()
+        var data2 = result2.data.response.areaMaster
+       
+         
+              
+         for (var i = 0; i < this.roads.length; i++) {
+  for (var j = 0; j < data2.length; j++) {
+if(this.data2[j].id === this.roads[i].baranggayId ){
+  this.roads[i].baranggayId = this.data2[j].areaName
+  break
+}
+  }
+         }
+
+            // }
+        
+    
+        console.log(this.selectedBaranggays)
+      } catch(error){
+        console.log(error)
+      }
+    },
      async userdata() {
        try {
       
