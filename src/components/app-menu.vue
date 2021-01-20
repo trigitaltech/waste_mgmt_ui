@@ -244,3 +244,30 @@ this.menuItems = []
 </div>
   <!-- End Sidebar -->
 </template>
+<style  scoped>
+.nav-second-level li a, .nav-thrid-level li a {
+    color: #8C94C0 !important;
+    display: block !important;
+    padding: 12px 30px !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    position: relative !important;
+    -webkit-transition: all 0.4s !important;
+    transition: all 0.4s !important;
+    border-left: 3px solid transparent !important;
+    text-align: left !important;
+}
+.left-sidebar > .mm-active > ul > li > a, .left-sidebar > .mm-active > ul > li > ul > li > a {
+    /* color: #4b4b5a; */
+    color: #8C94C0 !important;
+    display: block !important;
+    padding: 12px 30px !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+    position: relative !important;
+    -webkit-transition: all 0.4s !important;
+    transition: all 0.4s !important;
+    border-left: 3px solid transparent !important;
+    text-align: left !important;
+}
+</style>

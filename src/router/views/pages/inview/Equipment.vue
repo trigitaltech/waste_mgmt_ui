@@ -11,7 +11,8 @@ import {
 } from 'vee-validate/dist/vee-validate.full'
 import {
   deleteequipment,
- equipment
+ equipment,
+ haulers
 } from '../../../../services/auth'
 
 export default {
@@ -61,7 +62,7 @@ export default {
           label: 'EquipmentType',
         },
          {
-          key: 'hauler.haulerName',
+          key: 'haulerId',
 
           label: 'Hauler Name',
         },
@@ -95,6 +96,7 @@ export default {
           sortable: true,
         },
       ],
+      lgudata:[],
       items: [
         {
           text: 'Home',
@@ -118,6 +120,7 @@ export default {
   mounted() {
   
     this.getequipment()
+    this.getemployees()
   },
   methods: {
    async deleteReq(data) {
@@ -141,6 +144,25 @@ export default {
         })
       }
      
+    },
+    async getemployees() {
+       try {
+        NProgress.start()
+      const result = await haulers()
+      this.lgudata = result.data.response.HaulerMaster
+     
+         for (var i = 0; i < this.item.length; i++) {
+  for (var j = 0; j < this.lgudata.length; j++) {
+if(this.lgudata[j].id === this.item[i].haulerId ){
+  this.item[i].haulerId = this.lgudata[j].haulerName
+  break
+}
+  }
+         }
+
+       NProgress.done()
+      } catch (error) {}
+   
     },
     async getequipment() {
        try {

@@ -50,7 +50,7 @@ export default {
       areas:[],
       servingAreas:[],
        option: [
-      
+        { value: 'default', text: 'Default' },
         { value: 'solidwaste', text: 'Solidwaste' },
         { value: 'organicewaste', text: 'Organicwaste' },
       ],
@@ -70,12 +70,7 @@ export default {
           active: true,
         },
       ],
-     inputs: [
-        {
-         dumpingPointName:'',
-        },
-      ],
-    
+     inputs:this.$route.params.dumpingPoint
     }
   },
   computed: {

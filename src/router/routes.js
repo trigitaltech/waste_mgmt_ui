@@ -494,7 +494,7 @@ const inviewRoutes = [
     children: [
       {
         path: 'PayrollDriver',
-        name: 'PayrollDriver',
+        name: 'Payroll Driver',
         icon: 'check-square',
         component: () => lazyLoadView(import('@views/pages/inview/payrolldriver')),
         meta: { authRequired: true },
@@ -502,7 +502,7 @@ const inviewRoutes = [
       },
       {
         path: 'PayrollHelper',
-        name: 'PayrollHelper',
+        name: 'Payroll Helper',
         icon: 'check-square',
         component: () => lazyLoadView(import('@views/pages/inview/payrollhelper')),
         meta: { authRequired: true },
@@ -510,7 +510,7 @@ const inviewRoutes = [
       },
       {
         path: 'PayrollPalero',
-        name: 'PayrollPalero',
+        name: 'Payroll Palero',
         icon: 'check-square',
         component: () => lazyLoadView(import('@views/pages/inview/payrollpalero')),
         meta: { authRequired: true },
@@ -518,7 +518,7 @@ const inviewRoutes = [
       },
       {
         path: 'PayrollSoilTruck',
-        name: 'PayrollSoilTruck',
+        name: 'Payroll SoilTruck',
         icon: 'check-square',
         component: () => lazyLoadView(import('@views/pages/inview/payrollsoiltruck')),
         meta: { authRequired: true },
@@ -526,7 +526,7 @@ const inviewRoutes = [
       },
       {
         path: 'PayrollEquipment',
-        name: 'PayrollEquipment',
+        name: 'Payroll Equipment',
         icon: 'check-square',
         component: () => lazyLoadView(import('@views/pages/inview/payrollequipment')),
         meta: { authRequired: true },

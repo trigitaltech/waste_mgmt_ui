@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-        haulers:[],
+        haulers:"",
       haulerdata:[],
       haulernames:[],
      vehicleno:this.$route.params.vehicleNo,
@@ -52,7 +52,7 @@ export default {
         { value: 'Centralstaging', text: 'Central Staging' },
       ],
       item:[ ],
-      vehicletype:[],
+      // vehicletype:[],
 volumecapacity:this.$route.params.volumeCapacity,
       items: [
         {
@@ -68,7 +68,7 @@ volumecapacity:this.$route.params.volumeCapacity,
           active: true,
         },
       ],
-      haulername:"",
+      haulername:this.$route.params.haulerId,
    owners:[],
    vehicleTypesNames:[],
    emp:[],
@@ -86,6 +86,7 @@ volumecapacity:this.$route.params.volumeCapacity,
     this.modifyby = this.getUserDetails.user.username
     // this.getClientDetails()
     // this.getplans()
+   
     console.log(this.$route.params)
     this.areadata()
     this.employeedata()
@@ -101,7 +102,13 @@ volumecapacity:this.$route.params.volumeCapacity,
       this.haulerdata  = result.data.response.HaulerMaster
       this.haulerdata.map(e=>{
         this.haulernames.push(e.haulerName)
+       
+      if(this.$route.params.haulerId === e.haulerName ){
+        this.haulers=e.id
+      }
+ 
       })
+
 
       
       } catch (error) {}
@@ -110,7 +117,7 @@ volumecapacity:this.$route.params.volumeCapacity,
     gethauler(){
 this.haulerdata.map(e=>{
   if(this.haulername === e.haulerName){
-    this.haulers =  e
+    this.haulers =  e.id
   }
 })
 
@@ -221,7 +228,7 @@ this.haulerdata.map(e=>{
             totalKmServed: this.totalkmsserved,
             totalHourServed:this.totalhoursserved,
             description:this.description,
-              hauler:this.haulers,
+             haulerId:this.haulers,
             isDeleted: false,
             status: 22,
             createdDate: this.createddate,
@@ -303,7 +310,19 @@ this.haulerdata.map(e=>{
                 </b-row>
                 <b-row class="mb-3">
                   <b-col>
-                    <label
+                        <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Volume Capacity</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="volumecapacity"
+                       placeholder="Enter Volume Capacity"
+                      type="text"
+                      class="form-control"
+                    />
+                    <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Code</label
@@ -313,7 +332,7 @@ this.haulerdata.map(e=>{
                       v-model="code"
                       type="text"
                       class="form-control"
-                    />
+                    /> -->
                      <!--<b-form-select
                   v-model.trim="ownername"
                   placeholder="Select Supervisor"
@@ -448,18 +467,7 @@ this.haulerdata.map(e=>{
                               ></multiselect>
                      </b-col>
                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Volume Capacity</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="volumecapacity"
-                       placeholder="Enter Volume Capacity"
-                      type="text"
-                      class="form-control"
-                    />
+                
                  </b-col>
                  
                      <!-- </b-col> -->

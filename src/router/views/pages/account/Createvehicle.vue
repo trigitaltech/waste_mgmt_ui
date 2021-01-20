@@ -296,7 +296,19 @@ this.haulerdata.map(e=>{
                 </b-row>
                 <b-row class="mb-3">
                   <b-col>
-                    <label
+                       <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Volume Capacity</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      v-model="volumecapacity"
+                       placeholder="Enter Volume Capacity"
+                      type="text"
+                      class="form-control"
+                    />
+                    <!-- <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Code</label
@@ -307,7 +319,7 @@ this.haulerdata.map(e=>{
                        placeholder="Enter Code"
                       type="text"
                       class="form-control"
-                    />
+                    /> -->
                      <!--<b-form-select
                   v-model.trim="ownername"
                   placeholder="Select Supervisor"
@@ -447,18 +459,7 @@ this.haulerdata.map(e=>{
                               ></multiselect>
                      </b-col>
                 <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Volume Capacity</label
-                    >
-                    <input
-                      id="defaultFormCardtextEx"
-                      v-model="volumecapacity"
-                       placeholder="Enter Volume Capacity"
-                      type="text"
-                      class="form-control"
-                    />
+                 
                  </b-col>
                  
                      <!-- </b-col> -->

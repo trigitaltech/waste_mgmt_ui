@@ -34,7 +34,7 @@ export default {
      description:this.$route.params.description,
      servingarea:this.$route.params.servingArea,
      servingroute:this.$route.params.servingRoute,
-     manufacturedate:this.$route.params.manufactureDate,
+     manufacturedate:this.$route.params.haulerId,
      totalkmsserved:this.$route.params.totalKmServed,
      totalhoursserved:this.$route.params.totalHourServed,
       createdby:this.$route.params.createdBy,
@@ -266,7 +266,7 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >ManufactureDate</label
+                      >Hauler Name</label
                     >
                     <input
                     id="defaultFormCardtextEx"

@@ -12,7 +12,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- editdays
+ editdays,classmaster
 } from '../../../../services/auth'
 
 export default {
@@ -58,6 +58,7 @@ export default {
     },
   },
   mounted() {
+    this.getclass()
     // this.getClientDetails()
     // this.getplans()
     this.createdby = this.getUserDetails.user.username
@@ -66,6 +67,20 @@ export default {
     console.log(this.$route.params)
   },
   methods: {
+      async getclass() {
+       try {
+        // NProgress.start()
+      const result = await  classmaster()
+    data = result.data.response.TripClass
+    data.map(e=>{
+      if(this.$route.params.tripClass === e.id){
+      this.tripclass = e.name
+      }
+    })
+      //  NProgress.done()
+      } catch (error) {}
+   
+    },
     async create() {
       try {
         const payload = {

@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- vehicle,deletevehicle
+ vehicle,deletevehicle,haulers
 } from '../../../../services/auth'
 
 export default {
@@ -49,16 +49,16 @@ export default {
 
           label: 'Id',
         },
-         {
-          key: 'code',
-          label: 'code',
-        },
+        //  {
+        //   key: 'code',
+        //   label: 'code',
+        // },
          {
           key: 'vehicleNo',
           label: 'vehicleNo',
         },
          {
-          key: 'hauler.haulerName',
+          key: 'haulerId',
 
           label: 'Hauler Name',
         },
@@ -91,6 +91,7 @@ export default {
           sortable: true,
         },
       ],
+      lgudata:[],
       items: [
         {
           text: 'Home',
@@ -113,7 +114,7 @@ export default {
     },
   },
   mounted() {
-   
+   this.getemployees()
     this.getvehicles()
   },
   methods: {
@@ -139,6 +140,26 @@ export default {
       }
      
     },
+    async getemployees() {
+       try {
+        NProgress.start()
+      const result = await haulers()
+      this.lgudata = result.data.response.HaulerMaster
+     
+         for (var i = 0; i < this.item.length; i++) {
+  for (var j = 0; j < this.lgudata.length; j++) {
+if(this.lgudata[j].id === this.item[i].haulerId ){
+  this.item[i].haulerId = this.lgudata[j].haulerName
+  break
+}
+  }
+         }
+
+       NProgress.done()
+      } catch (error) {}
+   
+    },
+    
    async getvehicles() {
        try {
         NProgress.start()

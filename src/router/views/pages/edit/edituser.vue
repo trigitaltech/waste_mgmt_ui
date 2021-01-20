@@ -98,7 +98,7 @@ export default {
         middleName: this.$route.params.middleName,
         lastName: this.$route.params.lastName,
         userName:this.$route.params.userName,
-        password:'',
+        password:this.$route.params.password,
         email: this.$route.params.email,
         number: this.$route.params.phone,
         address: this.$route.params.addressLine1,
