@@ -30,7 +30,7 @@ export default {
     
       serviceoffice:"",
       file:"",
-      personalidno:"",
+      personalidno:this.$route.params.personalIdNo,
       items: [
          {
           text: 'Home',
@@ -65,10 +65,10 @@ export default {
        baranggay:"",
        haulerName:this.$route.params.haulerName,
         code:this.$route.params.code,
-        personalTitle: this.$route.params.contactSalutation,
-        firstName:  this.$route.params.contactFirstName,
-        middleName:  this.$route.params.contactMiddleName,
-        lastName:  this.$route.params.contactLastName,
+        personalTitle: this.$route.params.salutation,
+        firstName:  this.$route.params.firstName,
+        middleName:  this.$route.params.middleName,
+        lastName:  this.$route.params.lastName,
         userName: this.$route.params.userName,
         password: this.$route.params.password,
         email:  this.$route.params.email,
@@ -99,10 +99,10 @@ export default {
       clientTemplete: {},
       distopt:[],
       hauler:[],
-      haulername:"",
+      haulername:this.$route.params.haulerId,
       haulerdata:[],
       haulerarray:[],
-      rolename:"",
+      rolename:this.$route.params.type,
     }
   },
   computed: {
@@ -154,6 +154,10 @@ export default {
       this.haulerdata = result.data.response.HaulerMaster
        this.haulerdata.map(e=>{
          this.hauler.push(e.haulerName)
+           if(this.$route.params.haulerId === e.haulerName ){
+        this.haulerarray=e
+      }
+
        })
      
       } catch (error) {}

@@ -10,7 +10,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- hauleremployee,deletehauleremployee
+ hauleremployee,deletehauleremployee,haulers
 } from '../../../../services/auth'
 
 export default {
@@ -50,6 +50,11 @@ export default {
 
           label: 'Personal ID NO',
         },
+        
+        {
+          key: 'haulerId',
+          label: 'HaulerName',
+        },
          {
           key: 'userName',
           label: 'userName',
@@ -84,6 +89,7 @@ export default {
           sortable: true,
         },
       ],
+      lgudata:[],
       items: [
         {
           text: 'Home',
@@ -107,8 +113,28 @@ export default {
   mounted() {
   
     this.getemployees()
+    this.getemployees1()
   },
   methods: {
+     async getemployees1() {
+       try {
+        NProgress.start()
+      const result = await haulers()
+      this.lgudata = result.data.response.HaulerMaster
+     
+         for (var i = 0; i < this.item.length; i++) {
+  for (var j = 0; j < this.lgudata.length; j++) {
+if(this.lgudata[j].id === this.item[i].haulerId ){
+  this.item[i].haulerId = this.lgudata[j].haulerName
+  break
+}
+  }
+         }
+
+       NProgress.done()
+      } catch (error) {}
+   
+    },
     async deleteReq(data) {
        console.log("data",data.item.id)
        var id = data.item.id

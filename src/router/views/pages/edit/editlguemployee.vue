@@ -115,7 +115,7 @@ export default {
       lgusdata: "",
     
       file:"",
-      lguname: "",
+      lguname: this.$route.params.lguId,
       bouquetsOpt: [
         { value: null, text: 'Please select an option' },
         'FTA  AND STARTER',
@@ -246,8 +246,8 @@ export default {
         this.lgusnames.map((e) => {
           this.lgus.push(e.lguName)
              
-            if(this.$route.params.id === e.id){
-              this.lguname = e.lguName
+            if(this.$route.params.lguId === e.lguName){
+              this.lgusdata = e.id
             }
         })
         // data.map( e => {

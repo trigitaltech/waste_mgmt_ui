@@ -93,12 +93,13 @@ export default {
       item2:[],
       sid:"",
      form: {
+       personalidno: this.$route.params.personalIdNo,
         personalTitle:this.$route.params.salutation,
         firstName:this.$route.params.firstName,
         middleName: this.$route.params.middleName,
         lastName:this.$route.params.lastName,
         userName:this.$route.params.userName,
-        password:'',
+        password:this.$route.params.password,
         email:this.$route.params.email,
         number:this.$route.params.phone,
         address: this.$route.params.addressLine1,
@@ -546,7 +547,7 @@ export default {
                             </div>
                             </div>  -->
                          
-                          <div class="col-md-4">
+                          <!-- <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Post Code</label>
                               <input
@@ -572,8 +573,8 @@ export default {
                                
                                 />
                               </div>
-                            </div>
-                            <div class="col-md-4">
+                            </div> -->
+                            <!-- <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">Country</label>
                                 <input
@@ -585,7 +586,7 @@ export default {
                                 
                                 />
                               </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-4">
                             
                            
