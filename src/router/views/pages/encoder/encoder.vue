@@ -751,8 +751,8 @@ return this.tripdata.incomingTrips.length
                     :filter-included-fields="filterOn"
                     @filtered="onFiltered"
                   >
-                    <template v-slot:cell(requestDate)="data"
-                      >{{ getFormattedDate(data.item.requestDate) }}</template>
+                  <template v-slot:cell(tripStartTime)="data"
+                      >{{ getDate(data.item.tripStartTime) }}</template>
                    
                       <!-- <download-excel :data="json_data">
                   

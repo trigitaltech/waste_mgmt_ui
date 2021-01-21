@@ -611,7 +611,7 @@ export default {
                            
                            
                             </div>
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Service office</label>
                                  
@@ -621,17 +621,17 @@ export default {
                                 placeholder="Enter Personal ID"
                                 class="form-control"
                                 type="number"
-                              />
+                              /> -->
                                <!-- <b-form-select
                                            v-model.trim="serviceoffice"
                                             @change="getid()"
                                            :options="item2"
                                               
                                 ></b-form-select> -->
-                                    </div>
+                                    <!-- </div>
                            
                            
-                            </div>
+                            </div> -->
                               <div class="col-md-4">
                             
                            
@@ -640,7 +640,7 @@ export default {
                                    <label for="default">Personal ID No</label>
                                  
                               <input
-                              v-model.trim="personalidno"
+                              v-model.trim="form.personalidno"
                                 disabled
                                 placeholder="Enter Personal ID"
                                 class="form-control"

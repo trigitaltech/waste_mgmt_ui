@@ -17,6 +17,8 @@ import {
   classmaster,
   lgus,
   editpayrollhelper
+  , vehicleTypes,
+  type
 } from '../../../../services/auth'
 
 export default {
@@ -52,8 +54,7 @@ export default {
         },
       ],
       days: [
-        { value: 'BIO', text: 'BIO' },
-        { value: 'NON-BIO', text: 'NON-BIO' },
+       
       ],
       code: '',
       triptype: this.$route.params.tripType,
@@ -63,11 +64,14 @@ export default {
       lgusnames: [],
       lgus: [],
       lgusdata: this.$route.params.lguId,
-      lguname: '',
+      lguname: this.$route.params.lguId,
       rate:this.$route.params.rate,
       startDate:this.$route.params.effectiveStartDate,
       endDate:this.$route.params.effectiveEndDate,
-      trucktype:this.$route.params.truckType
+      trucktype:this.$route.params.truckType,
+         vehicleTypes:[],
+      vehicleTypesNames:[],
+      typemaster:[]
     }
   },
   computed: {
@@ -84,8 +88,28 @@ export default {
     this.modifyby = this.getUserDetails.user.username
     // this.permission()
     this.getemployees()
+    this.gettypes()
+    this.getVehicleTypes()
   },
   methods: {
+    async gettypes() {
+       try {
+        
+      const result = await  type()
+      this.typemaster = result.data.response.TripType
+     this.typemaster.map(e=>{
+       this.days.push(e.tripType)
+     })
+      } catch (error) {}
+   
+    },
+     async getVehicleTypes() {
+      var result = await vehicleTypes()
+      this.vehicleTypes = result.data.response.result
+      this.vehicleTypes.map( e => {
+        this.vehicleTypesNames.push(e.truckType)
+      })
+    },
     getlgu() {
       this.lgusnames.map((e) => {
         if (this.lguname === e.lguName) {
@@ -101,8 +125,8 @@ export default {
         this.lgusnames = result.data.response.result
         this.lgusnames.map((e) => {
           this.lgus.push(e.lguName)
-           if(this.$route.params.lguId === e.id){
-          this.lguname = e.lguName
+           if(this.$route.params.lguId === e.lguName){
+           this.lgusdata = e.id
             }
         })
         // data.map( e => {
@@ -180,13 +204,13 @@ export default {
                 >
                   Truck Type</label
                 >
-                <input
-                  v-model="trucktype"
-                  type="text"
-                  placeholder="Enter Truck Type"
-                  class="form-control"
-                  required
-                />
+               <b-form-select
+                      v-model.trim="trucktype"
+                      placeholder="Select Vehicle Type"
+                      label="value"
+                      class="form-control"
+                      :options="vehicleTypesNames"
+                    ></b-form-select>
                 <!-- Default input name -->
               </b-col>
 
@@ -219,10 +243,13 @@ export default {
                 >
                   Trip Type</label
                 >
-                <input
+                <b-form-select
                   v-model="triptype"
                   type="text"
+                  oninvalid="this.setCustomValidity('Trip Type is required ')"
+                  oninput="setCustomValidity('')"
                   placeholder="Enter Trip Type"
+                  :options="days"
                   class="form-control"
                   required
                 />
