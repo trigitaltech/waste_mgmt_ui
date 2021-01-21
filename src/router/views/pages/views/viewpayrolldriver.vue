@@ -60,9 +60,9 @@ export default {
       day: '',
       TripClass: [],
       lgusnames: [],
-      lgus: "",
+      lgus:this.$route.params.lguId,
       lgusdata: '',
-      lguname: '',
+      lguname: this.$route.params.lguId,
       rate:this.$route.params.rate,
       startDate:this.$route.params.effectiveStartDate,
       endDate:this.$route.params.effectiveEndDate,
@@ -81,6 +81,7 @@ export default {
     this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     // this.permission()
+    console.log(this.$route.params)
     this.getemployees()
   },
   methods: {

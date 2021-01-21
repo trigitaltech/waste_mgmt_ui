@@ -178,9 +178,9 @@ export default {
         console.log(result)
         this.haulerList = result.data.response.HaulerMaster;
         this.haulerList.map( e => {
-            if(e.baranggayId == this.baranggayId) {
+            // if(e.baranggayId == this.baranggayId) {
               this.haulerListNames.push(e.haulerName)
-            }
+            // }
         })
       } catch(e) {
         console.log(e);

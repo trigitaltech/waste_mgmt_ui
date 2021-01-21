@@ -57,7 +57,7 @@ export default {
         },
       ],
       serviceoffice: this.$route.params.service_OFFICE,
-      lguname: this.$route.params.lguName,
+      lguname: this.$route.params.lguId,
       personalidno: this.$route.params.personal_ID_NO,
       items: [
         {
@@ -91,7 +91,7 @@ export default {
       item2: [],
       sid: '',
       form: {
-        lguName: this.$route.params.lguName,
+        lguName: this.$route.params.lguId,
         lguCode: this.$route.params.code,
         personalidno: this.$route.params.personalIdNo,
         personalTitle: this.$route.params.salutation,
@@ -621,11 +621,11 @@ export default {
                                 <label for="default">LGU NAME</label>
 
                                 <input
-                                  v-model.trim="lguname"
+                                  v-model="lguname"
                                   disabled
                                   placeholder="Enter Lguname"
                                   class="form-control"
-                                  type="number"
+                                  type="text"
                                 />
                               </div>
                             </div>

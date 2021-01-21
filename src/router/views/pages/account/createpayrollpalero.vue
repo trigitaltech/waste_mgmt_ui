@@ -16,6 +16,9 @@ import {
   Createpayrollpalero,
   classmaster,
   lgus,
+   editpayrollpalero
+  , vehicleTypes,
+  type
 } from '../../../../services/auth'
 
 export default {
@@ -51,8 +54,7 @@ export default {
         },
       ],
       days: [
-        { value: 'BIO', text: 'BIO' },
-        { value: 'NON-BIO', text: 'NON-BIO' },
+     
       ],
       code: '',
       triptype: '',
@@ -66,7 +68,10 @@ export default {
       rate:"",
       startDate:"",
       endDate:"",
-      trucktype:""
+      trucktype:"",
+       vehicleTypes:[],
+      vehicleTypesNames:[],
+      typemaster:[]
     }
   },
   computed: {
@@ -81,9 +86,29 @@ export default {
     this.createdby = this.getUserDetails.user.username
     this.modifyby = this.getUserDetails.user.username
     // this.permission()
+     this.gettypes()
+    this.getVehicleTypes()
     this.getemployees()
   },
   methods: {
+        async gettypes() {
+       try {
+        
+      const result = await  type()
+      this.typemaster = result.data.response.TripType
+     this.typemaster.map(e=>{
+       this.days.push(e.tripType)
+     })
+      } catch (error) {}
+   
+    },
+     async getVehicleTypes() {
+      var result = await vehicleTypes()
+      this.vehicleTypes = result.data.response.result
+      this.vehicleTypes.map( e => {
+        this.vehicleTypesNames.push(e.truckType)
+      })
+    },
     getlgu() {
       this.lgusnames.map((e) => {
         if (this.lguname === e.lguName) {
@@ -174,13 +199,13 @@ export default {
                 >
                   Truck Type</label
                 >
-                <input
-                  v-model="trucktype"
-                  type="text"
-                  placeholder="Enter Truck Type"
-                  class="form-control"
-                  required
-                />
+               <b-form-select
+                      v-model.trim="trucktype"
+                      placeholder="Select Vehicle Type"
+                      label="value"
+                      class="form-control"
+                      :options="vehicleTypesNames"
+                    ></b-form-select>
                 <!-- Default input name -->
               </b-col>
 
@@ -213,14 +238,16 @@ export default {
                 >
                   Trip Type</label
                 >
-                <input
+              <b-form-select
                   v-model="triptype"
                   type="text"
+                  oninvalid="this.setCustomValidity('Trip Type is required ')"
+                  oninput="setCustomValidity('')"
                   placeholder="Enter Trip Type"
+                  :options="days"
                   class="form-control"
                   required
                 />
-
                 <!-- Default input name -->
               </b-col>
               <b-col>

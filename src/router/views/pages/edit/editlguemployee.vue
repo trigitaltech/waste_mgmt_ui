@@ -115,7 +115,7 @@ export default {
       lgusdata: "",
     
       file:"",
-      lguname: "",
+      lguname: this.$route.params.lguId,
       bouquetsOpt: [
         { value: null, text: 'Please select an option' },
         'FTA  AND STARTER',
@@ -246,8 +246,8 @@ export default {
         this.lgusnames.map((e) => {
           this.lgus.push(e.lguName)
              
-            if(this.$route.params.id === e.id){
-              this.lguname = e.lguName
+            if(this.$route.params.lguId === e.lguName){
+              this.lgusdata = e.id
             }
         })
         // data.map( e => {
@@ -374,15 +374,15 @@ export default {
                                 ></multiselect>
                               </div>
                             </div>-->
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
-                                <label for="default">LGU Name</label>
+                                <label for="default">LGU Name</label> -->
                                 <!-- <ValidationProvider
                                   v-slot="{ errors }"
                                   name="First Name"
                                   rules="required"
                                 >-->
-                                <input
+                                <!-- <input
                                   v-model.trim="form.lgunames"
                                   for="firstname"
                                   type="text"
@@ -391,7 +391,7 @@ export default {
                                   placeholder="Enter LguName"
                                   class="form-control"
                                   required
-                                />
+                                /> -->
                                 <!-- <input
                                     v-model.trim="form.firstName"
                                     class="form-control"
@@ -400,8 +400,8 @@ export default {
                                 />-->
                                 <!-- <span class="text-danger">{{ errors[0] }}</span>
                                 </ValidationProvider>-->
-                              </div>
-                            </div>
+                              <!-- </div>
+                            </div> -->
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">User Name</label>
