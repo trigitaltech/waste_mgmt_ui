@@ -64,14 +64,15 @@ export default {
       lgusnames: [],
       lgus: [],
       lgusdata: this.$route.params.lguId,
-      lguname: this.$route.params.lguId,
+      lguname:this.$route.params.lguId,
       rate:this.$route.params.rate,
       startDate:this.$route.params.effectiveStartDate,
       endDate:this.$route.params.effectiveEndDate,
       trucktype:this.$route.params.truckType,
          vehicleTypes:[],
       vehicleTypesNames:[],
-      typemaster:[]
+      typemaster:[],
+      tripid:""
     }
   },
   computed: {
@@ -92,6 +93,15 @@ export default {
     this.getVehicleTypes()
   },
   methods: {
+      getids(){
+ this.typemaster.map((e) => {
+        if (this.triptype === e.tripType) {
+          this.tripid = e.id
+
+          // this.form.district === e.districtName
+        }
+      })
+    },
     async gettypes() {
        try {
         
@@ -142,7 +152,7 @@ export default {
             id:this.$route.params.id,
           truckType: this.trucktype,
           lguId: this.lgusdata,
-          tripType: this.triptype,
+          tripType: this.tripid,
           rate: this.rate,
           effectiveStartDate:this.startDate,
           effectiveEndDate: this.endDate,
@@ -250,6 +260,7 @@ export default {
                   oninput="setCustomValidity('')"
                   placeholder="Enter Trip Type"
                   :options="days"
+                    @change="getids"
                   class="form-control"
                   required
                 />

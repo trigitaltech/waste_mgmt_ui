@@ -60,7 +60,7 @@ export default {
       day: '',
       TripClass: [],
       lgusnames: [],
-      lgus: "",
+       lgus: this.$route.params.lguId,
       lgusdata: this.$route.params.lguId,
       lguname: '',
       rate:"",

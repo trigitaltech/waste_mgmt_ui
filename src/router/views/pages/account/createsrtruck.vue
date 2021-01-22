@@ -150,7 +150,7 @@ export default {
     },
     async getdump() {
       for (var i = 0; i < this.dumpingdata.length; i++) {
-        if (this.dumpinglocation[0] === this.dumpingdata[i].dumpingAreaName) {
+        if (this.dumpinglocation === this.dumpingdata[i].dumpingAreaName) {
           this.dumpid = this.dumpingdata[i].id
           const result = await getdumpdata(this.dumpid)
           var dumpdata = result.data.response.result.dumpingPoint
@@ -201,8 +201,9 @@ export default {
       } catch (error) {}
     },
     async vehiclehauler() {
+      console.log(this.hauler)
       for (var i = 0; i < this.haulerdata.length; i++) {
-        if (this.hauler[0] === this.haulerdata[i].haulerName) {
+        if (this.hauler === this.haulerdata[i].haulerName) {
           this.haulerid = this.haulerdata[i].id
           const result = await getVehiclesByhauler(this.haulerid)
           this.vehicledata = result.data.response.result
@@ -334,8 +335,8 @@ export default {
           helperId: this.helperid,
           helperName: this.helper[0],
 
-          fromPoint: this.fromdumpingpoint[0],
-          toPoint: this.todumpingpoint[0],
+          fromPoint: this.fromdumpingpoint,
+          toPoint: this.todumpingpoint,
 
           volumeCapacity: this.volumecapacity,
 
@@ -439,7 +440,7 @@ export default {
                     >
                     <multiselect
                       v-model="dumpinglocation"
-                      :multiple="true"
+                    
                       :options="dumpings"
                       @input="getdump"
                     >
@@ -453,7 +454,7 @@ export default {
                     >
                     <multiselect
                       v-model="hauler"
-                      :multiple="true"
+                   
                       :options="haulers"
                       @input="vehiclehauler"
                     >
@@ -560,7 +561,7 @@ export default {
                     >
                     <multiselect
                       v-model="fromdumpingpoint"
-                      :multiple="true"
+
                       :options="fromdumpings"
                     >
                     </multiselect>
@@ -573,7 +574,7 @@ export default {
                     >
                     <multiselect
                       v-model="todumpingpoint"
-                      :multiple="true"
+                     
                       :options="todumpings"
                     >
                     </multiselect>

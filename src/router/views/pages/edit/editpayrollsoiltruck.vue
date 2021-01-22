@@ -16,7 +16,8 @@ import {
   Createpayrolldriver,
   classmaster,
   lgus,
-  editpayrollsoiltruck
+  editpayrollsoiltruck,
+  vehicleTypes
 } from '../../../../services/auth'
 
 export default {
@@ -62,15 +63,16 @@ export default {
       TripClass: [],
       lgusnames: [],
       lgus: [],
-      lgusdata: this.$route.params.lguId,
-      lguname: '',
+      lgusdata: "",
+      lguname: this.$route.params.lguId,
       rate:this.$route.params.rate,
       startDate:this.$route.params.effectiveStartDate,
       endDate:this.$route.params.effectiveEndDate,
       trucktype:this.$route.params.truckType,
         driverrate:this.$route.params.driverRate,
       helperrate:this.$route.params.helperRate,
-      truckrate:this.$route.params.truckRate
+      truckrate:this.$route.params.truckRate,
+      vehicleTypesNames:[]
     }
   },
   computed: {
@@ -87,6 +89,7 @@ export default {
     this.modifyby = this.getUserDetails.user.username
     // this.permission()
     this.getemployees()
+    this.getVehicleTypes()
   },
   methods: {
     getlgu() {
@@ -104,8 +107,8 @@ export default {
         this.lgusnames = result.data.response.result
         this.lgusnames.map((e) => {
           this.lgus.push(e.lguName)
-           if(this.$route.params.lguId === e.id){
-          this.lguname = e.lguName
+           if(this.$route.params.lguId === e.lguName){
+           this.lgusdata = e.id
             }
         })
         // data.map( e => {
@@ -149,6 +152,13 @@ export default {
         })
       }
     },
+      async getVehicleTypes() {
+      var result = await vehicleTypes()
+      this.vehicleTypes = result.data.response.result
+      this.vehicleTypes.map( e => {
+        this.vehicleTypesNames.push(e.truckType)
+      })
+    },
     async getclass() {
       try {
         const result = await classmaster()
@@ -187,13 +197,13 @@ export default {
                 >
                   Truck Type</label
                 >
-                <input
-                  v-model="trucktype"
-                  type="text"
-                  placeholder="Enter Truck Type"
-                  class="form-control"
-                  required
-                />
+               <b-form-select
+                      v-model.trim="trucktype"
+                      placeholder="Select Vehicle Type"
+                      label="value"
+                      class="form-control"
+                      :options="vehicleTypesNames"
+                    ></b-form-select>
 
                 <!-- Default input name -->
               </b-col>
