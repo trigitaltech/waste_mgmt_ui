@@ -69,7 +69,14 @@ export default {
       trucktype:"",
     equipmenttype:"",
     operatorrate:"",
-    equipmentrate:""
+    equipmentrate:"",
+      item1:[{ value: 'BH', text: 'BH '},
+        { value: 'BD', text: 'BD' },
+        { value: 'PL', text: 'PL' },
+        { value: 'PL', text: 'PL' },
+        { value: 'RR', text: 'RR' },
+        { value: 'RG', text: 'RG' },
+        ],
     }
   },
   computed: {
@@ -180,13 +187,13 @@ export default {
                 >
                   Equipment Type</label
                 >
-                <input
-                  v-model="equipmenttype"
-                  type="text"
-                  placeholder="Enter Equipment Type"
-                  class="form-control"
-                  required
-                />
+                 <b-form-select
+                      v-model.trim="equipmenttype"
+                      placeholder="Select Equipment"
+                      label="value"
+                      class="form-control"
+                      :options="item1"
+                ></b-form-select>
 
                 <!-- Default input name -->
               </b-col>

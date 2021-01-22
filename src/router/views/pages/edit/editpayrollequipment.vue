@@ -60,9 +60,16 @@ export default {
       day: '',
       TripClass: [],
       lgusnames: [],
+          item1:[{ value: 'BH', text: 'BH '},
+        { value: 'BD', text: 'BD' },
+        { value: 'PL', text: 'PL' },
+        { value: 'PL', text: 'PL' },
+        { value: 'RR', text: 'RR' },
+        { value: 'RG', text: 'RG' },
+        ],
       lgus: [],
-      lgusdata: this.$route.params.lguId,
-      lguname: '',
+      lgusdata: "",
+      lguname: this.$route.params.lguId,
       rate:"",
     startDate:this.$route.params.effectiveStartDate,
       endDate:this.$route.params.effectiveEndDate,
@@ -102,8 +109,8 @@ export default {
         this.lgusnames = result.data.response.result
         this.lgusnames.map((e) => {
           this.lgus.push(e.lguName)
-           if(this.$route.params.lguId === e.id){
-          this.lguname = e.lguName
+           if(this.$route.params.lguId === e.lguName){
+         this.lgusdata = e.id
             }
         })
         // data.map( e => {
@@ -184,14 +191,13 @@ export default {
                 >
                   Equipment Type</label
                 >
-                <input
-                  v-model="equipmenttype"
-                  type="text"
-                  placeholder="Enter Equipment Type"
-                  class="form-control"
-                  required
-                />
-
+               <b-form-select
+                      v-model.trim="equipmenttype"
+                      placeholder="Select Equipment"
+                      label="value"
+                      class="form-control"
+                      :options="item1"
+                ></b-form-select>
                 <!-- Default input name -->
               </b-col>
               <b-col>

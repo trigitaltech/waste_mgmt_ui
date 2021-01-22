@@ -16,6 +16,7 @@ import {
   Createpayrollsoiltruck,
   classmaster,
   lgus,
+  vehicleTypes
 } from '../../../../services/auth'
 
 export default {
@@ -69,7 +70,8 @@ export default {
       trucktype:"",
       driverrate:"",
       helperrate:"",
-      truckrate:""
+      truckrate:"",
+      vehicleTypesNames:[]
     }
   },
   computed: {
@@ -85,8 +87,16 @@ export default {
     this.modifyby = this.getUserDetails.user.username
     // this.permission()
     this.getemployees()
+    this.getVehicleTypes()
   },
   methods: {
+       async getVehicleTypes() {
+      var result = await vehicleTypes()
+      this.vehicleTypes = result.data.response.result
+      this.vehicleTypes.map( e => {
+        this.vehicleTypesNames.push(e.truckType)
+      })
+    },
     getlgu() {
       this.lgusnames.map((e) => {
         if (this.lguname === e.lguName) {
@@ -180,13 +190,13 @@ export default {
                 >
                   Truck Type</label
                 >
-                <input
-                  v-model="trucktype"
-                  type="text"
-                  placeholder="Enter Truck Type"
-                  class="form-control"
-                  required
-                />
+              <b-form-select
+                      v-model.trim="trucktype"
+                      placeholder="Select Vehicle Type"
+                      label="value"
+                      class="form-control"
+                      :options="vehicleTypesNames"
+                    ></b-form-select>
 
                 <!-- Default input name -->
               </b-col>

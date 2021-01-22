@@ -161,7 +161,7 @@ export default {
     },
     async getdump() {
       for (var i = 0; i < this.dumpingdata.length; i++) {
-        if (this.dumpinglocation[0] === this.dumpingdata[i].dumpingAreaName) {
+        if (this.dumpinglocation === this.dumpingdata[i].dumpingAreaName) {
           this.dumpid = this.dumpingdata[i].id
           const result = await getdumpdata(this.dumpid)
           var dumpdata = result.data.response.result.dumpingPoint
@@ -213,7 +213,7 @@ export default {
     },
     async vehiclehauler() {
       for (var i = 0; i < this.haulerdata.length; i++) {
-        if (this.hauler[0] === this.haulerdata[i].haulerName) {
+        if (this.hauler === this.haulerdata[i].haulerName) {
           this.haulerid = this.haulerdata[i].id
           const result = await getVehiclesByhauler(this.haulerid)
           this.vehicledata = result.data.response.result
@@ -241,7 +241,7 @@ export default {
     },
    getoperatorid(){
         this.emp.map(e=> {
-          if(this.operator[0] === e.userName){
+          if(this.operator === e.userName){
 this.operatorid = e.id
           }
         })
@@ -303,7 +303,7 @@ this.operatorid = e.id
      getequip() {
       // debugger
       this.equipmentdata.map((e) => {
-        if (this.equipment[0] === e.equipmentNo) {
+        if (this.equipment === e.equipmentNo) {
           this.model = e.model
         }
       })
@@ -336,11 +336,11 @@ this.operatorid = e.id
           tripDate: this.tripDate,
 
           dumpingareaId: this.dumpid,
-            equipmentNo:this.equipment[0],
+            equipmentNo:this.equipment,
           equipmentmodel:this.model,
           type:this.jobtype[0],
-          fromPoint: this.fromdumpingpoint[0],
-          toPoint: this.todumpingpoint[0],
+          fromPoint: this.fromdumpingpoint,
+          toPoint: this.todumpingpoint,
        
           haulerId: this.haulerid,
 
@@ -442,7 +442,7 @@ this.operatorid = e.id
                     >
                     <multiselect
                       v-model="dumpinglocation"
-                      :multiple="true"
+                  
                       :options="dumpings"
                       @input="getdump"
                     >
@@ -456,7 +456,7 @@ this.operatorid = e.id
                     >
                     <multiselect
                       v-model="hauler"
-                      :multiple="true"
+                  
                       :options="haulers"
                       @input="vehiclehauler"
                     >
@@ -473,7 +473,7 @@ this.operatorid = e.id
                     >
                     <multiselect
                       v-model="equipment"
-                      :multiple="true"
+                     
                       :options="equipments"
                      @input="getequip"
                     >
@@ -505,7 +505,7 @@ this.operatorid = e.id
                     >
                     <multiselect
                       v-model="operator"
-                      :multiple="true"
+                   
                       :options="drivers"
                       @input="getoperatorid"
                     >
@@ -519,7 +519,7 @@ this.operatorid = e.id
                     >
                     <multiselect
                       v-model="jobtype"
-                      :multiple="true"
+                   
                       :options="jobtypes"
                     
                     >
@@ -535,7 +535,7 @@ this.operatorid = e.id
                     >
                     <multiselect
                       v-model="fromdumpingpoint"
-                      :multiple="true"
+                  
                       :options="fromdumpings"
                     >
                     </multiselect>
@@ -548,7 +548,7 @@ this.operatorid = e.id
                     >
                     <multiselect
                       v-model="todumpingpoint"
-                      :multiple="true"
+                     
                       :options="todumpings"
                     >
                     </multiselect>

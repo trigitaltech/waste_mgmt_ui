@@ -70,7 +70,9 @@ export default {
       trucktype:"",
       vehicleTypes:[],
       vehicleTypesNames:[],
-      typemaster:[]
+      typemaster:[],
+      tripid:"",
+
     }
   },
   computed: {
@@ -90,6 +92,15 @@ export default {
     this.gettypes()
   },
   methods: {
+      getids(){
+ this.typemaster.map((e) => {
+        if (this.triptype === e.tripType) {
+          this.tripid = e.id
+
+          // this.form.district === e.districtName
+        }
+      })
+    },
     async gettypes() {
        try {
         
@@ -129,7 +140,7 @@ export default {
         const payload = {
           truckType: this.trucktype,
           lguId: this.lgusdata,
-          tripType: this.triptype,
+          tripType: this.tripid,
           rate: this.rate,
           effectiveStartDate:this.startDate,
           effectiveEndDate: this.endDate,
@@ -245,6 +256,7 @@ export default {
                   placeholder="Enter Trip Type"
                   :options="days"
                   class="form-control"
+                     @change="getids"
                   required
                 />
 

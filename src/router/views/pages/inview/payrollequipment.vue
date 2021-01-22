@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  payrollequipment,deletepayrollsoiltruck, deletepayrollequipment
+  payrollequipment,deletepayrollsoiltruck, deletepayrollequipment,lgus
 } from '../../../../services/auth'
 import NProgress from 'nprogress/nprogress'
 import Createstaging from '../account/Createstaging.vue'
@@ -109,6 +109,7 @@ export default {
           active: true,
         },
       ],
+      lgudata:[],
     
     }
   },
@@ -125,6 +126,7 @@ export default {
     this.getroutes()
   },
   methods: {
+    
  async deleteReq(data) {
        console.log("data",data.item.id)
        var id = data.item.id
@@ -153,6 +155,20 @@ export default {
         NProgress.start()
       const result = await  payrollequipment()
       this.item = result.data.response.result
+         const result1 = await  lgus()
+        this.lgudata = result1.data.response.result
+
+         for (var i = 0; i < this.item.length; i++) {
+          
+  for (var j = 0; j < this.lgudata.length; j++) {
+if(this.lgudata[j].id === this.item[i].lguId ){
+  this.item[i].lguId = this.lgudata[j].lguName
+  
+  break
+}
+
+  }
+         }
        NProgress.done()
       } catch (error) {
         this.$toasted.error(error.error, {

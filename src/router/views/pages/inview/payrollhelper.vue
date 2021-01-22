@@ -9,7 +9,8 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  payrollhelper,deletepayrollhelper,lgus
+  payrollhelper,deletepayrollhelper,lgus,type
+  
 } from '../../../../services/auth'
 import NProgress from 'nprogress/nprogress'
 import Createstaging from '../account/Createstaging.vue'
@@ -101,7 +102,8 @@ export default {
           active: true,
         },
       ],
-    lgudata:[]
+    lgudata:[],
+    typemaster:[]
     }
   },
   computed: {
@@ -115,6 +117,7 @@ export default {
   mounted() {
     // this.getClientDetails()
     this.getroutes()
+    this.gettypes()
   },
   methods: {
  async deleteReq(data) {
@@ -139,7 +142,27 @@ export default {
       }
      
     },
+async gettypes() {
+       try {
+        
+      const result = await  type()
+      this.typemaster = result.data.response.TripType
+    // debugger
+         for (var i = 0; i < this.item.length; i++) {
+          
+  for (var j = 0; j < this.typemaster.length; j++) {
+    // debugger
+if(this.typemaster[j].id.toString() === this.item[i].tripType ){
+  this.item[i].tripType = this.typemaster[j].tripType
+  
+  break
+}
 
+  }
+         }
+      } catch (error) {}
+   
+    },
     async getroutes() {
        try {
         NProgress.start()
