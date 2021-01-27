@@ -710,9 +710,7 @@ export default {
                       class="form-control"        
                       :options="helpers"
                       @change="gethelperid" 
-                          oninvalid="this.setCustomValidity('Helper is required ')"
-                  oninput="setCustomValidity('')"
-                  required
+                   
                     >
                     </b-form-select>
                   </b-col>

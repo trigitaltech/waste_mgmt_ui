@@ -4,6 +4,7 @@ import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
+import moment from "moment";
 import {
   ValidationProvider,
   ValidationObserver,
@@ -22,6 +23,7 @@ export default {
     ValidationProvider,
     ValidationObserver,
     ModelSelect,
+    moment
   },
   data() {
     return {
@@ -47,7 +49,7 @@ export default {
       modifiedBy: this.$route.params.modifiedBy,
       modifiedDate: this.$route.params.modifiedDate,
       status: this.$route.params.status,
-      tripDate: this.$route.params.tripDate,
+      tripdate: this.$route.params.tripDate,
       tripEndTime: this.$route.params.tripEndTime,
       tripIncomingAreaRoute: this.$route.params.tripIncomingAreaRoute,
       tripStartTime: this.$route.params.tripStartTime,
@@ -89,6 +91,16 @@ export default {
     // this.userdata()
   },
   methods: {
+    formattime(value) {
+      if (value) {
+      return moment(String(value)).format("hh:mm A DD/MM/YYYY");
+      }
+    },
+     formatdate(value) {
+      if (value) {
+        return moment(String(value)).format("DD/MM/YYYY");
+      }
+    },
      async getplans() {
        try {
         
@@ -120,8 +132,12 @@ export default {
        create(pay) {
      
         this.printPdf = this.$route.params
-        console.log("haii",this.printPdf)
-
+       this.printPdf.tripDate = this.formatdate(this.printPdf.tripDate) 
+        this.printPdf.tripStartTime = this.formattime( this.printPdf.tripStartTime) 
+         this.printPdf.tripEndTime =  this.formattime( this.printPdf.tripEndTime) 
+        // debugger
+   
+         console.log("haii",this.printPdf)
         setTimeout(() => {
          
           this.demoFun()
@@ -180,7 +196,7 @@ export default {
                 >
                 <input
                   id="defaultFormCardNameEx"
-                  v-model="tripDate"
+                  v-model="tripdate"
                   disabled
                   type="text"
                   class="form-control"
@@ -376,94 +392,115 @@ export default {
     >
       <section class="pdf-content row justify-content-center">
         <h1 style="text-align:center;font-size:24px;text-decoration:underline">
-          INT'L SWIMS INC.
+          ROUTE INCOMING TRIP TICKET.
         </h1>    
-        <h6 style="text-align:center;margin-top:-20px">INTERNATIONAL SOLID WASTE INTEGRATED</h6>
-        <h6 style="text-align:center;margin-top:-16px">MANAGEMENT SPECIAL INCORPORATED</h6>
-        <h1 style="text-align:center;font-size:22px">TRIP INCOMING TICKET</h1>
-     
-         <h2 style="margin-left:40px">
-          Baranggay: 
-          <span style="font-size:18px">{{baranggayid}}</span>
+        
+        <h6 style="text-align:center;margin-top:-20px"></h6>
+        <h6 style="text-align:center;margin-top:-16px"></h6>
+        <h1 style="text-align:center;font-size:22px"></h1>
+          <h2 style="margin-left:450px;margin-top:50px">
+              Control No:
+          <span style="font-size:25px;text-decoration: underline">{{printPdf.controlNo}}</span>
+        
         </h2>
-        <h2 style="margin-left:40px">
-          Driver's Name: 
-          <span style="font-size:18px">{{printPdf.driverName}}</span>
-        </h2>
-        <h2 style="margin-left:450px;margin-top:-44px">
-          Total Kilometer: 
-          <span style="font-size:18px">{{printPdf.totalDistance}}</span>
-        </h2>
-        <h2 style="margin-left:40px">
-          Plate No: 
-          <span style="font-size:18px">{{printPdf.truckplateNo}}</span>
-        </h2>
-        <h2 style="margin-left:450px;margin-top:-44px">
+          <h2 style="margin-left:450px;margin-top:30px">
           Date: 
-          <span style="font-size:18px">{{printPdf.tripDate | formatDate}}</span>
+          <span style="font-size:25px;text-decoration: underline">{{printPdf.tripDate}}</span>
+        </h2>
+          <h3 style="text-align:center;margin-top:30px">INT’L SWIMS INC. & DOMINUS CONSTRUCTION (JOINT VENTURE)</h3>
+        <h3 style="text-align:center;margin-top:20px">LOT 1 QUIRINO HIGHWAY ST. DOMINIQUE DR. SUBD. BAESA QUEZON CITY </h3>
+        <h2 style="margin-left:40px">
+          Lgu : 
+          <span style="font-size:25px;text-decoration: underline">{{printPdf.lguId}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+          Total Distance (Kms) : 
+          <span style="font-size:25px;text-decoration: underline">{{printPdf.totalDistance}}</span>
         </h2>
         <h2 style="margin-left:40px">
+          Plate No : 
+          <span style="font-size:25px;text-decoration: underline">{{printPdf.truckplateNo}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+       Body No : 
+          <span style="font-size:25px;text-decoration: underline">{{printPdf.truckBodyNo}}</span>
+        </h2>
+        <!-- <h2 style="margin-left:40px">
           Hauler Name: 
           <span style="font-size:18px">{{printPdf.haulerName}}</span>
+        </h2> -->
+        <h2 style="margin-left:450px;margin-top:30px">
+          Truck Type : 
+          <span style="font-size:25px;text-decoration: underline">{{printPdf.truckType}}</span>
         </h2>
-        <h2 style="margin-left:450px;margin-top:-44px">
-          Lgu Name: 
-          <span style="font-size:18px">{{printPdf.lguName}}</span>
-        </h2>
-        <h2 style="margin-left:40px">
+        <!-- <h2 style="margin-left:40px">
           Truck Type: 
-          <span style="font-size:18px">{{printPdf.truckType}}</span>
+          <span style="font-size:18px;text-decoration: underline">{{printPdf.truckType}}</span>
+        </h2> -->
+          <h3 style="text-align:center;margin-top:30px;text-decoration: underline">COLLECTION HOURS (TIME) </h3>
+
+        <h2 style="margin-left:40px;margin-top:40px">
+          From: 
+          <span style="font-size:25px;text-decoration: underline">{{printPdf.tripStartTime}} </span> AM/PM
         </h2>
-        <h2 style="margin-left:450px;margin-top:-44px">
-          Time In: 
-          <span style="font-size:18px">{{printPdf.tripStartTime | formatTime}}</span>
-        </h2>
-        <h2 style="margin-left:40px">
+        <!-- <h2 style="margin-left:40px">
           Volume: 
           <span style="font-size:18px">{{printPdf.volumeCheckerMeasuredVolume}}</span>
-        </h2>
+        </h2> -->
         <h2 style="margin-left:450px;margin-top:-44px">
-          Time Out: 
-          <span style="font-size:18px">{{printPdf.tripEndTime | formatTime}}</span>
+          TO: 
+          <span style="font-size:25px;text-decoration: underline">{{printPdf.tripEndTime}} </span> AM/PM
         </h2>
         <h2 style="margin-left:40px">
-          Body No: 
-          <span style="font-size:18px">{{printPdf.truckBodyNo}}</span>
+          Driver : 
+          <span style="font-size:25px">{{printPdf.driverName}}</span>
         </h2>
         <h2 style="margin-left:450px;margin-top:-44px">
-          Dumping Location: 
+          ITEM DISPATCHED: 
           <span style="font-size:18px">{{printPdf.dumpingLocationName}}</span>
         </h2>
         <h2 style="margin-left:40px">
-         Total Capacity: 
-          <span style="font-size:18px">{{printPdf.totalCapacity}}</span>
+         GARBAGE COLLECTORS: <br/>
+          <div v-for="(input, k) in printPdf.garbageCollector" :key="k">
+            <span style="font-size:18px;text-decoration: underline">{{input.garbageCollectorName}}</span> <br/>
+            </div>
         </h2>
-        <h2 style="margin-left:40px">
+        <!-- <h2 style="margin-left:40px">
           Volume Checker: 
           <span style="font-size:18px">{{printPdf.volumeCheckerName}}</span>
-        </h2>
+        </h2> -->
         <h2 style="margin-left:450px;margin-top:-44px">
-          Control Checker: 
-          <span style="font-size:18px">{{printPdf.controlCheckerName}}</span>
+          Guide : 
+          <span style="font-size:18px;text-decoration: underline">{{printPdf.controlCheckerName}}</span>
         </h2>
-        <h2 style="margin-left:40px">
+         <h2 style="margin-left:450px;margin-top:40px">
+          Route/Area Of Collection : 
+          <span style="font-size:18px;text-decoration: underline">{{baranggayid}}</span>
+        </h2>
+        <!-- <h2 style="margin-left:40px">
           TICKET NO: 
           <span style="font-size:18px">000000{{printPdf.id}}</span>
+        </h2> -->
+       
+        <!-- <p style="margin-left:480px;margin-top:30px;font-size:22px">
+        
+        </p> -->
+        <h3 style="margin-left:40px;text-decoration: underline"> VOLUME OF GARBAGE FOR FINAL DISPOSAL </h3>
+        <!-- <p style="margin-left:40px">1. Waste collected should be segregated and sprayed with deodorizer prior to transport to the site.</p> -->
+      <table id="table" style="margin-left:40px">
+  <tr>
+  <h2 style="margin-left:40px">
+          CONTRACTOR DISPATCHER: 
+          <span style="font-size:25px;text-decoration: underline">{{printPdf.contractorDispatcherName}}</span>
         </h2>
-         <h2 style="margin-left:450px;margin-top:-44px">
-          CONTROL NO:
-          <span style="font-size:18px">{{printPdf.controlNo}}</span>
+  </tr>
+  <tr>
+    <h2 style="margin-left:40px">
+          LGU CHECKER : 
+          <span style="font-size:25px;text-decoration: underline">{{printPdf.volumeCheckerName}}</span>
         </h2>
-        <p style="margin-left:480px;margin-top:30px;font-size:22px">
-          CUSTOMER'S COPY
-        </p>
-        <h4 style="margin-left:40px">NOTE:</h4>
-        <p style="margin-left:40px">1. Waste collected should be segregated and sprayed with deodorizer prior to transport to the site.</p>
-        <p style="margin-left:40px">2. Truck must be sealed/covered and that there is no leakage of waste liquid while transporting</p>
-        <p style="margin-left:40px">3. Any violation in transporting of which cargo will be responsibility of the hauling contractor.</p>
-        <p style="margin-left:40px">4. The permit to Dump Certificate should be surrendered to the Gate guard before entering the premises.</p>
-        <p style="margin-left:40px">5. Observe and obey RA 9003 and the rules and regulations set by INT’L SWIMS INC</p>
-        <p style="margin-left:40px">6. Any violation therefore shall be grounded for suspension or cancellation of the accreditation.</p>
+  </tr>
+</table>
       </section>
     </div>
     <!-- end row -->
