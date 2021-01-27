@@ -5,7 +5,7 @@ import PageHeader from '@components/page-header'
 import NProgress from 'nprogress/nprogress'
 import moment from "moment";
 import {
- Tripdownload,incomingtrips,deletetripincoming,getAllOutgoingTrip,deletetripoutgoing
+ Tripdownload,incomingtrips,deletetripincoming,getAllOutgoingTrip,deletetripoutgoing,lgus
 } from '../../../../services/auth'
 
 export default {
@@ -13,7 +13,7 @@ export default {
     title: 'Trip Incoming Details',
     meta: [{ name: 'description', content: appConfig.description }],
   },
-  components: { Layout, PageHeader },
+  components: { Layout, PageHeader ,moment},
   data() {
     return {
       json_fields: {
@@ -74,6 +74,10 @@ export default {
           label: 'controlNo',
           sortable: true,
         },
+         {
+          key: 'lguId',
+          label: 'LGU',
+        },
         {
           key: 'tripDate',
           label: 'Trip Date',
@@ -103,7 +107,8 @@ export default {
           sortable: true,
         },
       ],
-      loginUserType:null
+      loginUserType:null,
+      lgudata:[]
     }
   },
   computed: {
@@ -143,6 +148,11 @@ export default {
     }
   },
   methods: {
+      formatdate(value) {
+      if (value) {
+        return moment(String(value)).format("DD/MM/YYYY");
+      }
+    },
       async deleteReq(data) {
        console.log("data",data.item.id)
        var id = data.item.id
@@ -169,6 +179,20 @@ export default {
       try{
         let result = await getAllOutgoingTrip();
         this.item = result.data.response.OutgoingTrips
+           const result1 = await  lgus()
+        this.lgudata = result1.data.response.result
+
+         for (var i = 0; i < this.item.length; i++) {
+          
+  for (var j = 0; j < this.lgudata.length; j++) {
+if(this.lgudata[j].id === this.item[i].lguId ){
+  this.item[i].lguId = this.lgudata[j].lguName
+  
+  break
+}
+
+  }
+         }
         console.log(result);
       }
       catch(e) {
@@ -220,9 +244,8 @@ export default {
             class="mt-3"
             ref="roles"
           >
-            <template v-slot:cell(time_in)="data">
-              <div>{{ data.item.tripDate | formatdatetime }}</div>
-            </template>
+           <template v-slot:cell(tripDate)="data"
+                      >{{ formatdate(data.item.tripDate) }}</template>
                <template v-slot:cell(actions)="data">
               <router-link :to="{ name: 'Viewtripoutgoing', params: data.item }">
               <b-button size="sm" class="mr-2" variant="primary" >

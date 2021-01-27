@@ -4,12 +4,13 @@ import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
+import moment from "moment";
 import {
   ValidationProvider,
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- getAllDirectTrips,deletedirectrip
+ getAllDirectTrips,deletedirectrip,lgus
 } from '../../../../services/auth'
 
 export default {
@@ -24,6 +25,7 @@ export default {
     ValidationProvider,
     ValidationObserver,
     ModelSelect,
+    moment
   },
   data() {
     return {
@@ -98,6 +100,7 @@ export default {
           sortable: true,
         },
       ],
+      lgudata:[]
     }
   },
   computed: {
@@ -111,7 +114,11 @@ export default {
     this.getTrips()
   },
   methods: {
-
+ formatdate(value) {
+      if (value) {
+        return moment(String(value)).format("DD/MM/YYYY");
+      }
+    },
    
      async deleteReq(data) {
        console.log("data",data.item.id)
@@ -139,6 +146,20 @@ export default {
       try{
         let result = await getAllDirectTrips();
           this.item = result.data.response.result
+             const result1 = await  lgus()
+        this.lgudata = result1.data.response.result
+
+         for (var i = 0; i < this.item.length; i++) {
+          
+  for (var j = 0; j < this.lgudata.length; j++) {
+if(this.lgudata[j].id === this.item[i].lguId ){
+  this.item[i].lguId = this.lgudata[j].lguName
+  
+  break
+}
+
+  }
+         }
         console.log(result);
       }
       catch(e) {
@@ -192,6 +213,8 @@ export default {
            
             class="mt-3"
           >
+            <template v-slot:cell(tripDate)="data"
+                      >{{ formatdate(data.item.tripDate) }}</template>
                <template v-slot:cell(actions)="data">
               <router-link :to="{ name: 'Viewdirecttrip', params: data.item }">
               <b-button size="sm" class="mr-2" variant="primary" >

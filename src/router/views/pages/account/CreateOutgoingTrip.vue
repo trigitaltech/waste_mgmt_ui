@@ -527,9 +527,7 @@ export default {
                       v-model.trim="helper"
                       class="form-control"        
                       :options="helperNames"
-                          oninvalid="this.setCustomValidity('Helper is required ')"
-                  oninput="setCustomValidity('')"
-                  required
+                      
                     >
                     </b-form-select>
                   </b-col>
