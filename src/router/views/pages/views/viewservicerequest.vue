@@ -51,6 +51,7 @@ export default {
         },
       ],
       areadata: [],
+       printPdf: [],
       areaarray: '',
       routedate: [],
       haulerarray: [],
@@ -155,7 +156,31 @@ timeinpm:this.$route.params.driverTimeIn,
 
       console.log(this.loginDetails)
     },
-  
+   demoFun() {
+      console.log('heee')
+      var divContents = document.getElementById('pdf-voucher').innerHTML
+      console.log("divcontents",divContents)
+      var a = window.open('', '', 'height=500, width=500')
+      a.document.write('<html>')
+      a.document.write('<body >')
+      a.document.write('<div>')
+      a.document.write(divContents)
+      a.document.write('</div></body></html>')
+      a.document.close()
+      a.print()
+    },
+
+       create(pay) {
+     
+        this.printPdf = this.$route.params
+        console.log("haii",this.printPdf)
+
+        setTimeout(() => {
+         
+          this.demoFun()
+        }, 2000)
+      
+    },
   },
 }
 </script>
@@ -445,6 +470,16 @@ timeinpm:this.$route.params.driverTimeIn,
              
             </b-row>
                 <br />
+                   <b-row>
+              <b-col>
+                     <b-button
+                  class="btn btn-custome ml-4 btn-secondary mb-3 float-right mr-2"
+                  text="Create Tenant"
+                  @click="create"
+                  >PRINT</b-button
+                >
+                  </b-col>
+            </b-row>
                 <!-- <button
                   type="submit"
                   class="btn btn-custome float-right btn-secondary mb-3"
@@ -455,6 +490,102 @@ timeinpm:this.$route.params.driverTimeIn,
           </div>
         </div>
       </b-card>
+    </div>
+      <div
+      id="pdf-voucher"
+      class="mt-4 pdf-voucher"
+      style="font-family: sans-serif;display:none"
+    >
+      <section class="pdf-content row justify-content-center">
+        <h1 style="text-align:center;font-size:24px;text-decoration:underline">
+          INT'L SWIMS INC.
+        </h1>    
+        <h6 style="text-align:center;margin-top:-20px">INTERNATIONAL SOLID WASTE INTEGRATED</h6>
+        <h6 style="text-align:center;margin-top:-16px">MANAGEMENT SPECIAL INCORPORATED</h6>
+        <h1 style="text-align:center;font-size:22px">SERVICE REQUEST EQUIPMENT TICKET</h1>
+         <!-- <h2 style="margin-left:40px">
+          Baranggay: 
+          <span style="font-size:18px">{{baranggayid}}</span>
+        </h2> -->
+      <h2 style="margin-left:40px">
+          Driver's Name: 
+          <span style="font-size:18px">{{printPdf.driverName}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+          Total TRIPS: 
+          <span style="font-size:18px">{{printPdf.totalTrips}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+          Plate No: 
+          <span style="font-size:18px">{{printPdf.plateNo}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+          Date: 
+          <span style="font-size:18px">{{printPdf.tripDate | formatDate}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+          Hauler Name: 
+          <span style="font-size:18px">{{printPdf.haulerName}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+          TRUCK TYPE: 
+          <span style="font-size:18px">{{printPdf.truckType}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+       TOTAL DISTANCE: 
+          <span style="font-size:18px">{{printPdf.totalDistance}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+          Time In: 
+          <span style="font-size:18px">{{printPdf.tripStartTime | formatTime}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+          Volume: 
+          <span style="font-size:18px">{{printPdf.volumeCheckerMeasuredVolume}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+          Time Out: 
+          <span style="font-size:18px">{{printPdf.tripEndTime | formatTime}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+          Body No: 
+          <span style="font-size:18px">{{printPdf.bodyNo}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+          FROM POINT: 
+          <span style="font-size:18px">{{printPdf.fromPoint}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+         TO POINT: 
+          <span style="font-size:18px">{{printPdf.toPoint}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+        AM Trip: 
+          <span style="font-size:18px">{{printPdf.amTrip}}</span>
+        </h2>
+        <h2 style="margin-left:450px;margin-top:-44px">
+          PM Trip: 
+          <span style="font-size:18px">{{printPdf.pmTrip}}</span>
+        </h2>
+        <h2 style="margin-left:40px">
+          TICKET NO: 
+          <span style="font-size:18px">000000{{printPdf.id}}</span>
+        </h2>
+         <h2 style="margin-left:450px;margin-top:-44px">
+          CONTROL NO:
+          <span style="font-size:18px">{{printPdf.controlNo}}</span>
+        </h2>
+        <p style="margin-left:480px;margin-top:30px;font-size:22px">
+          CUSTOMER'S COPY
+        </p>
+        <h4 style="margin-left:40px">NOTE:</h4>
+        <p style="margin-left:40px">1. Waste collected should be segregated and sprayed with deodorizer prior to transport to the site.</p>
+        <p style="margin-left:40px">2. Truck must be sealed/covered and that there is no leakage of waste liquid while transporting</p>
+        <p style="margin-left:40px">3. Any violation in transporting of which cargo will be responsibility of the hauling contractor.</p>
+        <p style="margin-left:40px">4. The permit to Dump Certificate should be surrendered to the Gate guard before entering the premises.</p>
+        <p style="margin-left:40px">5. Observe and obey RA 9003 and the rules and regulations set by INT’L SWIMS INC</p>
+        <p style="margin-left:40px">6. Any violation therefore shall be grounded for suspension or cancellation of the accreditation.</p>
+      </section>
     </div>
   </Layout>
 </template>
