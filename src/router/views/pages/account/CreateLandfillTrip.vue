@@ -12,7 +12,7 @@ Vue.component('multiselect', Multiselect)
 import {
  getBaraggayByLguId,getHaulerByBaraggayId, CreateDirectTrip,haulerEmployees,vehicle,
  getRoutesByBaranggayId, haulers, getVehiclesByHaulerId, users,employees,lguemployee,
- getLguById,stagingarea
+ getLguById,stagingarea,getgarbagebystate
 } from '../../../../services/auth'
 
 export default {
@@ -92,7 +92,8 @@ export default {
       dumpingLocationId:null,
       controlCheckerId:null,
       controlCheckerName:'',
-      district:''
+      district:'',
+      state:""
     };
   },
   components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime,moment },
@@ -120,6 +121,7 @@ export default {
       const result = JSON.parse(localStorage.getItem('auth.currentUser'))
       this.loginlguid = result.lguemployee.lguId
       this.contractorDispatcherId = result.lguemployee.id
+       this.state = result.lguemployee.state
        this.district = result.lguemployee.district
       this.contractorDispatcherName = result.lguemployee.userName
       const result1 = await getLguById(this.loginlguid)
@@ -138,12 +140,13 @@ export default {
     },
     async getUsers() {
       try {
-        const result = await employees();
+           var type = "PALERO"
+        const result = await getgarbagebystate(type,this.state);
         this.collectorList = result.data.response.result;
         console.log(this.collectorList)
         this.collectorList.map( e => {
           if(e.type == 'PALERO')
-            this.collectorListNames.push(e.userName)
+            this.collectorListNames.push(e.firstName)
         })
       } catch(e) {
         console.log(e)
@@ -297,9 +300,9 @@ export default {
           this.emp.map(e=>{
             if(e.haulerId != null) {
               if(e.type == "DRIVER" && e.haulerId == this.haulerId)
-                this.drivers.push(e.userName)
+                this.drivers.push(e.firstName)
               if(e.type == "HELPER" && e.haulerId == this.haulerId)
-                this.helpers.push(e.userName)
+                this.helpers.push(e.firstName)
             }
           })
       } catch (error) {}

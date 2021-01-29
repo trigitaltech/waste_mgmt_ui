@@ -65,7 +65,7 @@ export default {
       outgoing: '',
       direct: '',
       value: this.areas,
-      max: 100,
+      max: 1000,
     }
   },
   mounted() {

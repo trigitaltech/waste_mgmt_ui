@@ -337,6 +337,7 @@ export const getlgubyId = (id) => serviceMaker(`/LGU/${id}`,methods.GET,api.NGB)
 
 export const getgarbagebyId = (id,id2) => serviceMaker(`/employees/details/${id}/${id2}`,methods.GET,api.NGB)
 
+export const getgarbagebystate = (type,state) => serviceMaker(`/employees/all/${type}/${state}`,methods.GET,api.NGB)
 
 export const getnameByBRGY = (id) => serviceMaker(`/areamaster/baranggay/${id}`,methods.GET,api.NGB)
 
