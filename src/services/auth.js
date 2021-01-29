@@ -367,6 +367,11 @@ export const editOutgoingTripByControlChecker1 = (payload) => serviceMaker(`trip
 
 export const editOutgoingTripByControlChecker2 = (payload) => serviceMaker(`tripoutgoing/controlChecker/verified`,methods.PUT,api.NGB,payload)
 
+export const editDirectTripByControlTrip = (payload) => serviceMaker(`/routetolandfilling/controlChecker/tripCompleted`,methods.PUT,api.NGB,payload)
+
+export const editDirectTripByControldump = (payload) => serviceMaker(`/routetolandfilling/controlChecker/dumpingCompleted`,methods.PUT,api.NGB,payload)
+
+
 export const outgoingTripApprove = (payload) => serviceMaker(`tripoutgoing/billing/approve`,methods.PUT,api.NGB,payload)
 
 // export const incomingbytstatus = (status) => serviceMaker (`/tripincoming/billing/${status}`, methods.GET, api.NGB)
