@@ -165,11 +165,11 @@ export default {
         data.map(g => {
           if(g.type == "DRIVER" && g.haulerId == this.haulerId){
             this.drivers.push(g)
-            this.driverNames.push(g.userName)
+            this.driverNames.push(g.firstName)
           }
           if(g.type == "HELPER" && g.haulerId == this.haulerId){
             this.helpers.push(g)
-            this.helperNames.push(g.userName)
+            this.helperNames.push(g.firstName)
           }
         })
       } catch(error) {

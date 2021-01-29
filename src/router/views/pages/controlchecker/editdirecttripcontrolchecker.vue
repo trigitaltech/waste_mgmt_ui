@@ -10,12 +10,12 @@ import Multiselect from 'vue-multiselect'
 Vue.component('multiselect', Multiselect)
 import {
   // eslint-disable-next-line no-unused-vars
- stagingarea, editOutgoingTripByControlChecker1,editOutgoingTripByControlChecker2
+ stagingarea, editDirectTripByControlTrip,editDirectTripByControldump
 } from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Trip Incoming Details',
+    title: 'Edit Direct Trip',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   data() {
@@ -31,6 +31,7 @@ export default {
   },
   components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime, },
   mounted() {
+      console.log(this.$route.params)
     this.data = this.$route.params
     this.getLgu()
     this.getStagingArea()
@@ -42,7 +43,7 @@ export default {
             const payload = {
             id: this.data.id,
           }
-          const result = await editOutgoingTripByControlChecker1(payload)
+          const result = await editDirectTripByControlTrip(payload)
           if(result) {
             this.$swal({
               group: 'alert',
@@ -53,12 +54,12 @@ export default {
             this.$router.push({path:'/Controlchecker'})
           }
         }
-        if(this.data.status == 'COMPLETED') {
+        if(this.data.status == 'TRIP_COMPLETED') {
             const payload = {
             id: this.data.id,
             controlCheckerVerified: 1
           }
-          const result = await editOutgoingTripByControlChecker2(payload)
+          const result = await editDirectTripByControldump(payload)
           if(result) {
             this.$swal({
               group: 'alert',
@@ -86,7 +87,7 @@ export default {
         console.log(this.stagingAreas)
         this.stagingAreas.map(e => {
           console.log(this.loginlguid+' '+e.lguName.id)
-          if(this.loginlguid == e.lguName.id){
+          if(this.loginlguid === e.lguName.id){
             this.loginDetails.name = e.lguName.userName
             this.stagingAreaNames.push(e.stagingAreaName)
           }
@@ -104,7 +105,7 @@ export default {
   <Layout>
     <div class="animated">
       <b-card
-        header="Edit Outgoing Trip"
+        header="Edit Direct Trip"
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-1">
@@ -384,7 +385,7 @@ export default {
                 <button v-if="data.status == 'STARTED'" @click="submit"
                    class="btn btn-custome float-right btn-secondary mt-3 mr-2"
                   >Trip Completed</button>
-                  <button v-if="data.status == 'COMPLETED'" @click="submit"
+                  <button v-if="data.status == 'TRIP_COMPLETED'" @click="submit"
                    class="btn btn-custome float-right btn-secondary mt-3 mr-2"
                   >Dumping Completed</button>
             </div>

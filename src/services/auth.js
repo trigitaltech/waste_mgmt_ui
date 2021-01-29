@@ -337,6 +337,7 @@ export const getlgubyId = (id) => serviceMaker(`/LGU/${id}`,methods.GET,api.NGB)
 
 export const getgarbagebyId = (id,id2) => serviceMaker(`/employees/details/${id}/${id2}`,methods.GET,api.NGB)
 
+export const getgarbagebystate = (type,state) => serviceMaker(`/employees/all/${type}/${state}`,methods.GET,api.NGB)
 
 export const getnameByBRGY = (id) => serviceMaker(`/areamaster/baranggay/${id}`,methods.GET,api.NGB)
 
@@ -365,6 +366,11 @@ export const editOutgoingTripByVolumeChecker = (payload) => serviceMaker(`tripou
 export const editOutgoingTripByControlChecker1 = (payload) => serviceMaker(`tripoutgoing/controlChecker/complete`,methods.PUT,api.NGB,payload)
 
 export const editOutgoingTripByControlChecker2 = (payload) => serviceMaker(`tripoutgoing/controlChecker/verified`,methods.PUT,api.NGB,payload)
+
+export const editDirectTripByControlTrip = (payload) => serviceMaker(`/routetolandfilling/controlChecker/tripCompleted`,methods.PUT,api.NGB,payload)
+
+export const editDirectTripByControldump = (payload) => serviceMaker(`/routetolandfilling/controlChecker/dumpingCompleted`,methods.PUT,api.NGB,payload)
+
 
 export const outgoingTripApprove = (payload) => serviceMaker(`tripoutgoing/billing/approve`,methods.PUT,api.NGB,payload)
 

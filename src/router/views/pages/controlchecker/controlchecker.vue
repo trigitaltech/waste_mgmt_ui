@@ -719,30 +719,13 @@ export default {
                   >
                     <template v-slot:cell(requestDate)="data"
                       >{{ getFormattedDate(data.item.requestDate) }}</template>
-                    <!-- <template v-slot:cell(action)="data">
-                      <button
-                        class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
-                        @click="print(data.item)"
-                      >
-                        <feather type="printer" class="icon-xs mr-2"></feather>Print
-                      </button>
-                      <button  @click="download(data.item)" style="border:1px;margin:5px;background-color:white">
-                        
-                      <download-excel
-                        class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
-                        :data="json_data"
-                        :fields="json_fields"
-                        worksheet="My Worksheet"
-                        name="vouchers.xls"
-                      >
-                        <feather type="download" class="icon-xs mr-2"  ></feather>Download
-                      </download-excel>
-                      </button> -->
-                      <!-- <download-excel :data="json_data">
-                  
-                        <feather type="download" class="icon-xs mr-2"></feather>Download
-                      </download-excel>-->
-                    <!-- </template> -->
+                    <template v-slot:cell(action)="data">
+                       <router-link v-if="data.item.status == 'STARTED' || data.item.status == 'TRIP_COMPLETED'" :to="{ name: 'EditdirecttripByControlChecker', params: data.item }">
+                        <span class="mr-2" >
+                         <i class="fa fa-pencil-alt edit"></i>
+                        </span>
+                      </router-link>
+                    </template>
                   </b-table>
                 </div>
                 <div class="row">

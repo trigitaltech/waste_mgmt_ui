@@ -10,8 +10,8 @@ import Multiselect from 'vue-multiselect'
 import moment from 'moment';
 Vue.component('multiselect', Multiselect)
 import {
- getBaraggayByLguId,getHaulerByBaraggayId, CreateIncomingTrip,haulerEmployees,vehicle,getgarbagebyId,getvolumebyId,getLguById,
- getRoutesByBaranggayId, haulers, getVehiclesByHaulerId, users,employees,lguemployee,getnameByLguId,getHaulerByBaranggayId,getEMPByLguId,getEMPhelpByLguId
+ getBaraggayByLguId,getHaulerByBaraggayId, CreateIncomingTrip,haulerEmployees,vehicle,getgarbagebyId,getvolumebyId,getLguById,getgarbagebystate,
+getRoutesByBaranggayId, haulers, getVehiclesByHaulerId, users,employees,lguemployee,getnameByLguId,getHaulerByBaranggayId,getEMPByLguId,getEMPhelpByLguId
 } from '../../../../services/auth'
 
 export default {
@@ -90,6 +90,7 @@ export default {
     date:"",
     district:"",
     time:"",
+    state:""
     };
   },
   components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime, },
@@ -120,6 +121,7 @@ export default {
       this.loginlguid = result.lguemployee.lguId
      this.dispatcherid = result.lguemployee.id
      this.district = result.lguemployee.district
+     this.state = result.lguemployee.state
      this.dispatchername = result.lguemployee.firstName
      const result1 = await getLguById(this.loginlguid)
       this.loginDetails = {
@@ -240,13 +242,13 @@ export default {
  this.haulerListNames.push( e.haulerName)
         })
       
-           var id2 = "PALERO"
-        const result4 = await getgarbagebyId(this.areadata[i].id,id2);
+           var type = "PALERO"
+        const result4 = await getgarbagebystate(type,this.state);
         this.collectorList = result4.data.response.result;
         console.log(this.collectorList)
         this.collectorList.map( e => {
         
-            this.collectorListNames.push(e.userName)
+            this.collectorListNames.push(e.firstName)
         })
 
          const result = await getRoutesByBaranggayId(this.areadata[i].id)
