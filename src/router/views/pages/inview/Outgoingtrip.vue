@@ -3,6 +3,7 @@ import appConfig from '@src/app.config'
 import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import NProgress from 'nprogress/nprogress'
+import OutgoingTripTicket from '../tickets/outgoingtripticket';
 import moment from "moment";
 import {
  Tripdownload,incomingtrips,deletetripincoming,getAllOutgoingTrip,deletetripoutgoing,lgus
@@ -13,7 +14,7 @@ export default {
     title: 'Trip Incoming Details',
     meta: [{ name: 'description', content: appConfig.description }],
   },
-  components: { Layout, PageHeader ,moment},
+  components: { Layout, PageHeader ,moment, OutgoingTripTicket},
   data() {
     return {
       json_fields: {
@@ -94,7 +95,7 @@ export default {
           key: 'plateNo',
           label: 'Truck plateNo',
         },
-          {
+        {
           key: 'bodyNo',
           label: 'Truck BodyNo',
         },
@@ -108,7 +109,9 @@ export default {
         },
       ],
       loginUserType:null,
-      lgudata:[]
+      lgudata:[],
+      ticket: false,
+      printData: []
     }
   },
   computed: {
@@ -148,6 +151,10 @@ export default {
     }
   },
   methods: {
+    async printTicket(data) {
+      this.printData = data;
+      this.ticket = true;
+    },
       formatdate(value) {
       if (value) {
         return moment(String(value)).format("DD/MM/YYYY");
@@ -210,10 +217,16 @@ if(this.lgudata[j].id === this.item[i].lguId ){
 <template>
   <Layout>
     <PageHeader  />
+    <OutgoingTripTicket
+      :data="printData"
+      :ticket="ticket"
+      v-if="ticket == true"
+      @change="ticket = $event"
+    />
    <div class="animated fadeIn">
       <b-card
         header="Outgoing Trips"
-        class="mt-10 ml-10 mr-10 mx-auto"
+        class="mt-10 ml-10 mr-5 mx-auto"
       >
         <div>
           <div class="mx-xl-5">
@@ -257,6 +270,11 @@ if(this.lgudata[j].id === this.item[i].lguId ){
                   <i class="fas fa-pencil-alt edit"></i>
                 </b-button>
               </router-link> -->
+              <b-button size="sm" class="mr-2" variant="primary" >
+                  <span @click="printTicket(data)">
+                    <i class="fa fa-print"></i>
+                  </span>
+                </b-button>
                <b-button size="sm" class="mr-2" variant="danger" >
                <span @click="deleteReq(data)">
               <i class="fa fa-times edit"></i>
