@@ -109,6 +109,11 @@ export default {
         this.lgusData = result.data.response.result
         this.lgusData.map(e => {
           this.lguNames.push(e.lguName)
+           if(this.$route.params.lguName.lguName === e.lguName ){
+          // debugger
+          this.lguemployee = e
+          // console.log(this.lgus)
+         }
         })
         console.log(this.lguNames)
       } catch(e) {
@@ -172,12 +177,17 @@ export default {
     
     },
     getlgudata(){
-     
-         if(this.lgu === this.master.lguName ){
+ this.lgusData.map(e=>{
+         if(this.lgu === e.lguName ){
           // debugger
-          this.lguemployee = this.master
+         
+           this.lguemployee = e
+
+              }
+          })
+         
           // console.log(this.lgus)
-         }
+      
      
     
     },
