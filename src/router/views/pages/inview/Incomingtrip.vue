@@ -4,8 +4,9 @@ import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import NProgress from 'nprogress/nprogress'
 import moment from "moment";
+import IncomingTripTicket from '../tickets/incomingtripticket';
 import {
- Tripdownload,incomingtrips,deletetripincoming,lgus
+ Tripdownload,incomingtrips,deletetripincoming,lgus, routemaster
 } from '../../../../services/auth'
 
 export default {
@@ -13,7 +14,7 @@ export default {
     title: 'Trip Incoming Details',
     meta: [{ name: 'description', content: appConfig.description }],
   },
-  components: { Layout, PageHeader },
+  components: { Layout, PageHeader , IncomingTripTicket },
   data() {
     return {
       json_fields: {
@@ -104,7 +105,10 @@ export default {
         },
       ],
       loginUserType:null,
-      lgudata:[]
+      lgudata:[],
+      ticket: false,
+      areas:[],
+      printData: []
     }
   },
   computed: {
@@ -195,6 +199,22 @@ if(this.lgudata[j].id === this.item[i].lguId ){
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },
+    async printTicket(data) {
+      this.areas = []
+      const result = await routemaster();
+      const data1 = result.data.response.RouteMaster;
+      console.log(data1);
+      for(var i = 0; i < data.item.tripIncomingAreaRoute.length;i++) {
+        data1.map(e => {
+          if(data.item.tripIncomingAreaRoute[i].routeId == e.id ){
+            this.areas.push(e.routeName)
+          }
+        })
+      }
+      console.log(this.areas);
+        this.printData = data;
+        this.ticket = true;
+    }
   },
 }
 </script>
@@ -202,6 +222,13 @@ if(this.lgudata[j].id === this.item[i].lguId ){
 <template>
   <Layout>
     <PageHeader  />
+    <IncomingTripTicket 
+      v-if="ticket==true" 
+      :data="printData" 
+      :ticket="ticket" 
+      :areas="areas"
+      @change="ticket = $event"
+    />
    <div class="animated fadeIn">
       <b-card
         header="Incoming Trips"
@@ -218,10 +245,10 @@ if(this.lgudata[j].id === this.item[i].lguId ){
                       v-model="filter"
                       type="search"
                       placeholder="Search..."
-                      class="form-control ml-2"
+                      class="form-control ml-2 w-50"
                     ></b-form-input>
            </b-col>
-           <b-col>
+           <!--<b-col>
         
                 <b-button
                   class="btn btn-custome float-right btn-secondary mb-4 mr-2"
@@ -229,7 +256,7 @@ if(this.lgudata[j].id === this.item[i].lguId ){
                   @click="$router.push({path:'/CreateIncomingTrip'})"
                   >Create Incoming Trip</b-button
                 >
-           </b-col>
+           </b-col>-->
          </b-row>
             <div class="card-body">
               <div class="mt-3">
@@ -265,11 +292,16 @@ if(this.lgudata[j].id === this.item[i].lguId ){
                   <i class="fas fa-pencil-alt edit"></i>
                 </b-button>
               </router-link> -->
-               <b-button size="sm" class="mr-2" variant="danger" >
-               <span @click="deleteReq(data)">
-              <i class="fa fa-times edit"></i>
-            </span>
-               </b-button>
+                <b-button size="sm" class="mr-2" variant="primary" >
+                  <span @click="printTicket(data)">
+                    <i class="fa fa-print"></i>
+                  </span>
+                </b-button>
+                <b-button size="sm" class="mr-2" variant="danger" >
+                  <span @click="deleteReq(data)">
+                    <i class="fa fa-times edit"></i>
+                  </span>
+                </b-button>
            </template>
           </b-table>
           <div style="float: right">

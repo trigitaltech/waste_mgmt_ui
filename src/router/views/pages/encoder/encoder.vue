@@ -7,9 +7,11 @@ import moment from 'moment'
 // import JsonExcel from 'vue-json-excel'
 
 // Vue.component('downloadExcel', JsonExcel)
+import IncomingTripTicket from '../tickets/incomingtripticket';
+import OutgoingTripTicket from '../tickets/outgoingtripticket'
 import {
 getincomingtrip,getoutgoingtrip,getTripsdetailsbyId,getAllOutgoingTrip
-,getnameByLguId, getAllDirectTrips,BILLINGTRIPS
+,getnameByLguId, getAllDirectTrips,BILLINGTRIPS,routemaster
 } from '../../../../services/auth'
 
 export default {
@@ -17,9 +19,14 @@ export default {
     title: 'Encoder Details',
     meta: [{ name: 'description', content: appConfig.description }],
   },
-  components: { Layout, PageHeader,moment },
+  components: { Layout, PageHeader,moment, IncomingTripTicket, OutgoingTripTicket },
   data() {
     return {
+        iticket: false,
+        oticket: false,
+        printOutData:[],
+        printInData:[],
+        areas:[],
         startDate:"",
         endDate:"",
       json_fields: {'Pin Value':'pinValue','serialNo':'serialNo','Expiry Date':'expiryDate','Pin Type':'pinType','Status':'status'},
@@ -67,7 +74,8 @@ export default {
         { key: 'volumeCheckerName', label:'CheckerName', sortable: true },
       
 
-        { key: 'status', sortable: true },
+        { key: 'status', sortable: true }
+        
       ],
       exportFields: [
         { key: 'contractorDispatcherName', label:'Dispatcher',sortable: true },
@@ -95,6 +103,7 @@ export default {
       
 
         { key: 'status', sortable: true },
+        { key:'action',label:'Action'}
         // { key: 'requestBy', sortable: true },
 
         // { key: 'status', sortable: true },
@@ -251,6 +260,26 @@ return this.tripdata.incomingTrips.length
    return moment(timeStamp).format('HH:mm A')
       // }
     },
+    printOutgoingTrip(data){
+      this.printOutData = data;
+      this.oticket = true;
+    },
+    async printIncomingTrip(data) {
+      this.areas = []
+      const result = await routemaster();
+      const data1 = result.data.response.RouteMaster;
+      console.log(data1);
+      for(var i = 0; i < data.item.tripIncomingAreaRoute.length;i++) {
+        data1.map(e => {
+          if(data.item.tripIncomingAreaRoute[i].routeId == e.id ){
+            this.areas.push(e.routeName)
+          }
+        })
+      }
+      console.log(this.areas);
+        this.printInData = data;
+        this.iticket = true;
+    },
      getFormattedDate(timeStamp) {
       //  console.log(timeStamp)
       let date
@@ -271,6 +300,19 @@ return this.tripdata.incomingTrips.length
 <template>
   <Layout>
     <!-- <pdf > -->
+   <OutgoingTripTicket
+      :data="printOutData"
+      :ticket="oticket"
+      v-if="oticket == true"
+      @change="oticket = $event"
+    />
+    <IncomingTripTicket 
+      v-if="iticket==true" 
+      :data="printInData" 
+      :ticket="iticket" 
+      :areas="areas"
+      @change="iticket = $event"
+    />
 <div class="row justify-content-center">
 
       <div class="col-lg-12">
@@ -382,6 +424,14 @@ return this.tripdata.incomingTrips.length
                   >
                     <template v-slot:cell(tripStartTime)="data"
                       >{{ getDate(data.item.tripStartTime) }}</template>
+                    <template v-slot:cell(action)="data">
+                      <b-button @click="printIncomingTrip(data)" size="sm" variant="primary">
+                        <span class="mr-2" >
+                         <i class="fa fa-print"></i>
+                        </span>
+                      </b-button>
+                      </router-link>
+                    </template>
                     <!-- <template v-slot:cell(action)="data">
                       <button
                         class="btn btn-outline-primary btn-sm mr-2 d-inline-flex align-items-center"
@@ -577,10 +627,11 @@ return this.tripdata.incomingTrips.length
                     <template v-slot:cell(loadingStartTime)="data"
                       >{{ getDate(data.item.loadingStartTime) }}</template>
                     <template v-slot:cell(action)="data">
-                      <router-link v-if="data.item.status!='ASSIGNED'" :to="{ name: 'ViewOutgoingTrip', params: data.item }">
+                      <b-button @click="printOutgoingTrip(data)" size="sm" variant="primary">
                         <span class="mr-2" >
-                         <i class="fa fa-eye edit"></i>
+                         <i class="fa fa-print"></i>
                         </span>
+                      </b-button>
                       </router-link>
                     </template>
                   </b-table>
