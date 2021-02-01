@@ -20,7 +20,9 @@ import {
   equipmentby,
   updatesrtruck,
   assignequipsrtruck,
-  getvolumebyId
+  getvolumebyId,
+  lguemployee,
+  
 } from '../../../../services/auth'
 
 export default {
@@ -106,6 +108,8 @@ export default {
       dispatcherlist:[],
       dispatchId:"",
       checkerId:"",
+      emp:[],
+      emp1:[]
     }
   },
   components: {
@@ -129,11 +133,13 @@ export default {
     this.getvolume()
   
   this.getvolume1()
+  this.employeedata()
+  this.getemployees()
   },
   methods: {
      async getLgu() {
       const result = JSON.parse(localStorage.getItem('auth.currentUser'))
-      this.loginlguid = result.lguemployee.lguId
+      this.loginlguid = result.user.id
      this.dispatcherid = result.user.id
      this.dispatchername = result.user.userName
     },
@@ -165,6 +171,20 @@ export default {
         console.log(e)
       }
     },
+     async employeedata() {
+        try {
+          const result = await lguemployee()
+          this.emp = result.data.response.result
+          console.log(this.emp)
+          this.emp.map(e=>{
+          
+              if(e.type == "VOLUME_CHECKER")
+              this.checkerListNames.push(e.userName)
+            
+         
+          })
+      } catch (error) {}
+     },
     add() {
       this.inputs.push({
         timeIn: '',
@@ -203,15 +223,28 @@ export default {
       
        }
     },
+     async getemployees() {
+       try {
+        
+      const result = await  employees()
+      this.emp1 = result.data.response.result
+     this.emp1.map(g => {
+                if(g.type == "OFFICE_ENCODER")
+
+                      this.dispatcherListNames.push(g.userName)
+      })
+      } catch (error) {}
+   
+    },
    getCheckerId() {
-        this.checkerList.map(e => {
+        this.emp.map(e => {
           if(this.verifiedby == e.userName){
             this.checkerId = e.id
           }
         })
       },
        getdispatchid() {
-        this.dispatcherlist.map(e => {
+        this.emp1.map(e => {
           if(this.dispatchedby == e.userName){
             this.dispatchId = e.id
           }
