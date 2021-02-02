@@ -7,9 +7,11 @@ import moment from 'moment'
 // import JsonExcel from 'vue-json-excel'
 
 // Vue.component('downloadExcel', JsonExcel)
+import IncomingTripTicket from '../tickets/incomingtripticket';
+import OutgoingTripTicket from '../tickets/outgoingtripticket'
 import {
 getincomingtrip,getoutgoingtrip,getTripsvolumebyId, 
-getAllOutgoingTrip,checkerupdatebystatus, getAllDirectTrips
+getAllOutgoingTrip,checkerupdatebystatus, getAllDirectTrips, routemaster
 } from '../../../../services/auth'
 
 export default {
@@ -17,9 +19,14 @@ export default {
     title: 'Volume Checker',
     meta: [{ name: 'description', content: appConfig.description }],
   },
-  components: { Layout, PageHeader,moment },
+  components: { Layout, PageHeader,moment, IncomingTripTicket, OutgoingTripTicket },
   data() {
     return {
+      iticket: false,
+        oticket: false,
+        printOutData:[],
+        printInData:[],
+        areas:[],
         startDate:"",
         endDate:"",
       json_fields: {'Pin Value':'pinValue','serialNo':'serialNo','Expiry Date':'expiryDate','Pin Type':'pinType','Status':'status'},
@@ -78,7 +85,7 @@ export default {
        { key: 'plateNo',label:'PlateNO',  sortable: true },
         { key: 'volumeCheckerName', label:'CheckerName', sortable: true },
         { key: 'status', sortable: true },
-        { key:'action'}
+        { key:'action',label:'Action'}
       ],
        incoming: [
         { key: 'baranggayId', label:'Baranggay',sortable: true },
@@ -142,6 +149,26 @@ export default {
     this.getLandfillTrip()
   },
   methods: {
+    printOutgoingTrip(data){
+      this.printOutData = data;
+      this.oticket = true;
+    },
+    async printIncomingTrip(data) {
+      this.areas = []
+      const result = await routemaster();
+      const data1 = result.data.response.RouteMaster;
+      console.log(data1);
+      for(var i = 0; i < data.item.tripIncomingAreaRoute.length;i++) {
+        data1.map(e => {
+          if(data.item.tripIncomingAreaRoute[i].routeId == e.id ){
+            this.areas.push(e.routeName)
+          }
+        })
+      }
+      console.log(this.areas);
+        this.printInData = data;
+        this.iticket = true;
+    },
     async getLandfillTrip() {
       try {
         const result = await getAllDirectTrips()
@@ -290,7 +317,19 @@ export default {
 
 <template>
   <Layout>
-   
+   <OutgoingTripTicket
+      :data="printOutData"
+      :ticket="oticket"
+      v-if="oticket == true"
+      @change="oticket = $event"
+    />
+    <IncomingTripTicket 
+      v-if="iticket==true" 
+      :data="printInData" 
+      :ticket="iticket" 
+      :areas="areas"
+      @change="iticket = $event"
+    />
     <div class="row justify-content-center">
 
       <div class="col-lg-12">
@@ -411,7 +450,11 @@ export default {
                   <i class="fas fa-pencil-alt edit"></i>
                 </b-button>
               </router-link>
-              
+                      <b-button @click="printIncomingTrip(data)" size="sm" variant="primary">
+                        <span class="mr-2" >
+                         <i class="fa fa-print"></i>
+                        </span>
+                      </b-button>
              <!-- <b-button size="sm" class="mr-2" variant="primary"  @click="updateReq(data)" :hidden="data.item.status === 'COMPLETED'">
               <i class="fa fa-check-square"></i>
              </b-button> -->
@@ -589,6 +632,11 @@ export default {
                          <i class="fa fa-pencil-alt edit"></i>
                         </span>
                       </router-link>
+                      <b-button @click="printOutgoingTrip(data)" size="sm" variant="primary">
+                        <span class="mr-2" >
+                         <i class="fa fa-print"></i>
+                        </span>
+                      </b-button>
                     </template>
                     <!--<template v-slot:cell(loadingStartTime)="data"
                       >{{ getFormattedDate(data.item.requestDate) }}</template>
