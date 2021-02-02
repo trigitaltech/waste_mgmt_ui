@@ -359,7 +359,7 @@ export default {
             </b-row>
             <br />
 
-            <b-row>
+            <!--<b-row>
               <b-col>
                      <b-button
                   class="btn btn-custome ml-4 btn-secondary mb-3 float-right mr-2"
@@ -368,7 +368,7 @@ export default {
                   >PRINT</b-button
                 >
                   </b-col>
-            </b-row>
+            </b-row>-->
 
             <br />
             <!-- <b-button

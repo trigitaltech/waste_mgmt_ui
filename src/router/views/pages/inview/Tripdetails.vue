@@ -5,6 +5,7 @@ import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
 import moment from "moment";
+import DirectTripPrint from '../tickets/directtripprint';
 import {
   ValidationProvider,
   ValidationObserver,
@@ -25,10 +26,13 @@ export default {
     ValidationProvider,
     ValidationObserver,
     ModelSelect,
-    moment
+    moment,
+    DirectTripPrint
   },
   data() {
     return {
+      ticket:false,
+      printData: [],
        items: [
         {
           text: 'Trips',
@@ -119,7 +123,10 @@ export default {
         return moment(String(value)).format("DD/MM/YYYY");
       }
     },
-   
+    async printTrip(data) {
+      this.printData = data;
+      this.ticket = true;
+    },
      async deleteReq(data) {
        console.log("data",data.item.id)
        var id = data.item.id
@@ -177,6 +184,12 @@ if(this.lgudata[j].id === this.item[i].lguId ){
 
 <template>
   <Layout>
+    <DirectTripPrint
+      v-if="ticket == true"
+      :data="printData"
+      :ticket="ticket"
+      @change="ticket = $event"
+    />
     <PageHeader :items="items" />
 
     <div class="animated fadeIn">
@@ -226,6 +239,11 @@ if(this.lgudata[j].id === this.item[i].lguId ){
                   <i class="fas fa-pencil-alt edit"></i>
                 </b-button>
               </router-link> -->
+              <b-button size="sm" class="mr-2" variant="primary" >
+                <span @click="printTrip(data)">
+                  <i class="fa fa-print"></i>
+                </span>
+               </b-button>
              <b-button size="sm" class="mr-2" variant="danger" >
                <span @click="deleteReq(data)">
               <i class="fa fa-times edit"></i>
