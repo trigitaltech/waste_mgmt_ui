@@ -53,7 +53,7 @@ export default {
        item1:[{ value: 'BH', text: 'BH '},
         { value: 'BD', text: 'BD' },
         { value: 'PL', text: 'PL' },
-        { value: 'PL', text: 'PL' },
+      
         { value: 'RR', text: 'RR' },
         { value: 'RG', text: 'RG' },
         ],
@@ -372,7 +372,7 @@ this.haulerdata.map(e=>{
                   class="btn btn-custome float-right btn-secondary mb-3"
                   text="Create Tenant"
                   @click="create"
-                  >Create</b-button
+                  >Submit</b-button
                 >
               </form>
               <!-- Default form subscription -->

@@ -249,14 +249,14 @@ export default {
               </b-col>
               <br />
             </b-row>
-            <b-row>
+            <!-- <b-row>
               <b-col>
-                <!-- Default input text -->
+             
                 <label
                   for="defaultFormCardtextEx"
                   class="grey-text font-weight-dark"
                   >Start Date</label
-                >
+                > -->
                 <!-- <datetime
                   v-model="startDate"
                   :format="{
@@ -268,7 +268,7 @@ export default {
                   placeholder="SELECT START DATE"
                   name="startdate"
                 ></datetime> -->
-                  <input
+                  <!-- <input
                   v-model="startDate"
                   disabled
                   type="text"
@@ -290,7 +290,7 @@ export default {
                   placeholder="Enter Trip Type"
                   class="form-control"
                   required
-                />
+                /> -->
                 <!-- <datetime
                   v-model="endDate"
                   :format="{
@@ -302,8 +302,8 @@ export default {
                   placeholder="SELECT END DATE"
                   name="startdate"
                 ></datetime> -->
-              </b-col>
-            </b-row>
+              <!-- </b-col>
+            </b-row> -->
             <br />
             <!-- <button
               type="submit"

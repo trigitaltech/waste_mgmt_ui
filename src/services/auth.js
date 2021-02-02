@@ -312,7 +312,7 @@ export const getoutgoingtrip = (id,payload) => serviceMaker(
   export const assignequipsrtruck = (id,payload) => serviceMaker(`serviceticket/assiningDetails/${id}`,methods.POST,api.NGB,payload);
 
   
-  export const assignequipsrequipment = (id,payload) => serviceMaker(`assiningequipmentdetails/${id}`,methods.POST,api.NGB,payload);
+  export const assignequipsrequipment = (id,payload) => serviceMaker(`serviceticket/assiningequipmentdetails/${id}`,methods.POST,api.NGB,payload);
 
   export const getdumpdata = (id) => serviceMaker(`/dumpinglocation/dumping/${id}`,methods.GET,api.NGB);
 

@@ -246,13 +246,13 @@ export default {
                   <i class="fa fa-eye edit"></i>
                 </span>
               </router-link>
-              <!-- <router-link
+              <router-link
                 :to="{ name: 'Editservicerequest', params: data.item }"
               >
                 <span class="mr-2">
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>
-              </router-link> -->
+              </router-link>
               <span @click="deleteReq(data)">
                 <i class="fa fa-times edit"></i>
               </span>

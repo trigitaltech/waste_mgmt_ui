@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-         dumparea:this.$route.params.dumpingAreaName,
+       
       lgumaster:[],
          areas:[],
       servingAreas:[],
@@ -34,6 +34,7 @@ export default {
       dumpmaster:[],
       code:this.$route.params.code,
       lgu:this.$route.params.lguName.lguName,
+        dumparea:this.$route.params.dumpingArea.dumpingAreaName,
       dumps:[],
       lgus:[],
       address:this.$route.params.address,
@@ -98,9 +99,10 @@ export default {
     console.log(this.$route.params)
     this.userdata()
     //  this.getlgus()
-    this.getdumping()
-     this.getareas()
+  
+    //  this.getareas()
      this.getlgus()
+       this.getdumping()
   },
   methods: {
       async getlgus() {
@@ -125,7 +127,7 @@ export default {
         const result = await Areamasters();
         this.areas = result.data.response.areaMaster
         this.areas.map(e=>{
-            if(e.areaName!=null)
+            // if(e.areaName!=null)
               this.servingAreas.push(e.areaName);
         })
         console.log(this.servingAreas)
@@ -199,6 +201,11 @@ export default {
     this.dumpmaster.map(e=>{
           // debugger
           this.dumps.push(e. dumpingAreaName)
+            if(this.$route.params.dumpingArea.dumpingAreaName === e.dumpingAreaName ){
+          // debugger
+          this.dumpingarea = e
+          // console.log(this.lgus)
+         }
           console.log(this.lgus)
         })
     

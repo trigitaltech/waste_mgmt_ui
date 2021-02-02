@@ -15,6 +15,7 @@ import {
 import {
 Createpayrollequipment,
   classmaster,
+  dumpinglocation,
   lgus,
 } from '../../../../services/auth'
 
@@ -94,9 +95,10 @@ export default {
     this.getemployees()
   },
   methods: {
+    
     getlgu() {
       this.lgusnames.map((e) => {
-        if (this.lguname === e.lguName) {
+        if (this.lguname === e.dumpingAreaName) {
           this.lgusdata = e.id
 
           // this.form.district === e.districtName
@@ -105,10 +107,12 @@ export default {
     },
     async getemployees() {
       try {
-        const result = await lgus()
-        this.lgusnames = result.data.response.result
+       
+        const result = await  dumpinglocation()
+      this.lgusnames = result.data.response.dumpingLocation
+        // this.lgusnames = result.data.response.result
         this.lgusnames.map((e) => {
-          this.lgus.push(e.lguName)
+          this.lgus.push(e.dumpingAreaName)
         })
         // data.map( e => {
         //   if(e.type!="ENCODER" && e.type!="VOLUME_CHECKER" && e.type!="DISPATCHER")
@@ -124,7 +128,7 @@ export default {
     
     "operatorHourlyRate": this.operatorrate,
     "equipmentDailyRate": this.equipmentrate,
-          lguId: this.lgusdata,
+          dumpingId: this.lgusdata,
        
           effectiveStartDate:this.startDate,
           effectiveEndDate: this.endDate,
@@ -198,7 +202,7 @@ export default {
                 <!-- Default input name -->
               </b-col>
               <b-col>
-                <label for="default">LGU</label>
+                <label for="default">Dumping Location</label>
                 <b-form-select
                   required
                   v-model="lguname"
@@ -209,9 +213,9 @@ export default {
               </b-col>
               <br />
             </b-row>
-            <b-row>
+            <!-- <b-row>
               <b-col>
-                <!-- Default input text -->
+               
                 <label
                   for="defaultFormCardtextEx"
                   class="grey-text font-weight-dark"
@@ -247,7 +251,7 @@ export default {
                   name="startdate"
                 ></datetime>
               </b-col>
-            </b-row>
+            </b-row> -->
              <b-row>
               <b-col>
                <label

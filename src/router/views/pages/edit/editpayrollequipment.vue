@@ -15,6 +15,7 @@ import {
 import {
 editpayrollequipment,
   classmaster,
+  dumpinglocation,
   lgus,
 } from '../../../../services/auth'
 
@@ -69,7 +70,7 @@ export default {
         ],
       lgus: [],
       lgusdata: "",
-      lguname: this.$route.params.lguId,
+      lguname: this.$route.params.dumpingId,
       rate:"",
     startDate:this.$route.params.effectiveStartDate,
       endDate:this.$route.params.effectiveEndDate,
@@ -96,7 +97,7 @@ export default {
   methods: {
     getlgu() {
       this.lgusnames.map((e) => {
-        if (this.lguname === e.lguName) {
+        if (this.lguname === e.dumpingAreaName) {
           this.lgusdata = e.id
    
           // this.form.district === e.districtName
@@ -105,11 +106,12 @@ export default {
     },
     async getemployees() {
       try {
-        const result = await lgus()
-        this.lgusnames = result.data.response.result
+            const result = await  dumpinglocation()
+      this.lgusnames = result.data.response.dumpingLocation
+        // this.lgusnames = result.data.response.result
         this.lgusnames.map((e) => {
-          this.lgus.push(e.lguName)
-           if(this.$route.params.lguId === e.lguName){
+          this.lgus.push(e.dumpingAreaName)
+           if(this.$route.params.dumpingId === e.dumpingAreaName){
          this.lgusdata = e.id
             }
         })
@@ -128,7 +130,7 @@ export default {
     
     "operatorHourlyRate": this.operatorrate,
     "equipmentDailyRate": this.equipmentrate,
-          lguId: this.lgusdata,
+          dumpingId: this.lgusdata,
        
           effectiveStartDate:this.startDate,
           effectiveEndDate: this.endDate,
@@ -201,7 +203,7 @@ export default {
                 <!-- Default input name -->
               </b-col>
               <b-col>
-                <label for="default">LGU</label>
+                <label for="default">Dumping Location</label>
                 <b-form-select
                   required
                   v-model="lguname"
@@ -212,9 +214,9 @@ export default {
               </b-col>
               <br />
             </b-row>
-            <b-row>
+            <!-- <b-row>
               <b-col>
-                <!-- Default input text -->
+              
                 <label
                   for="defaultFormCardtextEx"
                   class="grey-text font-weight-dark"
@@ -250,7 +252,7 @@ export default {
                   name="startdate"
                 ></datetime>
               </b-col>
-            </b-row>
+            </b-row> -->
              <b-row>
               <b-col>
                <label

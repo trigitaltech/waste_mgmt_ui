@@ -113,23 +113,13 @@ export default {
   mounted() {
   
     this.getemployees()
-    this.getemployees1()
+    // this.getemployees1()
   },
   methods: {
      async getemployees1() {
        try {
         NProgress.start()
-      const result = await haulers()
-      this.lgudata = result.data.response.HaulerMaster
      
-         for (var i = 0; i < this.item.length; i++) {
-  for (var j = 0; j < this.lgudata.length; j++) {
-if(this.lgudata[j].id === this.item[i].haulerId ){
-  this.item[i].haulerId = this.lgudata[j].haulerName
-  break
-}
-  }
-         }
 
        NProgress.done()
       } catch (error) {}
@@ -162,6 +152,17 @@ if(this.lgudata[j].id === this.item[i].haulerId ){
         NProgress.start()
       const result = await  hauleremployee()
       this.item = result.data.response.HaulerEmployees
+       const result1 = await haulers()
+      this.lgudata = result1.data.response.HaulerMaster
+     
+         for (var i = 0; i < this.item.length; i++) {
+  for (var j = 0; j < this.lgudata.length; j++) {
+if(this.lgudata[j].id === this.item[i].haulerId ){
+  this.item[i].haulerId = this.lgudata[j].haulerName
+  break
+}
+  }
+         }
        NProgress.done()
       } catch (error) {}
    

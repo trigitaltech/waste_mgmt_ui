@@ -76,14 +76,14 @@ export default {
           key: 'rate',
           label: 'Rate',
         },
-         {
-          key: 'effectiveStartDate',
-          label: 'Start Date',
-        },
-         {
-          key: 'effectiveEndDate',
-          label: 'End Date',
-        },
+        //  {
+        //   key: 'effectiveStartDate',
+        //   label: 'Start Date',
+        // },
+        //  {
+        //   key: 'effectiveEndDate',
+        //   label: 'End Date',
+        // },
       
       
         

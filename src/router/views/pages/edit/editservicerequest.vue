@@ -15,6 +15,7 @@ import {
   Areamasters,
   routemaster,
   CreateIncomingTrip,
+  lguemployee,
   employees,
   vehicle,
   getRoutesByBaranggayId,
@@ -99,6 +100,7 @@ export default {
           timeOut: '',
           duration: '',
           bucketLoaded: '',
+   
         },
       ],
       loginlguid:"",
@@ -107,6 +109,9 @@ export default {
       dispatcherlist:[],
       dispatchId:"",
       checkerId:"",
+      emp:[],
+      emp1:[],
+      distance:""
     }
   },
   components: {
@@ -127,44 +132,46 @@ export default {
     console.log(this.tripDate + ' ' + this.startTime)
     this.getLgu()
     this.getequipments()
-    this.getvolume()
+  //   this.getvolume()
   
-  this.getvolume1()
+  // this.getvolume1()
+  this.employeedata()
+  this.getemployees()
   },
   methods: {
      async getLgu() {
       const result = JSON.parse(localStorage.getItem('auth.currentUser'))
-      this.loginlguid = result.lguemployee.lguId
-     this.dispatcherid = result.lguemployee.id
+     this.loginlguid = result.user.id
+     this.dispatcherid = result.user.id
      this.dispatchername = result.lguemployee.firstName
     },
-     async getvolume() {
-      try {
-        var id3 = "VOLUME_CHECKER"
-        const result = await getvolumebyId(this.loginlguid,id3)
-       this.checkerList = result.data.response.result
+    async employeedata() {
+        try {
+          const result = await lguemployee()
+          this.emp = result.data.response.result
+          console.log(this.emp)
+          this.emp.map(e=>{
+          
+              if(e.type == "VOLUME_CHECKER")
+              this.checkerListNames.push(e.userName)
+            
+         
+          })
+      } catch (error) {}
+     },
+  
+      async getemployees() {
+       try {
         
-              this.checkerList.map(g => {
-             
-                      this.checkerListNames.push(g.userName)
-      })
-      } catch(e) {
-        console.log(e)
-      }
-    },
-     async getvolume1() {
-      try {
-        var id1 = "ENCODER"
-        const result = await getvolumebyId(this.loginlguid,id1)
-       this.dispatcherlist = result.data.response.result
-        
-              this.dispatcherlist.map(g => {
-             
+      const result = await  employees()
+      this.emp1 = result.data.response.result
+     this.emp1.map(g => {
+                if(g.type == "OFFICE_ENCODER")
+
                       this.dispatcherListNames.push(g.userName)
       })
-      } catch(e) {
-        console.log(e)
-      }
+      } catch (error) {}
+   
     },
     add() {
       this.inputs.push({
@@ -172,6 +179,7 @@ export default {
         timeOut: '',
         duration: '',
         bucketLoaded: '',
+      
       })
       console.log(this.inputs)
     },
@@ -204,15 +212,15 @@ export default {
       
        }
     },
-   getCheckerId() {
-        this.checkerList.map(e => {
+  getCheckerId() {
+        this.emp.map(e => {
           if(this.verifiedby == e.userName){
             this.checkerId = e.id
           }
         })
       },
        getdispatchid() {
-        this.dispatcherlist.map(e => {
+        this.emp1.map(e => {
           if(this.dispatchedby == e.userName){
             this.dispatchId = e.id
           }
@@ -244,7 +252,7 @@ export default {
         
                 
                   serviceTicketEquipementReport:this.inputs,
-                  "totaldistance":this.distancekms,
+                  "totaldistance":this.distance,
                   "driverTimeIn":this.drivertimein,
                   "dispatcherBy":this.dispatchId,
                   "verifiedBY":this.checkerId
@@ -258,7 +266,7 @@ export default {
             text: `Updated Service request Equipment`,
             duration: 5000,
           })
-          this.$router.push({ path: '/Servicerequest/Truck' })
+          this.$router.push({ path: '/Servicerequest/Equipment' })
         }
       } catch (e) {}
     },
@@ -397,6 +405,7 @@ export default {
                       placeholder="Enter bucketsloaded"
                     />
                   </b-col>
+                  
                   <b-col>
                     <span>
                       <i
@@ -431,7 +440,21 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
-                  <b-col> </b-col>
+                  <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                    >
+                      Total Distance (kms)</label
+                    >
+                    <input
+                      id="defaultFormCardtextEx"
+                      type="text"
+                      class="form-control"
+                      v-model="distance"
+                      placeholder="Enter Total Distance"
+                    />
+                  </b-col>
                 </b-row>
                  <b-row>
                   <b-col>

@@ -51,6 +51,16 @@ export default {
         { value: 'BIO', text: 'BIO' },
         { value: 'NON-BIO', text: 'NON-BIO' },
       ],
+       days1: [
+      
+        { value: 'SUNDAY', text: 'SUNDAY' },
+        { value: 'MONDAY', text: 'MONDAY' },
+         { value: 'TUESDAY', text: 'TUESDAY' },
+          { value: 'WEDNESDAY', text: 'WEDNESDAY' },
+           { value: 'THURSDAY', text: 'THURSDAY' },
+            { value: 'FRIDAY', text: 'FRIDAY' },
+             { value: 'SATURDAY', text: 'SATURDAY' },
+      ],
       code:"",
       classdata:[],
       triptype:"",
@@ -176,13 +186,24 @@ if(this.tripclass === e.name){
                 >
                   Day</label
                 >
-                <input
+                <!-- <input
                   v-model="day"
                   type="text"
                   oninvalid="this.setCustomValidity('Day is required ')"
                   oninput="setCustomValidity('')"
                   placeholder="Enter Day"
                   class="form-control"
+                  required
+                /> -->
+                 <b-form-select
+                 v-model="day"
+                  type="text"
+                
+                  oninvalid="this.setCustomValidity('Day is required ')"
+                  oninput="setCustomValidity('')"
+                  :options="days1"
+                  class="form-control"
+                
                   required
                 />
 
