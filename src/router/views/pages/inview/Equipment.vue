@@ -66,7 +66,11 @@ export default {
 
           label: 'Hauler Name',
         },
-       
+        {
+          key: 'model',
+
+          label: 'Model',
+        },
          {
           key: 'status',
 
@@ -120,7 +124,7 @@ export default {
   mounted() {
   
     this.getequipment()
-    this.getemployees()
+    // this.getemployees()
   },
   methods: {
    async deleteReq(data) {
@@ -169,6 +173,17 @@ if(this.lgudata[j].id === this.item[i].haulerId ){
         NProgress.start()
       const result = await  equipment()
       this.item = result.data.response.equipment
+      const result1 = await haulers()
+      this.lgudata = result1.data.response.HaulerMaster
+     
+         for (var i = 0; i < this.item.length; i++) {
+  for (var j = 0; j < this.lgudata.length; j++) {
+if(this.lgudata[j].id === this.item[i].haulerId ){
+  this.item[i].haulerId = this.lgudata[j].haulerName
+  break
+}
+  }
+         }
        NProgress.done()
       } catch (error) {}
    

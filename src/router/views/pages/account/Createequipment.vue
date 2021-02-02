@@ -55,7 +55,7 @@ export default {
       item1:[{ value: 'BH', text: 'BH '},
         { value: 'BD', text: 'BD' },
         { value: 'PL', text: 'PL' },
-        { value: 'PL', text: 'PL' },
+       
         { value: 'RR', text: 'RR' },
         { value: 'RG', text: 'RG' },
         ],

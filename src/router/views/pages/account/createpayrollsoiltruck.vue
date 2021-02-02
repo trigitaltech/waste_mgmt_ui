@@ -16,7 +16,8 @@ import {
   Createpayrollsoiltruck,
   classmaster,
   lgus,
-  vehicleTypes
+  vehicleTypes,
+  dumpinglocation
 } from '../../../../services/auth'
 
 export default {
@@ -90,6 +91,15 @@ export default {
     this.getVehicleTypes()
   },
   methods: {
+     async getdumping() {
+       try {
+      
+      const result = await  dumpinglocation()
+      this.dump = result.data.response.dumpingLocation
+      
+      } catch (error) {}
+   
+    },
        async getVehicleTypes() {
       var result = await vehicleTypes()
       this.vehicleTypes = result.data.response.result
@@ -99,7 +109,7 @@ export default {
     },
     getlgu() {
       this.lgusnames.map((e) => {
-        if (this.lguname === e.lguName) {
+        if (this.lguname === e.dumpingAreaName) {
           this.lgusdata = e.id
 
           // this.form.district === e.districtName
@@ -108,10 +118,11 @@ export default {
     },
     async getemployees() {
       try {
-        const result = await lgus()
-        this.lgusnames = result.data.response.result
+        const result = await  dumpinglocation()
+      this.lgusnames = result.data.response.dumpingLocation
+        // this.lgusnames = result.data.response.result
         this.lgusnames.map((e) => {
-          this.lgus.push(e.lguName)
+          this.lgus.push(e.dumpingAreaName)
         })
         // data.map( e => {
         //   if(e.type!="ENCODER" && e.type!="VOLUME_CHECKER" && e.type!="DISPATCHER")
@@ -124,7 +135,7 @@ export default {
       try {
         const payload = {
           truckType: this.trucktype,
-          lguId: this.lgusdata,
+          dumpingId: this.lgusdata,
         
         "driverRate": this.driverrate,
     "truckRate": this.truckrate,
@@ -201,7 +212,7 @@ export default {
                 <!-- Default input name -->
               </b-col>
               <b-col>
-                <label for="default">LGU</label>
+                <label for="default">Dumping Location</label>
                 <b-form-select
                   required
                   v-model="lguname"
@@ -212,9 +223,9 @@ export default {
               </b-col>
               <br />
             </b-row>
-            <b-row>
+            <!-- <b-row>
               <b-col>
-                <!-- Default input text -->
+              
                 <label
                   for="defaultFormCardtextEx"
                   class="grey-text font-weight-dark"
@@ -250,7 +261,7 @@ export default {
                   name="startdate"
                 ></datetime>
               </b-col>
-            </b-row>
+            </b-row> -->
              <b-row>
               <b-col>
                <label

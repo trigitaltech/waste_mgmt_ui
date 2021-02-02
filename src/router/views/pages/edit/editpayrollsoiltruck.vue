@@ -17,7 +17,8 @@ import {
   classmaster,
   lgus,
   editpayrollsoiltruck,
-  vehicleTypes
+  vehicleTypes,
+  dumpinglocation
 } from '../../../../services/auth'
 
 export default {
@@ -64,7 +65,7 @@ export default {
       lgusnames: [],
       lgus: [],
       lgusdata: "",
-      lguname: this.$route.params.lguId,
+      lguname: this.$route.params.dumpingId,
       rate:this.$route.params.rate,
       startDate:this.$route.params.effectiveStartDate,
       endDate:this.$route.params.effectiveEndDate,
@@ -94,7 +95,7 @@ export default {
   methods: {
     getlgu() {
       this.lgusnames.map((e) => {
-        if (this.lguname === e.lguName) {
+        if (this.lguname === e.dumpingAreaName) {
           this.lgusdata = e.id
 
           // this.form.district === e.districtName
@@ -103,11 +104,13 @@ export default {
     },
     async getemployees() {
       try {
-        const result = await lgus()
-        this.lgusnames = result.data.response.result
+       const result = await  dumpinglocation()
+      this.lgusnames = result.data.response.dumpingLocation
+        // this.lgusnames = result.data.response.result
         this.lgusnames.map((e) => {
-          this.lgus.push(e.lguName)
-           if(this.$route.params.lguId === e.lguName){
+          this.lgus.push(e.dumpingAreaName)
+        
+           if(this.$route.params.dumpingId === e.dumpingAreaName){
            this.lgusdata = e.id
             }
         })
@@ -123,7 +126,7 @@ export default {
         const payload = {
             id:this.$route.params.id,
            truckType: this.trucktype,
-          lguId: this.lgusdata,
+          dumpingId: this.lgusdata,
         
         "driverRate": this.driverrate,
     "truckRate": this.truckrate,
@@ -144,7 +147,7 @@ export default {
             text: `Your Edited Payroll SoilTruck  Successfully`,
             duration: 5000,
           })
-             this.$router.push({path:'/Payroll/Ratecard/PayrollPalero'})
+             this.$router.push({path:'/Payroll/Ratecard/PayrollSoilTruck'})
         }
       } catch (e) {
         this.$toasted.error(e.message.error, {
@@ -208,7 +211,7 @@ export default {
                 <!-- Default input name -->
               </b-col>
               <b-col>
-                <label for="default">LGU</label>
+                <label for="default">Dumping Location</label>
                 <b-form-select
                   required
                   v-model="lguname"
@@ -219,9 +222,9 @@ export default {
               </b-col>
               <br />
             </b-row>
-            <b-row>
+            <!-- <b-row>
               <b-col>
-                <!-- Default input text -->
+              
                 <label
                   for="defaultFormCardtextEx"
                   class="grey-text font-weight-dark"
@@ -257,7 +260,7 @@ export default {
                   name="startdate"
                 ></datetime>
               </b-col>
-            </b-row>
+            </b-row> -->
              <b-row>
               <b-col>
                <label

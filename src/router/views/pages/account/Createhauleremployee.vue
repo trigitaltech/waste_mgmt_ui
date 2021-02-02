@@ -459,11 +459,10 @@ export default {
                                   v-model.trim="form.email"
                                   for="email"
                                   type="email"
-                                  oninvalid="this.setCustomValidity('Please Use @gmail.com ')"
-                                  oninput="setCustomValidity('')"
+                                
                                   placeholder="Enter Email"
                                   class="form-control"
-                                  required
+                                
                                 />
                               </div>
                             </div>

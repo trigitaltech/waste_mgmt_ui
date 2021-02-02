@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
-  payrollequipment,deletepayrollsoiltruck, deletepayrollequipment,lgus
+  payrollequipment,deletepayrollsoiltruck, deletepayrollequipment,lgus,dumpinglocation
 } from '../../../../services/auth'
 import NProgress from 'nprogress/nprogress'
 import Createstaging from '../account/Createstaging.vue'
@@ -48,8 +48,8 @@ export default {
 
       RootmasterColumns: [
           {
-          key: 'lguId',
-          label: 'Lgu ID',
+          key: 'dumpingId',
+          label: 'Dumping Name',
         },
            {
           key: 'operatorHourlyRate',
@@ -83,14 +83,14 @@ export default {
         //   key: 'rate',
         //   label: 'Rate',
         // },
-         {
-          key: 'effectiveStartDate',
-          label: 'Start Date',
-        },
-         {
-          key: 'effectiveEndDate',
-          label: 'End Date',
-        },
+        //  {
+        //   key: 'effectiveStartDate',
+        //   label: 'Start Date',
+        // },
+        //  {
+        //   key: 'effectiveEndDate',
+        //   label: 'End Date',
+        // },
       
       
         
@@ -155,14 +155,15 @@ export default {
         NProgress.start()
       const result = await  payrollequipment()
       this.item = result.data.response.result
-         const result1 = await  lgus()
-        this.lgudata = result1.data.response.result
+     const result1 = await  dumpinglocation()
+    
+        this.lgudata = result1.data.response.dumpingLocation
 
          for (var i = 0; i < this.item.length; i++) {
           
   for (var j = 0; j < this.lgudata.length; j++) {
-if(this.lgudata[j].id === this.item[i].lguId ){
-  this.item[i].lguId = this.lgudata[j].lguName
+if(this.lgudata[j].id === this.item[i].dumpingId ){
+  this.item[i].dumpingId = this.lgudata[j].dumpingAreaName
   
   break
 }

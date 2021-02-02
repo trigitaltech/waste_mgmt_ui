@@ -274,9 +274,9 @@ export default {
               </b-col>
               <br />
             </b-row>
-            <b-row>
+            <!-- <b-row>
               <b-col>
-                <!-- Default input text -->
+             
                 <label
                   for="defaultFormCardtextEx"
                   class="grey-text font-weight-dark"
@@ -312,7 +312,7 @@ export default {
                   name="startdate"
                 ></datetime>
               </b-col>
-            </b-row>
+            </b-row> -->
             <br />
             <button
               type="submit"

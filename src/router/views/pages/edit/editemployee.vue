@@ -9,7 +9,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- Editemployee,Areamasters
+ Editemployee,Areamasters,address
 } from '../../../../services/auth'
 
 export default {
@@ -147,7 +147,7 @@ export default {
     getid(){
         // console.log("haiiiiii",this.item2)
         this.areas.map(e=>{
-            if(this.serviceoffice === e.areaName){
+            if(this.serviceoffice === e.districtName){
                 this.sid = e.id    
                        }
                         //  console.log("haiiiiii",this.sid)
@@ -155,8 +155,8 @@ export default {
       },
      async getplans() {
        try {
-        const result = await Areamasters()
-      this.areas = result.data.response.areaMaster
+        const result = await  address()
+      this.areas = result.data.response.result
     //   console.log("users",data[0].userName)
       // JSON.parse(JSON.stringify(result))
       // for(i=0;i<data.length;i++){
@@ -164,7 +164,7 @@ export default {
       // }
 
       this.areas.map(e=>{
-      this.item2.push(e.areaName)
+      this.item2.push(e.districtName)
       console.log("user",e)
       })
        console.log("users",this.item)
@@ -538,7 +538,7 @@ export default {
                                 />
                               </div>
                             </div> -->
-                          <div class="col-md-4">
+                          <!-- <div class="col-md-4">
                             <div class="form-group mt-3 mt-sm-0">
                               <label for="default">Post Code</label>
                               <input
@@ -548,7 +548,7 @@ export default {
                                 type="number"
                               />
                             </div>
-                          </div>
+                          </div> -->
 
                            <!-- <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
@@ -561,7 +561,7 @@ export default {
                               />
                               </div>
                             </div> -->
-                            <div class="col-md-4">
+                            <!-- <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">State</label>
                                 <input
@@ -584,7 +584,7 @@ export default {
                                 
                                 />
                               </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-3">
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Employee Type</label>

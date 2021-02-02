@@ -59,17 +59,17 @@ export default {
           key: 'staging_type',
           label: 'Staging Type',
         },
-
+        {
+          key: 'dumpingArea.dumpingAreaName',
+          label: 'Dumping Area',
+        },
          {
           key: 'address',
           label: 'Address',
         },
     
        
-        //  {
-        //   key: 'state',
-        //   label: 'State',
-        // },
+      
         //  {
         //   key: 'country',
         //   label: 'Country',
