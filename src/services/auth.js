@@ -67,7 +67,7 @@ export const vehicleTypes = () => serviceMaker(`/vehicles/vehicletypes`, methods
 
 export const simpleactivation = (payload) => serviceMaker(`/auth/signup`, methods.POST, api.NGB, payload)
 
-export const reviewAttendance = (payload) => serviceMaker('/attendence/checker/admin/review',methods.POST,api.NGB,payload)
+export const reviewAttendance = (payload) => serviceMaker('/attendence/checker/admin/review',methods.PUT,api.NGB,payload)
 
 export const dashboardbrgy = () => serviceMaker('/dashboard/baranggay/count',methods.GET,api.NGB)
 export const dashboardlgu = () => serviceMaker('/dashboard/lgu/count',methods.GET,api.NGB)
