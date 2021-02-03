@@ -238,7 +238,7 @@ console.log(this.$route.params)
                     >
 
                     <input
-                      v-model="ownername"
+                      v-model="empid"
                     
                       type="text"
                       disabled

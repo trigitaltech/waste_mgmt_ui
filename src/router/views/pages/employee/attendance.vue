@@ -11,7 +11,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- Attendance, deleteattendance
+ Attendance, deleteattendance,employees
 } from '../../../../services/auth'
 
 export default {
@@ -59,7 +59,7 @@ export default {
       AttendanceColumns: [
        
         {
-          key: 'employeeId.id',
+          key: 'employeeId',
           label: 'Emp Id',
         },
         {
@@ -70,10 +70,10 @@ export default {
           key: 'description',
           label: 'Description',
         },
-        {
-          key: 'createdBy',
-          label: 'Created By',
-        },
+        // {
+        //   key: 'createdBy',
+        //   label: 'Created By',
+        // },
           {
           key: 'time_in',
           label: 'Time in ',
@@ -99,6 +99,7 @@ export default {
           sortable: true,
         },
       ],
+      lgudata:[],
       items: [
         {
           text: 'Home',
@@ -152,6 +153,18 @@ export default {
         NProgress.start()
       const result = await  Attendance()
       this.item = result.data.response.attendence
+        
+      const result1 = await employees()
+      this.lgudata = result1.data.response.result
+     
+         for (var i = 0; i < this.item.length; i++) {
+  for (var j = 0; j < this.lgudata.length; j++) {
+if(this.lgudata[j].id === this.item[i].employeeId ){
+  this.item[i].employeeId = this.lgudata[j].userName
+  break
+}
+  }
+         }
        NProgress.done()
       } catch (error) {}
    

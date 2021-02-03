@@ -33,9 +33,9 @@ export default {
      emp:[],
      owners:[],
      status:"",
-     empname:"",
+     empname:this.$route.params.employeeId,
      description:this.$route.params.description,
-     empid:this.$route.params.employeeId,
+     empid:"",
      taskref:this.$route.params.task_ref_no,
      recordDate:this.$route.params.recordDate,
       timein:this.$route.params.time_in,
@@ -144,6 +144,9 @@ export default {
 
       this.emp.map(e=>{
       this.owners.push(e.userName)
+       if(this.$route.params.employeeId === e.userName){
+                this.empid = e.id    
+                  }
       console.log("user",e)
       })
        console.log("users",this.item)
@@ -215,7 +218,7 @@ export default {
                       >Employee Id:</label
                     >
                    <input
-                      v-model="empid"
+                      v-model="empname"
                       class="form-control"
                       readonly
                       name="startdate"

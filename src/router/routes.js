@@ -630,19 +630,33 @@ const inviewRoutes = [
 
     children: [
   {
-    path: 'Tripincomingdetails',
-    name: 'Tripincomingdetails',
-    component: () => lazyLoadView(import('@views/pages/inview/Tripincomingdetails')),
+    path: 'Haulingmonthlysummary',
+    name: 'Haulingmonthlysummary Expenses',
+    component: () => lazyLoadView(import('@views/pages/reports/haulingmonthlysummary')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
-    path: 'Tripoutgoingdetails',
-    name: 'Tripoutgoingdetails',
-    component: () => lazyLoadView(import('@views/pages/inview/Tripoutgoingdetails')),
+    path: 'Haulingmonthly',
+    name: 'Haulingmonthly Expenses',
+    component: () => lazyLoadView(import('@views/pages/reports/haulingmonthly')),
     meta: { authRequired: true },
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
-  }
+  },
+  {
+    path: 'Haulingweekly',
+    name: 'Haulingweekly Expenses',
+    component: () => lazyLoadView(import('@views/pages/reports/haulingweekly')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: 'Haulingbilling',
+    name: 'Haulingbilling Summary',
+    component: () => lazyLoadView(import('@views/pages/reports/haulingbilling')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
 ]
 },
   
