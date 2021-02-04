@@ -234,11 +234,11 @@ if(this.lgudata[j].id === this.item[i].lguId ){
               <i class="fa fa-eye"></i>
             </b-button>
               </router-link>
-            <!-- <router-link :to="{ name: 'EditIncomingTrip', params: data.item }">
-                <b-button size="sm" class="mr-2" variant="primary"  :hidden="data.item.status === 'APPROVED' || data.item.status === 'REJECTED' ">
-                  <i class="fas fa-pencil-alt edit"></i>
+            <router-link :to="{ name: 'EditDirectTripByAdmin', params: data.item }">
+                <b-button size="sm" class="mr-2" variant="primary">
+                  <i class="fas fa-pencil-alt"></i>
                 </b-button>
-              </router-link> -->
+              </router-link> 
               <b-button size="sm" class="mr-2" variant="primary" >
                 <span @click="printTrip(data)">
                   <i class="fa fa-print"></i>

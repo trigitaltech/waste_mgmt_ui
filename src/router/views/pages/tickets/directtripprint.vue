@@ -3,7 +3,7 @@
 		<p style="text-align:center;margin-top:50px;font-size:22px;font-weight: bold">INT’L SWIMS INC. & DOMINUS CONSTRUCTION (JOINT VENTURE)</p>
 		<p style="text-align:center;font-size:18px">LOT 1 QUIRINO HIGHWAY ST. DOMINIQUE DR. SUBD. BAESA QUEZON CITY</p>
 		<h2 style="text-align:center;margin-top:15px">WORK ASSIGNMENT FORM</h2>
-		<p style="text-align:center;font-size:16px;font-weight:bold;">STAGING AREA TO DISPOSAL FACILITY</p>
+		<!--<p style="text-align:center;font-size:16px;font-weight:bold;">STAGING AREA TO DISPOSAL FACILITY</p>-->
 		<div style="margin-top: 20px">
 			<p style="margin-left:80px;font-size:19px">DATE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<span style="font-size:18px"> {{data.item.createdDate | formatDate }}</span></p>
 			<p style="margin-left:400px;margin-top:-34px;font-size:19px">CONTROL NO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :<span style="font-size:18px"> {{data.item.controlNo}}</span></p>

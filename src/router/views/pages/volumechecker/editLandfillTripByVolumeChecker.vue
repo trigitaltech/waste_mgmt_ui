@@ -10,9 +10,9 @@ import Multiselect from 'vue-multiselect'
 import moment from 'moment';
 Vue.component('multiselect', Multiselect)
 import {
- getBaraggayByLguId,getHaulerByBaraggayId, CreateDirectTrip,haulerEmployees,vehicle,
+ getBaraggayByLguId,getHaulerByBaranggayId, CreateDirectTrip,haulerEmployees,vehicle,
  getRoutesByBaranggayId, haulers, getVehiclesByHaulerId, users,employees,lguemployee,
- getLguById,stagingarea,editdirecttripvolumechecker
+ getLguById,stagingarea,editdirecttripvolumechecker, routemaster
 } from '../../../../services/auth'
 
 export default {
@@ -80,9 +80,11 @@ export default {
       dumpingLocationNames:[],
       paleroList:[],
       garbage:null,
+
       areaId:null,
       routeId:null,
       garbageCollectors:[],
+      selectedGB:[],
       brgy:{},
       routeCodes:[],
       loginDetails:{},
@@ -96,7 +98,10 @@ export default {
       baranggayName:'',
       stagingAreaName:'',
       dumpingLocationName:'',
-      tripData:[]
+      tripData:[],
+      routeNames:[],
+      selectedRoutes:[],
+      routes:[]
     };
   },
   components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime, },
@@ -105,8 +110,46 @@ export default {
     this.tripData = this.$route.params
     this.getBaraggay()
     console.log(this.tripData)
+    this.getRoutes()
+    this.getHaulers()
+    this.getStagingArea()
+    this.tripData.collectors.map(e => {
+      this.garbageCollectors.push(e.garbageCollectorName)
+      this.selectedGB.push(e.garbageCollectorName)
+    })
   },
   methods:{
+    async getHaulers() {
+      const result = await haulers()
+        this.haulerList =  result.data.response.HaulerMaster
+        this.haulerList.map(e => {
+          this.haulerListNames.push(e.haulerName)
+        })
+        this.haulerList.map(e => {
+          if(e.id == this.tripData.haulerId) {
+            this.hauler = e.haulerName;
+          }
+        })
+    },
+    async getRoutes() {
+      try {
+        const result = await getRoutesByBaranggayId(this.tripData.baranggayId)
+        this.routearray = result.data.response.result.routeMaster
+        this.routearray.map(e => {
+          this.routeNames.push(e.routeName)
+        })
+        for(var i=0;i<this.tripData.routes.length;i++) {
+          this.routearray.map(e => {
+            if(e.id ==  this.tripData.routes[i].servingRouteId)
+            {
+              this.selectedRoutes.push(e.routeName)
+            }
+          })
+        }
+      } catch(e) {
+        console.error(e)
+      }
+    },
     async getLgu() {
       const result = JSON.parse(localStorage.getItem('auth.currentUser'))
       this.loginlguid = result.lguemployee.lguId
@@ -118,7 +161,7 @@ export default {
         const result = await getBaraggayByLguId(this.loginlguid)
         const data = result.data.response.result
         data.map( e => {
-          console.log(e.id+' '+this.tripData.baranggayId)
+          //console.log(e.id+' '+this.tripData.baranggayId)
           if(e.id == this.tripData.baranggayId) {
             this.baranggayName = e.areaName
           }
@@ -133,7 +176,8 @@ export default {
         const data = result.data.response.stagingArea
         data.map(e => {
           if(this.tripData.stagingAreaId == e.id){
-            console.log(e)
+            this.staging = e.stagingAreaName
+            this.dumping = e.dumpingArea.dumpingAreaName
           }
         })
       } catch(e) {
@@ -217,10 +261,10 @@ export default {
                         >Serving Route</label
                       >
                       <multiselect
-                        v-model="route"
+                        v-model="selectedRoutes"
                         :multiple="true"       
-                        :options="servingRoutes"
-                        @change="getRouteCode"
+                        :options="routeNames"
+                        
                       >
                       </multiselect>
                     </b-col>
@@ -245,7 +289,7 @@ export default {
                       >Trip Date</label
                     >
                     <datetime 
-                      v-model="tripDate"
+                      v-model="tripData.tripDate"
                       :format="{
                         year: 'numeric',
                         month: 'numeric',
@@ -262,10 +306,10 @@ export default {
                       >Trip Start Time</label
                     >
                     <datetime 
-                      v-model="startTime"
+                      v-model="tripData.tripStartTime"
                       :format="{
                         hour: 'numeric',
-                        minute: '2-digit'
+                        minute: '2-digit',
                       }"
                       type="datetime"
                       placeholder="SELECT Time"
@@ -283,7 +327,6 @@ export default {
                       v-model="hauler"
                       class="form-control"        
                       :options="haulerListNames"
-                      @change="getVehiclesDriversHelpers"
                     >
                     </b-form-select>
                   </b-col>
@@ -364,9 +407,9 @@ export default {
                       >Garbage Collectors</label
                     >
                     <multiselect
-                        v-model="collector"
+                        v-model="selectedGB"
                         :multiple="true"   
-                        :options="collectorListNames"
+                        :options="garbageCollectors"
                       >
                     </multiselect>
                   </b-col>
@@ -406,7 +449,7 @@ export default {
                     >
                      <input
                        class="form-control"
-                       v-model="tripData.stagingAreaName"
+                       v-model="staging"
                        readonly
                       />
                   </b-col>
@@ -417,7 +460,7 @@ export default {
                       >Dumping Location</label
                     >
                      <input
-                      v-model="tripData.dumpingLocationName"
+                      v-model="dumping"
                       class="form-control"
                       readonly
                     >
