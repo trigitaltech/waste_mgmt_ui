@@ -1101,6 +1101,22 @@ const pagesRoutes = [
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
+    path: '/EditIncomingTripByAdmin',
+    name: 'EditIncomingTripByAdmin',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/EditIncomingTripByAdmin')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
+    path: '/EditOutgoingTrip',
+    name: 'EditOutgoingTrip',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/edit/EditOutgoingTripByAdmin')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
     path: '/EditlandfilltripByVolumeChecker',
     name: 'EditlandfilltripByVolumeChecker',
     icon: 'check-square',

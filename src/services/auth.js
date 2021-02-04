@@ -391,3 +391,7 @@ export const getBrgysByRoute = (id) => serviceMaker(`/routemaster/getBrgysByRout
 export const deleteRoad = (id) => serviceMaker(`/routemaster/roads/${id}`,methods.DELETE,api.NGB)
 
 export const editRoads = (payload) => serviceMaker('/routemaster/roads/update',methods.PUT,api.NGB,payload)
+
+export const updateOutgoingTrip = (payload) => serviceMaker('tripoutgoing/billing/update',methods.PUT,api.NGB,payload)
+
+export const updateIncomingTrip = (payload) => serviceMaker('tripincoming/admin',methods.PUT,api.NGB,payload)

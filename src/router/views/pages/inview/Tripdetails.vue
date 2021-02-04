@@ -198,14 +198,14 @@ if(this.lgudata[j].id === this.item[i].lguId ){
 
         class="mt-10 ml-10 mr-10 mx-auto"
       >
-        <b-col >
+        <!--<b-col >
           <b-button
                       class="btn btn-custome btn-secondary ml-5 mb-2 mr-2 float-right"
                       text="Create Incoming Trip"
                       @click="$router.push({path:'/CreateLandfillTrip'})"
                       >Create Landfill Trip</b-button
                     >
-        </b-col>
+        </b-col>-->
         <div class="mt-3">
           <b-table
             id="my-table"
