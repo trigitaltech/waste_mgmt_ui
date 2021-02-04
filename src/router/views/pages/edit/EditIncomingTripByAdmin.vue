@@ -13,7 +13,8 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- checkout,users,employees,Tripdownload, updateIncomingTrip, lgus
+ checkout,users,employees,Tripdownload, updateIncomingTrip, lgus,
+ Areamasters, routemaster, haulers
 } from '../../../../services/auth'
 
 export default {
@@ -29,21 +30,36 @@ export default {
   },
   data() {
     return {
+      baranggayList:[],
+      baranggayNames:[],
+      selectedBaranggay:'',
+      baranggayId: '',
+      routeList:[],
+      routeNames:[],
+      selectedRoutes:[],
+      routeId:[],
+      haulerList:[],
+      haulerNames:[],
+      hauler:'',
       servingArea:null,
-      servingRoute:[],
-      route:"",
+      servingRoute:null,
+      route:null,
       lgu:null,
       lguId: '',
       items: [
         {
-          text: 'Home',
+          text: 'home',
           href: '/',
         },
         {
-          text: 'Incoming Trip / Edit',
+          text: 'Incoming Trips',
+          href: '#/Trips/IncomingTrips',
+        },
+        {
+          text: 'Edit Incoming trip',
           active: true,
         },
-      ]
+      ],
     }
   },
   computed: {
@@ -51,21 +67,107 @@ export default {
       return this.$store.getters['auth/loggedInDetails']
     },
   },
+  filters: {
+    formatdatetime: function(value) {
+      if (value) {
+        return moment(String(value)).format("hh:mm A DD/MM/YYYY");
+      }
+    },
+    formatdate: function(value) {
+      if (value) {
+        return moment(String(value)).format("DD/MM/YYYY");
+      }
+    }
+  },
   mounted() {
     console.log(this.$route.params)
     this.getTripDetails();
+    this.getBaranggays();
+    this.getRoutes()
+    this.getHaulers()
   },  
   methods: {
+    async getHaulers(){
+      try {
+        const result = await haulers();
+        this.haulerList = result.data.response.HaulerMaster;
+        this.haulerList.map( e => {
+          this.haulerNames.push(e.haulerName)
+        })
+        this.haulerList.map(e => {
+          if(this.$route.params.haulerId === e.id) {
+            this.hauler = e.haulerName;
+          }
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getRoutes(){
+      try {
+        const result = await routemaster()
+        this.routeList = result.data.response.RouteMaster;
+        this.routeList.map(e => {
+          this.routeNames.push(e.routeName)
+        })
+        for(var i=0;i<this.$route.params.tripIncomingAreaRoute.length;i++) {
+          this.routeList.map(e => {
+            if(e.id == this.$route.params.tripIncomingAreaRoute[i].routeId) {
+              this.selectedRoutes.push(e.routeName)
+            }
+          })
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getBaranggays(){
+      try {
+        const result = await  Areamasters()
+        this.baranggayList = result.data.response.areaMaster
+        this.baranggayList.map(e => {
+          this.baranggayNames.push(e.areaName)
+        })
+        this.baranggayList.map(e => {
+          if(e.id == this.$route.params.baranggayId){
+            this.selectedBaranggay = e.areaName
+          }
+        })
+      } catch(e){
+        console.log(e);
+      }
+    },
     async getTripDetails() {
       let result = await Tripdownload(7);
       console.log(result);
     },
     async update() {
-      const result1 = await  lgus()
+      const result1 = await lgus()
       const data = result1.data.response.result;
       data.map(e => {
         if(e.lguName == this.$route.params.lguId){
           this.lguId = e.id
+        }
+      })
+      this.baranggayList.map(e => {
+        if(e.areaName == this.selectedBaranggay) {
+          this.baranggayId =  e.id
+        }
+      })
+      this.selectedRoutes.map((e,index) => {
+        this.routeList.map(f => {
+          if(e == f.routeName) {
+            const data = {
+              id: index,
+              routeId: f.id
+            };
+            this.routeId.push(data);
+          }
+        })
+      })
+      this.haulerList.map(e => {
+        if(this.hauler == e.haulerName) {
+          this.$route.params.haulerId = e.id
         }
       })
       const payload = {
@@ -81,7 +183,7 @@ export default {
         "tripStartTime": this.$route.params.tripStartTime,
         "tripEndTime": this.$route.params.tripEndTime,
         "district": this.$route.params.district,
-        "baranggayId": this.$route.params.baranggayId,
+        "baranggayId": this.baranggayId,
         "helperId": this.$route.params.helperId,
         "helperName": this.$route.params.helperName,
         "driverId": this.$route.params.driverId,
@@ -96,8 +198,8 @@ export default {
         "volumeCheckerTotalKmServed": this.$route.params.volumeCheckerTotalKmServed,
         "isDeleted": false,
         "status": this.$route.params.status,
-        "tripIncomingAreaRoute": [],
-        "garbageCollector": [],
+        "tripIncomingAreaRoute": this.routeId,
+        "garbageCollector": this.$$route.params.garbageCollector,
         "createdBy": this.$route.params.createdBy,
         "createdDate": this.$route.params.createdDate,
         "modifiedBy": this.$route.params.modifiedBy,
@@ -121,6 +223,7 @@ export default {
 
 <template>
   <Layout>
+    <PageHeader :items="items" />
     <div class="animated fadeIn">
       <b-card
         header="Update Incoming Trip"
@@ -161,12 +264,11 @@ export default {
                         class="grey-text font-weight-dark ml-3"
                         >Baranggay: </label
                       >
-                      <input
-                        class="ml-2 form-control"
-                        v-model="$route.params.baranggayId"
-                        name="servingArea"
-                        id="servingArea"
-                      />
+                      <b-form-select
+                        v-model="selectedBaranggay"
+                        :options="baranggayNames"
+                        class="form-control"
+                      ></b-form-select>
                     </div>
                   </b-col>
                   <b-col>
@@ -194,9 +296,9 @@ export default {
                         >Serving Route: </label
                       >
                       <multiselect
-                        v-model="route"
+                        v-model="selectedRoutes"
                         :multiple="true"       
-                        :options="servingRoute"
+                        :options="routeNames"
                       >
                       </multiselect>
                     </div>
@@ -250,12 +352,11 @@ export default {
                         class="grey-text font-weight-dark ml-3"
                         >Hauler: </label
                       >
-                      <input
-                        class="ml-2 form-control"
-                        v-model="$route.params.haulerId"
-                        name="lgu"
-                        id="lgu"
-                      />
+                      <b-form-select
+                        v-model="hauler"
+                        :options="haulerNames"
+                        class="form-control"
+                      ></b-form-select>
                     </div>
                   </b-col>
                   <b-col>
@@ -342,7 +443,7 @@ export default {
                   </b-col>
                   <b-col>
                     <div class="form-group">
-                      <label
+                      <!--<label
                         class="grey-text font-weight-dark ml-3"
                         >Garbage Collectors: </label
                       >
@@ -351,7 +452,7 @@ export default {
                         :multiple="true"       
                         :options="servingRoute"
                       >
-                      </multiselect>
+                      </multiselect>-->
                     </div>
                   </b-col>
                 </b-row>
