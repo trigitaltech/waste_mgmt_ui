@@ -227,7 +227,7 @@ export default {
       </div>
       <div class="container my-3">
         <!-- Section: Block Content -->
-        <section>
+        <section v-if="this.$store.getters['auth/loggedInDetails'].user.roles[0].name === 'ADMIN'">
           <!-- <hr class="w-header my-4" /> -->
           <div class="row white-text">
             <!-- Grid column -->
@@ -779,8 +779,321 @@ export default {
             </div>
           </div>
         </section>
+
+               <section v-if="this.$store.getters['auth/loggedInDetails'].user.roles[0].name === 'OFFICE_ENCODER'">
+       
+          <div class="row white-text">
+             <!-- <div class="col-xl-3 col-md-6 mb-4">
+             
+              <div
+                class="card classic-admin-card red accent-2"
+                style="background-color: #ff7e5f"
+              >
+                <div class="card-body" style="overflow: hidden">
+                  <div class="media p-3">
+                    <div class="media-body">
+                      <span
+                        class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
+                        >EMPLOYEES</span
+                      >
+                      <h2 class="mb-0 text-dark-blue">{{ employee }}</h2>
+                    </div>
+                    <div class="align-self-center" style="position: relative">
+                      <i
+                        class="fas fa-users"
+                        style="
+                          font-size: 100px;
+                          position: absolute;
+                          right: -33px;
+                          top: -55px;
+                          opacity: 0.3;
+                          color: #fff;
+                        "
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="progress md-progress mx-2">
+                  <b-progress-bar :value="employee" :max="max"></b-progress-bar>
+                </div>
+                <div class="card-body pt-2 pb-3"> </div>
+              </div>
+            </div> --> 
+                <div class="col-xl-3 col-md-6 mb-4">
+              <!-- Card Yellow -->
+              <div
+                class="card classic-admin-card warning-color"
+                style="background-color: #4ca1af"
+              >
+                <div>
+                  <div class="card-body" style="overflow: hidden">
+                    <div class="media p-3">
+                      <div class="media-body">
+                        <span
+                          class="text-dark-blue text-uppercase font-size-12 font-weight-white"
+                          >SR TRUCK</span
+                        >
+                        <h2 class="mb-0 text-dark-blue">{{ srtruck }}</h2>
+                      </div>
+                      <div class="align-self-center" style="position: relative">
+                        <i
+                          class="fas fa-file-upload"
+                          style="
+                            font-size: 100px;
+                            position: absolute;
+                            right: -33px;
+                            top: -55px;
+                            opacity: 0.3;
+                            color: #fff;
+                          "
+                        ></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="progress md-progress mx-2">
+                    <b-progress-bar
+                      :value="srtruck"
+                      :max="max"
+                    ></b-progress-bar>
+                  </div>
+                  <div class="card-body pt-2 pb-3"> </div>
+                </div>
+                <!-- Card Yellow -->
+              </div>
+            </div>
+            <!-- Grid column -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <!-- Card Yellow -->
+              <div
+                class="card classic-admin-card warning-color"
+                style="background-color: #ffc371"
+              >
+                <div>
+                  <div class="card-body" style="overflow: hidden">
+                    <div class="media p-3">
+                      <div class="media-body">
+                        <span
+                          class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
+                          >SR EQUIPMENT</span
+                        >
+                        <h2 class="mb-0 text-dark-blue">{{ srequipment }}</h2>
+                      </div>
+                      <div class="align-self-center" style="position: relative">
+                        <i
+                          class="fas fa-address-card"
+                          style="
+                            font-size: 100px;
+                            position: absolute;
+                            right: -33px;
+                            top: -55px;
+                            opacity: 0.3;
+                            color: #fff;
+                          "
+                        ></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="progress md-progress mx-2">
+                    <b-progress-bar
+                      :value="srequipment"
+                      :max="max"
+                    ></b-progress-bar>
+                  </div>
+                  <div class="card-body pt-2 pb-3"> </div>
+                </div>
+                <!-- Card Yellow -->
+              </div>
+            </div>
+
+          </div>
+        </section>
+        <section v-if="this.$store.getters['auth/loggedInDetails'].user.roles[0].name === 'HAULER'">
+          <!-- <hr class="w-header my-4" /> -->
+          <div class="row white-text">
+ <div class="col-xl-3 col-md-6 mb-4">
+              <!-- Card Blue -->
+              <div
+                class="card classic-admin-card light-blue lighten-1"
+                style="
+                  background-color: #fbab7e;
+                  background-image: linear-gradient(
+                    62deg,
+                    #fbab7e 0%,
+                    #f7ce68 100%
+                  );
+                "
+              >
+                <div class="card-body" style="overflow: hidden" >
+                  <div class="media p-3">
+                    <div class="media-body">
+                      <span
+                        class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
+                        >HAULERS</span
+                      >
+                      <h2 class="mb-0 text-dark-blue">{{ haulers }}</h2>
+                    </div>
+                    <div class="align-self-center" style="position: relative">
+                      <i
+                        class="fas fa-user-secret"
+                        style="
+                          font-size: 100px;
+                          position: absolute;
+                          right: -33px;
+                          top: -55px;
+                          opacity: 0.3;
+                          color: #fff;
+                        "
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="progress md-progress mx-2">
+                  <b-progress-bar :value="haulers" :max="max"></b-progress-bar>
+                </div>
+                <div class="card-body pt-2 pb-3">
+                  <!-- <p class="small mb-0">Worse than last week (25%)</p> -->
+                </div>
+              </div>
+              <!-- Card Blue -->
+            </div>
+             <div class="col-xl-3 col-md-6 mb-4">
+              <!-- Card Red -->
+              <div
+                class="card classic-admin-card red accent-2"
+                style="background-color: #2980b9"
+              >
+                <div class="card-body" style="overflow: hidden">
+                  <div class="media p-3">
+                    <div class="media-body">
+                      <span
+                        class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
+                        >VEHICLES</span
+                      >
+                      <h2 class="mb-0 text-dark-blue">{{ vehicle }}</h2>
+                    </div>
+                    <div class="align-self-center" style="position: relative">
+                      <i
+                        class="fas fa-truck"
+                        style="
+                          font-size: 100px;
+                          position: absolute;
+                          right: -33px;
+                          top: -55px;
+                          opacity: 0.3;
+                          color: #fff;
+                        "
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="progress md-progress mx-2">
+                  <b-progress-bar :value="vehicle" :max="max"></b-progress-bar>
+                </div>
+                <div class="card-body pt-2 pb-3"> </div>
+              </div>
+              <!-- Card Red -->
+            </div>
+  <div class="col-xl-3 col-md-6 mb-4">
+              <!-- Card Blue -->
+              <div
+                class="card classic-admin-card light-blue lighten-1"
+                style="background-color: #ef629f"
+              >
+                <div class="card-body" style="overflow: hidden">
+                  <div class="media p-3">
+                    <div class="media-body">
+                      <span
+                        class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
+                        >EQUIPMENTS</span
+                      >
+                      <h2 class="mb-0 text-dark-blue">{{ equipment }}</h2>
+                    </div>
+                    <div class="align-self-center" style="position: relative">
+                      <i
+                        class="fas fa-toolbox"
+                        style="
+                          font-size: 100px;
+                          position: absolute;
+                          right: -33px;
+                          top: -55px;
+                          opacity: 0.3;
+                          color: #fff;
+                        "
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="progress md-progress mx-2">
+                  <b-progress-bar
+                    :value="equipment"
+                    :max="max"
+                  ></b-progress-bar>
+                </div>
+                <div class="card-body pt-2 pb-3"> </div>
+              </div>
+              <!-- Card Blue -->
+            </div>
+          </div>
+        </section>
+            <section v-if="this.$store.getters['auth/loggedInDetails'].user.roles[0].name === 'LGU'"> 
+          <!-- <hr class="w-header my-4" /> -->
+          <div class="row white-text">
+ <div class="col-xl-3 col-md-6 mb-4">
+              <!-- Card Yellow -->
+              <div
+                class="card classic-admin-card warning-color"
+                style="
+                  background-color: #8bc6ec;
+                  background-image: linear-gradient(
+                    135deg,
+                    #8bc6ec 0%,
+                    #9599e2 100%
+                  );
+                "
+              >
+                <div>
+                  <div class="card-body" style="overflow: hidden">
+                    <div class="media p-3">
+                      <div class="media-body">
+                        <span
+                          class="text-dark-blue text-uppercase font-size-12 font-weight-bold"
+                          >LGUS</span
+                        >
+                        <h2 class="mb-0 text-dark-blue">{{ lgus }}</h2>
+                      </div>
+                      <div class="align-self-center" style="position: relative">
+                        <i
+                          class="fas fa-user-plus"
+                          style="
+                            font-size: 100px;
+                            position: absolute;
+                            right: -33px;
+                            top: -55px;
+                            opacity: 0.3;
+                            color: #fff;
+                          "
+                        ></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="progress md-progress mx-2">
+                    <b-progress-bar :value="lgus" :max="max"></b-progress-bar>
+                  </div>
+                  <div class="card-body pt-2 pb-3">
+                    <!-- <p class="small mb-0">Worse than last week (25%)</p> -->
+                  </div>
+                </div>
+                <!-- Card Yellow -->
+              </div>
+            </div>
+
+
+          </div>
+            </section>
         <!-- Section: Block Content -->
+        
       </div>
     </div>
+
   </Layout>
 </template>
