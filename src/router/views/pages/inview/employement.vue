@@ -57,6 +57,10 @@ export default {
           label: 'userName',
         },
          {
+          key: 'type',
+          label: 'Type',
+        },
+         {
           key: 'phone',
 
           label: 'phone',
