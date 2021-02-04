@@ -4,6 +4,7 @@ import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
+import SRTruckPrint from '../tickets/srtruckprint';
 import moment from 'moment'
 import {
   ValidationProvider,
@@ -26,9 +27,12 @@ export default {
     ValidationProvider,
     ValidationObserver,
     ModelSelect,
+    SRTruckPrint
   },
   data() {
     return {
+      printData:[],
+      ticket: false,
       item: [],
       plandata: '',
       striped: false,
@@ -172,6 +176,11 @@ export default {
         })
       }
     },
+    printReq(data) {
+      this.printData = data;
+      console.log(data);
+      this.ticket = true;
+    },
     async servicerequest() {
       try {
         const result = await servicetruck()
@@ -189,7 +198,12 @@ export default {
 <template>
   <Layout>
     <PageHeader :items="items" />
-
+    <SRTruckPrint
+      v-if="ticket == true"
+      :data="printData"
+      :ticket="ticket"
+      @change="ticket = $event"
+    />
     <div class="animated fadeIn">
       <b-card header="ServiceRequests Truck" class="mt-10 ml-10 mr-10 mx-auto">
         <b-row>
@@ -227,8 +241,6 @@ export default {
             :fields="ServicerequestdetailsColumns"
             :items="item"
             class="mt-3"
-            :filter-included-fields="filterOn"
-            @filtered="onFiltered"
             ><template v-slot:cell(jobStartTime)="data">
               <div class="table-row">{{ getDate(data.item.jobStartTime) }}</div>
             </template>
@@ -251,6 +263,9 @@ export default {
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>
               </router-link>
+              <span @click="printReq(data.item)">
+                <i class="fa fa-print edit mr-2"></i>
+              </span>
               <span @click="deleteReq(data)">
                 <i class="fa fa-times edit"></i>
               </span>
