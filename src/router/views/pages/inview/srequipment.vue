@@ -4,6 +4,7 @@ import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
+import SREquipmentPrint from '../tickets/srequipmentprint'
 import moment from 'moment'
 import {
   ValidationProvider,
@@ -26,9 +27,12 @@ export default {
     ValidationProvider,
     ValidationObserver,
     ModelSelect,
+    SREquipmentPrint
   },
   data() {
     return {
+      printData:[],
+      ticket: false,
       item: [],
       plandata: '',
       striped: false,
@@ -171,6 +175,11 @@ export default {
         })
       }
     },
+    printReq(data) {
+      this.printData = data;
+      console.log(data);
+      this.ticket = true;
+    },
     async servicerequest() {
       try {
         const result = await serviceequipment()
@@ -188,7 +197,12 @@ export default {
 <template>
   <Layout>
     <PageHeader :items="items" />
-
+    <SREquipmentPrint
+      v-if="ticket == true"
+      :data="printData"
+      :ticket="ticket"
+      @change="ticket = $event"
+    />
     <div class="animated fadeIn">
       <b-card
         header="ServiceRequest Equipment"
@@ -253,6 +267,9 @@ export default {
                   <i class="fas fa-pencil-alt edit"></i>
                 </span>
               </router-link>
+              <span @click="printReq(data.item)">
+                <i class="fa fa-print edit mr-2"></i>
+              </span>
               <span @click="deleteReq(data)">
                 <i class="fa fa-times edit"></i>
               </span>

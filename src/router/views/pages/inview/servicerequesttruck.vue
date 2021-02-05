@@ -4,7 +4,7 @@ import Layout from '@layouts/main'
 import PageHeader from '@components/page-header'
 import Multiselect from 'vue-multiselect'
 import { ModelSelect } from 'vue-search-select'
-import SRTruckPrint from '../tickets/srtruckprint';
+import SRTruckPrint from '../tickets/srtruckprint'
 import moment from 'moment'
 import {
   ValidationProvider,
@@ -197,13 +197,13 @@ export default {
 </script>
 <template>
   <Layout>
-    <PageHeader :items="items" />
     <SRTruckPrint
       v-if="ticket == true"
       :data="printData"
       :ticket="ticket"
       @change="ticket = $event"
     />
+    <PageHeader :items="items" />
     <div class="animated fadeIn">
       <b-card header="ServiceRequests Truck" class="mt-10 ml-10 mr-10 mx-auto">
         <b-row>

@@ -5,7 +5,7 @@
 		<p style="text-align: center;font-size:14px">MANAGEMENT SPECIALIST INCORPORATED</p>
 		<h3 style="text-align: center;">SERVIVE TICKET     M</h3>
 		<p style="text-align: center;">F-OPS-0061Rev.0110/02/2017</p>
-		<p style="color:red;margin-top:-34px;margin-left:500px">No.<span>{{data.controlNo}}</span></p>
+		<p style="color:red;margin-top:-34px;margin-left:500px">No.<span>{{data.equipmentNo}}</span></p>
 		<div style="margin-left:100px">
 			<p>Equipment: {{data.equipmentmodel}}</p>
 			<p style="text-align:right;margin-top:-33px">Date: {{data.created_date | formatDate }} </p>
