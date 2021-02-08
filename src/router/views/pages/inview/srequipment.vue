@@ -11,7 +11,8 @@ import {
 } from 'vee-validate/dist/vee-validate.full'
 import {
   servicerequests,
-  deleteservicerequest,serviceequipment
+  deleteservicerequest,serviceequipment,
+  dumpinglocation
 } from '../../../../services/auth'
 
 export default {
@@ -43,6 +44,7 @@ export default {
       amount: '',
       submitted: false,
       title: 'Register',
+      lgudata:[],
       item: { key: 'resource', value: 'Frozen Yogurt', name: '159' },
 
       ServicerequestdetailsColumns: [
@@ -175,6 +177,20 @@ export default {
       try {
         const result = await serviceequipment()
         this.item = result.data.response.result
+           const result1 = await  dumpinglocation()
+     this.lgudata = result1.data.response.dumpingLocation
+
+         for (var i = 0; i < this.item.length; i++) {
+          
+  for (var j = 0; j < this.lgudata.length; j++) {
+if(this.lgudata[j].id === this.item[i].dumpingareaId ){
+  this.item[i].dumpingareaId = this.lgudata[j].dumpingAreaName
+  
+  break
+}
+
+  }
+         }
       } catch (error) {}
     },
     async refresh() {

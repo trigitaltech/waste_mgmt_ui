@@ -464,7 +464,7 @@ export default {
                 </b-row>
 
                 <br/>
-                 <b-row>
+                 <!-- <b-row>
                    <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -480,7 +480,7 @@ export default {
                     </b-form-select>
                   </b-col>
                   <b-col> </b-col>
-                </b-row>
+                </b-row> -->
                  <b-row>
                   <b-col>
                     <label

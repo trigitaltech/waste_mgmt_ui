@@ -244,14 +244,14 @@ export default {
        getid(){
         console.log("haiiiiii",)
         this.emp.map(e=>{
-            if(this.driver === e.userName){
+            if(this.driver === (e.firstName +" "+ e.lastName)){
                 this.driverid = e.id    
                        }
         })
       },
       gethelperid(){
         this.emp.map(e=>{
-            if(this.helper == e.userName){
+            if(this.helper == (e.firstName +" "+ e.lastName)){
               console.log(e)
                 this.helperid = e.id
             }
@@ -300,9 +300,9 @@ export default {
           this.emp.map(e=>{
             if(e.haulerId != null) {
               if(e.type == "DRIVER" && e.haulerId == this.haulerId)
-                this.drivers.push(e.firstName)
+                this.drivers.push(e.firstName +" "+ e.lastName)
               if(e.type == "HELPER" && e.haulerId == this.haulerId)
-                this.helpers.push(e.firstName)
+                this.helpers.push(e.firstName +" "+ e.lastName)
             }
           })
       } catch (error) {}
@@ -618,6 +618,19 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
+                    <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >Body</label
+                    >
+                    <input
+                      v-model="body"
+                      class="form-control"
+                      name="body"
+                      readonly
+                    />
+                  </b-col>
                   <b-col class="ml-4">
                      <label
                       for="defaultFormCardNameEx"
@@ -633,19 +646,7 @@ export default {
                   </b-col>
                 </b-row>
                 <b-row class="mt-3">
-                  <b-col>
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Body</label
-                    >
-                    <input
-                      v-model="body"
-                      class="form-control"
-                      name="body"
-                      readonly
-                    />
-                  </b-col>
+                
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
@@ -663,9 +664,7 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
-                </b-row>
-                <b-row class="mt-3">
-                  <b-col>
+                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -680,6 +679,9 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
+                </b-row>
+                <b-row class="mt-3">
+                 
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"
