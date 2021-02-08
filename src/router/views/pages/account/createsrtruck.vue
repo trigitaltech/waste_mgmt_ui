@@ -261,8 +261,8 @@ export default {
         this.emp = result.data.response.HaulerEmployees
         console.log(this.emp)
         this.emp.map((e) => {
-          if (e.type == 'DRIVER') this.drivers.push(e.userName)
-          if (e.type == 'HELPER') this.helpers.push(e.userName)
+          if (e.type == 'DRIVER') this.drivers.push(e.firstName +" "+ e.lastName)
+          if (e.type == 'HELPER') this.helpers.push(e.firstName +" "+ e.lastName)
         })
       } catch (error) {}
     },
@@ -299,7 +299,7 @@ export default {
     getdriverid() {
       // debugger
       this.emp.map((e) => {
-        if (this.driver[0] === e.userName) {
+        if (this.driver[0] === (e.firstName +" "+ e.lastName)) {
           this.driverid = e.id
         }
       })
@@ -307,7 +307,7 @@ export default {
     gethelperid() {
       // debugger
       this.emp.map((e) => {
-        if (this.helper[0] === e.userName) {
+        if (this.helper[0] === (e.firstName +" "+ e.lastName)) {
           this.helperid = e.id
         }
       })
@@ -481,22 +481,6 @@ export default {
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Truck Type</label
-                    >
-                    <input
-                      v-model="trucktype"
-                      class="form-control"
-                      name="trucktype"
-                      placeholder="Enter Trucktype"
-                      readonly
-                    />
-                  </b-col>
-                </b-row>
-                <b-row>
-                  <b-col>
-                    <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
                       >Vehicle No</label
                     >
                     <input
@@ -507,6 +491,23 @@ export default {
                       placeholder="Enter Vehicle No"
                     />
                   </b-col>
+                </b-row>
+                <b-row>
+                    <b-col>
+                    <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >Truck Type</label
+                    >
+                    <input
+                      v-model="trucktype"
+                      class="form-control"
+                      name="trucktype"
+                      placeholder="Enter Trucktype"
+                      readonly
+                    />
+                  </b-col>
+                
                   <b-col>
                     <label
                       for="defaultFormCardtextEx"

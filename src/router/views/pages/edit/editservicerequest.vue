@@ -426,7 +426,21 @@ export default {
 
                 <br/>
                  <b-row>
-                   <b-col>
+                    <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark"
+                      >Dispatched BY</label
+                    >
+                    <multiselect
+                      v-model="dispatchedby"
+                      :multiple="true"
+                      :options="dispatcherListNames"
+                      @input="getdispatchid"
+                    >
+                    </multiselect>
+                  </b-col>
+                   <!-- <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -439,7 +453,7 @@ export default {
                       @change="getCheckerId" 
                     >
                     </b-form-select>
-                  </b-col>
+                  </b-col> -->
                   <b-col>
                     <label
                       for="defaultFormCardNameEx"
@@ -457,20 +471,7 @@ export default {
                   </b-col>
                 </b-row>
                  <b-row>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Dispatched BY</label
-                    >
-                    <multiselect
-                      v-model="dispatchedby"
-                      :multiple="true"
-                      :options="dispatcherListNames"
-                      @input="getdispatchid"
-                    >
-                    </multiselect>
-                  </b-col>
+                 
                   <b-col> </b-col>
                 </b-row>
                 <br />

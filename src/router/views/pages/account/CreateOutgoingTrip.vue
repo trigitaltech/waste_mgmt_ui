@@ -165,11 +165,11 @@ export default {
         data.map(g => {
           if(g.type == "DRIVER" && g.haulerId == this.haulerId){
             this.drivers.push(g)
-            this.driverNames.push(g.firstName)
+            this.driverNames.push(g.firstName +" "+ g.lastName)
           }
           if(g.type == "HELPER" && g.haulerId == this.haulerId){
             this.helpers.push(g)
-            this.helperNames.push(g.firstName)
+            this.helperNames.push(g.firstName +" "+ g.lastName)
           }
         })
       } catch(error) {
@@ -201,12 +201,12 @@ export default {
           }
         })
         this.drivers.map(e => {
-          if(this.driver == e.userName) {
+          if(this.driver == (e.firstName +" "+ e.lastName)) {
             this.driverId = e.id
           }
         })
         this.helpers.map(e => {
-          if(this.helper == e.userName) {
+          if(this.helper == (e.firstName +" "+ e.lastName)) {
             this.helperId = e.id
           }
         })
@@ -455,7 +455,12 @@ export default {
                     </b-form-select>
                   </b-col>
                   <b-col>
-                    <label
+                   
+                  </b-col>
+                </b-row>
+                <b-row class="mt-3">
+                  <b-col>
+                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
                       >Plate No</label
@@ -470,9 +475,8 @@ export default {
                   required
                     >
                     </b-form-select>
+
                   </b-col>
-                </b-row>
-                <b-row class="mt-3">
                   <b-col>
                     <label
                       for="defaultFormCardNameEx"

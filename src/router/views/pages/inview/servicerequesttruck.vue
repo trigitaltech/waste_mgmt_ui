@@ -13,6 +13,7 @@ import {
 import {
   servicetruck,
   deleteservicerequest,
+  dumpinglocation
 } from '../../../../services/auth'
 
 export default {
@@ -133,6 +134,7 @@ export default {
         'FTA  AND STARTER',
       ],
       clientTemplete: {},
+      lgudata:[]
     }
   },
   computed: {
@@ -185,6 +187,20 @@ export default {
       try {
         const result = await servicetruck()
         this.item = result.data.response.ServiceTicket
+         const result1 = await  dumpinglocation()
+     this.lgudata = result1.data.response.dumpingLocation
+
+         for (var i = 0; i < this.item.length; i++) {
+          
+  for (var j = 0; j < this.lgudata.length; j++) {
+if(this.lgudata[j].id === this.item[i].dumpingareaId ){
+  this.item[i].dumpingareaId = this.lgudata[j].dumpingAreaName
+  
+  break
+}
+
+  }
+         }
       } catch (error) {}
     },
     async refresh() {

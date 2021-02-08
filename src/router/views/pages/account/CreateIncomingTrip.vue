@@ -196,14 +196,14 @@ export default {
             this.driverdata = result2.data.response.result
             this.driverdata.map(e => {
               
-                   this.drivers.push(e.firstName)
+                   this.drivers.push(e.firstName +" "+ e.lastName)
               })
                  var id3 = "HELPER"
                 const result3 = await getEMPhelpByLguId(this.haulerList[i].id,id3)
             this.helperdata = result3.data.response.result
             this.helperdata.map(e => {
               
-                    this.helpers.push(e.firstName)
+                    this.helpers.push(e.firstName +" "+ e.lastName)
               })
             
           }
@@ -309,14 +309,14 @@ export default {
        getid(){
         console.log("haiiiiii",)
         this.driverdata.map(e=>{
-            if(this.driver === e.firstName){
+            if(this.driver === (e.firstName +" "+ e.lastName)){
                 this.driverid = e.id    
                        }
         })
       },
       gethelperid(){
         this.helperdata.map(e=>{
-            if(this.helper == e.firstName){
+            if(this.helper == (e.firstName +" "+ e.lastName)){
               console.log(e)
                 this.helperid = e.id
             }
@@ -630,7 +630,12 @@ export default {
                     >
                     </b-form-select>
                   </b-col>
-                    <b-col>
+                   <b-col class>
+                  
+                  </b-col>
+                </b-row>
+                <b-row class="mt-3">
+                  <b-col>
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
@@ -648,24 +653,7 @@ export default {
                     </b-form-select>
                   </b-col>
                 
-                </b-row>
-                <b-row class="mt-3">
                 
-                  <b-col class>
-                     <label
-                      for="defaultFormCardNameEx"
-                      class="grey-text font-weight-dark"
-                      >Truck Type</label
-                    >
-                   <input
-                      v-model="trucktype"
-                      class="form-control"
-                      name="trucktype"
-                      disabled
-                    readonly
-                    
-                    />
-                  </b-col>
                     <b-col>
                     <label
                       for="defaultFormCardNameEx"
@@ -678,6 +666,21 @@ export default {
                       name="body"
                       readonly
                       disabled
+                    
+                    />
+                  </b-col>
+                  <b-col>
+                       <label
+                      for="defaultFormCardNameEx"
+                      class="grey-text font-weight-dark"
+                      >Truck Type</label
+                    >
+                   <input
+                      v-model="trucktype"
+                      class="form-control"
+                      name="trucktype"
+                      disabled
+                    readonly
                     
                     />
                   </b-col>
