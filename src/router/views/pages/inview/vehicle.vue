@@ -53,10 +53,7 @@ export default {
         //   key: 'code',
         //   label: 'code',
         // },
-         {
-          key: 'vehicleNo',
-          label: 'vehicleNo',
-        },
+        
          {
           key: 'haulerId',
 
@@ -78,6 +75,10 @@ export default {
           key: 'plateNo',
 
           label: 'plateNo',
+        },
+         {
+          key: 'vehicleNo',
+          label: 'BodyNo',
         },
          {
           key: 'vehicleType.truckType',
