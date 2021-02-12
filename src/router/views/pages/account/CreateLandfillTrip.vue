@@ -89,7 +89,7 @@ export default {
       baranggayId:null,
       totalCapacity: null,
       stagingAreaId:null,
-      dumpingLocationId:null,
+      dumpingLocationid:"",
       controlCheckerId:null,
       controlCheckerName:'',
       district:'',
@@ -146,7 +146,7 @@ export default {
         console.log(this.collectorList)
         this.collectorList.map( e => {
           if(e.type == 'PALERO')
-            this.collectorListNames.push(e.firstName)
+            this.collectorListNames.push(e.firstName +" "+ e.lastName)
         })
       } catch(e) {
         console.log(e)
@@ -261,7 +261,7 @@ export default {
       getGarbageCollectors() {
         this.collector.map(e => {
           this.collectorList.map(f => {
-            if(e == f.userName) {
+            if(e == (f.firstName +" "+ f.lastName)) {
               const data = {
                 garbageCollectorId: f.id,
                 garbageCollectorName: f.userName
@@ -357,9 +357,9 @@ export default {
     },
     getDumpingLocation() {
       this.stagingAreas.map(e => {
-        if(e.stagingAreaName == this.staging) {
+        if(e.stagingAreaName === this.staging) {
           this.stagingAreaId = e.id
-          this.dumpingLocationId = e.dumpingArea.id
+          this.dumpingLocationid = e.dumpingArea.id
           this.dumpingLocations.push(e)
           this.dumpingLocationNames.push(e.dumpingArea.dumpingAreaName)
           this.dumping = e.dumpingArea.dumpingAreaName
@@ -393,7 +393,7 @@ export default {
             tripStartTime: this.startTime,
             baranggayId: this.areaId,
             stagingAreaId: this.stagingAreaId,
-            dumpingLocationId: this.dumpingLocationId,
+            dumpinglocationId: this.dumpingLocationid,
             helperId:this.helperid,
             helperName:this.helper,
             driverId: this.driverid,
@@ -692,6 +692,7 @@ export default {
                         v-model="collector"
                         :multiple="true"   
                         :options="collectorListNames"
+                        @input="getGarbageCollectors"
                       >
                     </multiselect>
                   </b-col>

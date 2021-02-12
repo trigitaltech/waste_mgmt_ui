@@ -12,7 +12,7 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- Attendance, deleteattendance,employees
+ Attendance, deleteattendance,employees,pdfgenerate
 } from '../../../../services/auth'
 
 export default {
@@ -55,13 +55,30 @@ export default {
       return this.$store.getters['auth/loggedInDetails']
     },
   },
+  methods :{
+   async downloadFile() {
+     console.log("test")
+         var id = "pdf"
+     try{
+          
+        const result = await pdfgenerate(id)
+         let blob = new Blob([result.response.data], { type: 'application/pdf' })
+      let link = document.createElement('a')
+      link.href = window.URL.createObjectURL(blob)
+      link.download = 'test.pdf'
+      link.click()
+      } catch (e) {
+         this.$toasted.error(e.message.error, {
+          duration: 7000,
+        })
+      }
+ 
+}
+  },
   mounted() {
-   
-    this.attendancedata()
+  
   },
-  methods: {
-   
-  },
+  
 }
 </script>
 
@@ -114,7 +131,7 @@ export default {
                      <b-button
                   class="btn btn-custome ml-4 btn-secondary mb-3"
                   text="Create Tenant"
-                  @click="create"
+                  @click="downloadFile()"
                   > Download</b-button
                 >
                   </b-col>

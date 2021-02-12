@@ -248,7 +248,7 @@ export default {
         console.log(this.collectorList)
         this.collectorList.map( e => {
         
-            this.collectorListNames.push(e.firstName)
+            this.collectorListNames.push(e.firstName +" "+ e.lastName)
         })
 
          const result = await getRoutesByBaranggayId(this.areadata[i].id)
@@ -399,7 +399,7 @@ export default {
        for(var i = 0 ; i<this.collector.length ;i++){
         //  debugger
          this.collectorList.map(e=>{
-        if(this.collector[i] === e.userName){
+        if(this.collector[i] === (e.firstName +" "+ e.lastName)){
           this.garbagearray.push({garbageCollectorId:e.id ,garbageCollectorName:e.userName})
           console.log("routedata",this.garbagearray)
        

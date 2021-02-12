@@ -150,7 +150,7 @@ export default {
                         readonly        
                       />
                     </b-col>
-                  </b-col>
+                  
                   <b-col>
                     <label
                       for="defaultFormCardNameEx"

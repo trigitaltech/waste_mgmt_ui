@@ -12,7 +12,7 @@ Vue.component('multiselect', Multiselect)
 import {
  getBaraggayByLguId,getHaulerByBaraggayId, CreateDirectTrip,haulerEmployees,vehicle,
  getRoutesByBaranggayId, haulers, getVehiclesByHaulerId, users,employees,lguemployee,
- getLguById,stagingarea,editdirecttripvolumechecker
+ getLguById,stagingarea,editdirecttripvolumechecker,dumpinglocation
 } from '../../../../services/auth'
 
 export default {
@@ -90,13 +90,16 @@ export default {
       totalCapacity: null,
       stagingAreaId:null,
       dumpingLocationId:null,
+        inputs:this.$route.params.collectors,
       controlCheckerId:null,
       controlCheckerName:'',
       lguName:'',
       baranggayName:'',
       stagingAreaName:'',
       dumpingLocationName:'',
-      tripData:[]
+      tripData:[],
+      stagingarea:"",
+      dumpingarea:""
     };
   },
   components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime, },
@@ -104,6 +107,8 @@ export default {
     this.getLgu()
     this.tripData = this.$route.params
     this.getBaraggay()
+    this.getStagingArea()
+    this.getdumpingArea()
     console.log(this.tripData)
   },
   methods:{
@@ -132,14 +137,30 @@ export default {
         const result = await stagingarea()
         const data = result.data.response.stagingArea
         data.map(e => {
-          if(this.tripData.stagingAreaId == e.id){
+          if(this.tripData.stagingAreaId === e.id){
             console.log(e)
+            this.stagingarea = e.stagingAreaName
           }
         })
       } catch(e) {
         console.log(e)
       }
     },
+     async getdumpingArea() {
+      try {
+        const result = await dumpinglocation()
+        const data = result.data.response.dumpingLocation
+        data.map(e => {
+          if(this.tripData.dumpinglocationId === e.id){
+            console.log(e)
+            this.dumpingarea = e.dumpingAreaName
+          }
+        })
+      } catch(e) {
+        console.log(e)
+      }
+    },
+    
   async create() {
       try {
         const payload =   {
@@ -244,16 +265,11 @@ export default {
                       class="grey-text font-weight-dark"
                       >Trip Date</label
                     >
-                    <datetime 
-                      v-model="tripDate"
-                      :format="{
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: 'numeric'
-                      }"
-                      type="date"
-                      placeholder="SELECT Date"
-                 ></datetime>
+                     <input
+                      v-model="tripData.tripDate"
+                      class="form-control"
+                      name="body"
+                    />
                   </b-col>
                   <b-col class="ml-3">
                     <label
@@ -261,15 +277,11 @@ export default {
                       class="grey-text font-weight-dark mr-2"
                       >Trip Start Time</label
                     >
-                    <datetime 
-                      v-model="startTime"
-                      :format="{
-                        hour: 'numeric',
-                        minute: '2-digit'
-                      }"
-                      type="datetime"
-                      placeholder="SELECT Time"
-                 ></datetime>
+                   <input
+                      v-model="tripData.tripStartTime"
+                      class="form-control"
+                      name="body"
+                    />
                   </b-col>
                 </b-row>
                 <b-row class="mt-3">
@@ -279,13 +291,12 @@ export default {
                       class="grey-text font-weight-dark"
                       >Hauler</label
                     >
-                   <b-form-select
-                      v-model="hauler"
-                      class="form-control"        
-                      :options="haulerListNames"
-                      @change="getVehiclesDriversHelpers"
-                    >
-                    </b-form-select>
+                    
+                   <input
+                       class="form-control"
+                       v-model="tripData.haulerName"
+                       readonly
+                      />
                   </b-col>
                   <b-col>
                   </b-col>
@@ -357,19 +368,19 @@ export default {
                        readonly
                       />
                   </b-col>
-                  <b-col>
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark"
-                      >Garbage Collectors</label
-                    >
-                    <multiselect
-                        v-model="collector"
-                        :multiple="true"   
-                        :options="collectorListNames"
-                      >
-                    </multiselect>
-                  </b-col>
+                 <b-col v-for="(input, k) in inputs" :key="k">
+                <label
+                  for="defaultFormCardEmailEx"
+                  class="grey-text font-weight-dark"
+                  >Garbage Collector</label
+                >
+                <input
+                  id="defaultFormCardEmailEx"
+                  v-model="input.garbageCollectorName"
+                   readonly
+                  class="form-control"
+                />
+              </b-col>
                 </b-row>
                 <b-row class="mt-3">
                   <b-col>
@@ -406,7 +417,7 @@ export default {
                     >
                      <input
                        class="form-control"
-                       v-model="tripData.stagingAreaName"
+                       v-model="stagingarea"
                        readonly
                       />
                   </b-col>
@@ -417,7 +428,7 @@ export default {
                       >Dumping Location</label
                     >
                      <input
-                      v-model="tripData.dumpingLocationName"
+                      v-model="dumpingarea"
                       class="form-control"
                       readonly
                     >
