@@ -122,6 +122,9 @@ export default {
     rows() {
       return this.incomingtripdata.length
     },
+    rows5() {
+      return this.landfillTrips.length
+    },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
     },
@@ -835,7 +838,7 @@ export default {
                     <div class="dataTables_paginate paging_simple_numbers float-right">
                       <ul class="pagination pagination-rounded mb-0">
                         <!-- pagination -->
-                        <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage"></b-pagination>
+                        <b-pagination v-model="currentPage" :total-rows="rows5" :per-page="perPage"></b-pagination>
                       </ul>
                     </div>
                   </div>
