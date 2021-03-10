@@ -199,7 +199,7 @@ export default {
         "isDeleted": false,
         "status": this.$route.params.status,
         "tripIncomingAreaRoute": this.routeId,
-        "garbageCollector": this.$$route.params.garbageCollector,
+        "garbageCollector": this.$route.params.garbageCollector,
         "createdBy": this.$route.params.createdBy,
         "createdDate": this.$route.params.createdDate,
         "modifiedBy": this.$route.params.modifiedBy,

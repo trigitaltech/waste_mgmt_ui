@@ -10,7 +10,7 @@ import Multiselect from 'vue-multiselect'
 Vue.component('multiselect', Multiselect)
 import {
   // eslint-disable-next-line no-unused-vars
- stagingarea, editDirectTripByControlTrip,editDirectTripByControldump
+ stagingarea, editDirectTripByControlTrip,editDirectTripByControldump,dumpinglocation
 } from '../../../../services/auth'
 
 export default {
@@ -26,7 +26,9 @@ export default {
       data:{},
       loadingEndTime:'',
       volume:'',
-      tripStartTime:''
+      tripStartTime:'',
+      dumpingarea:"",
+      stagingarea:""
     };
   },
   components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime, },
@@ -35,8 +37,23 @@ export default {
     this.data = this.$route.params
     this.getLgu()
     this.getStagingArea()
+    this.getdumpingArea()
   },
   methods:{
+     async getdumpingArea() {
+      try {
+        const result = await dumpinglocation()
+        const data = result.data.response.dumpingLocation
+        data.map(e => {
+          if(this.data.dumpinglocationId === e.id){
+            console.log(e)
+            this.dumpingarea = e.dumpingAreaName
+          }
+        })
+      } catch(e) {
+        console.log(e)
+      }
+    },
     async submit() {
       try {
         if(this.data.status == 'STARTED') {
@@ -89,7 +106,7 @@ export default {
           console.log(this.loginlguid+' '+e.lguName.id)
           if(this.loginlguid === e.lguName.id){
             this.loginDetails.name = e.lguName.userName
-            this.stagingAreaNames.push(e.stagingAreaName)
+            this.stagingarea = e.stagingAreaName
           }
         })
         console.log(this.loginDetails.name)
@@ -97,6 +114,22 @@ export default {
         console.log(e)
       }
     },
+    // async getStagingArea() {
+    //   try {
+    //     const result = await stagingarea()
+      
+    //      const data = result.data.response.stagingArea
+    //     data.map(e => {
+    //       if(this.data.stagingAreaId === e.id){
+    //         console.log(e)
+           
+    //       }
+    //     })
+    //     // console.log(this.loginDetails.name)
+    //   } catch(e) {
+    //     console.log(e)
+    //   }
+    // },
   }
 }
 </script>
@@ -147,7 +180,7 @@ export default {
                       >Staging Area</label
                     >
                     <input
-                      v-model.trim="data.stagingAreaName"
+                      v-model.trim="stagingarea"
                       class="form-control"
                       readonly        
                     />
@@ -161,7 +194,7 @@ export default {
                         >Dumping Location</label
                       >
                       <input
-                        v-model.trim="data.dumpingLocationName"
+                        v-model.trim="dumpingarea"
                         class="form-control"
                         readonly        
                       />
@@ -276,7 +309,7 @@ export default {
                       >Truck Type</label
                     >
                    <input
-                      v-model="data.typeOfUnit"
+                      v-model="data.truckType"
                       class="form-control"
                       name="trucktype"
                       readonly

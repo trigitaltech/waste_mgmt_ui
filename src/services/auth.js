@@ -397,3 +397,7 @@ export const updateOutgoingTrip = (payload) => serviceMaker('tripoutgoing/billin
 export const updateIncomingTrip = (payload) => serviceMaker('tripincoming/admin',methods.PUT,api.NGB,payload)
 
 export const pdfgenerate = (id) => serviceMaker(`/reports/report/${id}`,methods.GET,api.NGB)
+
+export const triptypebilling = (tripType) => serviceMaker(`/payroll/billmaster/getTripIds/${tripType}`,methods.GET,api.NGB)
+
+export const tripbillinggenerate = (id1,id2) => serviceMaker(`/payroll/billmaster/generate/${id1}/${id2}`,methods.GET,api.NGB)
