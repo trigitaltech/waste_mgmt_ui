@@ -538,10 +538,30 @@ const inviewRoutes = [
         path: 'Billing',
         name: 'Billing',
         icon: 'check-square',
-        component: () => lazyLoadView(import('@views/pages/Payrol/billing')),
+        component: {
+          render(c) { return c('router-view') }
+        },
+        children: [
+
+          {
+            path: 'TripBilling',
+            name: 'Trips Billing',
+            icon: 'check-square',
+            component: () => lazyLoadView(import('@views/pages/Payrol/billingtrip')),
         meta: { authRequired: true },
         props: (route) => ({ user: store.state.auth.currentUser || {} }),
-      },
+          },
+          {
+            path: 'ServicerequestBilling',
+            name: 'ServicerequestBilling',
+            icon: 'check-square',
+            component: () => lazyLoadView(import('@views/pages/Payrol/billingsrequest')),
+        meta: { authRequired: true },
+        props: (route) => ({ user: store.state.auth.currentUser || {} }),
+          },
+        ]
+
+    },
       {
         path: 'Settlement',
         name: 'Settlement',
