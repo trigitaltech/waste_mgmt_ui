@@ -69,6 +69,7 @@ export default {
     async create() {
       try {
         const payload = {
+          id:this.$route.params.id,
          "code": this.code,
     "tripType": this.triptype
         }

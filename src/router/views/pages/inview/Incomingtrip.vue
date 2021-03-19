@@ -171,6 +171,11 @@ export default {
       }
      
     },
+     async refresh() {
+      setTimeout(function () {
+        location.reload()
+      }, 200)
+    },
     async getTrips() {
       try{
         let result = await incomingtrips();

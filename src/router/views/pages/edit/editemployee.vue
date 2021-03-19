@@ -208,7 +208,7 @@ export default {
                 modifiedDate: this.modifydate,
                 createdBy: this.createdby,
                 modifiedBy: this.modifyby,
-                personal_ID_NO: this.personalidno,
+                personalIdNo: this.personalidno,
                 id_PROOF_DOC_URL:this.file,
                 service_OFFICE: this.sid,
                 type:this.employeetype
