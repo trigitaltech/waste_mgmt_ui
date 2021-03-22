@@ -166,7 +166,7 @@ export default {
             this.vehicles = result1.data.response.vehicles
             this.vehicles.map(e => {
                 if(e.haulerId == this.haulerId)
-                  this.plates.push(e.plateNo)
+                  this.plates.push(e.vehicleNo)
             })
           }
         })
@@ -199,6 +199,7 @@ export default {
             this.baranggayId = e.id
             console.log(this.baranggayId)
             this.routedata = result.data.response.result.routeMaster
+              this.servingRoutes = []
             if(this.routedata.length > 0) {
               this.routedata.map(f=>{
                 if(f.routeName != null) 
@@ -426,11 +427,11 @@ export default {
     },
     getTruckType(){
       this.vehicles.map( e => {
-        if(e.plateNo == this.plate)
+        if(e.vehicleNo == this.body)
         {
           console.log(e)
           this.trucktype = e.vehicleType.code
-          this.body = e.vehicleNo
+          this.plate = e.plateNo
           this.totalCapacity = e.volumeCapacity
         }
       })
@@ -605,14 +606,14 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Plate No</label
+                      >Body No</label
                     >
                      <b-form-select
-                      v-model="plate"
+                      v-model="body"
                       :options="plates"
                       class="form-control"
                       @change="getTruckType"
-                        oninvalid="this.setCustomValidity('Plate No is required ')"
+                        oninvalid="this.setCustomValidity('Body No is required ')"
                   oninput="setCustomValidity('')"
                   required
                     >
@@ -622,13 +623,14 @@ export default {
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Body</label
+                      >Plate No</label
                     >
                     <input
-                      v-model="body"
+                      v-model="plate"
                       class="form-control"
                       name="body"
                       readonly
+                      disabled
                     />
                   </b-col>
                   <b-col class="ml-4">
@@ -642,6 +644,7 @@ export default {
                       class="form-control"
                       name="trucktype"
                       readonly
+                      disabled
                     />
                   </b-col>
                 </b-row>

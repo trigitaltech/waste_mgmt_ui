@@ -142,7 +142,7 @@ export default {
         const result = await haulers()
         this.haulerList = result.data.response.HaulerMaster
         this.haulerList.map(e => {
-          this.haulerListNames.push(e.userName)
+          this.haulerListNames.push(e.haulerName)
         })
       } catch(e) {
         console.log(e)
@@ -151,14 +151,14 @@ export default {
     async getVehiclesDriversHelpers() {
       try {
         this.haulerList.map(e => {
-          if(e.userName == this.hauler) {
+          if(e.haulerName == this.hauler) {
             this.haulerId = e.id
           }
         })
         const result1 = await getVehiclesByHaulerId(this.haulerId)
         this.vehicles = result1.data.response.result
         this.vehicles.map(f => {
-          this.plates.push(f.plateNo)
+          this.plates.push(f.vehicleNo)
         })
         const result2 = await haulerEmployees()
         const data = result2.data.response.HaulerEmployees
@@ -178,9 +178,9 @@ export default {
     },
     getTruckType() {
       this.vehicles.map(e => {
-        if(this.plate == e.plateNo) {
+        if(this.body == e.vehicleNo) {
           this.trucktype = e.vehicleType.truckType
-          this.body = e.vehicleNo
+          this.plate = e.plateNo
         }
       })
     },
@@ -463,14 +463,14 @@ export default {
                      <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Plate No</label
+                      >Body No</label
                     >
                      <b-form-select
-                      v-model="plate"
+                      v-model="body"
                       :options="plates"
                       class="form-control"
                       @change="getTruckType"
-                          oninvalid="this.setCustomValidity('Plate No is required ')"
+                          oninvalid="this.setCustomValidity('Body No is required ')"
                   oninput="setCustomValidity('')"
                   required
                     >
@@ -481,13 +481,13 @@ export default {
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Body</label
+                      >Plate No</label
                     >
                     <input
-                      v-model="body"
+                      v-model="plate"
                       class="form-control"
                       name="body"
-
+                    disabled
                     />
                   </b-col>
                   <b-col>
@@ -501,6 +501,7 @@ export default {
                       class="form-control"
                       name="trucktype"
                       readonly
+                      disabled
                     />
                   </b-col>
                 </b-row>
