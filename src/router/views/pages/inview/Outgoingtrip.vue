@@ -210,6 +210,11 @@ if(this.lgudata[j].id === this.item[i].lguId ){
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },
+     async refresh() {
+      setTimeout(function () {
+        location.reload()
+      }, 200)
+    },
   },
 }
 </script>

@@ -189,7 +189,7 @@ export default {
             this.vehicles = result1.data.response.result
             this.vehicles.map(e => {
               
-                  this.plates.push(e.plateNo)
+                  this.plates.push(e.vehicleNo)
               })
               var id2 = "DRIVER"
               const result2 = await getEMPByLguId(this.haulerList[i].id,id2)
@@ -253,7 +253,7 @@ export default {
 
          const result = await getRoutesByBaranggayId(this.areadata[i].id)
           this.routedata = result.data.response.result.routeMaster
-         
+         this.servingRoutes = []
            
             if(this.routedata.length > 0) {
               this.routedata.map(f=>{
@@ -490,11 +490,11 @@ export default {
     },
     getTruckType(){
       this.vehicles.map( e => {
-        if(e.plateNo == this.plate)
+        if(e.vehicleNo == this.body)
         {
           this.code = e.code
           this.trucktype = e.vehicleType.code
-          this.body = e.vehicleNo
+          this.plate = e.plateNo
         }
       })
     },
@@ -639,14 +639,14 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark"
-                      >Plate No</label
+                      >Body No</label
                     >
                      <b-form-select
-                      v-model="plate"
+                      v-model="body"
                       :options="plates"
                       class="form-control"
                       @change="getTruckType"
-                          oninvalid="this.setCustomValidity('Plate No is required ')"
+                          oninvalid="this.setCustomValidity('Body No is required ')"
                   oninput="setCustomValidity('')"
                   required
                     >
@@ -658,10 +658,10 @@ export default {
                     <label
                       for="defaultFormCardNameEx"
                       class="grey-text font-weight-dark"
-                      >Body</label
+                      >Plate No</label
                     >
                     <input
-                      v-model="body"
+                      v-model="plate"
                       class="form-control"
                       name="body"
                       readonly
