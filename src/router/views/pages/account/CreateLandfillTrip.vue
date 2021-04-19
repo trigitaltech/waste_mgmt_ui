@@ -422,7 +422,9 @@ export default {
         }
       }
       catch(e) {
-
+         this.$toasted.error(e.message.response.result, {
+          duration: 7000,
+        })
       }
     },
     getTruckType(){

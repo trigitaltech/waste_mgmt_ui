@@ -127,7 +127,7 @@ export default {
     <PageHeader :items="items" />
 
     <div class="animated fadeIn">
-      <b-card header="Create Days" class="mt-10 ml-10 mr-10 mx-auto">
+      <b-card header="Trip Billing" class="mt-10 ml-10 mr-10 mx-auto">
         <div class="mt-3">
           <!-- Default form subscription -->
           <form @submit.prevent="create">

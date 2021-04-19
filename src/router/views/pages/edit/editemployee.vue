@@ -561,7 +561,7 @@ export default {
                               />
                               </div>
                             </div> -->
-                            <!-- <div class="col-md-4">
+                            <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">State</label>
                                 <input
@@ -584,7 +584,7 @@ export default {
                                 
                                 />
                               </div>
-                            </div> -->
+                            </div>
                             <div class="col-md-3">
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Employee Type</label>

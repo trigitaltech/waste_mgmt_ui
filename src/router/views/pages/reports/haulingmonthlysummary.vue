@@ -12,9 +12,13 @@ import {
   ValidationObserver,
 } from 'vee-validate/dist/vee-validate.full'
 import {
- Attendance, deleteattendance,employees,pdfgenerate
+ Attendance, deleteattendance,employees,pdfgenerate,triphaulingsummarygenerate,downloadpdf
 } from '../../../../services/auth'
-
+import axios from "axios";
+import Datepicker from 'vuejs-datepicker';
+import {
+    api
+} from "../../../../services/index.js";
 export default {
   page: {
     title: 'Hauling Monthly Summary Expenses',
@@ -27,12 +31,14 @@ export default {
     ValidationProvider,
     ValidationObserver,
     ModelSelect,
-    Datetime
+    Datetime,
+    Datepicker
   },
  
   data() {
     return {
-     
+     year:"",
+       DatePickerFormat: 'yyyy',
       lgudata:[],
       items: [
         {
@@ -53,20 +59,65 @@ export default {
     // },
     getUserDetails() {
       return this.$store.getters['auth/loggedInDetails']
+      
     },
   },
   methods :{
-   async downloadFile() {
-     console.log("test")
-         var id = "pdf"
+   async create() {
+    //  console.log("test")
+    //      var id = "pdf"
      try{
-          
-        const result = await pdfgenerate(id)
-         let blob = new Blob([result.response.data], { type: 'application/pdf' })
-      let link = document.createElement('a')
-      link.href = window.URL.createObjectURL(blob)
-      link.download = 'test.pdf'
-      link.click()
+        //   const payload = {
+        //               year:moment(this.year).format('YYYY')
+        //   }
+//         const result = await triphaulingsummarygenerate(payload)
+//         let reportname = result.data
+//         // const result1 = await downloadpdf(reportname)
+//         debugger
+//         var buf = new ArrayBuffer(reportname.length*2); // 2 bytes for each char
+//   var bufView = new Uint16Array(buf);
+//   for (var i=0, strLen=reportname.length; i < strLen; i++) {
+//     bufView[i] = reportname.charCodeAt(i);
+//   }
+//   debugger
+        // const buffer = new ArrayBuffer(reportname);
+       axios
+          .get("http://65.0.10.135:9000/api/v1/management/reports/generate/monthlySummaryExpense/"+ moment(this.year).format('YYYY'),{
+ headers: {
+   Authorization: 'Bearer ' + this.getUserDetails.authToken}, responseType: 'arraybuffer'
+})
+          .then(response => {
+            //   debugger
+    // url: `http://65.0.10.135:9000/api/v1/management/reports/download/${reportname}`,
+    // method: "GET",
+    // responseType: "blob"
+// }).then(function(response) {
+    // var fileURL = URL.createObjectURL(response.data);
+    
+    const file = new Blob([response.data], {type: 'application/pdf'});
+
+            // process to auto download it
+            const fileURL = URL.createObjectURL(file);
+            const link = document.createElement('a');
+            link.href = fileURL;
+            link.download = "Hauling Monthly Summary" + moment(new Date()).format('DD-MM-YYYY')+ ".pdf";
+            link.click();
+    window.open(fileURL);
+});
+        //  const result1 = await downloadpdf(reportname)
+        //  var response = result1.data
+        //  console.log(response)
+        //  debugger
+        //  var file = new Blob([response], {type: 'application/pdf'});
+    //    var fileURL = URL.createObjectURL(response);
+    //    window.open(fileURL);
+    //      let link = document.createElement('a')
+    //      let blob = new Blob([response], { type: 'application/pdf' })
+         
+      
+    //   link.href = window.URL.createObjectURL(blob)
+    //   link.download = 'test.pdf'
+    //   link.click()
       } catch (e) {
          this.$toasted.error(e.message.error, {
           duration: 7000,
@@ -76,7 +127,7 @@ export default {
 }
   },
   mounted() {
-  
+      
   },
   
 }
@@ -100,24 +151,16 @@ export default {
               <!-- Default form subscription -->
               <form>
                 <b-row>
+                
                   <b-col>
-                    <!-- Default input name -->
-                   <input
-                      id="defaultFormCardNameEx"
-                      type="text"
-                      disabled
-                      class="form-control"
-                      placeholder="SELECT YEAR"
-                    />
-                  </b-col>
-                  <b-col style="margin-left:50px">
-                     <datetime 
-                      v-model="date"
-                      
-                      type="year"
-                      placeholder="SELECT YEAR"
-                    
-                 ></datetime>
+                     <Datepicker 
+      v-model="year"
+      :format="DatePickerFormat"
+     placeholder="SELECT  YEAR"
+      minimum-view="year"              
+      name="datepicker"
+      id="input-id"
+      input-class="form-control"></Datepicker>
                   </b-col>
                   <b-col>
                      <b-button
@@ -127,14 +170,14 @@ export default {
                   >Submit</b-button
                 >
                   </b-col>
-                   <b-col>
+                   <!-- <b-col>
                      <b-button
                   class="btn btn-custome ml-4 btn-secondary mb-3"
                   text="Create Tenant"
                   @click="downloadFile()"
                   > Download</b-button
                 >
-                  </b-col>
+                  </b-col> -->
                 </b-row>
                 <br />
                
@@ -162,3 +205,8 @@ export default {
   .role-details
     margin: 10px
 </style>
+    console.log(err);
+        }
+    }
+}
+</script>

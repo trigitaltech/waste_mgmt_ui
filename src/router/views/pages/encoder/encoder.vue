@@ -430,7 +430,7 @@ return this.tripdata.incomingTrips.length
                          <i class="fa fa-print"></i>
                         </span>
                       </b-button>
-                      </router-link>
+                    
                     </template>
                     <!-- <template v-slot:cell(action)="data">
                       <button

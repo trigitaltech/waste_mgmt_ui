@@ -260,8 +260,10 @@ export default {
           })
           this.$router.push({path:'/Encoder'})
         }
-      } catch(error) {
-        console.log(error)
+      } catch(e) {
+        this.$toasted.error(e.message.response.result, {
+          duration: 7000,
+        })
       }
     }
   }

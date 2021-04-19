@@ -1127,6 +1127,14 @@ const pagesRoutes = [
     props: (route) => ({ user: store.state.auth.currentUser || {} }),
   },
   {
+    path: '/EditdirecttripByBilling',
+    name: 'EditdirecttripByBilling',
+    icon: 'check-square',
+    component: () => lazyLoadView(import('@views/pages/billingperson/editdirecttripbilling')),
+    meta: { authRequired: true },
+    props: (route) => ({ user: store.state.auth.currentUser || {} }),
+  },
+  {
     path: '/EditoutgoingtripByVolumeChecker',
     name: 'EditoutgoingtripByVolumeChecker',
     icon: 'check-square',

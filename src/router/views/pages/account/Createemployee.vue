@@ -561,7 +561,7 @@ export default {
                                 type="number"
                               />
                             </div>
-                          </div> 
+                          </div>  -->
                           <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                 <label for="default">Baranggay</label>
@@ -612,7 +612,7 @@ export default {
                                   disabled
                                 />
                               </div>
-                            </div> -->
+                            </div>
                             <div class="col-md-4">
                               <div class="form-group mt-3 mt-sm-0">
                                    <label for="default">Employee Type</label>

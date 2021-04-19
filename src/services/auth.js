@@ -372,7 +372,10 @@ export const editDirectTripByControlTrip = (payload) => serviceMaker(`/routetola
 export const editDirectTripByControldump = (payload) => serviceMaker(`/routetolandfilling/controlChecker/dumpingCompleted`,methods.PUT,api.NGB,payload)
 
 
-export const outgoingTripApprove = (payload) => serviceMaker(`tripoutgoing/billing/approve`,methods.PUT,api.NGB,payload)
+export const directTripApprove = (payload) => serviceMaker(`/routetolandfilling/billing/approve`,methods.PUT,api.NGB,payload)
+
+
+export const outgoingTripApprove = (payload) => serviceMaker(`/tripoutgoing/billing/approve`,methods.PUT,api.NGB,payload)
 
 // export const incomingbytstatus = (status) => serviceMaker (`/tripincoming/billing/${status}`, methods.GET, api.NGB)
 export const incomingbytstatus = () => serviceMaker (`/tripincoming/all`, methods.GET, api.NGB)
@@ -401,3 +404,8 @@ export const pdfgenerate = (id) => serviceMaker(`/reports/report/${id}`,methods.
 export const triptypebilling = (tripType) => serviceMaker(`/payroll/billmaster/getTripIds/${tripType}`,methods.GET,api.NGB)
 
 export const tripbillinggenerate = (id1,id2) => serviceMaker(`/payroll/billmaster/generate/${id1}/${id2}`,methods.GET,api.NGB)
+
+
+export const triphaulingsummarygenerate = (payload) => serviceMaker(`/reports/generate/monthlySummaryExpense`,methods.POST,api.NGB,payload)
+
+export const downloadpdf = (reportName) => serviceMaker(`/reports/download/${reportName}`,methods.GET,api.NGB,{responseType:'arraybuffer'})
