@@ -97,7 +97,7 @@ export default {
             const fileURL = URL.createObjectURL(file);
             const link = document.createElement('a');
             link.href = fileURL;
-            link.download = "Hauling Monthly" + new Date() + ".pdf";
+            link.download = "Hauling Monthly" +moment(new Date()).format('DD-MM-YYYY') + ".pdf";
             link.click();
     window.open(fileURL);
 });
