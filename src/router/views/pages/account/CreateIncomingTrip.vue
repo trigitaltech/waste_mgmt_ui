@@ -245,7 +245,7 @@ export default {
            var type = "PALERO"
         const result4 = await getgarbagebystate(type,this.state);
         this.collectorList = result4.data.response.result;
-        console.log(this.collectorList)
+        console.log("gargabage",this.collectorList)
         this.collectorList.map( e => {
         
             this.collectorListNames.push(e.firstName +" "+ e.lastName)
@@ -484,8 +484,11 @@ export default {
         }
         this.$router.push({ name: 'Viewtripincoming', params: this.tripdata});
       }
-      catch(e) {
-
+      catch (e) {
+        // console.log(e)
+         this.$toasted.error(e.message.response.result, {
+          duration: 7000,
+        })
       }
     },
     getTruckType(){

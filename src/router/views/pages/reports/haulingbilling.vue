@@ -7,6 +7,7 @@ import { ModelSelect } from 'vue-search-select'
 import { Datetime } from 'vue-datetime'
 import NProgress from 'nprogress/nprogress'
 import moment from 'moment'
+import axios from "axios";
 import {
   ValidationProvider,
   ValidationObserver,
@@ -36,8 +37,16 @@ export default {
 
   data() {
     return {
+      date1:"",
+      date2:"",
       lgus:[],
-      hauler:[],
+      haulers:[],
+      lgudata:[],
+      haulerdata:[],
+      hauler:"",
+      lgu:"",
+      haulerid:"",
+      lguid:"",
       items: [
         {
           text: 'Home',
@@ -67,9 +76,9 @@ export default {
        try {
       
       const result = await haulers()
-      var data = result.data.response.HaulerMaster
-    data.map(e=>{
-         this.hauler.push(e.haulerName)
+      this.haulerdata = result.data.response.HaulerMaster
+    this.haulerdata.map(e=>{
+         this.haulers.push(e.haulerName)
        })
      
       } catch (error) {}
@@ -79,14 +88,60 @@ export default {
        try {
       
       const result = await lgus()
-      var data = result.data.response.result
-    data.map(e=>{
+      this.lgudata = result.data.response.result
+    this.lgudata.map(e=>{
          this.lgus.push(e.lguName)
        })
      
       } catch (error) {}
    
     },
+    gethaulerid(){
+    this.haulerdata.map(e => {
+          if(this.hauler == e.haulerName){
+            this.haulerid = e.id
+          }
+        })
+
+    },
+    getlguid(){
+ this.lgudata.map(e => {
+          if(this.lgu == e.lguName){
+            this.lguid = e.id
+          }
+        })
+
+    },
+    async create() {
+   debugger
+
+     try{
+       axios
+          .get("http://65.0.10.135:9000/api/v1/management/reports/generate/billingSummary/"+this.haulerid+"/"+this.lguid+"/"+moment(this.date1).format('YYYY-MM-DD')+"/"+moment(this.date2).format('YYYY-MM-DD'),{
+ headers: {
+   Authorization: 'Bearer ' + this.getUserDetails.authToken}, responseType: 'arraybuffer'
+})
+          .then(response => {
+        
+    
+    const file = new Blob([response.data], {type: 'application/pdf'});
+
+            // process to auto download it
+            const fileURL = URL.createObjectURL(file);
+            const link = document.createElement('a');
+            link.href = fileURL;
+            link.download = "Hauling Billing" + moment(new Date()).format('DD-MM-YYYY') + ".pdf";
+            link.click();
+    window.open(fileURL);
+});
+      
+      } catch (e) {
+         this.$toasted.error(e.message.error, {
+          duration: 7000,
+        })
+      }
+ 
+}
   },
 }
 </script>
@@ -108,41 +163,25 @@ export default {
               <!-- Default form subscription -->
               <form>
                 <b-row>
-                  <b-col>
-                    <input
-                      id="defaultFormCardNameEx"
-                      type="text"
-                      disabled
-                      class="form-control"
-                      placeholder="SELECT HAULER"
-                    />
-                  </b-col>
+                
                   <b-col>
                     <multiselect
-                      v-model="equipment"
+                      v-model="hauler"
                      
                       placeholder="SELECT HAULER"
-                      :options="hauler"
-                    
+                      :options="haulers"
+                    @input="gethaulerid()"
                     >
                     </multiselect>
                   </b-col>
-                  <b-col>
-                    <input
-                      id="defaultFormCardNameEx"
-                      type="text"
-                      disabled
-                      class="form-control"
-                      placeholder="SELECT LGU"
-                    />
-                  </b-col>
+                 
                   <b-col>
                      <multiselect
-                      v-model="equipment"
+                      v-model="lgu"
                      
                       placeholder="SELECT LGU"
                       :options="lgus"
-                    
+                    @input="getlguid()"
                     >
                     </multiselect>
                   </b-col>
@@ -152,14 +191,14 @@ export default {
                   <b-col>
                     <!-- Default input name -->
                     <datetime
-                      v-model="date"
+                      v-model="date1"
                       type="year"
                       placeholder="SELECT START DATE"
                     ></datetime>
                   </b-col>
                   <b-col style="margin-left: 50px">
                     <datetime
-                      v-model="date"
+                      v-model="date2"
                       type="year"
                       placeholder="SELECT END DATE"
                     ></datetime>
@@ -172,7 +211,7 @@ export default {
                       >Submit</b-button
                     >
                   </b-col>
-                  <b-col>
+                  <!-- <b-col>
                     <b-button
                       class="btn btn-custome ml-4 btn-secondary mb-3"
                       text="Create Tenant"
@@ -180,7 +219,7 @@ export default {
                     >
                       Download</b-button
                     >
-                  </b-col>
+                  </b-col> -->
                 </b-row>
                 <br />
               </form>

@@ -167,7 +167,7 @@ this.haulerdata.map(e=>{
       try {
         const payload = {
             equipmentType:this.equipmenttype,
-            equipmentNo:parseInt(this.equipmentno),
+            equipmentNo:this.equipmentno,
            
             equipmentId:parseInt(this.equipmentid),
             manufactureDate: this.manufacturedate,

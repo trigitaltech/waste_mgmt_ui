@@ -10,12 +10,12 @@ import Multiselect from 'vue-multiselect'
 Vue.component('multiselect', Multiselect)
 import {
   // eslint-disable-next-line no-unused-vars
- stagingarea, outgoingTripApprove
+ stagingarea, outgoingTripApprove,directTripApprove,dumpinglocation
 } from '../../../../services/auth'
 
 export default {
   page: {
-    title: 'Trip Incoming Details',
+    title: 'Edit Direct Trip Billing',
     meta: [{ name: 'description', content: appConfig.description }],
   },
   data() {
@@ -26,7 +26,9 @@ export default {
       data:{},
       loadingEndTime:'',
       volume:'',
-      tripStartTime:''
+      tripStartTime:'',
+      stagingArea:"",
+      dumpingarea:""
     };
   },
   components: { Layout, PageHeader,VueTimepicker, Multiselect ,datetime: Datetime, },
@@ -34,14 +36,30 @@ export default {
     this.data = this.$route.params
     this.getLgu()
     this.getStagingArea()
+    console.log("hai",this.data)
+    this.getdumping()
   },
   methods:{
+       async getdumping() {
+       try {
+      
+      const result = await  dumpinglocation()
+      var data = result.data.response.dumpingLocation
+     data.map(e => {
+            if(this.data.dumpinglocationId === e.id){
+                this.dumpingarea = e.dumpingAreaName
+            }
+      
+        })
+      } catch (error) {}
+   
+    },
     async tripApproved() {
       try {
         const payload = {
           id: this.data.id
         }
-        const result = await outgoingTripApprove(payload)
+        const result = await directTripApprove(payload)
         if(result) {
           this.$swal({
             group: 'alert',
@@ -67,15 +85,18 @@ export default {
         this.stagingAreas = result.data.response.stagingArea
         console.log(this.stagingAreas)
         this.stagingAreas.map(e => {
-          console.log(this.loginlguid+' '+e.lguName.id)
+            if(this.data.stagingAreaId === e.id){
+                this.stagingArea = e.stagingAreaName
+            }
+        //   console.log(this.loginlguid+' '+e.lguName.id)
           if(this.loginlguid == e.lguName.id){
             this.loginDetails.name = e.lguName.userName
             this.stagingAreaNames.push(e.stagingAreaName)
           }
         })
-        console.log(this.loginDetails.name)
+        // console.log(this.loginDetails.name)
       } catch(e) {
-        console.log(e)
+        // console.log(e)
       }
     },
   }
@@ -86,7 +107,7 @@ export default {
   <Layout>
     <div class="animated">
       <b-card
-        header="Edit Outgoing Trip"
+        header="Edit Direct Trip Billing"
         class="mt-10 ml-10 mr-10 mx-auto"
       >
         <div class="mt-1">
@@ -112,7 +133,7 @@ export default {
                       >Staging Area</label
                     >
                     <input
-                      v-model.trim="data.stagingAreaName"
+                      v-model.trim="stagingArea"
                       class="form-control"
                               
                     />
@@ -126,7 +147,7 @@ export default {
                         >Dumping Location</label
                       >
                       <input
-                        v-model.trim="data.dumpingLocationName"
+                        v-model.trim="dumpingarea"
                         class="form-control"
                                 
                       />
@@ -168,10 +189,32 @@ export default {
                     <label
                       for="defaultFormCardtextEx"
                       class="grey-text font-weight-dark mr-2"
-                      >Loading Start Time</label
+                      >Dumping Start Time</label
                     >
                     <datetime 
-                      v-model="data.loadingStartTime"
+                      v-model="data.dumpingStartTime"
+                      :format="{
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit'
+                      }"
+                      type="datetime"
+                      placeholder="SELECT Time"
+                 ></datetime>
+                  </b-col>
+                <!-- </b-row>
+                <b-row class="mt-3"> -->
+                  <!-- <b-col></b-col> -->
+                  <b-col>
+                    <label
+                      for="defaultFormCardtextEx"
+                      class="grey-text font-weight-dark mr-2"
+                      >Dumping End Time</label
+                    >
+                    <datetime 
+                      v-model="data.dumpingEndTime"
                       :format="{
                         year: 'numeric',
                         month: 'numeric',
@@ -184,28 +227,6 @@ export default {
                  ></datetime>
                   </b-col>
                 </b-row>
-                <!--<b-row class="mt-3">
-                  <b-col></b-col>
-                  <b-col class="ml-3">
-                    <label
-                      for="defaultFormCardtextEx"
-                      class="grey-text font-weight-dark mr-2"
-                      >Loading End Time</label
-                    >
-                    <datetime 
-                      v-model="loadingEndTime"
-                      :format="{
-                        year: 'numeric',
-                        month: 'numeric',
-                        day: 'numeric',
-                        hour: 'numeric',
-                        minute: '2-digit'
-                      }"
-                      type="datetime"
-                      placeholder="SELECT Time"
-                 ></datetime>
-                  </b-col>
-                </b-row>-->
                 <b-row class="mt-3">
                   <b-col>
                     <label
@@ -241,7 +262,7 @@ export default {
                       >Truck Type</label
                     >
                    <input
-                      v-model="data.typeOfUnit"
+                      v-model="data.truckType"
                       class="form-control"
                       name="trucktype"
                       
