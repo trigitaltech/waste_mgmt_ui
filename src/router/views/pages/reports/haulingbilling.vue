@@ -19,6 +19,10 @@ import {
   haulers,
   lgus
 } from '../../../../services/auth'
+import {
+    api, serviceMaker,
+    methods,
+} from "../../../../services/index.js";
 
 export default {
   page: {
@@ -113,11 +117,11 @@ export default {
 
     },
     async create() {
-   debugger
+  //  debugger
 
      try{
        axios
-          .get("http://65.0.10.135:9000/api/v1/management/reports/generate/billingSummary/"+this.haulerid+"/"+this.lguid+"/"+moment(this.date1).format('YYYY-MM-DD')+"/"+moment(this.date2).format('YYYY-MM-DD'),{
+          .get(api.NGB.defaults.baseURL+"/reports/generate/billingSummary/"+this.haulerid+"/"+this.lguid+"/"+moment(this.date1).format('YYYY-MM-DD')+"/"+moment(this.date2).format('YYYY-MM-DD'),{
  headers: {
    Authorization: 'Bearer ' + this.getUserDetails.authToken}, responseType: 'arraybuffer'
 })

@@ -16,6 +16,10 @@ import axios from "axios";
 import {
  Attendance, deleteattendance,employees
 } from '../../../../services/auth'
+import {
+    api, serviceMaker,
+    methods,
+} from "../../../../services/index.js";
 
 export default {
   page: {
@@ -84,7 +88,7 @@ export default {
   // debugger
         // const buffer = new ArrayBuffer(reportname);
        axios
-          .get("http://65.0.10.135:9000/api/v1/management/reports/generate/weeklyExpense/"+ moment(this.year).format('YYYY')+"/"+this.week,{
+          .get(api.NGB.defaults.baseURL+"/reports/generate/weeklyExpense/"+ moment(this.year).format('YYYY')+"/"+this.week,{
  headers: {
    Authorization: 'Bearer ' + this.getUserDetails.authToken}, responseType: 'arraybuffer'
 })
