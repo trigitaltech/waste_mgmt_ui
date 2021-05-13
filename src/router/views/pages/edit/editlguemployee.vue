@@ -447,6 +447,7 @@ export default {
                                   placeholder="Enter Password"
                                   class="form-control"
                                   required
+                                  disabled
                                 />
                                 <!-- <input
                                     v-model.trim="form.firstName"

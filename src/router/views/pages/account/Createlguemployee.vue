@@ -140,11 +140,32 @@ export default {
     this.getplans()
     this.getareas()
     this.getemployees()
-    this.getaddresss()
+    if(this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "LGU"){
+    this.getaddress()
+    }else(
+   this.getaddresss()
+    )
+   
+    
   },
   methods: {
+     async getaddresss() {
+       try {
+      
+      const result = await  address()
+      this.addres = result.data.response.result
+       this.addres.map((e) => {
+          // debugger
+          this.distopt.push(e.districtName)
+        })
+      
+      } catch (error) {}
+   
+    },
     async getcity() {
       // console.log('ahahahahha')
+      this.form.state = ""
+      this.form.country = ""
       this.addres.map((e) => {
         if (this.form.district === e.districtName) {
           this.form.state = e.stateCode.stateName
@@ -152,7 +173,7 @@ export default {
         }
       })
     },
-    async getaddresss() {
+    async getaddress() {
       try {
       var id =  this.$store.getters['auth/loggedInDetails'].user.roles[0].name === "LGU" ? this.$store.getters['auth/loggedInDetails'].lgu.id : this.$store.getters['auth/loggedInDetails'].user.id
         // const result = await districtsbylgu()
@@ -230,8 +251,8 @@ export default {
       this.lgusnames.map((e) => {
         if (this.lguname === e.lguName) {
           this.lgusdata = e.id
-            this.form.state = e.state
-          this.form.country = e.country
+          //   this.form.state = e.state
+          // this.form.country = e.country
 // this.form.district === e.districtName
         }
       })
